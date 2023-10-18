@@ -1,7 +1,8 @@
 ---
 name: Issues 생성 템플릿
 about: 해당 이슈 생성 템플릿을 사용하여 이슈를 생성해주세요.
-title: "[Refactor/Feature/Bug] 이슈 제목"
+title: "[♻️ Refactor/✨ Feature/\U0001F6A8 Bug /\U0001F527 Fix/\U0001F308 Style] 이슈
+  제목"
 labels: ''
 assignees: ''
 
