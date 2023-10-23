@@ -1,17 +1,16 @@
-import './App.css';
-import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
-
-const GlobalStyle = createGlobalStyle`
-${reset}
-`;
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './Router/AppRoutes';
+import GlobalStyle from './GlobalStyle';
 
 function App() {
   return (
-    <div className='App'>
-      <GlobalStyle />
+    <div>
+      <BrowserRouter>
+        <GlobalStyle />
+        <AppRoutes />
+      </BrowserRouter>
     </div>
   );
 }
-
 export default App;
