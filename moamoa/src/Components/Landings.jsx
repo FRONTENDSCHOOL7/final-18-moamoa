@@ -33,7 +33,6 @@ export default function Landings() {
     <Container>
       <MoaMoaBox>
         {/* <img src={Logo} alt='' /> */}
-
         <Copyright>@copyright moamoa corp</Copyright>
       </MoaMoaBox>
     </Container>

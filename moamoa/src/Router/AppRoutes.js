@@ -1,14 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Landing from '../Pages/Landing';
+import ProfileInfo from '../Pages/ProfileInfo';
+// import Landing from '../Pages/Landing';
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path='/' element={<Landing />} />
+      {/* <Route path='/' element={<Landing />} /> */}
 
       {/* 내 프로필 */}
-      {/* <Route path="/user" element={<?? />} /> */}
+      <Route path='/user' element={<ProfileInfo />} />
 
       {/* 상품 등록 */}
       {/* <Route path="/product" element={<?? />} /> */}

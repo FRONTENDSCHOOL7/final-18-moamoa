@@ -11,6 +11,11 @@
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-console": "off",
+    "no-alert": "off",
+    "no-shadow": "off",
+    "dot-notation": "off"
+    // "@typescript-eslint/no-shadow": ["error"]
   }
 }
