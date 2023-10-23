@@ -9,6 +9,7 @@ function App() {
       <BrowserRouter>
         {/* <GlobalStyle /> */}
         {/* <Profile /> */}
+
         <AppRoutes />
       </BrowserRouter>
     </div>

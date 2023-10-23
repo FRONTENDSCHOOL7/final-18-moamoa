@@ -1,76 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+// const token =
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MzY2M2VmYjJjYjIwNTY2Mzg1NzkwMSIsImV4cCI6MTcwMzI1MTUyNywiaWF0IjoxNjk4MDY3NTI3fQ.mhjKmJmBu7Acf-oukcUJOLcWya3m5yj145787KK36ws';
 
-  const login = async (email, password) => {
-    const baseUrl = 'https://api.mandarin.weniv.co.kr';
-    const reqPath = '/user/login';
-    const reqUrl = baseUrl + reqPath;
-
-    const loginData = {
-      user: {
-        email,
-        password,
-      },
-    };
-    try {
-      // 로그인해서 token꺼내기~!
-      const res = await fetch(reqUrl, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
-      });
-      const json = await res.json();
-      // console.log(json);
-
-      const { token } = json.user;
-      // 로컬스토리지에 토큰 저장하기.
-      localStorage.setItem('token', token);
-      // console.log(json.user["_id"]); // user id 출력
-    } catch (error) {
-      alert('로그인에 실패했습니다!');
-    }
-  };
-
-  const inputEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const inputPassword = (e) => {
-    setPassword(e.target.value);
-  };
-  const submitLogin = (e) => {
-    e.preventDefault();
-    login(email, password);
-  };
-  return (
-    <>
-      <h1>로그인</h1>
-      <section>
-        <h2>이메일, 비밀번호 입력하는곳</h2>
-        <form onSubmit={submitLogin}>
-          <input type='text' placeholder='이메일입력' onChange={inputEmail} value={email} />
-          <input type='text' placeholder='비밀번호입력' onChange={inputPassword} value={password} />
-          <button type='submit'>로그인</button>
-        </form>
-      </section>
-    </>
-  );
-}
-
+// 프로필보기
 export default function ProfileInfo() {
   const [profileImg, setProfileImg] = useState('');
   const [profileUsername, setProfileUsername] = useState('');
   const [profileAccountname, setProfileAccountname] = useState('');
   const [profileIntro, setProfileIntro] = useState('');
+  // const [profileTotalPost, setProfileTotalPost] = useState('')
+  const [profileFollowerCount, setProfileFollowerCount] = useState(0);
+  const [profileFollowingCount, setProfileFollowingCount] = useState(0);
 
   const getMyinfo = async () => {
     const token = localStorage.getItem('token');
-    // console.log(token);
-    const res = await fetch('https://api.mandarin.weniv.co.kr/profile/account_test', {
+    const accountname = localStorage.getItem('accountname');
+
+    const res = await fetch(`https://api.mandarin.weniv.co.kr/profile/${accountname}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -78,28 +25,36 @@ export default function ProfileInfo() {
       },
     });
     const json = await res.json();
-    console.log(json);
-    setProfileImg(JSON.stringify(json.profile['image']));
+    // console.log(json);
+
+    setProfileImg(json.profile['image']);
     setProfileAccountname(JSON.stringify(json.profile['accountname']));
     setProfileUsername(JSON.stringify(json.profile['username']));
-    setProfileIntro(JSON.stringify(json.profile['username']));
-    // setKeyword(JSON.stringify(json))
-    // console.log(json.user["_id"]); // user id 출력
-    // console.log(json.user["username"]); // username 출력
-    // console.log(json.user["follower"]);
+    setProfileIntro(JSON.stringify(json.profile['intro']));
+    setProfileFollowerCount(JSON.stringify(json.profile['followerCount']));
+    setProfileFollowingCount(JSON.stringify(json.profile['followingCount']));
   };
+
+  useEffect(() => {
+    getMyinfo(); // 컴포넌트가 마운트될 때 getMyinfo 함수 호출
+  }, []); // 빈 의존성 배열을 전달하여 마운트될 때만 실행
 
   return (
     <div>
-      <LoginPage />
       <section>
         <h2>내 프로필</h2>
-        <button type='button' onClick={getMyinfo}>
+        {/* <button type='button' onClick={getMyinfo}>
           내 정보 불러오기
-        </button>
-        {profileImg}
-        <p>닉네임: {profileUsername}</p>
-        <p>계정 id: {profileAccountname}</p>
+        </button> */}
+        <section>
+          <img src={profileImg} alt='Profile' />
+          <p>닉네임: {profileUsername}</p>
+          <p>계정 id: {profileAccountname}</p>
+          <p>소개글: {profileIntro}</p>
+          <p>게시글 수: </p>
+          <p>팔로워: {profileFollowerCount}</p>
+          <p>팔로잉: {profileFollowingCount}</p>
+        </section>
       </section>
     </div>
   );
