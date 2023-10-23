@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Landing from '../Pages/Landing';
+import ProductDetail from '../Pages/ProductDetail';
 
 export default function AppRoutes() {
   return (
@@ -14,7 +15,7 @@ export default function AppRoutes() {
       {/* <Route path="/product" element={<?? />} /> */}
 
       {/* 상품 리스트 */}
-      {/* <Route path="/product/:accountname" element={<?? />} /> */}
+      <Route path="/product/:accountname" element={<ProductDetail />} />
 
       {/* 게시글 상세 */}
       {/* <Route path="/post/:post_id" element={<?? />} /> */}
