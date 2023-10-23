@@ -5,6 +5,7 @@
     "node": true
   },
   "extends": ["airbnb", "prettier"],
+
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"

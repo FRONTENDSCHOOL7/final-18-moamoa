@@ -14,6 +14,7 @@ export default function AppRoutes() {
 
       {/* 로그인 */}
       <Route path='/login' element={<LoginPage />} />
+
       {/* 상품 등록 */}
       {/* <Route path="/product" element={<?? />} /> */}
 

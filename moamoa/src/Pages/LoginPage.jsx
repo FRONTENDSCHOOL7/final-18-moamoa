@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // 토큰을 받기위한 로그인 기능 구현
 function LoginPage() {
-  const navigate = useNavigate();
-
-  const [email, setEmail] = useState;
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const login = async (email, password) => {
@@ -38,8 +35,6 @@ function LoginPage() {
         // 로컬스토리지에 토큰 저장하기.
         localStorage.setItem('token', token);
         localStorage.setItem('accountname', accountname);
-
-        navigate('/profile'); // 로그인 성공 시 ProfileInfo 페이지로 이동
       } else {
         alert('로그인에 실패했습니다!');
       }
