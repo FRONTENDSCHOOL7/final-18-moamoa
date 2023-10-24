@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProductDetail from '../Pages/ProductDetail';
-import ProductList from '../Pages/ProductList';
 import AddProduct from '../Pages/AddProduct';
 import LoginPage from '../Pages/Login';
 import JoinPage from '../Pages/Join';
