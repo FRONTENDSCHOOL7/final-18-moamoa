@@ -5,13 +5,13 @@ import AppRoutes from './Router/AppRoutes';
 // import GlobalStyle from './GlobalStyle';
 import { RecoilEnv } from 'recoil';
 
-RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-        {/* <GlobalStyle /> */}
+        <GlobalStyle />
         {/* <Profile /> */}
 
         <AppRoutes />
