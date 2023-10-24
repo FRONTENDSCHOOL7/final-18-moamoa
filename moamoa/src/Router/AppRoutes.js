@@ -7,12 +7,14 @@ import LoginPage from '../Pages/Login';
 import JoinPage from '../Pages/Join';
 import ProfileInfo from '../Pages/ProfileInfo';
 import EditProfile from '../Pages/EditProfile';
+import ProductList from '../Pages/ProductList';
+import Landing from '../Pages/Landing';
 // import Landing from '../Pages/Landing';
 
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* <Route path='/' element={<Landing />} /> */}
+      <Route path='/' element={<Landing />} />
 
       {/* 내 프로필 */}
       <Route path='/profile' element={<ProfileInfo />} />
@@ -31,10 +33,10 @@ export default function AppRoutes() {
       <Route path='/product/:accountname' element={<ProductList />} />
 
       {/* 상품 상세 */}
-      <Route path="/product/detail/:product_id" element={<ProductDetail />} />
+      <Route path='/product/detail/:product_id' element={<ProductDetail />} />
 
       {/* 게시글 상세 */}
-      {/* <Route path="/post/:post_id" element={<?? />} /> */}
+      <Route path='/post/:post_id' element={ProductDetail} />
 
       <Route path='/user/login' element={<LoginPage />} />
       <Route path='/user' element={<JoinPage />} />
