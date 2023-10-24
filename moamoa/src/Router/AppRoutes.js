@@ -1,10 +1,12 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProductDetail from '../Pages/ProductDetail';
+import ProductList from '../Pages/ProductList';
 import AddProduct from '../Pages/AddProduct';
 import LoginPage from '../Pages/Login';
 import JoinPage from '../Pages/Join';
 import ProfileInfo from '../Pages/ProfileInfo';
+import EditProfile from '../Pages/EditProfile';
 import ProductList from '../Pages/ProductList';
 import Landing from '../Pages/Landing';
 // import Landing from '../Pages/Landing';
@@ -17,6 +19,10 @@ export default function AppRoutes() {
       {/* 내 프로필 */}
       <Route path='/profile' element={<ProfileInfo />} />
 
+      {/* 내 프로필 수정*/}
+      <Route path='/profile/edit' element={<EditProfile />} />
+      {/* 공통파일 프로필 수정 경로추가 */}
+
       {/* 로그인 */}
       {/* <Route path='/login' element={<?? />} /> */}
 
@@ -25,6 +31,9 @@ export default function AppRoutes() {
 
       {/* 상품 리스트 */}
       <Route path='/product/:accountname' element={<ProductList />} />
+
+      {/* 상품 상세 */}
+      <Route path='/product/detail/:product_id' element={<ProductDetail />} />
 
       {/* 게시글 상세 */}
       <Route path='/post/:post_id' element={ProductDetail} />
