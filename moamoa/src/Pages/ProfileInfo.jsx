@@ -2,7 +2,7 @@
   설명: 사용지 accountname의 프로필 페이지(남의 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.23
-  마지막 수정 날까: 
+  마지막 수정 날까: 2023.10.24
 */
 
 import React, { useState, useEffect } from 'react';
@@ -14,9 +14,9 @@ function EventList() {
   const token = useRecoilValue(userToken);
 
   const getEventList = async () => {
-    const accountname = localStorage.getItem('accountname');
+    // const accountname = localStorage.getItem('accountname');
 
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${accountname}`, {
+    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/account_test`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -66,9 +66,9 @@ function ProfileInfo() {
   const token = useRecoilValue(userToken);
 
   const getYourinfo = async () => {
-    const accountname = localStorage.getItem('accountname');
+    // const accountname = localStorage.getItem('accountname');
 
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/profile/${accountname}`, {
+    const res = await fetch(`https://api.mandarin.weniv.co.kr/profile/account_test`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,

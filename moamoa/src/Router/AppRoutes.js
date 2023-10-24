@@ -7,6 +7,7 @@ import LoginPage from '../Pages/Login';
 import JoinPage from '../Pages/Join';
 import ProfileInfo from '../Pages/ProfileInfo';
 import EditProfile from '../Pages/EditProfile';
+import AddPost from '../Pages/AddPost';
 // import Landing from '../Pages/Landing';
 
 export default function AppRoutes() {
@@ -21,6 +22,10 @@ export default function AppRoutes() {
       <Route path='/profile/edit' element={<EditProfile />} />
       {/* 공통파일 프로필 수정 경로추가 */}
 
+      {/* 게시글 작성 */}
+      <Route path='/post' element={<AddPost />} />
+      {/* 공통파일 프로필 수정 경로추가 */}
+
       {/* 로그인 */}
       {/* <Route path='/login' element={<?? />} /> */}
 
@@ -31,7 +36,7 @@ export default function AppRoutes() {
       <Route path='/product/:accountname' element={<ProductList />} />
 
       {/* 상품 상세 */}
-      <Route path="/product/detail/:product_id" element={<ProductDetail />} />
+      <Route path='/product/detail/:product_id' element={<ProductDetail />} />
 
       {/* 게시글 상세 */}
       {/* <Route path="/post/:post_id" element={<?? />} /> */}
