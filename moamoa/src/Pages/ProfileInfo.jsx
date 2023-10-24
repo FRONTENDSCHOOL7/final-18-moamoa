@@ -6,12 +6,14 @@
 */
 
 import React, { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import userToken from '../Recoil/UserToken';
 
 function EventList() {
   const [eventList, setEventList] = useState([]);
+  const token = useRecoilValue(userToken);
 
   const getEventList = async () => {
-    const token = localStorage.getItem('token');
     const accountname = localStorage.getItem('accountname');
 
     const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${accountname}`, {
@@ -61,8 +63,9 @@ function ProfileInfo() {
   const [profileFollowerCount, setProfileFollowerCount] = useState(0);
   const [profileFollowingCount, setProfileFollowingCount] = useState(0);
 
+  const token = useRecoilValue(userToken);
+
   const getYourinfo = async () => {
-    const token = localStorage.getItem('token');
     const accountname = localStorage.getItem('accountname');
 
     const res = await fetch(`https://api.mandarin.weniv.co.kr/profile/${accountname}`, {

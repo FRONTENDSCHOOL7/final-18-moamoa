@@ -18,6 +18,7 @@ export default function AppRoutes() {
 
       {/* 내 프로필 수정*/}
       <Route path='/profile/edit' element={<EditProfile />} />
+      {/* 공통파일 프로필 수정 경로추가 */}
 
       {/* 로그인 */}
       {/* <Route path='/login' element={<?? />} /> */}

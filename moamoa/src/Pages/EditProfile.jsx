@@ -2,22 +2,68 @@
   설명: 내 프로필 수정 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 
+  마지막 수정 날까: 2023.10.24
 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import userToken from '../Recoil/UserToken';
 
-function EditProfile({ handlePage }) {
-  const [username, setUsername] = useState('');
-  const [accountname, setAccountname] = useState('');
-  const [imgSrc, setImgSrc] = useState('https://api.mandarin.weniv.co.kr/Ellipse.png');
-  const [intro, setIntro] = useState('');
+function EditProfile() {
+  //기존 사용자의 정보를 가져오기
+  const token = useRecoilValue(userToken);
 
-  const edit = async (editData) => {
-    const reqUrl = 'https://api.mandarin.weniv.co.kr/user/';
-    const res = await fetch(reqUrl, {
-      method: 'POST',
+  const [initUsername, setInitUsername] = useState('');
+  const [initAccountname, setInitAccountname] = useState('');
+  const [initIntron, setInitIntron] = useState('');
+  const [initImgSrc, setInitImgSrc] = useState(''); // 이미 있는 이미지 주소
+
+  // 내 정보 API
+  const getInitInfo = async () => {
+    console.log(token);
+    const res = await fetch('https://api.mandarin.weniv.co.kr/user/myinfo', {
+      method: 'GET',
       headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const json = await res.json();
+    console.log(json);
+
+    if (json && json.user) {
+      setInitImgSrc(json.user['image'] || '');
+      setImgSrc(json.user['image'] || '');
+
+      setInitAccountname(json.user['accountname'] || '');
+      setAccountname(json.user['accountname'] || '');
+
+      setInitUsername(json.user['username'] || '');
+      setUsername(json.user['username'] || '');
+
+      setInitIntron(json.user['intro'] || '');
+      setIntro(json.user['intro'] || '');
+    }
+  };
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행합니다.
+    getInitInfo();
+  }, []);
+
+  const [username, setUsername] = useState(initUsername);
+  const [accountname, setAccountname] = useState(initAccountname);
+  const [imgSrc, setImgSrc] = useState(initImgSrc);
+  const [intro, setIntro] = useState(initIntron);
+
+  // 프로필 수정 API
+  const edit = async (editData) => {
+    // const token = localStorage.getItem('token');
+
+    const reqUrl = 'https://api.mandarin.weniv.co.kr/user';
+    const res = await fetch(reqUrl, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
         'Content-type': 'application/json',
       },
       body: JSON.stringify(editData),
@@ -61,7 +107,9 @@ function EditProfile({ handlePage }) {
     uploadImage(imageFile);
   };
 
-  const submitEdit = () => {
+  const submitEdit = (e) => {
+    e.preventDefault();
+
     const editData = {
       user: {
         username: username,
@@ -75,14 +123,10 @@ function EditProfile({ handlePage }) {
 
   return (
     <>
-      <button type='button' onClick={handlePage}>
-        로그인페이지로 돌아가기
-      </button>
       <section>
-        <h2>프로필 설정</h2>
-        <p>나중에 언제든지 변경할 수 있습니다.</p>
+        <h1>내 프로필 수정</h1>
         <label htmlFor='profileImg'>
-          <img src={imgSrc} alt='' id='imagePre' />
+          <img src={imgSrc || initImgSrc} alt='Profile' id='imagePre' />
         </label>
         <input
           type='file'
@@ -99,7 +143,7 @@ function EditProfile({ handlePage }) {
             type='text'
             id='userNameInput'
             name='username'
-            placeholder='2~10자 이내여야 합니다.'
+            placeholder={initUsername ? `${initUsername}` : '2~10자 이내여야 합니다.'}
           />
         </div>
         <div>
@@ -110,21 +154,26 @@ function EditProfile({ handlePage }) {
             type='text'
             id='userIdInput'
             name='accountname'
-            placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
+            placeholder={
+              initAccountname
+                ? `${initAccountname}`
+                : '영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.'
+            }
           />
         </div>
         <div>
           <label htmlFor='userIntroInput'>소개</label>
           <input
+            value={intro}
             onChange={inputInfo}
             type='text'
             id='userIntroInput'
             name='intro'
-            placeholder='자신과 판매할 상품에 대해 소개해 주세요.'
+            placeholder={initIntron ? `${initIntron}` : '자신과 판매할 상품에 대해 소개해 주세요!'}
           />
         </div>
         <button type='button' onClick={submitEdit}>
-          감귤마켓 시작하기
+          수정하기
         </button>
       </section>
     </>
