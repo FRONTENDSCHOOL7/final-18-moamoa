@@ -1,18 +1,22 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Landing from '../Pages/Landing';
 import ProductDetail from '../Pages/ProductDetail';
 import AddProduct from '../Pages/AddProduct';
 import LoginPage from '../Pages/Login';
 import JoinPage from '../Pages/Join';
+import ProfileInfo from '../Pages/ProfileInfo';
+// import Landing from '../Pages/Landing';
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path='/' element={<Landing />} />
+      {/* <Route path='/' element={<Landing />} /> */}
 
       {/* 내 프로필 */}
-      {/* <Route path="/user" element={<?? />} /> */}
+      <Route path='/profile' element={<ProfileInfo />} />
+
+      {/* 로그인 */}
+      {/* <Route path='/login' element={<?? />} /> */}
 
       {/* 상품 등록 */}
       <Route path='/product' element={<AddProduct />} />

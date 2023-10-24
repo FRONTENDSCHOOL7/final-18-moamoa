@@ -1,6 +1,7 @@
 import React from 'react';
-import Logo from '../assets/images/Logo.png';
 import styled from 'styled-components';
+// import Logo from '../assets/images/Logo.png';
+
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -26,12 +27,12 @@ const Copyright = styled.p`
   margin-top: 300px;
   color: red;
 `;
+
 export default function Landings() {
   return (
     <Container>
       <MoaMoaBox>
-        <img src={Logo} alt='' />
-
+        {/* <img src={Logo} alt='' /> */}
         <Copyright>@copyright moamoa corp</Copyright>
       </MoaMoaBox>
     </Container>
