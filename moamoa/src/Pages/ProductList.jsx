@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -146,7 +145,6 @@ export default function ProductList() {
           </ProductContainer>
         )}
       </Main>
-      <a href=''></a>
     </>
   );
 }
