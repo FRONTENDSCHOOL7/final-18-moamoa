@@ -1,10 +1,14 @@
+/*
+  설명: 사용지 accountname의 프로필 페이지(남의 페이지)
+  작성자: 이해지
+  최초 작성 날짜: 2023.10.23
+  마지막 수정 날까: 
+*/
+
 import React, { useState, useEffect } from 'react';
 
 function EventList() {
-  // const [eventImgList, setEventImgList] = useState([]);
   const [eventList, setEventList] = useState([]);
-  // const [eventNameList, setEventNameList] = useState<string[]>([]);
-  // const [eventPeriodList, setEventPeriodList] = useState<string[]>([]);
 
   const getEventList = async () => {
     const token = localStorage.getItem('token');
@@ -18,24 +22,8 @@ function EventList() {
       },
     });
     const json = await res.json();
-    // console.log(json.product);
-    // console.log(json.product[0]['itemImage']);
 
     setEventList(json.product);
-
-    // const ImgList = [];
-    // for (let i = 0; i < json.product.length; i += 1) {
-    //   ImgList.push(json.product[i]['itemImage']);
-    // }
-
-    // setEventImgList([...ImgList]);
-
-    // setProfileImg(json.profile['image']);
-    // setProfileAccountname(JSON.stringify(json.profile['accountname']));
-    // setProfileUsername(JSON.stringify(json.profile['username']));
-    // setProfileIntro(JSON.stringify(json.profile['intro']));
-    // setProfileFollowerCount(JSON.stringify(json.profile['followerCount']));
-    // setProfileFollowingCount(JSON.stringify(json.profile['followingCount']));
   };
 
   useEffect(() => {
@@ -111,7 +99,7 @@ function ProfileInfo() {
           <p>닉네임: {profileUsername}</p>
           <p>계정 id: {profileAccountname}</p>
           <p>소개글: {profileIntro}</p>
-          <p>게시글 수: </p>
+          {/* <p>게시글 수: 행사</p>   */}
           <p>팔로워: {profileFollowerCount}</p>
           <p>팔로잉: {profileFollowingCount}</p>
           <button type='button'>상품 등록</button>
