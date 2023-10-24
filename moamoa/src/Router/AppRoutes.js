@@ -6,6 +6,7 @@ import AddProduct from '../Pages/AddProduct';
 import LoginPage from '../Pages/Login';
 import JoinPage from '../Pages/Join';
 import ProfileInfo from '../Pages/ProfileInfo';
+import EditProfile from '../Pages/EditProfile';
 // import Landing from '../Pages/Landing';
 
 export default function AppRoutes() {
@@ -15,6 +16,10 @@ export default function AppRoutes() {
 
       {/* 내 프로필 */}
       <Route path='/profile' element={<ProfileInfo />} />
+
+      {/* 내 프로필 수정*/}
+      <Route path='/profile/edit' element={<EditProfile />} />
+      {/* 공통파일 프로필 수정 경로추가 */}
 
       {/* 로그인 */}
       {/* <Route path='/login' element={<?? />} /> */}
