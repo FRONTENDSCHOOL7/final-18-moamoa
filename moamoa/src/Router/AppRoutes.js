@@ -2,10 +2,10 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Landing from '../Pages/Splash/Landing';
-import Home from '../Pages/Home/Home';
+import Home from '../Pages/Home';
 import Login from '../Pages/Login/Login';
 import Join from '../Pages/Join/Join';
-// 도와주셍쇼!
+
 import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';
 import EditProfile from '../Pages/Profile/EditProfile';
