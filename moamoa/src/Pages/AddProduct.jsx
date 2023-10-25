@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import userToken from '../Recoil/UserToken';
-// import { isFestival } from '../Recoil/EventCategory';
 import axios from 'axios';
 import GoBack from '../Assets/icons/icon-arrow-left.svg';
 import eventStateAtom from '../Recoil/EventState';
@@ -12,21 +11,18 @@ const AddProduct = () => {
   const [eventName, setEventName] = useState('');
   const [eventStartDate, setEventStartDate] = useState('');
   const [eventEndDate, setEventEndDate] = useState('');
+  const [eventPeriod, setEventPeriod] = useState(1);
   const [imgSrc, setImgSrc] = useState(
     'https://cdn.visitkorea.or.kr/kfes/upload/contents/db/400_03e7c925-a8a5-4923-905c-e12586ec0a44_3.png',
   );
-  // const [isLeftClick, setIsLeftClick] = useRecoilState(isFestival);
+  const [eventDetail, setEventDetail] = useState('');
+  const [eventType, setEventType] = useState('');
 
   const setCategory = useSetRecoilState(eventStateAtom);
-
-  const [eventType, setEventType] = useState('');
-  const [eventPeriod, setEventPeriod] = useState('');
-  const [eventDetail, setEventDetail] = useState('');
-
   const token = useRecoilValue(userToken);
 
   // API 요청-------------------------------------------
-  const addEvent = async (eventImg, eventName, eventPeriod, eventDetail) => {
+  const addEvent = async (imgSrc, eventName, eventPeriod, eventDetail) => {
     const baseUrl = 'https://api.mandarin.weniv.co.kr';
     const reqPath = '/product';
     const reqUrl = baseUrl + reqPath;
@@ -49,7 +45,7 @@ const AddProduct = () => {
       }).then((res) => {
         //status 200//
         setCategory({ eventType, eventName, eventStartDate, eventEndDate });
-        console.log(res);
+        console.log(res.data);
       });
     } catch (err) {
       //status 422
@@ -94,17 +90,6 @@ const AddProduct = () => {
     setEventEndDate(e.target.value);
   };
 
-  // const calculateEventDuration = () => {
-  //   let startDate = new Date(eventStartDate);
-
-  //   console.log(startDate.getTime());
-  // };
-
-  const inputEventPeriod = (e) => {
-    console.log(typeof e.target.value);
-    setEventPeriod(e.target.value);
-  };
-
   const inputEventDetail = (e) => {
     setEventDetail(e.target.value);
   };
@@ -143,10 +128,20 @@ const AddProduct = () => {
     navigate(-1);
   };
 
-  const submitProduct = (e) => {
+  const handlePeriod = (startDate, endDate) => {
+    console.log(startDate);
+    console.log(endDate);
+    console.log(startDate+endDate);
+    const date = parseInt((startDate + endDate).replaceAll('-', ''));
+    console.log(date);
+    setEventPeriod(date);
+    return date; 
+  };
+
+  const submitProduct = async (e) => {
     e.preventDefault();
-    // calculateEventDuration();
-    addEvent(imgSrc, eventName, eventPeriod, eventDetail);
+    await handlePeriod(eventStartDate, eventEndDate);
+    await addEvent(imgSrc, eventName, eventPeriod, eventDetail);
   };
 
   const handleEventTypeBtn = (id) => {
@@ -214,7 +209,6 @@ const AddProduct = () => {
               ></input>
             </label>
             {/* 확인 필요 */}
-            <input type='number' onChange={inputEventPeriod} value={eventPeriod}></input>
 
             <label>상세 설명</label>
             <textarea
@@ -225,7 +219,7 @@ const AddProduct = () => {
           </section>
           <button
             onClick={clickSaveBtn}
-            disabled={!imgSrc || !eventName || !eventPeriod || !eventDetail}
+            disabled={!imgSrc || !eventName || !eventStartDate || !eventEndDate || !eventDetail}
           >
             저장
           </button>

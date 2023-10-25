@@ -6,6 +6,7 @@ import AddProduct from '../Pages/AddProduct';
 import LoginPage from '../Pages/Login';
 import JoinPage from '../Pages/Join';
 import ProfileInfo from '../Pages/ProfileInfo';
+import Home from '../Pages/Home';
 // import Landing from '../Pages/Landing';
 
 export default function AppRoutes() {
@@ -30,6 +31,10 @@ export default function AppRoutes() {
 
       {/* 게시글 상세 */}
       {/* <Route path="/post/:post_id" element={<?? />} /> */}
+
+      {/* 홈 */}
+      <Route path="/post/feed" element={<Home />} />
+
 
       <Route path='/user/login' element={<LoginPage />} />
       <Route path='/user' element={<JoinPage />} />

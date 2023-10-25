@@ -98,7 +98,7 @@ function ProfileInfo() {
   useEffect(() => {
     getYourinfo(); // 컴포넌트가 마운트될 때 getMyinfo 함수 호출
   }, []); // 빈 의존성 배열을 전달하여 마운트될 때만 실행
-
+  
   return (
     <div>
       <section>
