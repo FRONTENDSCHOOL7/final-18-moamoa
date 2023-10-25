@@ -40,7 +40,7 @@ const Login = () => {
           // //로컬스토리지에 토큰 저장하기
 
           setToken(res.data.user.token);
-          navigate('/product');
+          navigate('/home');
         }
       });
     } catch (err) {
