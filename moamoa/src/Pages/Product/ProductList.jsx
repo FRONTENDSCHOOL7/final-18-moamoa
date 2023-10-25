@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -118,6 +117,7 @@ export default function ProductList() {
     axiosData(); // 데이터를 가져오는 함수 호출
   }, [token, setProduct]);
   //   리턴
+  console.log(eventStateAtom);
   return (
     <>
       <Header>
