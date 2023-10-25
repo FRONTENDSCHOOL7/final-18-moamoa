@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
-import userToken from '../Recoil/UserToken';
+import userToken from '../../Recoil/UserToken';
 
-const LoginPage = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -114,4 +114,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

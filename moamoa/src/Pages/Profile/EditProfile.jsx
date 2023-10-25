@@ -7,7 +7,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import userToken from '../Recoil/UserToken';
+import userToken from '../../Recoil/UserToken';
 
 function EditProfile() {
   //기존 사용자의 정보를 가져오기
