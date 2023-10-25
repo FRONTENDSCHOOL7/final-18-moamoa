@@ -5,14 +5,12 @@ import userToken from '../Recoil/UserToken';
 import axios from 'axios';
 import eventStateAtom from '../Recoil/EventState';
 import GoBack from '../Assets/icons/icon-arrow-left.svg';
-const initialDate = new Date();
 
 const AddProduct = () => {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState('');
   const [eventStartDate, setEventStartDate] = useState('');
   const [eventEndDate, setEventEndDate] = useState('');
-
   const [eventPeriod, setEventPeriod] = useState(1);
   const [imgSrc, setImgSrc] = useState(
     'https://cdn.visitkorea.or.kr/kfes/upload/contents/db/400_03e7c925-a8a5-4923-905c-e12586ec0a44_3.png',
@@ -23,11 +21,8 @@ const AddProduct = () => {
   const setCategory = useSetRecoilState(eventStateAtom);
   const token = useRecoilValue(userToken);
 
-  // API 요청-------------------------------------------
   const addEvent = async (imgSrc, eventName, eventPeriod, eventDetail) => {
-    const baseUrl = 'https://api.mandarin.weniv.co.kr';
-    const reqPath = '/product';
-    const reqUrl = baseUrl + reqPath;
+    const reqUrl = 'https://api.mandarin.weniv.co.kr/product';
 
     try {
       await axios({
@@ -39,7 +34,7 @@ const AddProduct = () => {
         data: {
           product: {
             itemName: eventName,
-            price: eventPeriod,
+            price: parseInt(eventPeriod),
             link: eventDetail,
             itemImage: imgSrc,
           },
@@ -47,7 +42,7 @@ const AddProduct = () => {
       }).then((res) => {
         //status 200//
         setCategory({ eventType, eventName, eventStartDate, eventEndDate });
-        console.log(res.data);
+        console.log(res);
       });
     } catch (err) {
       if (err.response) {
@@ -80,7 +75,12 @@ const AddProduct = () => {
   const inputEventEndDate = (e) => {
     setEventEndDate(e.target.value);
   };
-  
+
+  const calculateEventDuration = () => {
+    const date = parseInt((eventStartDate + eventEndDate).replaceAll('-', ''));
+    setEventPeriod(date);
+  };
+
   const inputEventDetail = (e) => {
     setEventDetail(e.target.value);
   };
@@ -114,25 +114,9 @@ const AddProduct = () => {
     navigate(-1);
   };
 
-  const handlePeriod = (startDate, endDate) => {
-    // startDate와 endDate를 날짜 객체로 변환
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    // 날짜 범위 계산
-    const timeDiff = Math.abs(end - start);
-    const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    // dayDiff를 가격 필드에 저장
-    setEventPeriod(dayDiff);
-    console.log(typeof timeDiff);
-  };
-
   const submitProduct = (e) => {
     e.preventDefault();
-
-    handlePeriod(eventStartDate, eventEndDate);
-
+    calculateEventDuration();
     addEvent(imgSrc, eventName, eventPeriod, eventDetail);
   };
 
@@ -197,7 +181,6 @@ const AddProduct = () => {
                 max='9999-12-31'
               ></input>
             </label>
-            {/* 확인 필요 */}
             <label>상세 설명</label>
             <textarea
               placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
