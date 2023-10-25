@@ -50,9 +50,7 @@ export default function AppRoutes() {
 
       {/* 내 프로필 수정*/}
       <Route path='/profile/edit' element={<EditProfile />} />
-
-      {/* 팔로우 리스트*/}
-      <Route path='profile/:accountname/following' element={<FollowingList />} />
+      {/* 공통파일 프로필 수정 경로추가 */}
 
       {/* 팔로워 리스트*/}
       <Route path='profile/:accountname/follower' element={<FollowerList />} />
@@ -76,19 +74,10 @@ export default function AppRoutes() {
       <Route path='/post/edit' element={<EditPost />} />
 
       {/* 게시글 상세 */}
-      <Route path='/post/:post_id' element={<PostDetail />} />
+      <Route path='/post/:post_id' element={ProductDetail} />
 
-      {/* 채팅방 */}
-      <Route path='/chat' element={<ChatRoom />} />
-
-      {/* 채팅 리스트 */}
-      <Route path='/chat/list' element={<ChatList />} />
-
-      {/* 오류 페이지 */}
-      <Route path='/fail' element={<Error />} />
-
-      {/* 검색 */}
-      <Route path='/search' element={<Search />} />
+      <Route path='/user/login' element={<LoginPage />} />
+      <Route path='/user' element={<JoinPage />} />
     </Routes>
   );
 }
