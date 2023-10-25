@@ -44,14 +44,19 @@ export default function Home() {
   return (
 
     <>
-      {post && (
-        
+      {post.length !== 0 ? (        
         <ul>
           {post.map((item)=>{
             return <PostCard key={item.id} post={item}/>
           })}
         </ul>
-      )};  
+      )
+      :
+      (<div>
+        <p>유저를 검색해 팔로우 해보세요!</p>
+        <button>검색하기</button>
+      </div>)
+    } 
     </>
   )
 }
