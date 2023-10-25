@@ -12,15 +12,12 @@
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-<<<<<<< HEAD
     "react/react-in-jsx-scope": "off",
     "no-console": "off",
     "no-alert": "off",
     "no-shadow": "off",
     "dot-notation": "off"
     // "@typescript-eslint/no-shadow": ["error"]
-=======
-    "react/react-in-jsx-scope": "off"
   },
   "settings": {
     "import/resolver": {
@@ -28,6 +25,5 @@
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
->>>>>>> develop
   }
 }
