@@ -9,7 +9,8 @@ import Join from '../Pages/Join/Join';
 import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';
 import EditProfile from '../Pages/Profile/EditProfile';
-//import FollowingList from '../Pages/Follow/FollowingList';
+
+// import FollowingList from '../Pages/Follow/FollowingList';
 import FollowerList from '../Pages/Follow/FollowerList';
 
 import ProductDetail from '../Pages/Product/ProductDetail';
@@ -19,13 +20,13 @@ import EditProduct from '../Pages/Product/EditProduct';
 
 import UploadPost from '../Pages/Post/UploadPost';
 import EditPost from '../Pages/Post/EditPost';
-import PostDetail from '../Pages/Post/PostDetail';
+// import PostDetail from '../Pages/Post/PostDetail';
 
-//import ChatRoom from '../Pages/Chat/ChatRoom';
-//import ChatList from '../Pages/Chat/ChatList';
+// import ChatRoom from '../Pages/Chat/ChatRoom';
+// import ChatList from '../Pages/Chat/ChatList';
 
-//import Error from '../Pages/Error';
-//import Search from '../Pages/Search/Search';
+// import Error from '../Pages/Error';
+// import Search from '../Pages/Search/Search';
 
 export default function AppRoutes() {
   return (

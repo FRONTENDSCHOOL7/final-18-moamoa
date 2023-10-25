@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import userToken from '../../Recoil/UserToken';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -43,6 +44,7 @@ export default function Home() {
         <ul>
           {post.map((item) => {
             return <PostCard key={item._id} post={item} />;
+
           })}
         </ul>
       ) : (
