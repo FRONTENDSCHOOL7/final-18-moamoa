@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import userToken from '../Recoil/UserToken';
+import userToken from '../../Recoil/UserToken';
 import axios from 'axios';
-import GoBack from '../Assets/icons/icon-arrow-left.svg';
-import eventStateAtom from '../Recoil/EventState';
+import GoBack from '../../Assets/icons/icon-arrow-left.svg';
+import eventStateAtom from '../../Recoil/EventState';
 const initialDate = new Date();
 
 const AddProduct = () => {
