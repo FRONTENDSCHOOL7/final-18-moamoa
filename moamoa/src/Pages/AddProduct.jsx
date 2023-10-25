@@ -5,7 +5,6 @@ import userToken from '../Recoil/UserToken';
 import axios from 'axios';
 import eventStateAtom from '../Recoil/EventState';
 import GoBack from '../Assets/icons/icon-arrow-left.svg';
-const initialDate = new Date();
 
 const AddProduct = () => {
   const navigate = useNavigate();
