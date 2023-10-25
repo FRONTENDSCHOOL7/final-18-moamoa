@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil';
 
 export default function ProductDetail() {
+  
   const productState = atom({
     key:"productData",
     default:null,
