@@ -1,9 +1,3 @@
-/*
-  설명: 게시글 작성 페이지
-  작성자: 이해지
-  최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.10.24
-*/
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import userToken from '../Recoil/UserToken';

@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import userToken from '../Recoil/UserToken';
+import userToken from '../../Recoil/UserToken';
 import axios from 'axios';
-import eventStateAtom from '../Recoil/EventState';
-import GoBack from '../Assets/icons/icon-arrow-left.svg';
+import GoBack from '../../Assets/icons/icon-arrow-left.svg';
+import eventStateAtom from '../../Recoil/EventState';
+const initialDate = new Date();
 
 const AddProduct = () => {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState('');
   const [eventStartDate, setEventStartDate] = useState('');
   const [eventEndDate, setEventEndDate] = useState('');
-  const [eventPeriod, setEventPeriod] = useState(1);
+  const [eventPeriod, setEventPeriod] = useState(initialDate);
   const [imgSrc, setImgSrc] = useState(
     'https://cdn.visitkorea.or.kr/kfes/upload/contents/db/400_03e7c925-a8a5-4923-905c-e12586ec0a44_3.png',
   );
@@ -20,9 +21,11 @@ const AddProduct = () => {
 
   const setCategory = useSetRecoilState(eventStateAtom);
   const token = useRecoilValue(userToken);
-
+  // API 요청-------------------------------------------
   const addEvent = async (imgSrc, eventName, eventPeriod, eventDetail) => {
-    const reqUrl = 'https://api.mandarin.weniv.co.kr/product';
+    const baseUrl = 'https://api.mandarin.weniv.co.kr';
+    const reqPath = '/product';
+    const reqUrl = baseUrl + reqPath;
 
     try {
       await axios({
@@ -34,7 +37,7 @@ const AddProduct = () => {
         data: {
           product: {
             itemName: eventName,
-            price: parseInt(eventPeriod),
+            price: eventPeriod,
             link: eventDetail,
             itemImage: imgSrc,
           },
@@ -42,27 +45,38 @@ const AddProduct = () => {
       }).then((res) => {
         //status 200//
         setCategory({ eventType, eventName, eventStartDate, eventEndDate });
-        console.log(res);
+        console.log(res.data);
       });
     } catch (err) {
+      //status 422
+      //에러 처리
       if (err.response) {
-        const { status, data } = err.response;
+        console.log(err);
+        // 요청이 이루어졌고 서버가 응답했을 경우
+        const { status, config, data } = err.response;
+
         if (status === 422) {
           console.log(data);
         }
+
         if (status === 404) {
           //404 이미지 출력
+          console.log(`${config.url} not found`);
         }
+
         if (status === 500) {
           console.log('Server error');
         }
       } else if (err.request) {
+        // 요청이 이루어졌으나 서버에서 응답이 없었을 경우
         console.log('Error', err.message);
       } else {
+        // 그 외 다른 에러
         console.log('Error', err.message);
       }
     }
   };
+  // API 요청--------------------------------------------
 
   const inputEventName = (e) => {
     setEventName(e.target.value);
@@ -76,11 +90,6 @@ const AddProduct = () => {
     setEventEndDate(e.target.value);
   };
 
-  const calculateEventDuration = () => {
-    const date = parseInt((eventStartDate + eventEndDate).replaceAll('-', ''));
-    setEventPeriod(date);
-  };
-
   const inputEventDetail = (e) => {
     setEventDetail(e.target.value);
   };
@@ -88,8 +97,12 @@ const AddProduct = () => {
   const uploadImage = async (imageFile) => {
     const baseUrl = 'https://api.mandarin.weniv.co.kr/';
     const reqUrl = baseUrl + 'image/uploadfile';
+    //폼데이터 만들기
     const form = new FormData();
+    //폼데이터에 값 추가하기
+    //폼데이터.append("키","값");
     form.append('image', imageFile);
+    //폼바디에 넣어서 요청하기
     const res = await fetch(reqUrl, {
       method: 'POST',
       body: form,
@@ -100,6 +113,7 @@ const AddProduct = () => {
   };
 
   const handleChangeImage = (e) => {
+    //파일 가져오기
     const imageFile = e.target.files[0];
     uploadImage(imageFile);
   };
@@ -114,9 +128,23 @@ const AddProduct = () => {
     navigate(-1);
   };
 
+  const handlePeriod = (startDate, endDate) => {
+    // startDate와 endDate를 날짜 객체로 변환
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // 날짜 범위 계산
+    const timeDiff = Math.abs(end - start);
+    const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    // dayDiff를 가격 필드에 저장
+    setEventPeriod(dayDiff);
+    console.log(typeof timeDiff);
+  };
+
   const submitProduct = (e) => {
     e.preventDefault();
-    calculateEventDuration();
+    handlePeriod(eventStartDate, eventEndDate);
     addEvent(imgSrc, eventName, eventPeriod, eventDetail);
   };
 
@@ -145,6 +173,7 @@ const AddProduct = () => {
               onChange={handleChangeImage}
             ></input>
           </section>
+
           <section>
             <h2>카테고리</h2>
             <button type='button' onClick={handleEventTypeBtn} id='festival'>
@@ -154,6 +183,7 @@ const AddProduct = () => {
               체험
             </button>
           </section>
+
           <section>
             <label>행사명</label>
             <input
@@ -162,6 +192,7 @@ const AddProduct = () => {
               onChange={inputEventName}
               value={eventName}
             ></input>
+            {/* 확인 필요 */}
             <label htmlFor='event-period'>
               행사 기간
               <input
@@ -181,6 +212,8 @@ const AddProduct = () => {
                 max='9999-12-31'
               ></input>
             </label>
+            {/* 확인 필요 */}
+
             <label>상세 설명</label>
             <textarea
               placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
