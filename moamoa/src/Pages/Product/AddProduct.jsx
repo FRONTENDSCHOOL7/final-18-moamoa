@@ -1,32 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import userToken from '../Recoil/UserToken';
-// import { isFestival } from '../Recoil/EventCategory';
+import userToken from '../../Recoil/UserToken';
 import axios from 'axios';
-import GoBack from '../Assets/icons/icon-arrow-left.svg';
-import eventStateAtom from '../Recoil/EventState';
+import GoBack from '../../Assets/icons/icon-arrow-left.svg';
+import eventStateAtom from '../../Recoil/EventState';
+const initialDate = new Date();
 
 const AddProduct = () => {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState('');
   const [eventStartDate, setEventStartDate] = useState('');
   const [eventEndDate, setEventEndDate] = useState('');
+  const [eventPeriod, setEventPeriod] = useState(initialDate);
   const [imgSrc, setImgSrc] = useState(
     'https://cdn.visitkorea.or.kr/kfes/upload/contents/db/400_03e7c925-a8a5-4923-905c-e12586ec0a44_3.png',
   );
-  // const [isLeftClick, setIsLeftClick] = useRecoilState(isFestival);
+  const [eventDetail, setEventDetail] = useState('');
+  const [eventType, setEventType] = useState('');
 
   const setCategory = useSetRecoilState(eventStateAtom);
-
-  const [eventType, setEventType] = useState('');
-  const [eventPeriod, setEventPeriod] = useState('');
-  const [eventDetail, setEventDetail] = useState('');
-
   const token = useRecoilValue(userToken);
-
   // API 요청-------------------------------------------
-  const addEvent = async (eventImg, eventName, eventPeriod, eventDetail) => {
+  const addEvent = async (imgSrc, eventName, eventPeriod, eventDetail) => {
     const baseUrl = 'https://api.mandarin.weniv.co.kr';
     const reqPath = '/product';
     const reqUrl = baseUrl + reqPath;
@@ -41,7 +37,7 @@ const AddProduct = () => {
         data: {
           product: {
             itemName: eventName,
-            price: parseInt(eventPeriod),
+            price: eventPeriod,
             link: eventDetail,
             itemImage: imgSrc,
           },
@@ -49,7 +45,7 @@ const AddProduct = () => {
       }).then((res) => {
         //status 200//
         setCategory({ eventType, eventName, eventStartDate, eventEndDate });
-        console.log(res);
+        console.log(res.data);
       });
     } catch (err) {
       //status 422
@@ -94,17 +90,6 @@ const AddProduct = () => {
     setEventEndDate(e.target.value);
   };
 
-  // const calculateEventDuration = () => {
-  //   let startDate = new Date(eventStartDate);
-
-  //   console.log(startDate.getTime());
-  // };
-
-  const inputEventPeriod = (e) => {
-    console.log(typeof e.target.value);
-    setEventPeriod(e.target.value);
-  };
-
   const inputEventDetail = (e) => {
     setEventDetail(e.target.value);
   };
@@ -143,9 +128,23 @@ const AddProduct = () => {
     navigate(-1);
   };
 
+  const handlePeriod = (startDate, endDate) => {
+    // startDate와 endDate를 날짜 객체로 변환
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // 날짜 범위 계산
+    const timeDiff = Math.abs(end - start);
+    const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    // dayDiff를 가격 필드에 저장
+    setEventPeriod(dayDiff);
+    console.log(typeof timeDiff);
+  };
+
   const submitProduct = (e) => {
     e.preventDefault();
-    // calculateEventDuration();
+    handlePeriod(eventStartDate, eventEndDate);
     addEvent(imgSrc, eventName, eventPeriod, eventDetail);
   };
 
@@ -214,7 +213,6 @@ const AddProduct = () => {
               ></input>
             </label>
             {/* 확인 필요 */}
-            <input type='number' onChange={inputEventPeriod} value={eventPeriod}></input>
 
             <label>상세 설명</label>
             <textarea
@@ -225,7 +223,7 @@ const AddProduct = () => {
           </section>
           <button
             onClick={clickSaveBtn}
-            disabled={!imgSrc || !eventName || !eventPeriod || !eventDetail}
+            disabled={!imgSrc || !eventName || !eventStartDate || !eventEndDate || !eventDetail}
           >
             저장
           </button>

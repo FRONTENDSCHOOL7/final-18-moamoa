@@ -1,7 +1,9 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import axios from 'axios';
+import eventStateAtom from '../../Recoil/EventState';
 // style
 const Header = styled.div`
   background-color: var(--white);
