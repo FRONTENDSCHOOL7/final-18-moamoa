@@ -40,7 +40,8 @@ const LoginPage = () => {
           // //로컬스토리지에 토큰 저장하기
 
           setToken(res.data.user.token);
-          navigate('/product');
+          // navigate('/product');
+          navigate(`/profile/${res.data.user.accountname}`); //프로필 페이지로 이동(test용)
         }
       });
     } catch (err) {

@@ -5,7 +5,7 @@ import userToken from '../Recoil/UserToken';
 import axios from 'axios';
 import eventStateAtom from '../Recoil/EventState';
 import GoBack from '../Assets/icons/icon-arrow-left.svg';
-const initialDate = new Date();
+// const initialDate = new Date();
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ const AddProduct = () => {
   const inputEventEndDate = (e) => {
     setEventEndDate(e.target.value);
   };
-  
+
   const inputEventDetail = (e) => {
     setEventDetail(e.target.value);
   };

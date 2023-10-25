@@ -19,7 +19,7 @@ export default function AppRoutes() {
       <Route path='/' element={<Landing />} />
 
       {/* 내 프로필 */}
-      <Route path='/profile' element={<ProfileInfo />} />
+      <Route path='/profile/:accountname' element={<ProfileInfo />} />
 
       {/* 내 프로필 수정*/}
       <Route path='/profile/edit' element={<EditProfile />} />
