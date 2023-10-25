@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Logo from '../Assets/images/Logo.png';
-import Bluemoa from '../Assets/images/Bluemoa.png';
-import kakao from '../Assets/images/kakao.png';
-import google from '../Assets/images/google.png';
-import naver from '../Assets/images/naver.png';
-import fireworks from '../Assets/images/fireworks.svg';
-import Festival from '../Assets/images/Festival.svg';
+import Logo from '../../Assets/images/Logo.png';
+import Bluemoa from '../../Assets/images/Bluemoa.png';
+import kakao from '../../Assets/images/kakao.png';
+import google from '../../Assets/images/google.png';
+import naver from '../../Assets/images/naver.png';
+import fireworks from '../../Assets/images/fireworks.svg';
+import Festival from '../../Assets/images/Festival.svg';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
@@ -141,19 +141,19 @@ const BlueMoa = styled(tempLoginButton)`
   background-position: 14px 2px;
 `;
 const Kakao = styled(tempLoginButton)`
-  border: 1px solid #f2c94c;
+  border: 1px solid #f0e2b9;
   background-image: url(${kakao});
   background-size: 24px;
   background-position: 16px 9px;
 `;
 const Google = styled(tempLoginButton)`
-  border: 1px solid #767676;
+  border: 1px solid #888282;
   background-image: url(${google});
   background-size: 30px;
   background-position: 14px 6px;
 `;
 const Naver = styled(tempLoginButton)`
-  border: 1px solid #25b022;
+  border: 1px solid #a1e9a0;
   background-image: url(${naver});
   background-size: 30px;
   background-position: 14px 6px;
