@@ -118,6 +118,7 @@ const AddProduct = () => {
     e.preventDefault();
     calculateEventDuration();
     addEvent(imgSrc, eventName, eventPeriod, eventDetail);
+
   };
 
   const handleEventTypeBtn = (id) => {
