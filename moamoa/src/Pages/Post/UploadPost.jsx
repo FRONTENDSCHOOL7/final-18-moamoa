@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import userToken from '../Recoil/UserToken';
+import userToken from '../../Recoil/UserToken';
 
 export default function AddPost() {
   const token = useRecoilValue(userToken);
