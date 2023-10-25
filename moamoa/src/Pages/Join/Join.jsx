@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
-import joinStateAtom from '../Recoil/JoinState';
+import joinStateAtom from '../../Recoil/JoinState.jsx';
 
-const JoinPage = () => {
+const Join = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -201,4 +201,4 @@ const JoinPage = () => {
   );
 };
 
-export default JoinPage;
+export default Join;
