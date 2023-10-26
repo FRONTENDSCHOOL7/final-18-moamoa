@@ -1,11 +1,10 @@
-/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import axios from 'axios';
 import eventStateAtom from '../../Recoil/EventState';
 import { Link } from 'react-router-dom';
-
+import ProductImgBox from '../../Components/Common/ProductImgBox';
 // style
 const Header = styled.div`
   background-color: var(--white);
@@ -27,6 +26,7 @@ const Header = styled.div`
     background-color: #fff;
   }
 `;
+
 const Main = styled.div`
   margin: 0 auto;
   width: 390px;
@@ -67,12 +67,7 @@ const ProductContainer = styled.div`
 const ProductBox = styled.div`
   max-width: 172px;
   margin: 0 auto;
-  img {
-    border-radius: 10px;
-    border: 1px solid #dbdbdb;
-    width: 172px;
-    height: 110px;
-  }
+
   .itemName {
     font-size: 12px;
     margin-block: 16px 4px;
@@ -83,6 +78,7 @@ const ProductBox = styled.div`
     font-weight: 400;
   }
 `;
+
 export const ProductAtom = atom({
   key: 'ProductState',
   default: [],
@@ -134,7 +130,7 @@ export default function ProductList() {
   //   리턴
   const setCategory = useSetRecoilState(eventStateAtom);
   const Category = useRecoilValue(eventStateAtom);
-  // console.log('setCategory : ', setCategory);
+  console.log('setCategory : ', setCategory);
   console.log('Category.eventType : ', Category);
   // console.log('isFestivalActive: ', isFestivalActive);
   // console.log('isExperienceActive: ', isExperienceActive);
@@ -167,7 +163,7 @@ export default function ProductList() {
                   .map((item, index) => (
                     <Link to={`/product/detail/${item.id}`} key={index}>
                       <ProductBox key={index}>
-                        <img src={item.itemImage} />
+                        <ProductImgBox src={item.itemImage} />
                         <p className='itemName'>{item.itemName}</p>
                         <p className='itemDate'>{item.createdAt}</p>
                       </ProductBox>
@@ -181,7 +177,6 @@ export default function ProductList() {
                   .map((item, index) => (
                     <Link to={`/product/detail/${item.id}`} key={index}>
                       <ProductBox key={index}>
-                        <img src={item.itemImage} />
                         <p className='itemName'>{item.itemName}</p>
                         <p className='itemDate'>{item.createdAt}</p>
                       </ProductBox>
