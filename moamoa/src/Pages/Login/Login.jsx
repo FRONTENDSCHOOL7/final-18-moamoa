@@ -40,12 +40,22 @@ const LoginPage = () => {
           },
         },
       }).then((res) => {
+
+        //status 200//
+        console.log(res);
+
+        // 이메일,비밀번호 모두 입력 완료 하지만 불일치
+        if (res.data.message === '이메일 또는 비밀번호가 일치하지 않습니다.') {
+          console.log('이메일 또는 비밀번호가 일치하지 않습니다.');
+        }
+
         if (res.data.status === 422) {
           setLoginErrMsg(res.data.message);
           //'이메일 또는 비밀번호가 일치하지 않습니다.'
         } else if (res.data.user) {
           saveToken(res.data.user.token);
           navigate('/home');
+
         }
       });
     } catch (err) {
