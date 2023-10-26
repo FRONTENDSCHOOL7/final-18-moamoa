@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import axios from 'axios';
-import eventStateAtom from '../../Recoil/EventState';
+import eventStateAtom from '../../Recoil/eventTypeAtom'; //파일경로 변경 완료
 import { Link } from 'react-router-dom';
 
 // style

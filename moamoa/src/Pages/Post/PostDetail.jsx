@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import userToken from '../../Recoil/UserToken';
-import PostState from '../../Recoil/PostState';
+import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
+import PostState from '../../Recoil/followPostAtom'; ////파일 경로 변경 완료
 import PostCard from '../../Components/Common/PostCard';
 
 export default function ProductDetail() {
-  
   const token = useRecoilValue(userToken);
   const [post, setPost] = useRecoilState(PostState);
-  const [postIdList,setPostIdList] = useState([]);
+  const [postIdList, setPostIdList] = useState([]);
   const [pageIndex, setPageIndex] = useState(null);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ export default function ProductDetail() {
           const posts = await res.json();
           const postSet = posts.posts;
           setPost(postSet);
-          
+
           const idList = post.map((item) => item.id);
           setPostIdList(idList);
         } else {
@@ -41,11 +40,7 @@ export default function ProductDetail() {
     };
 
     getPostInfo();
-
-    
-
-    
-  }, [token,setPost]);
+  }, [token, setPost]);
 
   const params = useParams();
   const index = params.post_id ? postIdList.indexOf(params.post_id) : -1;
@@ -58,10 +53,8 @@ export default function ProductDetail() {
 
   return (
     <>
-    {console.log(pageIndex)}
-    {post && pageIndex !== null && pageIndex !== -1 && (
-      <PostCard post={post[pageIndex]}/>
-      )}
+      {console.log(pageIndex)}
+      {post && pageIndex !== null && pageIndex !== -1 && <PostCard post={post[pageIndex]} />}
     </>
   );
 }
