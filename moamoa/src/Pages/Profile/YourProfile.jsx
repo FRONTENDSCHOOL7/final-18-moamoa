@@ -9,9 +9,9 @@ import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import userToken from '../../Recoil/UserToken';
+import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
-import joinStateAtom from '../../Recoil/JoinState';
+import joinStateAtom from '../../Recoil/userTypeAtom'; //파일경로 변경 완료
 import PostCard from '../../Components/Common/PostCard';
 
 //진행중인 행사

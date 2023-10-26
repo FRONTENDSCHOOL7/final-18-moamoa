@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import userToken from '../../Recoil/UserToken';
+import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
 import { useRecoilValue, useRecoilState } from 'recoil';
 import PostCard from '../../Components/Common/PostCard';
-import PostState from '../../Recoil/PostState';
+import PostState from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
 
 export default function Home() {
   const [post, setPost] = useRecoilState(PostState);
@@ -38,12 +38,11 @@ export default function Home() {
 
   return (
     <>
-    {console.log(post)}
+      {console.log(post)}
       {post.length !== 0 ? (
         <ul>
           {post.map((item) => {
             return <PostCard key={item.id} post={item} />;
-
           })}
         </ul>
       ) : (
