@@ -9,6 +9,7 @@ import Join from '../Pages/Join/Join';
 import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';
 import EditProfile from '../Pages/Profile/EditProfile';
+
 // import FollowingList from '../Pages/Follow/FollowingList';
 import FollowerList from '../Pages/Follow/FollowerList';
 
@@ -74,7 +75,7 @@ export default function AppRoutes() {
       <Route path='/post/edit' element={<EditPost />} />
 
       {/* 게시글 상세 */}
-      <Route path='/post/:post_id' element={ProductDetail} />
+      <Route path='/post/:post_id' element={<PostDetail/>} />
 
       {/* <Route path='/user/login' element={<LoginPage />} />
       <Route path='/user' element={<JoinPage />} /> */}

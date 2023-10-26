@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import userToken from '../Recoil/UserToken';
-import { useRecoilValue } from 'recoil';
-import PostCard from '../Components/Common/PostCard';
-// import PostCard from '../Components/Common/PostCard';
+import React, { useEffect } from 'react';
+import userToken from '../../Recoil/UserToken';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import PostCard from '../../Components/Common/PostCard';
+import PostState from '../../Recoil/PostState';
 
 export default function Home() {
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useRecoilState(PostState);
   const token = useRecoilValue(userToken);
 
   useEffect(() => {
@@ -23,9 +23,8 @@ export default function Home() {
 
         if (res.status === 200) {
           const posts = await res.json();
-          setPost(posts.posts);
-          console.log(posts);
-          console.log(posts.posts);
+          const postSet = posts.posts;
+          setPost(postSet);
         } else {
           console.error('페이지를 불러오는데 실패했습니다.');
         }
@@ -39,10 +38,11 @@ export default function Home() {
 
   return (
     <>
+      {console.log(post)}
       {post.length !== 0 ? (
         <ul>
           {post.map((item) => {
-            return <PostCard key={item.id} post={item} />;
+            return <PostCard key={item._id} post={item} />;
           })}
         </ul>
       ) : (

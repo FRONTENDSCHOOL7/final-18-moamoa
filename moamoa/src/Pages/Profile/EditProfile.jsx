@@ -100,10 +100,21 @@ function EditProfile() {
     const imageUrl = baseUrl + json.filename;
     setImgSrc(imageUrl);
   };
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChangeImage = (e) => {
     // 파일 가져오기
     const imageFile = e.target.files[0];
+
+    // 파일이 선택되지 않았을 경우 오류 메시지 설정
+    if (!imageFile) {
+      setErrorMessage('파일을 선택해주세요.');
+      return;
+    }
+
+    // 오류 메시지 초기화
+    setErrorMessage('');
+
     uploadImage(imageFile);
   };
 
@@ -135,6 +146,7 @@ function EditProfile() {
           name='image'
           accept='image/*'
         />
+        <p style={{ color: 'red' }}>{errorMessage}</p>
         <div>
           <label htmlFor='userNameInput'>사용자 이름</label>
           <input
