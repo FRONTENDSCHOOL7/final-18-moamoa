@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import userToken from '../../Recoil/UserToken';
+import userToken from '../Recoil/UserToken';
 import { useRecoilValue } from 'recoil';
-import PostCard from '../../Components/Common/PostCard';
+import PostCard from '../Components/Common/PostCard';
 // import PostCard from '../Components/Common/PostCard';
 
 export default function Home() {

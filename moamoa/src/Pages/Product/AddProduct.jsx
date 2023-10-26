@@ -20,6 +20,8 @@ const AddProduct = () => {
   const [eventType, setEventType] = useState('');
 
   const setCategory = useSetRecoilState(eventStateAtom);
+  const Category = useRecoilValue(eventStateAtom);
+  // console.log로 값을 확인
   const token = useRecoilValue(userToken);
   // API 요청-------------------------------------------
   const addEvent = async (imgSrc, eventName, eventPeriod, eventDetail) => {
@@ -149,8 +151,12 @@ const AddProduct = () => {
   };
 
   const handleEventTypeBtn = (id) => {
-    id === 'festival' ? setEventType('festival') : setEventType('experience');
+    id.target.id === 'festival' ? setEventType('festival') : setEventType('experience');
+    // id만으로는 setEventType이 festival이 안되어 id.target.id로 변경
+    console.log(id.target.id);
+    // console.log(Category)로 확인
   };
+  console.log(Category.eventType);
 
   return (
     <>
