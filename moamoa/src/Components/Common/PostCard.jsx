@@ -9,7 +9,6 @@ export default function PostCard(post) {
   const profileImgUrl =`${baseUrl}${postprop.author.image}`;
   const postImgUrl =`${baseUrl}${postprop.image}`;
   const postDetailId = post.post.id;
-  console.log(postDetailId)
   const postDetailUrl = `/post/${postDetailId}`
 
   const inputDate = postprop.createdAt
@@ -25,10 +24,9 @@ export default function PostCard(post) {
         <li>
           <article>
             <Link to={postDetailUrl}>
-              {console.log(post.post)}
               <img src={profileImgUrl} alt="사용자프로필"/>
               <p>{postprop.author.username}</p>
-              <p>{postprop.author.accountname}</p>
+              <p>@{postprop.author.accountname}</p>
               <button>
                 케밥버튼
               </button>
@@ -36,8 +34,8 @@ export default function PostCard(post) {
               <img src={postImgUrl} alt="게시글 사진" />
             </Link>
             <p>{outputDate}</p>
-            <p>{postprop.heartCount}</p>
-            <p>{postprop.commentCount}</p>
+            <button>{postprop.heartCount}</button>
+            <button>{postprop.commentCount}</button>
           </article>
         </li>
       )}
