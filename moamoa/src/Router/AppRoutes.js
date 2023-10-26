@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Landing from '../Pages/Splash/Landing';
-import Home from '../Pages/Home';
+import Home from '../Pages/Home/Home';
 import Login from '../Pages/Login/Login';
 import Join from '../Pages/Join/Join';
 
@@ -35,7 +35,7 @@ export default function AppRoutes() {
       <Route path='/' element={<Landing />} />
 
       {/* 홈 */}
-      <Route path='/home' element={<Home />} />
+      <Route path='/home/home' element={<Home />} />
 
       {/* 로그인 */}
       <Route path='/user/login' element={<Login />} />
@@ -75,7 +75,7 @@ export default function AppRoutes() {
       <Route path='/post/edit' element={<EditPost />} />
 
       {/* 게시글 상세 */}
-      <Route path='/post/:post_id' element={<PostDetail/>} />
+      {/* <Route path='/post/:post_id' element={<PostDetail />} /> */}
 
       {/* <Route path='/user/login' element={<LoginPage />} />
       <Route path='/user' element={<JoinPage />} /> */}
