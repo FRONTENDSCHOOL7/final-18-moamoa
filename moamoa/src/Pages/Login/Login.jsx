@@ -40,7 +40,6 @@ const LoginPage = () => {
           },
         },
       }).then((res) => {
-
         //status 200//
         console.log(res);
 
@@ -55,7 +54,6 @@ const LoginPage = () => {
         } else if (res.data.user) {
           saveToken(res.data.user.token);
           navigate('/home');
-
         }
       });
     } catch (err) {
