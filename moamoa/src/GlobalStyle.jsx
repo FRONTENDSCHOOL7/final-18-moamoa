@@ -16,6 +16,10 @@ body{
 }
 a{
 	text-decoration:none;
+	color:inherit;
+}
+input,button{
+	border:none;
 }
 `;
 export default GlobalStyle;

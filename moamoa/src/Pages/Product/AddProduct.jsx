@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import userToken from '../../Recoil/UserToken';
 import axios from 'axios';
-import GoBack from '../../Assets/icons/icon-arrow-left.svg';
+// import GoBack from '../../Assets/icons/icon-arrow-left.svg';
 import eventStateAtom from '../../Recoil/EventState';
+import { Container } from '../../Components/Common/Container';
+import Header from '../../Components/Common/HeaderAddProduct';
 const initialDate = new Date();
 
 const AddProduct = () => {
@@ -122,13 +124,13 @@ const AddProduct = () => {
 
   // 저장 버튼 클릭 시 이동
   const clickSaveBtn = () => {
-    // navigate('/product/:accountname');
+    navigate('/product/:accountname');
   };
 
   // 뒤로 가기 클릭 시 이동
-  const clickLeftArrow = () => {
-    navigate(-1);
-  };
+  // const clickLeftArrow = () => {
+  //   navigate(-1);
+  // };
 
   const handlePeriod = (startDate, endDate) => {
     // startDate와 endDate를 날짜 객체로 변환
@@ -159,12 +161,13 @@ const AddProduct = () => {
   console.log(Category.eventType);
 
   return (
-    <>
-      <header>
+    <Container>
+      {/* <header>
         <a onClick={clickLeftArrow}>
           <img src={GoBack} />
         </a>
-      </header>
+      </header> */}
+      <Header></Header>
       <main>
         <h1>상품 등록 페이지</h1>
         <form onSubmit={submitProduct}>
@@ -235,7 +238,7 @@ const AddProduct = () => {
           </button>
         </form>
       </main>
-    </>
+    </Container>
   );
 };
 

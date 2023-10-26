@@ -5,35 +5,13 @@ import axios from 'axios';
 import eventStateAtom from '../../Recoil/EventState';
 import { Link } from 'react-router-dom';
 import ProductImgBox from '../../Components/Common/ProductImgBox';
-// style
-const Header = styled.div`
-  background-color: var(--white);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 4;
-  box-shadow: 0 2px 10px hsla(0, 0%, 0%, 0.1);
-  .Container {
-    display: flex;
-    width: 390px;
-    align-items: center;
-    padding: 13px 16px;
-    margin: 0 auto;
-    justify-content: space-between;
-    font-size: 18px;
-    font-weight: 400;
-    background-color: #fff;
-  }
-`;
-
-const Main = styled.div`
-  margin: 0 auto;
-  width: 390px;
-`;
+// import Header from '../../Components/Common/HeaderSearch';
+// import Header from '../../Components/Common/HeaderBasic';
+// import Header from '../../Components/Common/HeaderHome';
+import Header from '../../Components/Common/HeaderProductList';
+import { Container } from '../../Components/Common/Container';
 const Nav = styled.div`
   display: flex;
-  /* justify-content: center; */
   padding-top: 70px;
   padding-left: 10px;
 `;
@@ -136,13 +114,8 @@ export default function ProductList() {
   // console.log('isExperienceActive: ', isExperienceActive);
   return (
     <>
-      <Header>
-        <div className='Container'>
-          <h1>모아모아 판매상품</h1>
-          <button>돋보기</button>
-        </div>
-      </Header>
-      <Main>
+      <Container>
+        <Header />
         <Nav>
           <FestivalBtn isActive={isFestivalActive} onClick={toggleFestival}>
             축제
@@ -185,7 +158,7 @@ export default function ProductList() {
               : null}
           </ProductContainer>
         )}
-      </Main>
+      </Container>
     </>
   );
 }
