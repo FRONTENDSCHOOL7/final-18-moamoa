@@ -5,7 +5,7 @@ import Landing from '../Pages/Splash/Landing';
 import Home from '../Pages/Home/Home';
 import Login from '../Pages/Login/Login';
 import Join from '../Pages/Join/Join';
-
+// 도와주셍쇼!
 import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';
 import EditProfile from '../Pages/Profile/EditProfile';
@@ -20,7 +20,7 @@ import EditProduct from '../Pages/Product/EditProduct';
 
 import UploadPost from '../Pages/Post/UploadPost';
 import EditPost from '../Pages/Post/EditPost';
-// import PostDetail from '../Pages/Post/PostDetail';
+import PostDetail from '../Pages/Post/PostDetail';
 
 // import ChatRoom from '../Pages/Chat/ChatRoom';
 // import ChatList from '../Pages/Chat/ChatList';
@@ -35,7 +35,7 @@ export default function AppRoutes() {
       <Route path='/' element={<Landing />} />
 
       {/* 홈 */}
-      <Route path='/home/home' element={<Home />} />
+      <Route path='/home' element={<Home />} />
 
       {/* 로그인 */}
       <Route path='/user/login' element={<Login />} />
@@ -75,7 +75,7 @@ export default function AppRoutes() {
       <Route path='/post/edit' element={<EditPost />} />
 
       {/* 게시글 상세 */}
-      {/* <Route path='/post/:post_id' element={<PostDetail />} /> */}
+      <Route path='/post/:post_id' element={<PostDetail/>} />
 
       {/* <Route path='/user/login' element={<LoginPage />} />
       <Route path='/user' element={<JoinPage />} /> */}

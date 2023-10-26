@@ -16,8 +16,6 @@ body{
 }
 a{
 	text-decoration:none;
-	color:inherit;
-	/* a태그가 리셋이 안되어있어 수정하였습니다 10-26 재웅 */
 }
 `;
 export default GlobalStyle;

@@ -38,11 +38,12 @@ export default function Home() {
 
   return (
     <>
-      {console.log(post)}
+    {console.log(post)}
       {post.length !== 0 ? (
         <ul>
           {post.map((item) => {
-            return <PostCard key={item._id} post={item} />;
+            return <PostCard key={item.id} post={item} />;
+
           })}
         </ul>
       ) : (
