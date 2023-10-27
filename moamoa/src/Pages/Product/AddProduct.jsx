@@ -1,29 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
 import axios from 'axios';
+import userTokenAtom from '../../Recoil/userTokenAtom';
+import eventTypeAtom from '../../Recoil/eventTypeAtom';
 import GoBack from '../../Assets/icons/icon-arrow-left.svg';
-import eventStateAtom from '../../Recoil/eventTypeAtom'; //파일 경로 변경 완료
-const initialDate = new Date();
 
 const AddProduct = () => {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState('');
   const [eventStartDate, setEventStartDate] = useState('');
   const [eventEndDate, setEventEndDate] = useState('');
-  const [eventPeriod, setEventPeriod] = useState(initialDate);
+  const [eventPeriod, setEventPeriod] = useState(1);
+  const [periodInfoMsg, setPeriodInfoMsg] = useState('');
   const [imgSrc, setImgSrc] = useState(
     'https://cdn.visitkorea.or.kr/kfes/upload/contents/db/400_03e7c925-a8a5-4923-905c-e12586ec0a44_3.png',
   );
   const [eventDetail, setEventDetail] = useState('');
   const [eventType, setEventType] = useState('');
+  const [requiredInfoMsg, setRequiredInfoMsg] = useState('');
 
-  const setCategory = useSetRecoilState(eventStateAtom);
-  const Category = useRecoilValue(eventStateAtom);
-  // console.log로 값을 확인
-  const token = useRecoilValue(userToken);
-  // API 요청-------------------------------------------
+  const setEventTypeAtom = useSetRecoilState(eventTypeAtom);
+  const saveEventType = () => {
+    setEventTypeAtom({ eventType, eventName });
+  };
+
+  const token = useRecoilValue(userTokenAtom);
+
   const addEvent = async (imgSrc, eventName, eventPeriod, eventDetail) => {
     const baseUrl = 'https://api.mandarin.weniv.co.kr';
     const reqPath = '/product';
@@ -46,26 +49,20 @@ const AddProduct = () => {
         },
       }).then((res) => {
         //status 200//
-        setCategory({ eventType, eventName, eventStartDate, eventEndDate });
+        saveEventType();
         console.log(res.data);
+        // navigate('/product/:accountname');
       });
     } catch (err) {
-      //status 422
-      //에러 처리
       if (err.response) {
-        console.log(err);
-        // 요청이 이루어졌고 서버가 응답했을 경우
-        const { status, config, data } = err.response;
-
+        const { status, data } = err.response;
         if (status === 422) {
-          console.log(data);
+          // 필수 입력 사항이 모두 입력되지 않았을 경우 메세지 출력
+          setRequiredInfoMsg(data.message);
         }
-
         if (status === 404) {
           //404 이미지 출력
-          console.log(`${config.url} not found`);
         }
-
         if (status === 500) {
           console.log('Server error');
         }
@@ -78,7 +75,6 @@ const AddProduct = () => {
       }
     }
   };
-  // API 요청--------------------------------------------
 
   const inputEventName = (e) => {
     setEventName(e.target.value);
@@ -120,43 +116,43 @@ const AddProduct = () => {
     uploadImage(imageFile);
   };
 
-  // 저장 버튼 클릭 시 이동
-  const clickSaveBtn = () => {
-    // navigate('/product/:accountname');
-  };
-
   // 뒤로 가기 클릭 시 이동
   const clickLeftArrow = () => {
     navigate(-1);
   };
 
-  const handlePeriod = (startDate, endDate) => {
-    // startDate와 endDate를 날짜 객체로 변환
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    // 날짜 범위 계산
-    const timeDiff = Math.abs(end - start);
-    const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    // dayDiff를 가격 필드에 저장
-    setEventPeriod(dayDiff);
-    console.log(typeof timeDiff);
+  const checkTwoDates = () => {
+    if (eventStartDate && eventEndDate && eventStartDate > eventEndDate) {
+      setPeriodInfoMsg('행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
+    } else {
+      setPeriodInfoMsg('');
+    }
   };
+
+  const twoDatesIntoOneString = () => {
+    const datesArr = [];
+    if (eventStartDate) {
+      datesArr.push(eventStartDate);
+    }
+    if (eventEndDate) {
+      datesArr.push(eventEndDate);
+    }
+
+    const putDatesIntoArray = datesArr
+      .map((date) => parseInt(date.replaceAll('-', '')))
+      .sort((firstDate, lastDate) => firstDate - lastDate);
+    setEventPeriod(parseInt(putDatesIntoArray.join('')));
+  };
+
+  useEffect(() => {
+    checkTwoDates();
+    twoDatesIntoOneString();
+  }, [eventStartDate, eventEndDate]);
 
   const submitProduct = (e) => {
     e.preventDefault();
-    handlePeriod(eventStartDate, eventEndDate);
     addEvent(imgSrc, eventName, eventPeriod, eventDetail);
   };
-
-  const handleEventTypeBtn = (id) => {
-    id.target.id === 'festival' ? setEventType('festival') : setEventType('experience');
-    // id만으로는 setEventType이 festival이 안되어 id.target.id로 변경
-    console.log(id.target.id);
-    // console.log(Category)로 확인
-  };
-  console.log(Category.eventType);
 
   return (
     <>
@@ -169,6 +165,7 @@ const AddProduct = () => {
         <h1>상품 등록 페이지</h1>
         <form onSubmit={submitProduct}>
           <section>
+            <h2>이미지 등록</h2>
             <label htmlFor='upload-file'>
               <img src={imgSrc} alt='' srcSet='' id='imagePre' />
             </label>
@@ -178,27 +175,30 @@ const AddProduct = () => {
               accept='image/*'
               onChange={handleChangeImage}
             ></input>
+            <p>* 행사 관련 이미지를 등록해주세요.</p>
           </section>
-
-          <section>
+          <div>
             <h2>카테고리</h2>
-            <button type='button' onClick={handleEventTypeBtn} id='festival'>
+            <button type='button' onClick={() => setEventType('festival')}>
               축제
             </button>
-            <button type='button' onClick={handleEventTypeBtn} id='experience'>
+            <button type='button' onClick={() => setEventType('experience')}>
               체험
             </button>
-          </section>
-
-          <section>
-            <label>행사명</label>
+          </div>
+          <div>
+            <label htmlFor='event-name'>행사명</label>
             <input
+              id='event-name'
               type='text'
-              placeholder='2~15자 이내여야 합니다.'
+              placeholder='2~22자 이내여야 합니다.'
+              pattern='.{2,22}'
+              title='2~22자 이내여야 합니다.'
               onChange={inputEventName}
               value={eventName}
             ></input>
-            {/* 확인 필요 */}
+          </div>
+          <div>
             <label htmlFor='event-period'>
               행사 기간
               <input
@@ -217,23 +217,32 @@ const AddProduct = () => {
                 pattern='yyyy-MM-dd'
                 max='9999-12-31'
               ></input>
+              {periodInfoMsg}
             </label>
-            {/* 확인 필요 */}
-
-            <label>상세 설명</label>
+          </div>
+          <div>
+            <label htmlFor='event-detail'>상세 설명</label>
             <textarea
+              id='event-detail'
               placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
               onChange={inputEventDetail}
               value={eventDetail}
             ></textarea>
-          </section>
+          </div>
           <button
-            onClick={clickSaveBtn}
-            disabled={!imgSrc || !eventName || !eventStartDate || !eventEndDate || !eventDetail}
+            disabled={
+              !imgSrc ||
+              !eventName ||
+              !eventStartDate ||
+              !eventEndDate ||
+              !eventDetail ||
+              !eventType
+            }
           >
             저장
           </button>
         </form>
+        {requiredInfoMsg}
       </main>
     </>
   );
