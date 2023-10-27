@@ -7,7 +7,5 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-
-  background-color: beige;
   border: 1px solid black;
 `;

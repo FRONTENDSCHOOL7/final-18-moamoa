@@ -3,6 +3,15 @@ import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
 import iconKebob from '../../Assets/icons/icon-more.svg';
 
+export default function Header() {
+  return (
+    <HeaderContainer>
+      <Gobackbtn />
+      <img src={iconKebob}></img>
+    </HeaderContainer>
+  );
+}
+
 const HeaderContainer = styled.header`
   display: flex;
   height: 55px;
@@ -22,12 +31,3 @@ const HeaderContainer = styled.header`
     cursor: pointer;
   }
 `;
-
-export default function Header() {
-  return (
-    <HeaderContainer>
-      <Gobackbtn />
-      <img src={iconKebob}></img>
-    </HeaderContainer>
-  );
-}

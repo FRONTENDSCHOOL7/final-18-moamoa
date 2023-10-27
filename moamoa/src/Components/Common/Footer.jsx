@@ -14,11 +14,6 @@ import postButtonFill from '../../Assets/icons/icon-edit.svg';
 import festivalButtonFill from '../../Assets/icons/icon-festival.svg';
 import profileButtonFill from '../../Assets/icons/icon-more.svg';
 
-const HomeButton = styled.img`
-  width: 24px;
-  height: 24px;
-`;
-
 export default function Footer() {
   //  const [toggleCount, setToggleCount] = useState(false);
   //  const [iconColor, setIconColor] = useState(heartBg);
@@ -43,3 +38,8 @@ export default function Footer() {
     </tabMenu>
   );
 }
+
+const HomeButton = styled.img`
+  width: 24px;
+  height: 24px;
+`;

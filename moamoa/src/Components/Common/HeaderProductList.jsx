@@ -3,6 +3,16 @@ import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
 import iconSearch from '../../Assets/icons/icon-search.svg';
 
+export default function Header() {
+  return (
+    <HeaderContainer>
+      <Gobackbtn />
+      <h2>모아모아 축제목록</h2>
+      <img src={iconSearch}></img>
+    </HeaderContainer>
+  );
+}
+
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-evenly;
@@ -22,13 +32,3 @@ const HeaderContainer = styled.header`
     gap: 5px;
   }
 `;
-
-export default function Header() {
-  return (
-    <HeaderContainer>
-      <Gobackbtn />
-      <h2>모아모아 축제목록</h2>
-      <img src={iconSearch}></img>
-    </HeaderContainer>
-  );
-}

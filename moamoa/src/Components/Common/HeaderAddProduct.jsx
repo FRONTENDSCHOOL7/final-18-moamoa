@@ -3,6 +3,18 @@ import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
 import ButtonSubmit from '../Common/Button';
 
+export default function Header() {
+  const onClickHandler = () => {
+    console.log('콘솔 찍었지롱~');
+  };
+  return (
+    <HeaderContainer>
+      <Gobackbtn />
+      <ButtonSubmit buttonText='저장' onClickHandler={onClickHandler} />
+    </HeaderContainer>
+  );
+}
+
 const HeaderContainer = styled.header`
   display: flex;
   height: 55px;
@@ -22,15 +34,3 @@ const HeaderContainer = styled.header`
     cursor: pointer;
   }
 `;
-
-export default function Header() {
-  const onClickHandler = () => {
-    console.log('콘솔 찍었지롱~');
-  };
-  return (
-    <HeaderContainer>
-      <Gobackbtn />
-      <ButtonSubmit buttonText='저장' onClickHandler={onClickHandler} />
-    </HeaderContainer>
-  );
-}

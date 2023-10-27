@@ -12,52 +12,6 @@ import Header from '../../Components/Common/HeaderProductList';
 // import Header from '../../Components/Common/HeaderAddProduct';
 import { Container } from '../../Components/Common/Container';
 import Footer from '../../Components/Common/Footer';
-const Nav = styled.div`
-  display: flex;
-  padding-top: 70px;
-  padding-left: 10px;
-`;
-const Button = styled.button`
-  width: 80px;
-  height: 36px;
-  border: 1px solid #dadada;
-  border-radius: 10px;
-  font-weight: bold;
-  margin-right: 6px;
-  margin-bottom: 16px;
-  cursor: pointer;
-`;
-const FestivalBtn = styled(Button)`
-  background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
-  color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
-`;
-
-const ExperienceBtn = styled(Button)`
-  background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
-  color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
-`;
-
-const ProductContainer = styled.div`
-  max-width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-`;
-const ProductBox = styled.div`
-  max-width: 172px;
-  margin: 0 auto;
-
-  .itemName {
-    font-size: 12px;
-    margin-block: 16px 4px;
-  }
-  .itemDate {
-    color: #797979;
-    font-size: 10px;
-    font-weight: 400;
-  }
-`;
 
 export const ProductAtom = atom({
   key: 'ProductState',
@@ -165,3 +119,50 @@ export default function ProductList() {
     </>
   );
 }
+
+const Nav = styled.div`
+  display: flex;
+  padding-top: 70px;
+  padding-left: 10px;
+`;
+const Button = styled.button`
+  width: 80px;
+  height: 36px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-right: 6px;
+  margin-bottom: 16px;
+  cursor: pointer;
+`;
+const FestivalBtn = styled(Button)`
+  background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
+  color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
+`;
+
+const ExperienceBtn = styled(Button)`
+  background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
+  color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
+`;
+
+const ProductContainer = styled.div`
+  max-width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+`;
+const ProductBox = styled.div`
+  max-width: 172px;
+  margin: 0 auto;
+
+  .itemName {
+    font-size: 12px;
+    margin-block: 16px 4px;
+  }
+  .itemDate {
+    color: #797979;
+    font-size: 10px;
+    font-weight: 400;
+  }
+`;
