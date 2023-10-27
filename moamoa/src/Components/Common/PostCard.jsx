@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import PostCardUser from './PostCardUser';
+import styled from 'styled-components';
+import heartBg from '../../Assets/icons/heart.svg'
+import heartBgFill from '../../Assets/icons/heart-fill.svg'
+import commentBg from '../../Assets/icons/message-circle.svg'
+
+
 
 export default function PostCard(post) {
+
+  const [heartCount, setHeartCount] = useState(0);
+  const [toggleCount, setToggleCount] = useState(false);
+  const [heartColor, setHeartColor] = useState(heartBg);
+
 
   const baseUrl = `https://api.mandarin.weniv.co.kr/`
 
@@ -18,28 +30,102 @@ export default function PostCard(post) {
   const day = dateset.slice(8,10)  
   const outputDate = `${year}년 ${month}월 ${day}일`;
 
+
+    const handleHeartCount = () =>{
+      if (toggleCount === true ){
+        setHeartColor(heartBgFill);
+        setHeartCount(postprop.heartCount);
+      } else{
+        setHeartColor(heartBg);
+        setHeartCount(postprop.heartCount);}
+      
+      console.log(heartCount);      
+    }
+
+
   return (
     <>
       {post && (
         <li>
-          <article>
+          <PostArticle>
+            
+              <PostCardUser url={profileImgUrl} username={postprop.author.username} accountname={postprop.author.accountname}/>
             <Link to={postDetailUrl}>
-              <img src={profileImgUrl} alt="사용자프로필"/>
-              <p>{postprop.author.username}</p>
-              <p>@{postprop.author.accountname}</p>
-              <button>
-                케밥버튼
-              </button>
-              <p>{post.post.content}</p>
-              <img src={postImgUrl} alt="게시글 사진" />
+              <PostDesc>{post.post.content}</PostDesc>
+              <PostImg src={postImgUrl} alt="게시글 사진" />
             </Link>
-            <p>{outputDate}</p>
-            <button>{postprop.heartCount}</button>
-            <button>{postprop.commentCount}</button>
-          </article>
+            <PostFooterContainer>
+              <CreateDate>{outputDate}</CreateDate>
+              <div>
+                <HeartBtn onClick={()=>{setToggleCount(!toggleCount);handleHeartCount();}} heartColor={heartColor}>{postprop.heartCount}</HeartBtn>
+                <Link to={postDetailUrl}><CommentBtn>{postprop.commentCount}</CommentBtn></Link>
+              </div>
+            </PostFooterContainer>
+          </PostArticle>
         </li>
       )}
     </>
       
   )
 }
+
+const PostArticle = styled.article`
+  margin-bottom: 2rem;
+`;
+
+const PostImg = styled.img`
+  width: 100%;
+  height: 22.8rem;
+  margin: 0 auto;
+  aspect-ratio: 358/228;
+  object-fit: cover;
+  border-radius: 1rem;
+  &:hover{
+    cursor: default;
+  }
+`;
+const PostDesc = styled.p`
+  font-size: 1.4rem;
+  margin: 1.2rem 0 1.6rem;
+  &:hover{
+    cursor: default;
+  }
+`;
+const PostFooterContainer = styled.div`
+  margin: 1.5rem 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const CreateDate = styled.p`
+  font-size: 1rem;
+  color: #767676;
+`;
+
+const HeartBtn = styled.button`
+  padding-left: 2.6rem;
+  margin-right: 0.6rem;
+  height: 2rem;
+  color: #767676;
+  background: url(${props => props.heartColor}) 0.2rem no-repeat;
+  &:hover{
+    cursor: pointer;
+  }
+  &:active{
+    background: url(${props => props.heartColor}) 0.2rem no-repeat;
+  }
+`;
+
+const CommentBtn = styled.button`
+  height: 2rem;
+  padding-left: 2.6rem;
+  color: #767676;
+  &:link{
+    color: #767676;
+  }
+  &:hover{
+    cursor: pointer;
+  }
+  background: url(${commentBg}) 0.2rem no-repeat;
+`;
