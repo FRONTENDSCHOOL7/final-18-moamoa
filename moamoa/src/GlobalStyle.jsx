@@ -19,7 +19,7 @@ a{
 	color:inherit;
 }
 input,button{
-	border:none;
+	/* border:none; */
 }
 `;
 export default GlobalStyle;

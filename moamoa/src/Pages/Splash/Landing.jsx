@@ -9,6 +9,45 @@ import fireworks from '../../Assets/images/fireworks.svg';
 import Festival from '../../Assets/images/Festival.svg';
 import { Link } from 'react-router-dom';
 
+export default function Landing() {
+  const [modalActive, setModalActive] = useState(false);
+  useEffect(() => {
+    // 3초 뒤에 모달을 자동으로 활성화하도록 설정합니다.
+    const modalTimeout = setTimeout(() => {
+      setModalActive(true);
+    }, 2000);
+
+    // 컴포넌트가 언마운트되면 타임아웃을 클리어합니다.
+    return () => clearTimeout(modalTimeout);
+  }, []);
+
+  return (
+    <Container>
+      <MoaMoaBox>
+        <SVGgroup>
+          <div>
+            <img src={Festival} className='blinkFestival' alt='' />
+            <img src={fireworks} className='blinkfireworks' alt='' />
+          </div>
+          <img src={Logo} alt='' />
+          <p className='logotext'>내 손 안의 안의 모든 축제!</p>
+        </SVGgroup>
+        <Copyright>@copyright moamoa corp</Copyright>
+        <LoginModal visible={modalActive}>
+          <Link to='/user/login'>
+            <BlueMoa>이메일 계정으로 로그인</BlueMoa>
+          </Link>
+          <Kakao>카카오톡 계정으로 로그인</Kakao>
+          <Google>구글 계정으로 로그인</Google>
+          <Naver>네이버 계정으로 로그인</Naver>
+          <p>아직 회원이 아니신가요?</p>
+          <a href='#'>이메일로 회원가입</a>
+        </LoginModal>
+      </MoaMoaBox>
+    </Container>
+  );
+}
+
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -36,11 +75,10 @@ const SVGgroup = styled.div`
   justify-content: space-between;
   flex-direction: column;
   text-align: center;
-  /* background-color: purple; */
+
   gap: 5px;
 
   .blinkFestival {
-    /* background-color: red; */
     margin-top: 150px;
     width: 109px;
     height: 13px;
@@ -50,14 +88,12 @@ const SVGgroup = styled.div`
   .blinkfireworks {
     transform: translateX(95%);
     justify-content: center;
-    /* background-color: blue; */
+
     width: 57px;
     height: 57px;
   }
   img {
     width: 250px;
-    /* margin-top: 150px; */
-    /* background-color: yellow; */
   }
   @keyframes blink {
     0% {
@@ -158,41 +194,3 @@ const Naver = styled(tempLoginButton)`
   background-size: 30px;
   background-position: 14px 6px;
 `;
-export default function Landing() {
-  const [modalActive, setModalActive] = useState(false);
-  useEffect(() => {
-    // 3초 뒤에 모달을 자동으로 활성화하도록 설정합니다.
-    const modalTimeout = setTimeout(() => {
-      setModalActive(true);
-    }, 2000);
-
-    // 컴포넌트가 언마운트되면 타임아웃을 클리어합니다.
-    return () => clearTimeout(modalTimeout);
-  }, []);
-
-  return (
-    <Container>
-      <MoaMoaBox>
-        <SVGgroup>
-          <div>
-            <img src={Festival} className='blinkFestival' alt='' />
-            <img src={fireworks} className='blinkfireworks' alt='' />
-          </div>
-          <img src={Logo} alt='' />
-          <p className='logotext'>내 손 안의 안의 모든 축제!</p>
-        </SVGgroup>
-        <Copyright>@copyright moamoa corp</Copyright>
-        <LoginModal visible={modalActive}>
-          <Link to='/user/login'>
-            <BlueMoa>이메일 계정으로 로그인</BlueMoa>
-          </Link>
-          <Kakao>카카오톡 계정으로 로그인</Kakao>
-          <Google>구글 계정으로 로그인</Google>
-          <Naver>네이버 계정으로 로그인</Naver>
-          <p>아직 회원이 아니신가요?</p>
-          <a href='#'>이메일로 회원가입</a>
-        </LoginModal>
-      </MoaMoaBox>
-    </Container>
-  );
-}

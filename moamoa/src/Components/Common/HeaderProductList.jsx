@@ -6,18 +6,20 @@ import iconSearch from '../../Assets/icons/icon-search.svg';
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-evenly;
-  height: 55px;
+  height: 48px;
   gap: 65px;
   width: 390px;
   position: fixed;
   background-color: #fff;
-  border-bottom: 2px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
   align-items: center;
   font-size: 24px;
   font-weight: bold;
   box-sizing: border-box;
   img {
     cursor: pointer;
+    align-items: center;
+    gap: 5px;
   }
 `;
 

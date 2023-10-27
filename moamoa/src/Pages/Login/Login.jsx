@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSetRecoilState } from 'recoil';
-import userTokenAtom from '../../Recoil/UserToken';
+import userTokenAtom from '../../Recoil/userTokenAtom'; ////파일 경로 변경 완료
 import styled from 'styled-components';
 
 const Input = styled.input`

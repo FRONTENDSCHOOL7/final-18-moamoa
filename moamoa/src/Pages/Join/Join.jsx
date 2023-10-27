@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
-import joinStateAtom from '../../Recoil/JoinState.jsx';
+import joinStateAtom from '../../Recoil/userTypeAtom.jsx'; //파일 경로 변경 완료
 
 const Join = () => {
   const navigate = useNavigate();

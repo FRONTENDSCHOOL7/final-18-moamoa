@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import axios from 'axios';
-import eventStateAtom from '../../Recoil/EventState';
+import eventStateAtom from '../../Recoil/eventTypeAtom'; //파일경로 변경 완료
 import { Link } from 'react-router-dom';
 import ProductImgBox from '../../Components/Common/ProductImgBox';
+import Header from '../../Components/Common/HeaderProductList';
 // import Header from '../../Components/Common/HeaderSearch';
 // import Header from '../../Components/Common/HeaderBasic';
 // import Header from '../../Components/Common/HeaderHome';
-import Header from '../../Components/Common/HeaderProductList';
+// import Header from '../../Components/Common/HeaderAddProduct';
 import { Container } from '../../Components/Common/Container';
+import Footer from '../../Components/Common/Footer';
 const Nav = styled.div`
   display: flex;
   padding-top: 70px;
@@ -158,6 +160,7 @@ export default function ProductList() {
               : null}
           </ProductContainer>
         )}
+        <Footer></Footer>
       </Container>
     </>
   );
