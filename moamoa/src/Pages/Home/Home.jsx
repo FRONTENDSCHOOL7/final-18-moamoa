@@ -3,6 +3,7 @@ import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완�
 import { useRecoilValue, useRecoilState } from 'recoil';
 import PostCard from '../../Components/Common/PostCard';
 import PostState from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
+import styled from 'styled-components';
 
 export default function Home() {
   const [post, setPost] = useRecoilState(PostState);
@@ -40,11 +41,15 @@ export default function Home() {
     <>
       {console.log(post)}
       {post.length !== 0 ? (
-        <ul>
-          {post.map((item) => {
-            return <PostCard key={item.id} post={item} />;
-          })}
-        </ul>
+        <HomeContainer>
+          <PostList>
+            <ul>
+              {post.map((item) => {
+                return <PostCard key={item.id} post={item} />;
+              })}
+            </ul>
+          </PostList>
+        </HomeContainer>
       ) : (
         <div>
           <p>유저를 검색해 팔로우 해보세요!</p>
@@ -54,3 +59,17 @@ export default function Home() {
     </>
   );
 }
+
+const HomeContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #fff9e4;
+`;
+const PostList = styled.div`
+  max-width: 39rem;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 2rem 1.6rem;
+`;
