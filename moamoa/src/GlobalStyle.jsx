@@ -14,6 +14,10 @@ body{
 }
 a{
 	text-decoration:none;
+	color:inherit;
+}
+input,button{
+	/* border:none; */
 }
 li{
 	list-style: none;

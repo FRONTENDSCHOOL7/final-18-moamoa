@@ -5,79 +5,13 @@ import axios from 'axios';
 import eventStateAtom from '../../Recoil/eventTypeAtom'; //파일경로 변경 완료
 import { Link } from 'react-router-dom';
 import ProductImgBox from '../../Components/Common/ProductImgBox';
-// style
-const Header = styled.div`
-  background-color: var(--white);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 4;
-  box-shadow: 0 2px 10px hsla(0, 0%, 0%, 0.1);
-  .Container {
-    display: flex;
-    width: 390px;
-    align-items: center;
-    padding: 13px 16px;
-    margin: 0 auto;
-    justify-content: space-between;
-    font-size: 18px;
-    font-weight: 400;
-    background-color: #fff;
-  }
-`;
-
-const Main = styled.div`
-  margin: 0 auto;
-  width: 390px;
-`;
-const Nav = styled.div`
-  display: flex;
-  /* justify-content: center; */
-  padding-top: 70px;
-  padding-left: 10px;
-`;
-const Button = styled.button`
-  width: 80px;
-  height: 36px;
-  border: 1px solid #dadada;
-  border-radius: 10px;
-  font-weight: bold;
-  margin-right: 6px;
-  margin-bottom: 16px;
-  cursor: pointer;
-`;
-const FestivalBtn = styled(Button)`
-  background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
-  color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
-`;
-
-const ExperienceBtn = styled(Button)`
-  background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
-  color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
-`;
-
-const ProductContainer = styled.div`
-  max-width: 100%;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-`;
-const ProductBox = styled.div`
-  max-width: 172px;
-  margin: 0 auto;
-
-  .itemName {
-    font-size: 12px;
-    margin-block: 16px 4px;
-  }
-  .itemDate {
-    color: #797979;
-    font-size: 10px;
-    font-weight: 400;
-  }
-`;
+import Header from '../../Components/Common/HeaderProductList';
+// import Header from '../../Components/Common/HeaderSearch';
+// import Header from '../../Components/Common/HeaderBasic';
+// import Header from '../../Components/Common/HeaderHome';
+// import Header from '../../Components/Common/HeaderAddProduct';
+import { Container } from '../../Components/Common/Container';
+import Footer from '../../Components/Common/Footer';
 
 export const ProductAtom = atom({
   key: 'ProductState',
@@ -136,13 +70,8 @@ export default function ProductList() {
   // console.log('isExperienceActive: ', isExperienceActive);
   return (
     <>
-      <Header>
-        <div className='Container'>
-          <h1>모아모아 판매상품</h1>
-          <button>돋보기</button>
-        </div>
-      </Header>
-      <Main>
+      <Container>
+        <Header />
         <Nav>
           <FestivalBtn isActive={isFestivalActive} onClick={toggleFestival}>
             축제
@@ -185,7 +114,55 @@ export default function ProductList() {
               : null}
           </ProductContainer>
         )}
-      </Main>
+        <Footer></Footer>
+      </Container>
     </>
   );
 }
+
+const Nav = styled.div`
+  display: flex;
+  padding-top: 70px;
+  padding-left: 10px;
+`;
+const Button = styled.button`
+  width: 80px;
+  height: 36px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-right: 6px;
+  margin-bottom: 16px;
+  cursor: pointer;
+`;
+const FestivalBtn = styled(Button)`
+  background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
+  color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
+`;
+
+const ExperienceBtn = styled(Button)`
+  background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
+  color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
+`;
+
+const ProductContainer = styled.div`
+  max-width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+`;
+const ProductBox = styled.div`
+  max-width: 172px;
+  margin: 0 auto;
+
+  .itemName {
+    font-size: 12px;
+    margin-block: 16px 4px;
+  }
+  .itemDate {
+    color: #797979;
+    font-size: 10px;
+    font-weight: 400;
+  }
+`;
