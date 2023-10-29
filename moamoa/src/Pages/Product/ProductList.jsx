@@ -39,7 +39,7 @@ export default function ProductList() {
 
     async function axiosData() {
       try {
-        const response = await axios.get('https://api.mandarin.weniv.co.kr/product', {
+        const response = await axios.get('https://api.mandarin.weniv.co.kr/product/', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -94,7 +94,7 @@ export default function ProductList() {
                       <ProductBox key={index}>
                         <ProductImgBox src={item.itemImage} />
                         <p className='itemName'>{item.itemName}</p>
-                        <p className='itemDate'>{item.createdAt}</p>
+                        <p className='itemDate'>{item.price}</p>
                       </ProductBox>
                     </Link>
                   ))
@@ -107,7 +107,7 @@ export default function ProductList() {
                     <Link to={`/product/detail/${item.id}`} key={index}>
                       <ProductBox key={index}>
                         <p className='itemName'>{item.itemName}</p>
-                        <p className='itemDate'>{item.createdAt}</p>
+                        <p className='itemDate'>{item.price}</p>
                       </ProductBox>
                     </Link>
                   ))
@@ -151,6 +151,8 @@ const ProductContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  flex: 1;
+  padding-bottom: 150px;
 `;
 const ProductBox = styled.div`
   max-width: 172px;

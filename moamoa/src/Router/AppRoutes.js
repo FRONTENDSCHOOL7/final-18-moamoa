@@ -21,6 +21,7 @@ import EditProduct from '../Pages/Product/EditProduct';
 import UploadPost from '../Pages/Post/UploadPost';
 import EditPost from '../Pages/Post/EditPost';
 import PostDetail from '../Pages/Post/PostDetail';
+import ChatList from '../Pages/Chat/ChatList';
 
 // import ChatRoom from '../Pages/Chat/ChatRoom';
 // import ChatList from '../Pages/Chat/ChatList';
@@ -63,7 +64,7 @@ export default function AppRoutes() {
       <Route path='/product/edit' element={<EditProduct />} />
 
       {/* 상품 리스트 */}
-      <Route path='/product/:accountname' element={<ProductList />} />
+      <Route path='/product/list' element={<ProductList />} />
 
       {/* 상품 상세 */}
       <Route path='/product/detail/:product_id' element={<ProductDetail />} />
@@ -75,7 +76,9 @@ export default function AppRoutes() {
       <Route path='/post/edit' element={<EditPost />} />
 
       {/* 게시글 상세 */}
-      <Route path='/post/:post_id' element={<PostDetail/>} />
+      <Route path='/post/:post_id' element={<PostDetail />} />
+      {/* 채팅 리스트 */}
+      <Route path='/chat' element={<ChatList />} />
 
       {/* <Route path='/user/login' element={<LoginPage />} />
       <Route path='/user' element={<JoinPage />} /> */}

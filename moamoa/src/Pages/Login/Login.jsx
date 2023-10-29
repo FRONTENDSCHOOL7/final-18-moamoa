@@ -1,131 +1,49 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useSetRecoilState } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom'; ////파일 경로 변경 완료
-import styled from 'styled-components';
-
-const Input = styled.input`
-  border-color: #dbdbdb;
-
-  &:focus {
-    border-color: #87b7e4;
-    outline-color: #87b7e4;
-  }
-`;
+import React from 'react';
+import { Link } from 'react-router-dom';
+import useLogin from '../../Hooks/Sign/useLogin';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const emailErrMsg = useState[0];
-  const [loginErrMsg, setLoginErrMsg] = useState('');
-
-  const setUserTokenAtom = useSetRecoilState(userTokenAtom);
-  const saveToken = (token) => {
-    setUserTokenAtom(token);
-  };
-
-  const login = async (email, password) => {
-    const reqUrl = 'https://api.mandarin.weniv.co.kr/user/login';
-
-    try {
-      await axios({
-        method: 'post',
-        url: reqUrl,
-        data: {
-          user: {
-            email: email,
-            password: password,
-          },
-        },
-      }).then((res) => {
-        //status 200//
-        console.log(res);
-
-        // 이메일,비밀번호 모두 입력 완료 하지만 불일치
-        if (res.data.message === '이메일 또는 비밀번호가 일치하지 않습니다.') {
-          console.log('이메일 또는 비밀번호가 일치하지 않습니다.');
-        }
-
-        if (res.data.status === 422) {
-          setLoginErrMsg(res.data.message);
-          //'이메일 또는 비밀번호가 일치하지 않습니다.'
-        } else if (res.data.user) {
-          saveToken(res.data.user.token);
-          navigate('/home');
-        }
-      });
-    } catch (err) {
-      if (err.response) {
-        const { status, data } = err.response;
-        if (status === 422) {
-          console.log(data);
-        }
-        if (status === 404) {
-          //404 이미지 출력
-        }
-
-        if (status === 500) {
-          console.log('Server error');
-        }
-      } else if (err.request) {
-        console.log('Error', err.message);
-      } else {
-        console.log('Error', err.message);
-      }
-    }
-  };
-
-  const inputEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const inputPassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const submitLogin = (e) => {
-    e.preventDefault();
-
-    login(email, password);
-    setEmail('');
-    setPassword('');
-  };
+  const {
+    userInput,
+    handleError,
+    handleInputChange,
+    handleFormSubmit,
+    errorMsg,
+    userErrorMessage,
+  } = useLogin();
 
   return (
     <>
       <h1>로그인</h1>
-      <section>
-        <h2>이메일과 비밀번호 입력</h2>
-        <form onSubmit={submitLogin}>
-          <Input
-            type='text'
-            placeholder='이메일 입력'
-            onChange={inputEmail}
-            value={email}
-            required
-          />
-          {emailErrMsg}
-          <Input
-            type='text'
-            placeholder='비밀번호 입력'
-            onChange={inputPassword}
-            value={password}
-            required
-          />
-          {loginErrMsg}
-          <button disabled={!email || !password}>로그인</button>
-          <button
-            type='button'
-            onClick={() => {
-              navigate('/user/join');
-            }}
-          >
-            회원가입
-          </button>
-        </form>
-      </section>
+      <form onSubmit={handleFormSubmit}>
+        <input
+          type='email'
+          placeholder='이메일'
+          name='email'
+          onChange={handleInputChange}
+          value={userInput.user.email}
+          required
+        />
+        {!userInput.user.email && !userInput.user.password && errorMsg}
+        <input
+          type='password'
+          placeholder='비밀번호'
+          name='password'
+          onChange={handleInputChange}
+          value={userInput.user.password}
+          required
+        />
+        {userInput.user.email && !userInput.user.password && errorMsg}
+        {userInput.user.email && userInput.user.password && userErrorMessage}
+        <button
+          type='submit'
+          disabled={!userInput.user.email || !userInput.user.password}
+          onClick={handleError}
+        >
+          로그인
+        </button>
+        <Link to='/user/join'>이메일로 회원가입</Link>
+      </form>
     </>
   );
 };
