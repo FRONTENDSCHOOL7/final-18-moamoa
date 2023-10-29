@@ -10,11 +10,10 @@ import { useRecoilValue } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
-import PostCard from '../../Components/Common/PostCard';
-
 import ProductImgBox from '../../Components/Common/ProductImgBox';
 import ProfileDetail from '../../Components/Common/ProfileDetail';
 import FollowButton from '../../Components/Common/FollowButton';
+import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
 
 //진행중인 행사
 function EventList() {
@@ -61,44 +60,9 @@ function EventList() {
   );
 }
 
-// 내 게시글
-function PostList() {
-  const token = useRecoilValue(userToken);
-  const userAccountname = location.pathname.replace('/profile/', '');
-
-  const [myPostList, setMyPostList] = useState([]);
-
-  const postList = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/post/${userAccountname}/userpost`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    setMyPostList(json.post);
-  };
-
-  useEffect(() => {
-    postList();
-  }, []);
-
-  return (
-    <ul>
-      {myPostList.map((item) => {
-        return <PostCard key={item.id} post={item} />;
-      })}
-      {/* const profileImgUrl =`{postprop.author.image} :: 이렇게 하면 안되는지 물어보기
-      이미지가 깨지기 때문에*/}
-    </ul>
-  );
-}
-
 // 프로필보기
 function YourProfile() {
   // 게시글 화면 전환
-  const [view, setView] = useState('PostList');
 
   // 현제 페이지 주소 복사
   function copyURLToClipboard() {
@@ -124,11 +88,7 @@ function YourProfile() {
           <button onClick={copyURLToClipboard}>공유 버튼</button>
         </section>
         <EventList />
-        <button onClick={() => setView('PostList')}>햄버거 버튼</button>
-        <button onClick={() => setView('PostImgList')}>벤토 버튼</button>
-
-        {view === 'PostList' && <PostList />}
-        {view === 'PostImgList' && <p>벤토버튼 클릭</p>}
+        <ProfileDetailPost />
       </section>
     </div>
   );

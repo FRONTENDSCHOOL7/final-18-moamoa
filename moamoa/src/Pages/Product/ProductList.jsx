@@ -1,30 +1,27 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import axios from 'axios';
-import eventStateAtom from '../../Recoil/eventTypeAtom'; //파일경로 변경 완료
 import { Link } from 'react-router-dom';
 import ProductImgBox from '../../Components/Common/ProductImgBox';
 import Header from '../../Components/Common/HeaderProductList';
-// import Header from '../../Components/Common/HeaderSearch';
-// import Header from '../../Components/Common/HeaderBasic';
-// import Header from '../../Components/Common/HeaderHome';
-// import Header from '../../Components/Common/HeaderAddProduct';
 import { Container } from '../../Components/Common/Container';
 import Footer from '../../Components/Common/Footer';
-
+import userTokenAtom from '../../Recoil/userTokenAtom';
+import { ProductListAPI } from '../../API/Product/ProductListAPI';
+import backgroundMoamoa from '../../Assets/images/backgroundMoamoa.png';
 export const ProductAtom = atom({
   key: 'ProductState',
   default: [],
 });
 // ProductList
 export default function ProductList() {
-  const token = localStorage.getItem('token');
   const [product, setProduct] = useRecoilState(ProductAtom);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isFestivalActive, setFestivalActive] = useState(true);
   const [isExperienceActive, setExperienceActive] = useState(false);
+  const token = useRecoilValue(userTokenAtom);
 
   const toggleExperience = () => {
     setFestivalActive(false);
@@ -35,41 +32,28 @@ export default function ProductList() {
     setExperienceActive(false);
   };
   useEffect(() => {
-    // 데이터를 비동기적으로 가져오는 함수
-
-    async function axiosData() {
+    async function fetchData() {
       try {
-        const response = await axios.get('https://api.mandarin.weniv.co.kr/product', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        // 요청이 성공했을 때 실행되는 코드
-        console.log('데이터를 가져왔습니다:', response);
-        console.log('데이터를 가져왔습니다:', response.data);
-
-        // "product" 배열을 Recoil 상태에 저장
-        setProduct(response.data.product);
+        const productList = await ProductListAPI(token);
+        setProduct(productList);
         setLoading(false);
       } catch (error) {
-        // 요청이 실패했을 때 실행되는 코드
-        console.error('데이터를 가져오지 못했습니다:', error);
         setError(error);
       }
     }
 
-    axiosData(); // 데이터를 가져오는 함수 호출
+    fetchData();
   }, [token, setProduct]);
+  // 행시기간 함수
+  function formatDateString(dateString) {
+    const year = toString.slice(2, 4);
+    const month = toString.slice(4, 6);
+    const day = toString.slice(6, 8);
+    return `${year}.${month}.${day}`;
+  }
   //   리턴
-  const setCategory = useSetRecoilState(eventStateAtom);
-  const Category = useRecoilValue(eventStateAtom);
-  console.log('setCategory : ', setCategory);
-  console.log('Category.eventType : ', Category);
-  // console.log('isFestivalActive: ', isFestivalActive);
-  // console.log('isExperienceActive: ', isExperienceActive);
   return (
-    <>
+    <BackColor className='body'>
       <Container>
         <Header />
         <Nav>
@@ -88,35 +72,64 @@ export default function ProductList() {
           <ProductContainer>
             {isFestivalActive
               ? product
-                  .filter(() => Category.eventType === 'festival')
+                  .filter((item) => {
+                    if (item.price.toString().length >= 16) {
+                      return true;
+                    }
+                    return false;
+                  })
                   .map((item, index) => (
-                    <Link to={`/product/detail/${item.id}`} key={index}>
+                    <Link to={`/product/detail/${item._id}`} key={index}>
                       <ProductBox key={index}>
                         <ProductImgBox src={item.itemImage} />
                         <p className='itemName'>{item.itemName}</p>
-                        <p className='itemDate'>{item.createdAt}</p>
+                        <p className='itemDate'>
+                          {'행사기간: ' +
+                            `${item.price.toString().slice(2, 4)}.${item.price
+                              .toString()
+                              .slice(4, 6)}.${item.price.toString().slice(6, 8)}~${item.price
+                              .toString()
+                              .slice(10, 12)}.${item.price.toString().slice(12, 14)}.${item.price
+                              .toString()
+                              .slice(14, 16)}`}
+                        </p>
                       </ProductBox>
                     </Link>
                   ))
               : null}
-            {console.log('콘솔로그는 뭘까:', product)}
+            {/* {console.log('콘솔로그는 뭘까:', product)} */}
+            {/* {console.log('아이디찾기:', product[0]._id)} */}
             {isExperienceActive
               ? product
-                  .filter(() => Category.eventType === 'experience')
+                  .filter((item) => {
+                    if (item.price.toString().length >= 16) {
+                      return true;
+                    }
+                    return false;
+                  })
                   .map((item, index) => (
-                    <Link to={`/product/detail/${item.id}`} key={index}>
-                      <ProductBox key={index}>
-                        <p className='itemName'>{item.itemName}</p>
-                        <p className='itemDate'>{item.createdAt}</p>
-                      </ProductBox>
-                    </Link>
+                    <ProductBox key={index}>
+                      <ProductImgBox src={item.itemImage} />
+                      <Link to={`/product/detail/${item._id}`} key={index}></Link>
+                      <p className='itemName'>{item.itemName}</p>
+                      <p className='itemDate'>
+                        {'행사기간: ' +
+                          `${item.price.toString().slice(2, 4)}.${item.price
+                            .toString()
+                            .slice(4, 6)}.${item.price.toString().slice(6, 8)}~${item.price
+                            .toString()
+                            .slice(10, 12)}.${item.price.toString().slice(12, 14)}.${item.price
+                            .toString()
+                            .slice(14, 16)}`}
+                      </p>
+                    </ProductBox>
                   ))
               : null}
           </ProductContainer>
         )}
         <Footer></Footer>
       </Container>
-    </>
+    </BackColor>
   );
 }
 
@@ -133,7 +146,6 @@ const Button = styled.button`
   font-weight: bold;
   margin-right: 6px;
   margin-bottom: 16px;
-  cursor: pointer;
 `;
 const FestivalBtn = styled(Button)`
   background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
@@ -151,18 +163,30 @@ const ProductContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  flex: 1;
+  padding-bottom: 150px;
+  background-image: url(${backgroundMoamoa});
+  background-repeat: no-repeat;
+  background-position: 110% 88%;
 `;
 const ProductBox = styled.div`
   max-width: 172px;
   margin: 0 auto;
 
   .itemName {
-    font-size: 12px;
-    margin-block: 16px 4px;
+    font-size: 14px;
+    margin: 12px 0 6px 4px;
+    font-weight: 500;
+    cursor: default;
   }
   .itemDate {
+    margin-left: 4px;
     color: #797979;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 400;
+    cursor: default;
   }
+`;
+const BackColor = styled.div`
+  background-color: #fff9e4;
 `;

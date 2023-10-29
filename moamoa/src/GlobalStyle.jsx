@@ -17,7 +17,11 @@ a{
 	color:inherit;
 }
 input,button{
-	/* border:none; */
+	border:none;
+	background-color:inherit;
+}
+button{
+	cursor:pointer;
 }
 li{
 	list-style: none;
@@ -36,5 +40,6 @@ button{
 	border: none;
 	background: transparent;
 }
+
 `;
 export default GlobalStyle;
