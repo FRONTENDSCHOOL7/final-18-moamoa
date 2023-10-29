@@ -10,6 +10,8 @@ html{
 	font-size: 62.5%;
 }
 body{
+	background-color:#fff9e4;
+	/* 여기에 color 주는건 별로일까요? */
 	font-family: 'Pretendard', sans-serif;
 }
 a{

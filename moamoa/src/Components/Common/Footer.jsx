@@ -76,9 +76,10 @@ const TabMenu = styled.div`
   height: 60px;
   background-color: #2e2c39;
   display: flex;
-  margin-top: 87px;
   position: fixed;
   bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const TabButton = styled.button`
