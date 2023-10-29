@@ -10,8 +10,8 @@ html{
 	font-size: 62.5%;
 }
 body{
-	background-color:#fff9e4;
-	/* 여기에 color 주는건 별로일까요? */
+	/* background-color:#fff9e4; */
+	/* 바디에 배경색 */
 	font-family: 'Pretendard', sans-serif;
 }
 a{
