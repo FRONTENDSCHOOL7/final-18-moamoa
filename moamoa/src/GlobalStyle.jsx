@@ -40,5 +40,6 @@ button{
 	border: none;
 	background: transparent;
 }
+
 `;
 export default GlobalStyle;
