@@ -70,6 +70,8 @@ export default function Footer() {
     </TabMenu>
   );
 }
+const TabMenu = styled.div`
+`;
 
 const TabMenu = styled.div`
   width: 390px;
