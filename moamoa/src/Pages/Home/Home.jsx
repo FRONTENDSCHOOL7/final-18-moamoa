@@ -4,7 +4,7 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import PostCard from '../../Components/Common/PostCard';
 import PostState from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
-import UserSearchCont from './HomeFeed';
+import HomeFeed from './HomeFeed';
 
 export default function Home() {
   const [post, setPost] = useRecoilState(PostState);
@@ -54,7 +54,7 @@ export default function Home() {
       ) : (
         <HomeContainer>
           <PostList>
-            <UserSearchCont/>
+            <HomeFeed/>
           </PostList>
         </HomeContainer>
       )}

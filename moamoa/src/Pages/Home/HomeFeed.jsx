@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import homeBg from '../../Assets/icons/character-yellow.png'
 
-export default function UserSearchCont() {
+export default function HomeFeed() {
   return (
     <UserSearchHome>      
       <HomeCont>
