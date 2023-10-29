@@ -18,7 +18,7 @@ export default function PostCardUser({url, username, accountname }) {
             <FrofileImg src={url} alt="사용자프로필"/>        
             <InfoText>
               <UserName>{username}</UserName>
-              <AccountName>@ {accountname}</AccountName>
+              <AccountName>@{accountname}</AccountName>
             </InfoText>
           </UserInfo>
         </>

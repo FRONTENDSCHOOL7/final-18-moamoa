@@ -18,7 +18,9 @@ const HeaderContainer = styled.header`
   width: 390px;
   justify-content: space-between;
   position: fixed;
-  border-bottom: 2px solid #dbdbdb;
+  left: 50%;
+  translate: -50%;
+  border-bottom: 1px solid #dbdbdb;
   background-color: #fff;
   align-items: center;
   font-size: 24px;

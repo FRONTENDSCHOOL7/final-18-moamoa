@@ -29,15 +29,17 @@ export default function Footer() {
   //      console.log(heartCount);
   //    };
   return (
-    <tabMenu>
+    <TabMenu>
       <img src='{HomeBtno}' alt='' />1
       <img src='{chatButton}' alt='' />1
       <img src='{postButton}' alt='' />1
       <img src='{festivalButton}' alt='' />1
       <img src='{profileButton}' alt='' />1
-    </tabMenu>
+    </TabMenu>
   );
 }
+const TabMenu = styled.div`
+`;
 
 const HomeButton = styled.img`
   width: 24px;
