@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import MoreBtn from './MoreBtn';
 
 PostCardUser.propTypes = {
   url: PropTypes.string,
@@ -12,7 +11,6 @@ PostCardUser.propTypes = {
 export default function PostCardUser({url, username, accountname }) {
   return (
     <Container>
-      <Frofile>
         <>
           <UserInfo>
             <FrofileImg src={url} alt="사용자프로필"/>        
@@ -22,8 +20,6 @@ export default function PostCardUser({url, username, accountname }) {
             </InfoText>
           </UserInfo>
         </>
-        <MoreBtn/>
-      </Frofile>
     </Container>
   )
 }
@@ -35,14 +31,6 @@ const Container = styled.div`
 
 `;
 
-const Frofile = styled.div`  
-  margin: 0 auto;
-  height: 4.2rem;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-` ;
 const FrofileImg = styled.img`
   width: 4.2rem;
   height: 4.2rem;

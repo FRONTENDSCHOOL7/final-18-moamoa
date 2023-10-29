@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import PostCardUser from './PostCardUser';
+import MoreBtn from './MoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg'
 import heartBgFill from '../../Assets/icons/heart-fill.svg'
@@ -48,8 +49,10 @@ export default function PostCard(post) {
       {post && (
         <li>
           <PostArticle>
-            
-              <PostCardUser url={profileImgUrl} username={postprop.author.username} accountname={postprop.author.accountname}/>
+              <Frofile>
+                <PostCardUser url={profileImgUrl} username={postprop.author.username} accountname={postprop.author.accountname}/>
+                <MoreBtn/>
+              </Frofile>
             <Link to={postDetailUrl}>
               <PostDesc>{post.post.content}</PostDesc>
               <PostImg src={postImgUrl} alt="게시글 사진" />
@@ -72,7 +75,14 @@ export default function PostCard(post) {
 const PostArticle = styled.article`
   margin-bottom: 2rem;
 `;
-
+const Frofile = styled.div`  
+  margin: 0 auto;
+  height: 4.2rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+` ;
 const PostImg = styled.img`
   width: 100%;
   height: 22.8rem;

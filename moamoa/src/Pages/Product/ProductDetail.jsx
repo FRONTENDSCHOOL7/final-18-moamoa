@@ -4,7 +4,8 @@ import { atom, useRecoilState,useRecoilValue } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom';
 import styled from 'styled-components';
 import Header from '../../Components/Common/HeaderBasic';
-// import PostCardUser from '../../Components/Common/PostCardUser';
+import AskBtn from './AskBtn';
+import PostCardUser from '../../Components/Common/PostCardUser';
 
 export default function ProductDetail() {
   const productState = atom({
@@ -12,6 +13,7 @@ export default function ProductDetail() {
     default: null,
   });
   const token = useRecoilValue(userToken);
+  
 
   const [productData, setProductData] = useRecoilState(productState);
   const [productId, setProductId] = useState([]);
@@ -81,17 +83,8 @@ export default function ProductDetail() {
             <FestivalContainer>
               <Header/>
               <Frofile>
-                {/* <PostCardUser url={profileImgUrl} username={postprop.author.username} accountname={postprop.author.accountname}/> */}
-                <UserInfo>
-                  <FrofileImg src={productData.product[pageIndex]?.itemImage || ''}alt='사용자' />
-                  <InfoText>
-                    <UserName>
-                      {productData.product[pageIndex]?.author?.username || '사용자를 찾을 수 없습니다.'}
-                    </UserName>
-                    <AccountName>@{productData.product[pageIndex]?.author?.accountname || ''}</AccountName>
-                  </InfoText>
-                </UserInfo>
-                <AskBtn>문의하기</AskBtn>
+                <PostCardUser url={productData.product[pageIndex].itemImage} username={productData.product[pageIndex].author.username} accountname={productData.product[pageIndex].author.accountname}/>
+                <AskBtn accountname={productData.product[pageIndex].author.accountname}/>                
               </Frofile>
               <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
               <InfoContainer>
@@ -134,29 +127,6 @@ const Frofile = styled.div`
   align-items: center;
   justify-content: space-between;
 ` ;
-const FrofileImg = styled.img`
-  width: 4.2rem;
-  height: 4.2rem;
-  border-radius: 100%;
-  margin-right: 1.2rem;
-` ;
-const UserInfo = styled.div`
-  display: flex;
-  align-items: center;
-` ;
-const InfoText = styled.div`
-
-`;
-
-const UserName = styled.p`
-  font-size: 1.4rem;
-  margin-bottom: 0.2rem;
-` ;
-const AccountName = styled.p` 
-  font-size: 1.2rem;
-  line-height: 1.4rem;
-  color: #767676;
-` ;
 const FestivalImg = styled.img`  
   width: 39rem;
   height: 27rem;
@@ -184,17 +154,4 @@ const FestivalDesc = styled.p`
   padding-left:1.8rem;
   margin-bottom: 1.6rem;
   color: #767676;
-`;
-
-const AskBtn = styled.button`
-  width: 8.6rem;
-  height: 2.8rem;
-  border-radius: 2rem;
-  background: #87B7E4;
-  color: white;
-  font-size: 1.4rem;
-  &:hover{
-    cursor: pointer;
-    background-color: #4F9EE9;
-  }
 `;
