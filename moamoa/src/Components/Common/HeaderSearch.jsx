@@ -2,6 +2,15 @@ import React from 'react';
 import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
 
+export default function Header() {
+  return (
+    <HeaderContainer>
+      <Gobackbtn />
+      <input type='text' />
+    </HeaderContainer>
+  );
+}
+
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-evenly;
@@ -24,12 +33,3 @@ const HeaderContainer = styled.header`
     border-radius: 32px;
   }
 `;
-
-export default function Header() {
-  return (
-    <HeaderContainer>
-      <Gobackbtn />
-      <input type='text' />
-    </HeaderContainer>
-  );
-}
