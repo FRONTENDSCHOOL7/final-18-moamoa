@@ -12,13 +12,14 @@ export default function PostCard(post) {
 
   const [heartCount, setHeartCount] = useState(0);
   const [toggleCount, setToggleCount] = useState(false);
-  const [heartColor, setHeartColor] = useState(heartBg);
+  const [heartcolor, setHeartColor] = useState(heartBg);
 
 
   const baseUrl = `https://api.mandarin.weniv.co.kr/`
 
   const postprop = post.post;
-  const profileImgUrl =`${baseUrl}${postprop.author.image}`;
+  console.log(postprop);
+  const profileImgUrl =`${postprop.author.image}`;
   const postImgUrl =`${baseUrl}${postprop.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`
@@ -34,10 +35,12 @@ export default function PostCard(post) {
     const handleHeartCount = () =>{
       if (toggleCount === true ){
         setHeartColor(heartBgFill);
-        setHeartCount(postprop.heartCount);
-      } else{
+        setHeartCount(postprop.heartCount+1);
+      } else {
         setHeartColor(heartBg);
-        setHeartCount(postprop.heartCount);}
+        setHeartCount(postprop.heartCount-1);
+      }
+      
       
       console.log(heartCount);      
     }
@@ -57,7 +60,7 @@ export default function PostCard(post) {
             <PostFooterContainer>
               <CreateDate>{outputDate}</CreateDate>
               <div>
-                <HeartBtn onClick={()=>{setToggleCount(!toggleCount);handleHeartCount();}} heartColor={heartColor}>{postprop.heartCount}</HeartBtn>
+                <HeartBtn onClick={()=>{setToggleCount((prev)=>!prev);handleHeartCount();}} heartcolor={heartcolor}>{postprop.heartCount}</HeartBtn>
                 <Link to={postDetailUrl}><CommentBtn>{postprop.commentCount}</CommentBtn></Link>
               </div>
             </PostFooterContainer>
@@ -108,12 +111,12 @@ const HeartBtn = styled.button`
   margin-right: 0.6rem;
   height: 2rem;
   color: #767676;
-  background: url(${props => props.heartColor}) 0.2rem no-repeat;
+  background: url(${props => props.heartcolor}) 0.2rem no-repeat;
   &:hover{
     cursor: pointer;
   }
   &:active{
-    background: url(${props => props.heartColor}) 0.2rem no-repeat;
+    background: url(${props => props.heartcolor}) 0.2rem no-repeat;
   }
 `;
 

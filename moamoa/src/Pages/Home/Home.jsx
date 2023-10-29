@@ -4,6 +4,7 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import PostCard from '../../Components/Common/PostCard';
 import PostState from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
+import HomeFeed from './HomeFeed';
 
 export default function Home() {
   const [post, setPost] = useRecoilState(PostState);
@@ -51,10 +52,11 @@ export default function Home() {
           </PostList>
         </HomeContainer>
       ) : (
-        <div>
-          <p>유저를 검색해 팔로우 해보세요!</p>
-          <button>검색하기</button>
-        </div>
+        <HomeContainer>
+          <PostList>
+            <HomeFeed/>
+          </PostList>
+        </HomeContainer>
       )}
     </>
   );
@@ -68,7 +70,7 @@ const HomeContainer = styled.div`
 const PostList = styled.div`
   max-width: 39rem;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: auto;
   background-color: #ffffff;
   padding: 2rem 1.6rem;
