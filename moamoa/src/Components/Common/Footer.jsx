@@ -10,7 +10,7 @@ import profileButton from '../../Assets/icons/icon-user.svg';
 import homeButtonFill from '../../Assets/icons/icon-home-fill.svg';
 import chatButtonFill from '../../Assets/icons/icon-message-fill.svg';
 import postButtonFill from '../../Assets/icons/icon-post-fill.svg';
-import festivalButtonFill from '../../Assets/icons/icon-festival-fill.svg'; // 수정: 아이콘 이름 올바로 설정
+import festivalButtonFill from '../../Assets/icons/icon-festival-fill.svg';
 import profileButtonFill from '../../Assets/icons/icon-user-fill.svg';
 
 export default function Footer() {
@@ -41,13 +41,10 @@ export default function Footer() {
     },
   ];
 
-  // 현재 페이지 경로 가져오기
   const currentPath = window.location.pathname;
 
-  // 현재 페이지에 해당하는 탭 찾기
   const initialTab = tabs.find((tab) => tab.path === currentPath);
 
-  // 초기 선택 탭 설정
   const [toggleSwitch, setToggleSwitch] = useState(initialTab ? initialTab.name : 'home');
 
   const handleToggleSwitch = (tabName) => {
