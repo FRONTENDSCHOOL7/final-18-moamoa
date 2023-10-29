@@ -9,14 +9,14 @@ import React from 'react';
 // import React, { useState, useEffect } from 'react';
 // import { useRecoilValue } from 'recoil';
 // import { useLocation } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 // import userTypeAtom from '../../Recoil/userTypeAtom'; //파일경로 변경 완료
 
 // import ProductImgBox from '../../Components/Common/ProductImgBox';
 import ProfileDetail from '../../Components/Common/ProfileDetail';
-// import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
+import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
 
 // //진행중인 행사
 // function EventList() {
@@ -65,7 +65,7 @@ import ProfileDetail from '../../Components/Common/ProfileDetail';
 
 // 프로필보기
 function MyProfile() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const joinData = useRecoilValue(userTypeAtom);
 
@@ -75,29 +75,28 @@ function MyProfile() {
         <h1>내 프로필</h1>
         <section>
           <ProfileDetail />
-          {/* 내 계정 페이지 버튼 */}
-          {/* <button
+          <button
             type='button'
             onClick={() => {
               navigate('/profile/edit');
             }}
-          > */}
-          {/* 프로필 수정
-          </button> */}
-          {/* 판매자 계정일 경우 상품등록 버튼 삭제 */}
-          {/* {joinData.userType === 'organization' ? (
-            <button
-              type='button'
-              onClick={() => {
-                navigate('/product');
-              }}
-            >
-              상품 등록
-            </button>
-          ) : null} */}
+          >
+            프로필 수정
+          </button>
+          {/* 일반 계정일 경우 상품등록 버튼 제거 */}
+          {/* {joinData.userType === 'organization' ? ( */}
+          <button
+            type='button'
+            onClick={() => {
+              navigate('/product');
+            }}
+          >
+            상품 등록
+          </button>
+          {/* ) : null} */}
         </section>
         {/* <EventList /> */}
-        {/* <ProfileDetailPost /> */}
+        <ProfileDetailPost />
       </section>
     </div>
   );
