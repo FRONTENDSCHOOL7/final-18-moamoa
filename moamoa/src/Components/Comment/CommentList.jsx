@@ -30,6 +30,10 @@ export default function CommentList(postId) {
   
   console.log(comments)
 
+  const handleCommnet = () => {
+    
+  }
+
   return (
     <div>
       <ul>
@@ -38,7 +42,7 @@ export default function CommentList(postId) {
         })}      
       </ul>
       <div>
-        <input type="text" />
+        <input type="text" onChange={handleCommnet()}/>
         <button>게시</button>
       </div>
     </div>
