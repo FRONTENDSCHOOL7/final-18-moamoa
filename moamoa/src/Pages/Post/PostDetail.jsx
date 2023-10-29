@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
-import PostState from '../../Recoil/followPostAtom'; ////파일 경로 변경 완료
+import followPostAtom from '../../Recoil/followPostAtom'; ////파일 경로 변경 완료
 import PostCard from '../../Components/Common/PostCard';
+import styled from 'styled-components';
 
 export default function ProductDetail() {
   const token = useRecoilValue(userToken);
-  const [post, setPost] = useRecoilState(PostState);
+  const [post, setPost] = useRecoilState(followPostAtom);
   const [postIdList, setPostIdList] = useState([]);
   const [pageIndex, setPageIndex] = useState(null);
 
@@ -52,9 +53,28 @@ export default function ProductDetail() {
   }, [index]);
 
   return (
-    <>
-      {console.log(pageIndex)}
-      {post && pageIndex !== null && pageIndex !== -1 && <PostCard post={post[pageIndex]} />}
-    </>
+    <PostContainer>
+      <PostCardContainer>
+        {console.log(pageIndex)}
+        {post && pageIndex !== null && pageIndex !== -1 && <PostCard post={post[pageIndex]} />}
+      </PostCardContainer>
+    </PostContainer>
   );
+
+
 }
+
+const PostContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #fff9e4;
+`;
+
+const PostCardContainer = styled.div`
+  max-width: 39rem;
+  width: 100%;
+  height: 100vh;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 2rem 1.6rem;
+`;
