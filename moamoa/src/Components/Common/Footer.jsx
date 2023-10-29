@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import homeButton from '../../Assets/icons/icon-home.svg';
 import chatButton from '../../Assets/icons/icon-message.svg';
@@ -15,6 +15,7 @@ import profileButtonFill from '../../Assets/icons/icon-user-fill.svg';
 
 export default function Footer() {
   const navigate = useNavigate();
+  const location = useLocation();
   const tabs = [
     { name: 'home', label: '홈', path: '/home', icon: homeButton, fillIcon: homeButtonFill },
     { name: 'chat', label: '채팅', path: '/chat', icon: chatButton, fillIcon: chatButtonFill },
@@ -41,7 +42,7 @@ export default function Footer() {
     },
   ];
 
-  const currentPath = window.location.pathname;
+  const currentPath = location.pathname;
 
   const initialTab = tabs.find((tab) => tab.path === currentPath);
 
@@ -58,7 +59,7 @@ export default function Footer() {
   return (
     <TabMenu>
       {tabs.map((tab) => (
-        <TabButton key={tab.name}>
+        <TabButton key={tab.name} active={toggleSwitch === tab.name}>
           <TabBtnImg
             src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon}
             onClick={() => handleToggleSwitch(tab.name)}
@@ -91,6 +92,7 @@ const TabButton = styled.button`
   p {
     font-size: 10px;
     color: #fff;
+    color: ${(props) => (props.active ? '#FFC700' : '#fff')};
   }
 `;
 

@@ -54,7 +54,7 @@ export default function Home() {
       ) : (
         <HomeContainer>
           <PostList>
-            <HomeFeed/>
+            <HomeFeed />
           </PostList>
         </HomeContainer>
       )}
