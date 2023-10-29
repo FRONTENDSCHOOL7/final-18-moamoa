@@ -8,55 +8,55 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import userTypeAtom from '../../Recoil/userTypeAtom'; //파일경로 변경 완료
 
-function PostCnt() {
-  const location = useLocation();
-  const token = useRecoilValue(userToken);
-  // const joinData = useRecoilValue(userTypeAtom);
-  const userAccountname = location.pathname.replace('/profile/', ''); // 경로에서 사용자 accountname을 추출
-
+function PostCnt({ src, token }) {
   const [postCount, setPostCount] = useState(0);
   const [productCount, setProductCount] = useState(0);
 
+  const fetchPostCount = async () => {
+    const res = await fetch(`https://api.mandarin.weniv.co.kr/post/${src}/userpost`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+    });
+    const json = await res.json();
+    setPostCount(json.post.length);
+  };
+
+  const fetchProductCount = async () => {
+    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${src}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+    });
+    const json = await res.json();
+    setProductCount(json.product.length);
+    // //판매자 계정이 아닐경우 행사 길이가 0
+    // joinData.userType === 'organization'
+    //   ? setProductCount(json.product.length)
+    //   : setProductCount(0);
+  };
+
   useEffect(() => {
-    const fetchPostCount = async () => {
-      const res = await fetch(`https://api.mandarin.weniv.co.kr/post/${userAccountname}/userpost`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-      });
-      const json = await res.json();
-      setPostCount(json.post.length);
-    };
-
-    const fetchProductCount = async () => {
-      const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${userAccountname}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-      });
-      const json = await res.json();
-
-      setProductCount(json.product.length);
-      // //판매자 계정이 아닐경우 행사 길이가 0
-      // joinData.userType === 'organization'
-      //   ? setProductCount(json.product.length)
-      //   : setProductCount(0);
-    };
-
     fetchPostCount();
     fetchProductCount();
-  }, [userAccountname, token]);
+  }, [src, token]);
 
   return <p>게시글 수 : {postCount + productCount}</p>;
 }
+
+PostCnt.propTypes = {
+  src: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
 export default function ProfileDetail() {
   const location = useLocation();
@@ -71,11 +71,12 @@ export default function ProfileDetail() {
   const token = useRecoilValue(userToken);
   const joinData = useRecoilValue(userTypeAtom);
   const userAccountname = location.pathname.replace('/profile/', ''); // 경로에서 사용자 accountname을 추출
+  const myUrl = `https://api.mandarin.weniv.co.kr/user/myinfo`;
+  const yourUrl = `https://api.mandarin.weniv.co.kr/profile/${userAccountname}`;
+  let resultUrl = userAccountname === 'myInfo' ? myUrl : yourUrl;
 
   const getYourinfo = async () => {
-    // const accountname = localStorage.getItem('accountname');
-
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/profile/${userAccountname}`, {
+    const res = await fetch(resultUrl, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -83,15 +84,24 @@ export default function ProfileDetail() {
       },
     });
     const json = await res.json();
-    console.log(json);
+
     console.log(`유저타입: ${JSON.stringify(joinData)}`);
 
-    setProfileImg(json.profile['image']);
-    setProfileAccountname(JSON.stringify(json.profile['accountname']));
-    setProfileUsername(JSON.stringify(json.profile['username']));
-    setProfileIntro(JSON.stringify(json.profile['intro']));
-    setProfileFollowerCount(JSON.stringify(json.profile['followerCount']));
-    setProfileFollowingCount(JSON.stringify(json.profile['followingCount']));
+    if (userAccountname === 'myInfo') {
+      setProfileImg(json.user['image']);
+      setProfileAccountname(json.user['accountname']);
+      setProfileUsername(json.user['username']);
+      setProfileIntro(json.user['intro']);
+      setProfileFollowerCount(JSON.stringify(json.user['followerCount']));
+      setProfileFollowingCount(JSON.stringify(json.user['followingCount']));
+    } else {
+      setProfileImg(json.profile['image']);
+      setProfileAccountname(json.profile['accountname']);
+      setProfileUsername(json.profile['username']);
+      setProfileIntro(json.profile['intro']);
+      setProfileFollowerCount(JSON.stringify(json.profile['followerCount']));
+      setProfileFollowingCount(JSON.stringify(json.profile['followingCount']));
+    }
   };
 
   useEffect(() => {
@@ -108,7 +118,9 @@ export default function ProfileDetail() {
       <p>계정 id: {profileAccountname}</p>
       <p>소개글: {profileIntro}</p>
       {/* <p>게시글 수: 행사</p>   */}
-      <PostCnt />
+      {profileAccountname && profileImg && profileUsername && (
+        <PostCnt src={profileAccountname} token={token} />
+      )}
       <p>팔로워: {profileFollowerCount}</p>
       <p>팔로잉: {profileFollowingCount}</p>
     </section>
