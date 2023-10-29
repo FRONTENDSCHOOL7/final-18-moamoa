@@ -23,7 +23,7 @@ const HeaderContainer = styled.header`
   background-color: #fff;
   border-bottom: 1px solid #dbdbdb;
   align-items: center;
-  font-size: 24px;
+  font-size: 21px;
   font-weight: bold;
   box-sizing: border-box;
   img {
