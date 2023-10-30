@@ -10,7 +10,7 @@ import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';
 import EditProfile from '../Pages/Profile/EditProfile';
 
-// import FollowingList from '../Pages/Follow/FollowingList';
+import FollowingList from '../Pages/Follow/FollowingList';
 import FollowerList from '../Pages/Follow/FollowerList';
 
 import ProductDetail from '../Pages/Product/ProductDetail';
@@ -56,6 +56,8 @@ export default function AppRoutes() {
 
       {/* 팔로워 리스트*/}
       <Route path='profile/:accountname/follower' element={<FollowerList />} />
+      {/*  팔로잉 리스트 */}
+      <Route path='profile/:accountname/following' element={<FollowingList />} />
 
       {/* 상품 등록 */}
       <Route path='/product' element={<AddProduct />} />

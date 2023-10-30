@@ -10,7 +10,7 @@ html{
 	font-size: 62.5%;
 }
 body{
-	/* background-color:#fff9e4; */
+	background-color:#fff9e4;
 	/* 바디에 배경색 */
 	font-family: 'Pretendard', sans-serif;
 }
