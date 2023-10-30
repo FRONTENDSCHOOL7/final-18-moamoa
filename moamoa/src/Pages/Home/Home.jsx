@@ -66,12 +66,14 @@ const HomeContainer = styled.div`
   width: 100%;
   height: 100%;
   background-color: #fff9e4;
+  
 `;
 const PostList = styled.div`
+  box-sizing: border-box;
   max-width: 39rem;
-  width: 100%;
-  height: 100vh;
+  width: 39rem;
+  height: 100%;
   margin: auto;
   background-color: #ffffff;
-  padding: 2rem 1.6rem;
+  padding: 2rem 1.6rem 15rem;
 `;

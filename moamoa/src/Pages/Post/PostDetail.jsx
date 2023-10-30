@@ -5,6 +5,7 @@ import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완�
 import followPostAtom from '../../Recoil/followPostAtom'; ////파일 경로 변경 완료
 import PostCard from '../../Components/Common/PostCard';
 import styled from 'styled-components';
+import Comment from '../../Components/Comment/Comment';
 
 export default function ProductDetail() {
   const token = useRecoilValue(userToken);
@@ -59,6 +60,7 @@ export default function ProductDetail() {
         {console.log(pageIndex)}
         {post && pageIndex !== null && pageIndex !== -1 && <PostCard post={post[pageIndex]} />}
       </PostCardContainer>
+      <Comment postId={params.post_id}/>
     </PostContainer>
   );
 
@@ -72,10 +74,11 @@ const PostContainer = styled.div`
 `;
 
 const PostCardContainer = styled.div`
+  box-sizing: border-box;
   max-width: 39rem;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: auto;
   background-color: #ffffff;
-  padding: 2rem 1.6rem;
+  padding: 0 1.6rem 1.5rem;
 `;
