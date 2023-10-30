@@ -3,11 +3,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function Button(props) {
-  const { onClickHandler, disabled, buttonText } = props;
+  const { onClickHandler, disabled, buttonText, backgroundColor, color, bordered } = props;
 
   return (
     <div>
-      <ButtonSubmit disabled={disabled} onClick={onClickHandler}>
+      <ButtonSubmit
+        width={props.width}
+        disabled={disabled}
+        onClick={onClickHandler}
+        backgroundColor={backgroundColor}
+        color={color}
+        style={{
+          border: bordered ? '1px solid #dbdbdb' : 'none',
+        }}
+      >
         {buttonText}
       </ButtonSubmit>
     </div>
@@ -15,11 +24,14 @@ export default function Button(props) {
 }
 
 const ButtonSubmit = styled.button`
-  width: 90px;
+  width: ${(props) => (props.width ? `${props.width}px` : '90px')};
+  background-color: ${(props) => (props.backgroundColor ? `${props.backgroundColor}` : '#87b7e4')};
+  color: ${(props) => (props.color ? `${props.color}` : '#fff')};
+  border: ${(props) => (props.border ? `${props.color}` : '#fff')};
+
   height: 32px;
   border-radius: 32px;
-  background: #87b7e4;
-  color: #fff;
+
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
