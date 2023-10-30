@@ -30,7 +30,7 @@ export default function Landing() {
           <p className='logotext'>내 손 안의 안의 모든 축제!</p>
         </SVGgroup>
         <Copyright>@copyright moamoa corp</Copyright>
-        <LoginModal visible={modalActive ? 'true' : 'false'}>
+        <LoginModal visible={modalActive ? true : false}>
           <Link to='/user/login'>
             <BlueMoa>이메일 계정으로 로그인</BlueMoa>
           </Link>
@@ -132,8 +132,8 @@ const LoginModal = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== 'visible',
 })`
   position: fixed;
-  bottom: ${(props) => (props.visible === 'true' ? '0' : '-300px')};
-  visibility: ${(props) => (props.visible === 'true' ? 'visible' : 'hidden')};
+  bottom: ${(props) => (props.visible === true ? '0' : '-300px')};
+  visibility: ${(props) => (props.visible === true ? 'visible' : 'hidden')};
   transition: 0.5s ease;
   display: flex;
   flex-direction: column;
