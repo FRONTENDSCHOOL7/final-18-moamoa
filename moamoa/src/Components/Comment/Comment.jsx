@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import CommentItem from './CommentItem';
 import styled from 'styled-components';
+import AddCommentBtn from './AddCommentBtn';
 
 
 export default function Comment(postId) {
@@ -25,16 +26,17 @@ export default function Comment(postId) {
       }
     }
     getComment(); 
-  }, [postId, token]);
+  }, [postId, addComment, token]);
 
 
   const postComment = async (AddData)=>{
   try {
-    await axios.post(`https://api.mandarin.weniv.co.kr/post/${postId.postId}/comments`, AddData, {
+    const res = await axios.post(`https://api.mandarin.weniv.co.kr/post/${postId.postId}/comments`, AddData, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+        setComments(res.data.comments);
   } catch (error) {
       console.error('데이터 전송에 실패했습니다.', error);
     }
@@ -50,10 +52,13 @@ export default function Comment(postId) {
         content:addComment
       }}
     postComment(AddData)
-    setAddComment("")
+    setAddComment("")    
+    // getComment(); 
   }
 
   const handleCommnet = (e) => setAddComment(e.target.value)
+
+  {console.log(comments)}
 
   return (
     <CommentContainer>
@@ -63,9 +68,9 @@ export default function Comment(postId) {
         })}      
       </CommentList>
       <AddComment onSubmit={handleSubmit}>
-        <img src="" alt="" />
-        <input type="text" value={addComment} onChange={handleCommnet} placeholder='댓글 입력하기...'/>
-        <AddCommentBtn>게시</AddCommentBtn>
+        {/* <img src="" alt="" /> */}
+        <CommentContent type="text" value={addComment} onChange={handleCommnet} placeholder='댓글을 입력해주세요 :)'/>
+        <AddCommentBtn addcomment={addComment}/>
       </AddComment>
     </CommentContainer>
   )
@@ -80,20 +85,21 @@ const CommentContainer = styled.div`
 const CommentList = styled.ul`
   border-top: 1px solid #dbdbdb;
   max-width: 39rem;
-  height: 100%;
   margin: auto;
   background-color: #ffffff;
   box-sizing: border-box;
-  padding: 1.8rem 1.6rem;
+  padding: 1.8rem 1.6rem 3rem;
 `;
 
 const AddComment = styled.form`
+  box-sizing: border-box;
   width: 100%;
   max-width: 39rem;
   height: 6rem;
   background-color: white;
   border-top: 1px solid #dbdbdb;
   margin: auto;
+  padding: 0 2rem;
   position: fixed;
   bottom: 0;
   left: 50%;
@@ -103,10 +109,12 @@ const AddComment = styled.form`
   align-items: center;
 `;
 
-const AddCommentBtn = styled.button`
-  width: 4.6rem;
-  height: 4rem;
-  border-radius: 1rem;
-  border: 1px solid #C4C4C4;
-
+const CommentContent = styled.input`
+  width: 28rem;
+  height: 5rem;
+  font-size: 1.4rem;
+  &::placeholder{color: #C4C4C4;}
+  &:focus{
+    outline:none;
+  }
 `;

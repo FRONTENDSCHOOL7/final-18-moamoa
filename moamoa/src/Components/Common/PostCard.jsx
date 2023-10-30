@@ -41,7 +41,7 @@ export default function PostCard(post) {
   return (
     <>
       {post && (
-        <li>
+        <PostList>
           <PostArticle>
             <Frofile>
               <PostCardUser
@@ -73,11 +73,17 @@ export default function PostCard(post) {
               </div>
             </PostFooterContainer>
           </PostArticle>
-        </li>
+        </PostList>
       )}
     </>
   );
 }
+
+const PostList = styled.li`
+  &:first-child { 
+      padding-top: 4rem; 
+    }
+`;
 
 const PostArticle = styled.article`
   margin-top: 3rem;
