@@ -7,9 +7,13 @@ import google from '../../Assets/images/google.png';
 import naver from '../../Assets/images/naver.png';
 import fireworks from '../../Assets/images/fireworks.svg';
 import Festival from '../../Assets/images/Festival.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import userTokenAtom from '../../Recoil/userTokenAtom';
+import { useRecoilValue } from 'recoil';
 
 export default function Landing() {
+  const navigate = useNavigate();
+  const userToken = useRecoilValue(userTokenAtom);
   const [modalActive, setModalActive] = useState(false);
   useEffect(() => {
     const modalTimeout = setTimeout(() => {
@@ -18,6 +22,13 @@ export default function Landing() {
     return () => clearTimeout(modalTimeout);
   }, []);
 
+  useEffect(() => {
+    if (userToken) {
+      navigate('/home');
+    } else {
+      navigate('/');
+    }
+  });
   return (
     <Container>
       <MoaMoaBox>
@@ -38,7 +49,9 @@ export default function Landing() {
           <Google>구글 계정으로 로그인</Google>
           <Naver>네이버 계정으로 로그인</Naver>
           <p>아직 회원이 아니신가요?</p>
-          <a href='#'>이메일로 회원가입</a>
+          <Link to='/user/join'>
+            <a href='#'>이메일로 회원가입</a>
+          </Link>
         </LoginModal>
       </MoaMoaBox>
     </Container>
@@ -85,7 +98,6 @@ const SVGgroup = styled.div`
   .blinkfireworks {
     transform: translateX(95%);
     justify-content: center;
-
     width: 57px;
     height: 57px;
   }
