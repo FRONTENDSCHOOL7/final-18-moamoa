@@ -1,5 +1,5 @@
 /*
-  설명: 프로필 상세 페이지 하단 게시물 목록 컴포넌트
+  설명: 프로필 상세 페이지 내 게시물 목록(기본형/앨범형)
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
   마지막 수정 날까: 2023.10.29
@@ -8,6 +8,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import PostCard from '../../Components/Common/PostCard';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
@@ -15,6 +17,7 @@ export default function ProfileDetailPost() {
   const location = useLocation();
   const token = useRecoilValue(userToken);
   const userAccountname = location.pathname.replace('/profile/', '');
+  const navigate = useNavigate();
 
   const [myPostList, setMyPostList] = useState([]);
   const [view, setView] = useState('PostList');
@@ -41,6 +44,7 @@ export default function ProfileDetailPost() {
       },
     });
     const json = await res.json();
+    console.log(json);
     setMyPostList(json.post);
   };
 
@@ -53,11 +57,15 @@ export default function ProfileDetailPost() {
     fetchData();
   }, []);
 
+  const handlePostClick = (postId) => {
+    navigate(`/post/${postId}`);
+  };
+
   return (
     <div>
       <button onClick={() => setView('PostList')}>햄버거 버튼</button>
       <button onClick={() => setView('PostImgList')}>벤토 버튼</button>
-
+      {/* 햄버거 버튼 */}
       {view === 'PostList' && (
         <ul>
           {myPostList.map((item) => {
@@ -65,7 +73,16 @@ export default function ProfileDetailPost() {
           })}
         </ul>
       )}
-      {view === 'PostImgList' && <p>벤토버튼 클릭</p>}
+      {/* 벤토 버튼 */}
+      {view === 'PostImgList' && (
+        <ul>
+          {myPostList.map((item) => (
+            <li onClick={() => handlePostClick(item.id)} key={item.id}>
+              {item.image ? <img src={item.image} alt='Product' /> : null}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
