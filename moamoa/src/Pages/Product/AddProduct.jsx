@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import axios from 'axios';
-import userTokenAtom from '../../Recoil/userTokenAtom';
-import eventTypeAtom from '../../Recoil/eventTypeAtom';
 import GoBack from '../../Assets/icons/icon-arrow-left.svg';
+import { uploadImage } from '../../API/Img/UploadImageAPI';
+import ProductUploadAPI from '../../API/Product/ProductUploadAPI';
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -18,107 +16,19 @@ const AddProduct = () => {
   );
   const [eventDetail, setEventDetail] = useState('');
   const [eventType, setEventType] = useState('');
-  const [requiredInfoMsg, setRequiredInfoMsg] = useState('');
 
-  const setEventTypeAtom = useSetRecoilState(eventTypeAtom);
-  const saveEventType = () => {
-    setEventTypeAtom({ eventType, eventName });
+  const uploadEvent = ProductUploadAPI({ eventName, eventPeriod, eventDetail, imgSrc, eventType });
+
+  const submitProduct = async (e) => {
+    e.preventDefault();
+    await uploadEvent();
+    // navigate('/profile');
   };
 
-  const token = useRecoilValue(userTokenAtom);
-
-  const addEvent = async (imgSrc, eventName, eventPeriod, eventDetail) => {
-    const baseUrl = 'https://api.mandarin.weniv.co.kr';
-    const reqPath = '/product';
-    const reqUrl = baseUrl + reqPath;
-
-    try {
-      await axios({
-        method: 'post',
-        url: reqUrl,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
-          product: {
-            itemName: eventName,
-            price: eventPeriod,
-            link: eventDetail,
-            itemImage: imgSrc,
-          },
-        },
-      }).then((res) => {
-        //status 200//
-        saveEventType();
-        console.log(res.data);
-        // navigate('/product/:accountname');
-      });
-    } catch (err) {
-      if (err.response) {
-        const { status, data } = err.response;
-        if (status === 422) {
-          // 필수 입력 사항이 모두 입력되지 않았을 경우 메세지 출력
-          setRequiredInfoMsg(data.message);
-        }
-        if (status === 404) {
-          //404 이미지 출력
-        }
-        if (status === 500) {
-          console.log('Server error');
-        }
-      } else if (err.request) {
-        // 요청이 이루어졌으나 서버에서 응답이 없었을 경우
-        console.log('Error', err.message);
-      } else {
-        // 그 외 다른 에러
-        console.log('Error', err.message);
-      }
-    }
-  };
-
-  const inputEventName = (e) => {
-    setEventName(e.target.value);
-  };
-
-  const inputEventStartDate = (e) => {
-    setEventStartDate(e.target.value);
-  };
-
-  const inputEventEndDate = (e) => {
-    setEventEndDate(e.target.value);
-  };
-
-  const inputEventDetail = (e) => {
-    setEventDetail(e.target.value);
-  };
-
-  const uploadImage = async (imageFile) => {
-    const baseUrl = 'https://api.mandarin.weniv.co.kr/';
-    const reqUrl = baseUrl + 'image/uploadfile';
-    //폼데이터 만들기
-    const form = new FormData();
-    //폼데이터에 값 추가하기
-    //폼데이터.append("키","값");
-    form.append('image', imageFile);
-    //폼바디에 넣어서 요청하기
-    const res = await fetch(reqUrl, {
-      method: 'POST',
-      body: form,
-    });
-    const json = await res.json();
-    const imageUrl = baseUrl + json.filename;
-    setImgSrc(imageUrl);
-  };
-
-  const handleChangeImage = (e) => {
-    //파일 가져오기
+  const handleChangeImage = async (e) => {
     const imageFile = e.target.files[0];
-    uploadImage(imageFile);
-  };
-
-  // 뒤로 가기 클릭 시 이동
-  const clickLeftArrow = () => {
-    navigate(-1);
+    const response = await uploadImage(imageFile);
+    setImgSrc(response);
   };
 
   const checkTwoDates = () => {
@@ -149,15 +59,10 @@ const AddProduct = () => {
     twoDatesIntoOneString();
   }, [eventStartDate, eventEndDate]);
 
-  const submitProduct = (e) => {
-    e.preventDefault();
-    addEvent(imgSrc, eventName, eventPeriod, eventDetail);
-  };
-
   return (
     <>
       <header>
-        <a onClick={clickLeftArrow}>
+        <a onClick={() => navigate(-1)}>
           <img src={GoBack} />
         </a>
       </header>
@@ -194,7 +99,7 @@ const AddProduct = () => {
               placeholder='2~22자 이내여야 합니다.'
               pattern='.{2,22}'
               title='2~22자 이내여야 합니다.'
-              onChange={inputEventName}
+              onChange={(e) => setEventName(e.target.value)}
               value={eventName}
             ></input>
           </div>
@@ -204,7 +109,7 @@ const AddProduct = () => {
               <input
                 type='date'
                 id='event-period'
-                onChange={inputEventStartDate}
+                onChange={(e) => setEventStartDate(e.target.value)}
                 value={eventStartDate}
                 pattern='yyyy-MM-dd'
                 max='9999-12-31'
@@ -212,7 +117,7 @@ const AddProduct = () => {
               <input
                 type='date'
                 id='event-period'
-                onChange={inputEventEndDate}
+                onChange={(e) => setEventEndDate(e.target.value)}
                 value={eventEndDate}
                 pattern='yyyy-MM-dd'
                 max='9999-12-31'
@@ -225,7 +130,7 @@ const AddProduct = () => {
             <textarea
               id='event-detail'
               placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
-              onChange={inputEventDetail}
+              onChange={(e) => setEventDetail(e.target.value)}
               value={eventDetail}
             ></textarea>
           </div>
@@ -242,7 +147,6 @@ const AddProduct = () => {
             저장
           </button>
         </form>
-        {requiredInfoMsg}
       </main>
     </>
   );
