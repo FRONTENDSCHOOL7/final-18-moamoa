@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지 공통 UI
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.10.29
+  마지막 수정 날까: 2023.10.30
 */
 
 import React, { useState, useEffect } from 'react';
@@ -121,8 +121,8 @@ export default function ProfileDetail() {
       {profileAccountname && profileImg && profileUsername && (
         <PostCnt src={profileAccountname} token={token} />
       )}
-      <p>팔로워: {profileFollowerCount}</p>
-      <p>팔로잉: {profileFollowingCount}</p>
+      <button>팔로워: {profileFollowerCount}</button>
+      <button>팔로잉: {profileFollowingCount}</button>
     </section>
   );
 }
