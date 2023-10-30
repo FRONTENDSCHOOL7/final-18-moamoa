@@ -5,6 +5,7 @@ import userTokenAtom from '../../Recoil/userTokenAtom';
 import isLoginAtom from '../../Recoil/isLoginAtom';
 import accountNameAtom from '../../Recoil/accountNameAtom';
 import LoginAPI from '../../API/Auth/LoginAPI';
+import userNameAtom from '../../Recoil/userNameAtom';
 
 const useLogin = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const useLogin = () => {
   const setUserToken = useSetRecoilState(userTokenAtom);
   const [isLoginState, setIsLoginState] = useRecoilState(isLoginAtom);
   const setAccountName = useSetRecoilState(accountNameAtom);
+  const setUserName = useSetRecoilState(userNameAtom);
 
   const handleError = () => {
     const user = userInput.user;
@@ -52,6 +54,7 @@ const useLogin = () => {
       setUserToken(res.user.token);
       setIsLoginState(true);
       setAccountName(res.user.accountname);
+      setUserName(res.user.username);
       navigate('/home');
     } else if (res && !Object.prototype.hasOwnProperty.call(res, 'user')) {
       setUserErrorMessage(res.message);
