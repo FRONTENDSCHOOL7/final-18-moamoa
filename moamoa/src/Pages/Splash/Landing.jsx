@@ -12,12 +12,9 @@ import { Link } from 'react-router-dom';
 export default function Landing() {
   const [modalActive, setModalActive] = useState(false);
   useEffect(() => {
-    // 3초 뒤에 모달을 자동으로 활성화하도록 설정합니다.
     const modalTimeout = setTimeout(() => {
       setModalActive(true);
     }, 2000);
-
-    // 컴포넌트가 언마운트되면 타임아웃을 클리어합니다.
     return () => clearTimeout(modalTimeout);
   }, []);
 
@@ -33,7 +30,7 @@ export default function Landing() {
           <p className='logotext'>내 손 안의 안의 모든 축제!</p>
         </SVGgroup>
         <Copyright>@copyright moamoa corp</Copyright>
-        <LoginModal visible={modalActive}>
+        <LoginModal visible={modalActive ? true : false}>
           <Link to='/user/login'>
             <BlueMoa>이메일 계정으로 로그인</BlueMoa>
           </Link>
@@ -97,31 +94,31 @@ const SVGgroup = styled.div`
   }
   @keyframes blink {
     0% {
-      opacity: 0.2; /* 초기에 투명 */
+      opacity: 0.2;
     }
     10% {
-      opacity: 0.1; /* 초기에 투명 */
+      opacity: 0.1;
     }
     20% {
-      opacity: 0.2; /* 초기에 투명 */
+      opacity: 0.2;
     }
     30% {
-      opacity: 0.15; /* 초기에 투명 */
+      opacity: 0.15;
     }
     32% {
-      opacity: 0.8; /* 초기에 투명 */
+      opacity: 0.8;
     }
     50% {
-      opacity: 0.1; /* 50% 지점에서 불투명 */
+      opacity: 0.1;
     }
     70% {
-      opacity: 0.04; /* 50% 지점에서 불투명 */
+      opacity: 0.04;
     }
     85% {
-      opacity: 0.1; /* 50% 지점에서 불투명 */
+      opacity: 0.1;
     }
     100% {
-      opacity: 1; /* 100% 지점에서 다시 투명 */
+      opacity: 1;
     }
   }
 `;
@@ -131,10 +128,12 @@ const Copyright = styled.p`
   color: #ffffff;
   font-size: 14px;
 `;
-const LoginModal = styled.div`
+const LoginModal = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'visible',
+})`
   position: fixed;
-  bottom: ${(props) => (props.visible ? '0' : '-300px')};
-  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  bottom: ${(props) => (props.visible === true ? '0' : '-300px')};
+  visibility: ${(props) => (props.visible === true ? 'visible' : 'hidden')};
   transition: 0.5s ease;
   display: flex;
   flex-direction: column;
@@ -160,7 +159,7 @@ const LoginModal = styled.div`
   }
 `;
 
-const tempLoginButton = styled.button`
+const TempLoginButton = styled.button`
   margin: 0 auto;
   width: 322px;
   height: 44px;
@@ -170,25 +169,25 @@ const tempLoginButton = styled.button`
   cursor: pointer;
   background-repeat: no-repeat;
 `;
-const BlueMoa = styled(tempLoginButton)`
+const BlueMoa = styled(TempLoginButton)`
   border: 1px solid #017dc2;
   background-image: url(${Bluemoa});
   background-size: 30px;
   background-position: 14px 2px;
 `;
-const Kakao = styled(tempLoginButton)`
+const Kakao = styled(TempLoginButton)`
   border: 1px solid #f0e2b9;
   background-image: url(${kakao});
   background-size: 24px;
   background-position: 16px 9px;
 `;
-const Google = styled(tempLoginButton)`
+const Google = styled(TempLoginButton)`
   border: 1px solid #888282;
   background-image: url(${google});
   background-size: 30px;
   background-position: 14px 6px;
 `;
-const Naver = styled(tempLoginButton)`
+const Naver = styled(TempLoginButton)`
   border: 1px solid #a1e9a0;
   background-image: url(${naver});
   background-size: 30px;
