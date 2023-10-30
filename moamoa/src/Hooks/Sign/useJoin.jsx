@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import JoinAPI from '../../API/Auth/JoinAPI';
 import EmailValidAPI from '../../API/Valid/EmailValidAPI';
-import { useSetRecoilState } from 'recoil';
-import userTypeAtom from '../../Recoil/userTypeAtom';
 
 const useJoin = () => {
   const navigate = useNavigate();
@@ -23,8 +21,6 @@ const useJoin = () => {
       image: '',
     },
   });
-
-  const setUserTypeAtom = useSetRecoilState(userTypeAtom);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,13 +69,12 @@ const useJoin = () => {
   };
 
   const handleJoin = async () => {
-    const res = await JoinAPI(userInfo);
+    const res = await JoinAPI(userInfo, userType);
 
     if (res) {
       setErrorMessage(res.message);
 
       if (res.message === '회원가입 성공') {
-        setUserTypeAtom(userType);
         navigate('/user/login');
       }
     }

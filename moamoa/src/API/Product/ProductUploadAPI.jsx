@@ -1,17 +1,11 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import axios from 'axios';
 import userTokenAtom from '../../Recoil/userTokenAtom';
-import eventTypeAtom from '../../Recoil/eventTypeAtom';
 
 const ProductUploadAPI = (inputValue) => {
   const reqURL = 'https://api.mandarin.weniv.co.kr/product';
   const token = useRecoilValue(userTokenAtom);
   const { eventName, eventPeriod, eventDetail, imgSrc, eventType } = inputValue;
-
-  const setEventTypeAtom = useSetRecoilState(eventTypeAtom);
-  const saveEventType = () => {
-    setEventTypeAtom({ eventType, eventName });
-  };
 
   const uploadProduct = async () => {
     try {
@@ -23,14 +17,13 @@ const ProductUploadAPI = (inputValue) => {
         },
         data: {
           product: {
-            itemName: eventName,
+            itemName: eventType === 'festival' ? `[f]${eventName}` : `[e]${eventName}`,
             price: eventPeriod,
             link: eventDetail,
             itemImage: imgSrc,
           },
         },
       }).then((res) => {
-        saveEventType();
         console.log(res.data);
       });
     } catch (error) {
