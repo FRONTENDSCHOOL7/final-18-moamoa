@@ -64,18 +64,22 @@ export default function ProductList() {
         <ProductContainer>
           {isFestivalActive
             ? product
+
                 .filter((item) => {
                   if (item.price.toString().length >= 16) {
                     return true;
                   }
                   return false;
                 })
+                .filter((item) => {
+                  return item.itemName.includes('[f]');
+                })
                 .map((item, index) => (
                   <ProductBox key={index}>
                     <Link to={`/product/detail/${item._id}`} key={index}>
                       <ProductImgBox src={item.itemImage} />
                     </Link>
-                    <p className='itemName'>{item.itemName}</p>
+                    <p className='itemName'>{item.itemName.replace('[f]', '')}</p>
                     <p className='itemDate'>
                       {'행사기간: ' +
                         `${item.price.toString().slice(2, 4)}.${item.price
@@ -94,17 +98,20 @@ export default function ProductList() {
           {isExperienceActive
             ? product
                 .filter((item) => {
-                  if (item.price.toString().length >= 26) {
+                  if (item.price.toString().length >= 16) {
                     return true;
                   }
                   return false;
+                })
+                .filter((item) => {
+                  return item.itemName.includes('[e]');
                 })
                 .map((item, index) => (
                   <ProductBox key={index}>
                     <Link to={`/product/detail/${item._id}`} key={index}>
                       <ProductImgBox src={item.itemImage} />
                     </Link>
-                    <p className='itemName'>{item.itemName}</p>
+                    <p className='itemName'>{item.itemName.replace('[e]', '')}</p>
                     <p className='itemDate'>
                       {'행사기간: ' +
                         `${item.price.toString().slice(2, 4)}.${item.price
@@ -162,6 +169,7 @@ const ProductContainer = styled.div`
   background-repeat: no-repeat;
   background-position: 110% 91%;
   height: 100%;
+  grid-template-rows: 160px;
 `;
 const ProductBox = styled.div`
   max-width: 172px;
