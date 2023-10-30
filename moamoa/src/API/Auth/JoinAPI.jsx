@@ -1,4 +1,4 @@
-const JoinAPI = async (userInfo) => {
+const JoinAPI = async (userInfo, userType) => {
   const reqUrl = 'https://api.mandarin.weniv.co.kr/user';
 
   try {
@@ -7,7 +7,16 @@ const JoinAPI = async (userInfo) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...userInfo }),
+      body: JSON.stringify({
+        ...userInfo,
+        user: {
+          ...userInfo.user,
+          username:
+            userType === 'individual'
+              ? `[i]${userInfo.user.username}`
+              : `[o]${userInfo.user.username}`,
+        },
+      }),
     });
     const result = await response.json();
     console.log(result);
