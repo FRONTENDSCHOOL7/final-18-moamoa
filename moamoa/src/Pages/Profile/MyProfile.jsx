@@ -11,17 +11,22 @@ import { useNavigate } from 'react-router-dom';
 import ProfileDetail from '../../Components/Common/ProfileDetail';
 import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
 import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
-import Header from '../../Components/Common/HeaderBasic';
-import Footer from '../../Components/Common/Footer';
+
+import userNameAtom from '../../Recoil/userNameAtom';
+import { useRecoilValue } from 'recoil';
+// import Header from '../../Components/Common/HeaderBasic';
+// import Footer from '../../Components/Common/Footer';
 
 // 프로필보기
 function MyProfile() {
   const navigate = useNavigate();
   // const joinData = useRecoilValue(userTypeAtom);
+  const userType = useRecoilValue(userNameAtom).includes('[o]') ? 'organization' : 'Individual';
+  console.log(`userType : ${userType}`);
 
   return (
     <section>
-      <Header />
+      {/* <Header /> */}
       <h1>내 프로필</h1>
       <section>
         <ProfileDetail />
@@ -34,20 +39,20 @@ function MyProfile() {
           프로필 수정
         </button>
         {/* 일반 계정일 경우 상품등록 버튼 제거 */}
-        {/* {joinData.userType === 'organization' ? ( */}
-        <button
-          type='button'
-          onClick={() => {
-            navigate('/product');
-          }}
-        >
-          상품 등록
-        </button>
-        {/* ) : null} */}
+        {userType === 'organization' ? (
+          <button
+            type='button'
+            onClick={() => {
+              navigate('/product');
+            }}
+          >
+            상품 등록
+          </button>
+        ) : null}
       </section>
-      <ProfileDetailProduct />
+      {userType === 'organization' ? <ProfileDetailProduct /> : null}
       <ProfileDetailPost />
-      <Footer />
+      {/* <Footer /> */}
     </section>
   );
 }

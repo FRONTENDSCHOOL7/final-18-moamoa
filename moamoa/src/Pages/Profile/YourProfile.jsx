@@ -6,16 +6,20 @@
 */
 
 import React from 'react';
-
+import { useRecoilValue } from 'recoil';
 import ProfileDetail from '../../Components/Common/ProfileDetail';
 import FollowButton from '../../Components/Common/FollowButton';
 import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
 import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
-import Header from '../../Components/Common/HeaderBasic';
-import Footer from '../../Components/Common/Footer';
+import userNameAtom from '../../Recoil/userNameAtom';
+
+// import Header from '../../Components/Common/HeaderBasic';
+// import Footer from '../../Components/Common/Footer';
 
 // 프로필보기
 function YourProfile() {
+  const userType = useRecoilValue(userNameAtom).includes('[o]') ? 'organization' : 'Individual';
+  console.log(userType);
   // 현제 페이지 주소 복사
   function copyURLToClipboard() {
     const currentURL = window.location.href;
@@ -31,7 +35,7 @@ function YourProfile() {
 
   return (
     <section>
-      <Header />
+      {/* <Header /> */}
       <h1>남의 프로필</h1>
       <section>
         <ProfileDetail />
@@ -40,9 +44,9 @@ function YourProfile() {
         <button>채팅 버튼</button>
         <button onClick={copyURLToClipboard}>공유 버튼</button>
       </section>
-      <ProfileDetailProduct />
+      {userType === 'organization' ? <ProfileDetailProduct /> : null}
       <ProfileDetailPost />
-      <Footer />
+      {/* <Footer /> */}
     </section>
   );
 }
