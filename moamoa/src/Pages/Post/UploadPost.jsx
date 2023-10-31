@@ -112,10 +112,15 @@ export default function AddPost() {
     }
   }, [content, image]);
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    submitAddPost(e);
+  };
+
   return (
     <section>
       <h1>게시글 등록</h1>
-      <form>
+      <form onSubmit={handleFormSubmit}>
         {/* 사용자 프로필 */}
         <img src={userImage} alt='' />
 
