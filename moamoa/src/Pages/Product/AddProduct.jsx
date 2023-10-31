@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import GoBack from '../../Assets/icons/icon-arrow-left.svg';
 import { uploadImage } from '../../API/Img/UploadImageAPI';
 import ProductUploadAPI from '../../API/Product/ProductUploadAPI';
 
@@ -22,7 +21,7 @@ const AddProduct = () => {
   const submitProduct = async (e) => {
     e.preventDefault();
     await uploadEvent();
-    // navigate('/profile');
+    navigate('/product/list');
   };
 
   const handleChangeImage = async (e) => {
@@ -61,11 +60,6 @@ const AddProduct = () => {
 
   return (
     <>
-      <header>
-        <a onClick={() => navigate(-1)}>
-          <img src={GoBack} />
-        </a>
-      </header>
       <main>
         <h1>상품 등록 페이지</h1>
         <form onSubmit={submitProduct}>
