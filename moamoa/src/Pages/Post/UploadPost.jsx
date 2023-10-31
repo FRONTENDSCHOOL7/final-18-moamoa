@@ -2,7 +2,7 @@
   설명: 게시글 등록 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.10.30
+  마지막 수정 날까: 2023.10.31
 */
 
 import React, { useState, useEffect } from 'react';
@@ -10,13 +10,22 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import userToken from '../../Recoil/userTokenAtom'; ////파일 경로 변경 완료
-import styled from 'styled-components';
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
 import ButtonSubmit from '../../Components/Common/Button';
 
 import uploadFile from '../../Assets/images/upload-file.png';
 import xButton from '../../Assets/icons/x.svg';
+import {
+  HeaderContainer,
+  HiddenH1,
+  UploadPostBox,
+  ProfileImg,
+  TextArea,
+  ImgPre,
+  XButton,
+  InputImgIcon,
+} from './UloadEditPostStyle';
 
 export default function AddPost() {
   const token = useRecoilValue(userToken);
@@ -207,108 +216,3 @@ export default function AddPost() {
     </Container>
   );
 }
-const HeaderContainer = styled.header`
-  display: flex;
-  height: 55px;
-  width: 390px;
-  justify-content: space-between;
-  border-bottom: 2px solid #dbdbdb;
-  background-color: #fff;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  padding-left: 10px;
-  padding-right: 10px;
-  box-sizing: border-box;
-
-  img {
-    cursor: pointer;
-  }
-`;
-
-const a11yHidden = `
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  width: 1px
-	height: 1px;
-	margin: -1px;
-  overflow: hidden;
-	padding: 0;
-	position: absolute;
-`;
-
-const HiddenH1 = styled.h1`
-  ${a11yHidden}
-`;
-
-const UploadPostBox = styled.div`
-  flex: 1;
-  padding: 16px;
-  position: relative;
-`;
-
-const ProfileImg = styled.div`
-  width: 42px;
-  height: 42px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%; // 원형으로 보이게 하려면 추가
-  }
-`;
-
-const TextArea = styled.div`
-  padding: 10px 0;
-
-  textarea {
-    resize: none; // 이 부분을 추가합니다.
-    box-sizing: border-box;
-    width: 100%;
-    border-radius: 2px;
-    padding-top: 5px; // 위쪽 padding 추가
-    padding-left: 5px; // 왼쪽 padding 추가
-    overflow-y: hidden;
-
-    border: none;
-
-    &:focus {
-      border: 1px solid #ffc700; // textarea가 포커스될 때 빨간색 테두리가 생깁니다.
-      outline: none; // 기본 브라우저 포커스 스타일을 제거합니다.
-    }
-  }
-`;
-
-const ImgPre = styled.div`
-  height: 228px;
-  position: relative;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-`;
-
-const XButton = styled.div`
-  position: absolute;
-  top: 6px;
-  right: 6px;
-`;
-
-const InputImgIcon = styled.div`
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-
-  width: 50px;
-  height: 50px;
-
-  img {
-    width: 100%;
-    height: 100%;
-
-    cursor: pointer;
-  }
-`;
