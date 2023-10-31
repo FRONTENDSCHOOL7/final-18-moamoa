@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 PostCardUser.propTypes = {
   url: PropTypes.string,
@@ -12,13 +13,15 @@ export default function PostCardUser({url, username, accountname }) {
   return (
     <Container>
         <>
-          <UserInfo>
-            <FrofileImg src={url} alt="사용자프로필"/>        
-            <InfoText>
-              <UserName>{username}</UserName>
-              <AccountName>@{accountname}</AccountName>
-            </InfoText>
-          </UserInfo>
+          <Link to={`/profile/${accountname}`}>
+            <UserInfo>
+              <FrofileImg src={url} alt="사용자프로필"/>        
+              <InfoText>
+                <UserName>{username}</UserName>
+                <AccountName>@{accountname}</AccountName>
+              </InfoText>
+            </UserInfo>
+          </Link>
         </>
     </Container>
   )
