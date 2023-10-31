@@ -28,7 +28,7 @@ export default function Landing() {
     } else {
       navigate('/');
     }
-  });
+  }, []);
   return (
     <Container>
       <MoaMoaBox>
@@ -49,9 +49,7 @@ export default function Landing() {
           <Google>구글 계정으로 로그인</Google>
           <Naver>네이버 계정으로 로그인</Naver>
           <p>아직 회원이 아니신가요?</p>
-          <Link to='/user/join'>
-            <a href='#'>이메일로 회원가입</a>
-          </Link>
+          <Link to='/user/join'>이메일로 회원가입</Link>
         </LoginModal>
       </MoaMoaBox>
     </Container>
@@ -124,10 +122,7 @@ const SVGgroup = styled.div`
       opacity: 0.1;
     }
     70% {
-      opacity: 0.04;
-    }
-    85% {
-      opacity: 0.1;
+      opacity: 0;
     }
     100% {
       opacity: 1;

@@ -10,7 +10,7 @@ import { useRecoilValue } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import PostCard from '../../Components/Common/PostCard';
+import PostCardList from '../Post/PostCardList';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 export default function ProfileDetailPost() {
@@ -69,7 +69,7 @@ export default function ProfileDetailPost() {
       {view === 'PostList' && (
         <ul>
           {myPostList.map((item) => {
-            return <PostCard key={item.id} post={item} />;
+            return <PostCardList key={item.id} post={item} />;
           })}
         </ul>
       )}

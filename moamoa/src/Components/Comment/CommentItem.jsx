@@ -4,7 +4,6 @@ import TimeCalc from './timecalc';
 import styled from 'styled-components';
 
 export default function CommentItem(item) {
-  console.log(item)
   const created = TimeCalc(item.item.createdAt)
   return (
     <li>

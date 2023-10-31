@@ -58,8 +58,6 @@ export default function Comment(postId) {
 
   const handleCommnet = (e) => setAddComment(e.target.value)
 
-  {console.log(comments)}
-
   return (
     <CommentContainer>
       <CommentList>

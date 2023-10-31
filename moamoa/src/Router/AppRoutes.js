@@ -22,6 +22,7 @@ import UploadPost from '../Pages/Post/UploadPost';
 import EditPost from '../Pages/Post/EditPost';
 import PostDetail from '../Pages/Post/PostDetail';
 import ChatList from '../Pages/Chat/ChatList';
+import Search from '../Pages/Search/Search';
 
 // import ChatRoom from '../Pages/Chat/ChatRoom';
 // import ChatList from '../Pages/Chat/ChatList';
@@ -81,6 +82,8 @@ export default function AppRoutes() {
       <Route path='/post/:post_id' element={<PostDetail />} />
       {/* 채팅 리스트 */}
       <Route path='/chat' element={<ChatList />} />
+      {/* 검색 페이지 */}
+      <Route path='/search' element={<Search />} />
 
       {/* <Route path='/user/login' element={<LoginPage />} />
       <Route path='/user' element={<JoinPage />} /> */}
