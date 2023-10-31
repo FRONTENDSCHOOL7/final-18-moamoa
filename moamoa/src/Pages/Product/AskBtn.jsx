@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import userNameAtom from '../../Recoil/userNameAtom';
+import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
 
 export default function AskBtn(username) {
   const userName = useRecoilValue(userNameAtom);
@@ -14,6 +15,12 @@ export default function AskBtn(username) {
     navigate('/product/edit', { state: params });
   };
 
+  const handleProductDelete = ProductDeleteAPI(params);
+  const handleDelete = async () => {
+    await handleProductDelete();
+    navigate('/product/list');
+  };
+
   console.log(userName);
   console.log(userName.username);
   return (
@@ -23,7 +30,7 @@ export default function AskBtn(username) {
       ) : (
         <>
           <Eidt onClick={handleBtnClick}>상품수정</Eidt>
-          <Eidt>상품삭제</Eidt>
+          <Eidt onClick={handleDelete}>상품삭제</Eidt>
         </>
       )}
     </>
