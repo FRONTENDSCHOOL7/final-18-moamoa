@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
 import { useRecoilValue, useRecoilState } from 'recoil';
-import PostCard from '../../Components/Common/PostCard';
-import PostState from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
+import PostCardList from '../../Components/Post/PostCardList';
+import followPostAtom from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
 import HomeFeed from './HomeFeed';
 import Header from '../../Components/Common/HeaderBasic';
 import Footer from '../../Components/Common/Footer';
 
 export default function Home() {
-  const [post, setPost] = useRecoilState(PostState);
+  const [posts, setPosts] = useRecoilState(followPostAtom);
   const token = useRecoilValue(userToken);
 
   useEffect(() => {
@@ -26,9 +26,9 @@ export default function Home() {
         });
 
         if (res.status === 200) {
-          const posts = await res.json();
-          const postSet = posts.posts;
-          setPost(postSet);
+          const result = await res.json();
+          setPosts(result.posts);
+
         } else {
           console.error('페이지를 불러오는데 실패했습니다.');
         }
@@ -43,13 +43,13 @@ export default function Home() {
   return (
     <>
       <Header/>
-      {console.log(post)}
-      {post.length !== 0 ? (
+      {console.log(posts)}
+      {posts.length !== 0 ? (
         <HomeContainer>
           <PostList>
             <ul>
-              {post.map((item) => {
-                return <PostCard key={item.id} post={item} />;
+              {posts.map((item) => {
+                return <PostCardList key={item.id} post={item} />;
               })}
             </ul>
           </PostList>
