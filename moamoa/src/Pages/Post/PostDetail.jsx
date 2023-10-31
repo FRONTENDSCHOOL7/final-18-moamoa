@@ -47,12 +47,10 @@ export default function ProductDetail() {
         <PostCardContainer>
           <PostCardItem post={post} />
         </PostCardContainer>
-        <Comment postId={params.post_id}/>
+        <Comment postId={params.post_id} />
       </BgCont>
     </PostContainer>
   );
-
-
 }
 
 const PostContainer = styled.div`
@@ -61,7 +59,6 @@ const PostContainer = styled.div`
   background-color: #fff9e4;
 `;
 const BgCont = styled.div`
-  
   box-sizing: border-box;
   max-width: 39rem;
   width: 100%;
@@ -72,4 +69,3 @@ const BgCont = styled.div`
 const PostCardContainer = styled.div`
   padding: 0 1.6rem 1.5rem;
 `;
-
