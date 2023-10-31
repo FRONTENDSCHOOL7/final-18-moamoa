@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
+import postModalDelAtom from '../../Recoil/postModalDelAtom';
 
 export default function DeleteModal() {
   
@@ -11,6 +12,7 @@ export default function DeleteModal() {
   const params = useParams();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(true);
+  const [delMadoal, setDelModal] = useRecoilState(postModalDelAtom);
 
   const delPost = () => {
     const delReq = () => {
@@ -31,11 +33,13 @@ export default function DeleteModal() {
 
   return (
     <>
-      { showModal ?       
+      { showModal && delMadoal ?       
       <Modal>
-        <p>정말 삭제하시겠습니까?</p>
-        <Btn onClick={()=>delPost()}>삭제</Btn>
-        <Btn onClick={()=>setShowModal((prev)=>!prev)}>취소</Btn>
+        <Deltext>정말 삭제하시겠습니까?</Deltext>
+        <Btn>
+          <BtnDel onClick={()=>delPost()}>삭제</BtnDel>
+          <BtnCancel onClick={()=>{setShowModal((prev)=>!prev); setDelModal((prev)=>!prev);}}>취소</BtnCancel>
+        </Btn>
       </Modal> : null
       }
     </>
@@ -43,14 +47,43 @@ export default function DeleteModal() {
 }
 
 const Modal = styled.div`
-  width: 12rem;
-  height: 3rem;
-  background-color: #ddd;
+  width: 26rem;
+  height: 14rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%);
+  padding: 3rem 0 0;
+  box-sizing: border-box;
 `;
 
-const Btn = styled.button`
-  width: 3rem;
-  height: 2rem;
-  background-color: gold;
-  margin-left: 1rem;
+const Btn = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const BtnCancel = styled.button`
+  width: 12.5rem;
+  height: 6.5rem;
+  font-size: 1.4rem;
+  &:hover{
+    font-weight: bold;
+  }
+`;
+
+const BtnDel = styled(BtnCancel)`
+  color: #EB5757;
+  border-right: 1px solid #dbdbdb;
+`;
+
+
+
+const Deltext = styled.p`
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #dbdbdb;
 `;

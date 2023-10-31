@@ -14,6 +14,7 @@ export default function PostCardDetail(post) {
 
   const postprop = post.post.post;
   const postImgUrl = `${postprop.image}`;
+  const accountName = postprop.author.accountname
 
   const handleHeartCount = () => {
     if (toggleCount === true) {
@@ -32,9 +33,9 @@ export default function PostCardDetail(post) {
               <PostCardUser
                 url={postprop.author.image}
                 username={postprop.author.username}
-                accountname={postprop.author.accountname}
+                accountname={accountName}
               />
-              <MoreBtn accountname={postprop.author.accountname} onClick={()=>{
+              <MoreBtn accountname={accountName} onClick={()=>{
                 setShowModal(true);
                 console.log(showModal);
                 }}/>
