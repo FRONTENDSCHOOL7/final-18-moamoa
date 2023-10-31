@@ -26,9 +26,9 @@ const useLogin = () => {
   const handleError = () => {
     const user = userInput.user;
     if (!user.email && !user.password) {
-      setErrorMsg('아이디를 입력해주세요.');
+      setErrorMsg('*아이디를 입력해주세요.');
     } else if (user.email && !user.password) {
-      setErrorMsg('비밀번호를 입력해주세요.');
+      setErrorMsg('*비밀번호를 입력해주세요.');
     } else {
       setErrorMsg('');
     }
@@ -57,7 +57,7 @@ const useLogin = () => {
       setUserName(res.user.username);
       navigate('/home');
     } else if (res && !Object.prototype.hasOwnProperty.call(res, 'user')) {
-      setUserErrorMessage(res.message);
+      setUserErrorMessage(`*` + res.message);
     }
   };
 

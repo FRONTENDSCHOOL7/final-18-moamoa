@@ -43,7 +43,7 @@ const useJoin = () => {
     const res = await EmailValidAPI({ user: { email: userInfo.user.email } });
 
     if (res) {
-      setEmailError(res.message);
+      setEmailError(`*` + res.message);
     }
   };
 
@@ -53,7 +53,7 @@ const useJoin = () => {
 
   const handlePasswordValid = () => {
     if (userInfo.user.password.length < 6) {
-      setPasswordError('비밀번호는 6자 이상이어야 합니다.');
+      setPasswordError('*비밀번호는 6자 이상이어야 합니다.');
     } else {
       setPasswordError('');
     }
@@ -62,7 +62,7 @@ const useJoin = () => {
   const goNext = (e) => {
     e.preventDefault();
     if (userInfo.user.email && userInfo.user.password && !passwordError) {
-      if (emailError === '사용 가능한 이메일 입니다.') {
+      if (emailError === '*사용 가능한 이메일 입니다.') {
         setPageTransition(true);
       }
     }
@@ -72,7 +72,7 @@ const useJoin = () => {
     const res = await JoinAPI(userInfo, userType);
 
     if (res) {
-      setErrorMessage(res.message);
+      setErrorMessage(`*` + res.message);
 
       if (res.message === '회원가입 성공') {
         navigate('/user/login');
