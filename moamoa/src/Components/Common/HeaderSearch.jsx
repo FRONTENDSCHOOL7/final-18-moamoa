@@ -13,23 +13,25 @@ export default function Header() {
 
 const HeaderContainer = styled.header`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   height: 55px;
-  gap: 13px;
   width: 390px;
-  position: fixed;
+  /* position: fixed; */
   background-color: #fff;
   border-bottom: 2px solid #dbdbdb;
   align-items: center;
   box-sizing: border-box;
-  /* padding-left: 15px; */
+  margin-bottom: 10px;
+
   img {
     cursor: pointer;
   }
   input {
     background-color: #f2f2f2;
-    width: 320px;
+    width: 316px;
     height: 32px;
     border-radius: 32px;
+    padding-left: 20px;
+    box-sizing: border-box;
   }
 `;
