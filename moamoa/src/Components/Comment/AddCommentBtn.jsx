@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components';
 
 export default function AddCommentBtn(addcomment) {
-
-  console.log(addcomment)
   return (
     <>{ addcomment !== '' ? <AddBtn>게시</AddBtn> : <AddBtnOn>게시</AddBtnOn>}</>
     

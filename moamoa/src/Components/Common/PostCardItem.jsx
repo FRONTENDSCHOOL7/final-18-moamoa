@@ -16,8 +16,6 @@ export default function PostCardDetail(post) {
   // const baseUrl = `https://api.mandarin.weniv.co.kr/`
 
   const postprop = post.post.post;
-  console.log(postprop);
-  console.log(postprop.image);
   const postImgUrl = `${postprop.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
@@ -25,10 +23,8 @@ export default function PostCardDetail(post) {
   const handleHeartCount = () => {
     if (toggleCount === true) {
       setHeartColor(heartBgFill);
-      // setHeartCount((prev)=> prev + 1);
     } else {
       setHeartColor(heartBg);
-      // setHeartCount((prev)=> prev + 1-1);
     }
   };
 

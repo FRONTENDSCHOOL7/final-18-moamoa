@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
-import PostCardDetail from '../../Components/Common/PostCardDetail';
+import PostCardDetail from '../../Components/Common/PostCardItem';
 import detailPostAtom from '../../Recoil/detailPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
@@ -12,7 +12,6 @@ export default function ProductDetail() {
   const token = useRecoilValue(userToken);
   const [post, setPost] = useRecoilState(detailPostAtom);
   const params = useParams();
-  console.log(params.post_id);
 
   useEffect(() => {
     const getPostInfo = async () => {
@@ -30,8 +29,6 @@ export default function ProductDetail() {
         if (res.status === 200) {
           const result = await res.json();
           setPost(result)
-          console.log(result);
-
         } else {
           console.error('페이지를 불러오는데 실패했습니다.');
         }
@@ -42,8 +39,7 @@ export default function ProductDetail() {
 
     getPostInfo();
   }, [token]);
-
-console.log(post);
+  
   return (
     <PostContainer>
       <Header />

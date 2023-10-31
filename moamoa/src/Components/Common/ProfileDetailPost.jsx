@@ -10,7 +10,7 @@ import { useRecoilValue } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import PostCardHome from '../../Components/Common/PostCardHome';
+import PostCardHome from './PostCardList';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 export default function ProfileDetailPost() {

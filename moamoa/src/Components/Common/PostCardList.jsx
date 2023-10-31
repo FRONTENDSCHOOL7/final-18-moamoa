@@ -8,15 +8,10 @@ import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 
 export default function PostCardHome(post) {
-  console.log(post);
-  // const [heartCount, setHeartCount] = useState("");
   const [toggleCount, setToggleCount] = useState(false);
   const [heartcolor, setHeartColor] = useState(heartBg);
 
-  // const baseUrl = `https://api.mandarin.weniv.co.kr/`
-
   const postprop = post.post;
-  console.log(postprop);
   const profileImgUrl = `${postprop.author.image}`;
   const postImgUrl = `${postprop.image}`;
   const postDetailId = post.post.id;
@@ -32,10 +27,8 @@ export default function PostCardHome(post) {
   const handleHeartCount = () => {
     if (toggleCount === true) {
       setHeartColor(heartBgFill);
-      // setHeartCount((prev)=> prev + 1);
     } else {
       setHeartColor(heartBg);
-      // setHeartCount((prev)=> prev + 1-1);
     }
   };
 

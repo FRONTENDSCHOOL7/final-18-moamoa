@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
 import { useRecoilValue, useRecoilState } from 'recoil';
-import PostCardHome from '../../Components/Common/PostCardHome';
+import PostCardHome from '../../Components/Common/PostCardList';
 import followPostAtom from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
 import HomeFeed from './HomeFeed';
