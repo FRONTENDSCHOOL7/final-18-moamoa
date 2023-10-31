@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 
 const ProductDetailAPI = (productId) => {
-  const reqURL = 'https://api.mandarin.weniv.co.kr/product';
+  const reqURL = 'https://api.mandarin.weniv.co.kr';
   const token = useRecoilValue(userTokenAtom);
 
   const getProductDetail = useCallback(async () => {
