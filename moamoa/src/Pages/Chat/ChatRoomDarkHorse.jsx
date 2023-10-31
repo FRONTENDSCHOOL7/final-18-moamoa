@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
