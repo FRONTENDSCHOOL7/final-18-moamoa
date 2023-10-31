@@ -5,7 +5,7 @@ import userToken from '../../Recoil/userTokenAtom';
 import styled from 'styled-components';
 import Header from '../../Components/Common/HeaderBasic';
 import AskBtn from './AskBtn';
-import PostCardUser from '../../Components/Common/PostCardUser';
+import PostCardUser from '../../Components/Post/PostCardUser';
 
 export default function ProductDetail() {
   const productState = atom({

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
-import PostCardDetail from '../../Components/Common/PostCardItem';
+import PostCardItem from '../../Components/Post/PostCardItem';
 import detailPostAtom from '../../Recoil/detailPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
@@ -13,7 +13,7 @@ export default function ProductDetail() {
   const [post, setPost] = useRecoilState(detailPostAtom);
   const params = useParams();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getPostInfo = async () => {
       const reqUrl = `https://api.mandarin.weniv.co.kr/post/${params.post_id}`;
 
@@ -45,7 +45,7 @@ export default function ProductDetail() {
       <Header />
       <BgCont>
         <PostCardContainer>
-          <PostCardDetail post={post} />
+          <PostCardItem post={post} />
         </PostCardContainer>
         <Comment postId={params.post_id}/>
       </BgCont>

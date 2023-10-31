@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
 import { useRecoilValue, useRecoilState } from 'recoil';
-import PostCardHome from '../../Components/Common/PostCardList';
+import PostCardList from '../../Components/Post/PostCardList';
 import followPostAtom from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
 import HomeFeed from './HomeFeed';
@@ -49,7 +49,7 @@ export default function Home() {
           <PostList>
             <ul>
               {posts.map((item) => {
-                return <PostCardHome key={item.id} post={item} />;
+                return <PostCardList key={item.id} post={item} />;
               })}
             </ul>
           </PostList>

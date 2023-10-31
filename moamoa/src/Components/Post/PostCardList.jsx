@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PostCardUser from './PostCardUser';
-import MoreBtn from './MoreBtn';
+import MoreBtn from '../Common/MoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
-import Datacalc from './datecalc'
 
-export default function PostCardDetail(post) {
-  // const [heartCount, setHeartCount] = useState("");
+export default function PostCardList(post) {
   const [toggleCount, setToggleCount] = useState(false);
   const [heartcolor, setHeartColor] = useState(heartBg);
 
-  // const baseUrl = `https://api.mandarin.weniv.co.kr/`
-
-  const postprop = post.post.post;
+  const postprop = post.post;
+  const profileImgUrl = `${postprop.author.image}`;
   const postImgUrl = `${postprop.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
+
+  const inputDate = postprop.createdAt;
+  const dateset = inputDate.split('').slice(0, 10).join('');
+  const year = dateset.slice(0, 4);
+  const month = dateset.slice(5, 7);
+  const day = dateset.slice(8, 10);
+  const outputDate = `${year}년 ${month}월 ${day}일`;
 
   const handleHeartCount = () => {
     if (toggleCount === true) {
@@ -35,7 +39,7 @@ export default function PostCardDetail(post) {
           <PostArticle>
             <Frofile>
               <PostCardUser
-                url={postprop.author.image}
+                url={profileImgUrl}
                 username={postprop.author.username}
                 accountname={postprop.author.accountname}
               />
@@ -46,7 +50,7 @@ export default function PostCardDetail(post) {
               {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             </Link>
             <PostFooterContainer>
-              <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
+              <CreateDate>{outputDate}</CreateDate>
               <div>
                 <HeartBtn
                   onClick={() => {
