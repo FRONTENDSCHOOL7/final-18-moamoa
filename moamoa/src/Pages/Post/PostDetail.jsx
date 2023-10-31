@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
-import followPostAtom from '../../Recoil/followPostAtom'; ////파일 경로 변경 완료
-import PostCard from '../../Components/Common/PostCard';
+import PostCardDetail from '../../Components/Common/PostCardDetail';
+import detailPostAtom from '../../Recoil/detailPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
 import Header from '../../Components/Common/HeaderBasic';
 
 export default function ProductDetail() {
   const token = useRecoilValue(userToken);
-  const [post, setPost] = useRecoilState(followPostAtom);
-  const [postIdList, setPostIdList] = useState([]);
-  const [pageIndex, setPageIndex] = useState(null);
+  const [post, setPost] = useRecoilState(detailPostAtom);
+  const params = useParams();
+  console.log(params.post_id);
 
   useEffect(() => {
     const getPostInfo = async () => {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/post/feed`;
+      const reqUrl = `https://api.mandarin.weniv.co.kr/post/${params.post_id}`;
 
       try {
         const res = await fetch(reqUrl, {
@@ -28,13 +28,10 @@ export default function ProductDetail() {
         });
 
         if (res.status === 200) {
-          const posts = await res.json();
-          console.log(posts)
-          const postSet = posts.posts;
-          setPost(postSet);
+          const result = await res.json();
+          setPost(result)
+          console.log(result);
 
-          const idList = post.map((item) => item.id);
-          setPostIdList(idList);
         } else {
           console.error('페이지를 불러오는데 실패했습니다.');
         }
@@ -44,24 +41,15 @@ export default function ProductDetail() {
     };
 
     getPostInfo();
-  }, [token, setPost]);
+  }, [token]);
 
-  const params = useParams();
-  const index = params.post_id ? postIdList.indexOf(params.post_id) : -1;
-
-  useEffect(() => {
-    if (index !== -1) {
-      setPageIndex(index);
-    }
-  }, [index]);
-
+console.log(post);
   return (
     <PostContainer>
       <Header />
       <BgCont>
         <PostCardContainer>
-          {console.log(pageIndex)}
-          {post && pageIndex !== null && pageIndex !== -1 && <PostCard post={post[pageIndex]} />}
+          <PostCardDetail post={post} />
         </PostCardContainer>
         <Comment postId={params.post_id}/>
       </BgCont>

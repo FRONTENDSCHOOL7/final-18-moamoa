@@ -7,7 +7,8 @@ import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 
-export default function PostCard(post) {
+export default function PostCardHome(post) {
+  console.log(post);
   // const [heartCount, setHeartCount] = useState("");
   const [toggleCount, setToggleCount] = useState(false);
   const [heartcolor, setHeartColor] = useState(heartBg);
