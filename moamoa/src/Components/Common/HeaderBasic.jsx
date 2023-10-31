@@ -1,13 +1,16 @@
 import React from 'react';
 import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
-import iconKebob from '../../Assets/icons/icon-more.svg';
+import iconSearch from '../../Assets/icons/icon-search.svg';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
     <HeaderContainer>
       <Gobackbtn />
-      <img src={iconKebob}></img>
+      <Link to='/search'>
+        <img src={iconSearch}></img>
+      </Link>
     </HeaderContainer>
   );
 }
