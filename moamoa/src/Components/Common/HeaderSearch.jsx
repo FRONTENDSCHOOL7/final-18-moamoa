@@ -16,7 +16,7 @@ const HeaderContainer = styled.header`
   justify-content: space-around;
   height: 55px;
   width: 390px;
-  /* position: fixed; */
+
   background-color: #fff;
   border-bottom: 2px solid #dbdbdb;
   align-items: center;
