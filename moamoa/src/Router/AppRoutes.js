@@ -23,6 +23,9 @@ import EditPost from '../Pages/Post/EditPost';
 import PostDetail from '../Pages/Post/PostDetail';
 import ChatList from '../Pages/Chat/ChatList';
 import Search from '../Pages/Search/Search';
+import ChatRoomKim from '../Pages/Chat/ChatRoomKim';
+import ChatRoomSumiDad from '../Pages/Chat/ChatRoomSumiDad';
+import ChatRoomDarkHorse from '../Pages/Chat/ChatRoomDarkHorse';
 
 // import ChatRoom from '../Pages/Chat/ChatRoom';
 // import ChatList from '../Pages/Chat/ChatList';
@@ -80,10 +83,13 @@ export default function AppRoutes() {
 
       {/* 게시글 상세 */}
       <Route path='/post/:post_id' element={<PostDetail />} />
-      {/* 채팅 리스트 */}
       <Route path='/chat' element={<ChatList />} />
       {/* 검색 페이지 */}
       <Route path='/search' element={<Search />} />
+      {/* 채팅 리스트 */}
+      <Route path='/chat/kim' element={<ChatRoomKim />} />
+      <Route path='/chat/sumiDad' element={<ChatRoomSumiDad />} />
+      <Route path='/chat/darkHorse' element={<ChatRoomDarkHorse />} />
 
       {/* <Route path='/user/login' element={<LoginPage />} />
       <Route path='/user' element={<JoinPage />} /> */}
