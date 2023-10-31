@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
+import userTokenAtom from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
 import PostCardItem from '../../Components/Post/PostCardItem';
 import detailPostAtom from '../../Recoil/detailPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import Comment from '../../Components/Comment/Comment';
 import Header from '../../Components/Common/HeaderBasic';
 
 export default function ProductDetail() {
-  const token = useRecoilValue(userToken);
+  const token = useRecoilValue(userTokenAtom);
   const [post, setPost] = useRecoilState(detailPostAtom);
   const params = useParams();
 
