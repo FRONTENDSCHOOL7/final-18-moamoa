@@ -5,6 +5,7 @@ import img from '../../Assets/images/followImg/child.jpg';
 import img2 from '../../Assets/images/followImg/dog.jpg';
 import img3 from '../../Assets/images/followImg/water.jpg';
 import styled from 'styled-components';
+import Footer from '../../Components/Common/Footer';
 export default function Search() {
   return (
     <Container>
@@ -36,6 +37,7 @@ export default function Search() {
           <UserText>수련하러 갑니다.</UserText>
         </UserInfo>
       </SearchWrap>
+      <Footer></Footer>
     </Container>
   );
 }
