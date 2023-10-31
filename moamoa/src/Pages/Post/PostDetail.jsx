@@ -29,7 +29,7 @@ export default function ProductDetail() {
 
         if (res.status === 200) {
           const posts = await res.json();
-          console.log(posts)
+          console.log(posts);
           const postSet = posts.posts;
           setPost(postSet);
 
@@ -63,12 +63,10 @@ export default function ProductDetail() {
           {console.log(pageIndex)}
           {post && pageIndex !== null && pageIndex !== -1 && <PostCard post={post[pageIndex]} />}
         </PostCardContainer>
-        <Comment postId={params.post_id}/>
+        <Comment postId={params.post_id} />
       </BgCont>
     </PostContainer>
   );
-
-
 }
 
 const PostContainer = styled.div`
@@ -77,7 +75,6 @@ const PostContainer = styled.div`
   background-color: #fff9e4;
 `;
 const BgCont = styled.div`
-  
   box-sizing: border-box;
   max-width: 39rem;
   width: 100%;
@@ -88,4 +85,3 @@ const BgCont = styled.div`
 const PostCardContainer = styled.div`
   padding: 0 1.6rem 1.5rem;
 `;
-
