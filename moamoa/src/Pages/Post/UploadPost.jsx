@@ -1,14 +1,25 @@
+/*
+  설명: 게시글 등록 페이지
+  작성자: 이해지
+  최초 작성 날짜: 2023.10.24
+  마지막 수정 날까: 2023.10.30
+*/
+
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import userToken from '../../Recoil/userTokenAtom'; ////파일 경로 변경 완료
 
 export default function AddPost() {
   const token = useRecoilValue(userToken);
+  const navigate = useNavigate();
 
   const [content, setContent] = useState('');
   const [image, setPostImage] = useState('');
 
   const [userImage, setUserImage] = useState('');
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const getUserImg = async () => {
     console.log(token);
@@ -43,6 +54,7 @@ export default function AddPost() {
       });
       const json = await res.json();
       console.log(json);
+      navigate('/profile/myInfo');
     } catch (error) {
       alert('아이템 등록에 실패했습니다!');
     }
@@ -66,7 +78,6 @@ export default function AddPost() {
       body: form,
     });
     const json = await res.json();
-    console.log(baseUrl + json.filename);
     const imageUrl = baseUrl + json.filename;
     setPostImage(imageUrl);
   };
@@ -93,11 +104,23 @@ export default function AddPost() {
     setPostImage('');
   };
 
+  useEffect(() => {
+    if (content.trim() === '' && !image) {
+      setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
+    }
+  }, [content, image]);
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    submitAddPost(e);
+  };
+
   return (
-    <div>
-      {/* <button type="button" onClick={handlePage}>게시글 등록</button> */}
-      <section>
-        <h1>게시글 등록</h1>
+    <section>
+      <h1>게시글 등록</h1>
+      <form onSubmit={handleFormSubmit}>
         {/* 사용자 프로필 */}
         <img src={userImage} alt='' />
 
@@ -130,10 +153,10 @@ export default function AddPost() {
             placeholder='내용을 입력해주세요'
           ></textarea>
         </div>
-        <button type='button' onClick={submitAddPost}>
-          게시글 등록
+        <button type='button' onClick={submitAddPost} disabled={isButtonDisabled}>
+          업로드
         </button>
-      </section>
-    </div>
+      </form>
+    </section>
   );
 }
