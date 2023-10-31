@@ -19,7 +19,6 @@ const HeaderContainer = styled.header`
   height: 48px;
   gap: 65px;
   width: 390px;
-  position: fixed;
   background-color: #fff;
   border-bottom: 1px solid #dbdbdb;
   align-items: center;

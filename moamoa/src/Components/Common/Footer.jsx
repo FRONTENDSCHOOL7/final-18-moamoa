@@ -98,5 +98,5 @@ const TabButton = styled.button`
 `;
 
 const TabBtnImg = styled.img`
-  margin-top: 13px;
+  padding-top: 5px;
 `;

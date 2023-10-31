@@ -134,7 +134,7 @@ export default function ProductList() {
 
 const Nav = styled.div`
   /* display: flex; */
-  padding-top: 70px;
+  padding: 12px;
   padding-left: 10px;
   /* height: 100vh; */
 `;
@@ -145,7 +145,6 @@ const Button = styled.button`
   border-radius: 10px;
   font-weight: bold;
   margin-right: 6px;
-  margin-bottom: 16px;
 `;
 const FestivalBtn = styled(Button)`
   background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
