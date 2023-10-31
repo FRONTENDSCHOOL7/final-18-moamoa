@@ -41,7 +41,7 @@ export default function PostCard(post) {
   return (
     <>
       {post && (
-        <li>
+        <PostList>
           <PostArticle>
             <Frofile>
               <PostCardUser
@@ -73,14 +73,20 @@ export default function PostCard(post) {
               </div>
             </PostFooterContainer>
           </PostArticle>
-        </li>
+        </PostList>
       )}
     </>
   );
 }
 
+const PostList = styled.li`
+  &:first-child { 
+      padding-top: 4rem; 
+    }
+`;
+
 const PostArticle = styled.article`
-  margin-bottom: 2rem;
+  margin-top: 3rem;
 `;
 const Frofile = styled.div`
   margin: 0 auto;
@@ -91,7 +97,7 @@ const Frofile = styled.div`
   justify-content: space-between;
 `;
 const PostImg = styled.img`
-  width: 100%;
+  width: 35.8rem;
   height: 22.8rem;
   margin: 0 auto;
   aspect-ratio: 358/228;
@@ -109,7 +115,7 @@ const PostDesc = styled.p`
   }
 `;
 const PostFooterContainer = styled.div`
-  margin: 1.5rem 0.8rem;
+  margin: 1.5rem 0.8rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -5,6 +5,8 @@ import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완�
 import followPostAtom from '../../Recoil/followPostAtom'; ////파일 경로 변경 완료
 import PostCard from '../../Components/Common/PostCard';
 import styled from 'styled-components';
+import Comment from '../../Components/Comment/Comment';
+import Header from '../../Components/Common/HeaderBasic';
 
 export default function ProductDetail() {
   const token = useRecoilValue(userToken);
@@ -27,6 +29,7 @@ export default function ProductDetail() {
 
         if (res.status === 200) {
           const posts = await res.json();
+          console.log(posts)
           const postSet = posts.posts;
           setPost(postSet);
 
@@ -54,10 +57,14 @@ export default function ProductDetail() {
 
   return (
     <PostContainer>
-      <PostCardContainer>
-        {console.log(pageIndex)}
-        {post && pageIndex !== null && pageIndex !== -1 && <PostCard post={post[pageIndex]} />}
-      </PostCardContainer>
+      <Header />
+      <BgCont>
+        <PostCardContainer>
+          {console.log(pageIndex)}
+          {post && pageIndex !== null && pageIndex !== -1 && <PostCard post={post[pageIndex]} />}
+        </PostCardContainer>
+        <Comment postId={params.post_id}/>
+      </BgCont>
     </PostContainer>
   );
 
@@ -69,12 +76,16 @@ const PostContainer = styled.div`
   height: 100%;
   background-color: #fff9e4;
 `;
-
-const PostCardContainer = styled.div`
+const BgCont = styled.div`
+  
+  box-sizing: border-box;
   max-width: 39rem;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: auto;
   background-color: #ffffff;
-  padding: 2rem 1.6rem;
 `;
+const PostCardContainer = styled.div`
+  padding: 0 1.6rem 1.5rem;
+`;
+
