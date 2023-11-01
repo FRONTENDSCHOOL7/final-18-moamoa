@@ -25,7 +25,6 @@ export default function DeleteModal() {
         alert('게시글이 삭제되었습니다.');
         navigate(-1)
       }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
-        alert('내가 작성한 게시글만 삭제할 수 있습니다.')
       }
 
     delReq();
