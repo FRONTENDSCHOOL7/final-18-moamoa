@@ -43,17 +43,29 @@ export default function DeleteModal({commentid, setCloseFooter}) {
   return (
     <>
       { modal && delMadoal ?       
-      <Modal>
-        <Deltext>정말 삭제하시겠습니까?</Deltext>
-        <Btn>
-          <BtnDel onClick={delComment}>삭제</BtnDel>
-          <BtnCancel onClick={()=>{setModal((prev)=>!prev); setDelModal((prev)=>!prev); setCloseFooter((prev)=>!prev)}}>취소</BtnCancel>
-        </Btn>
-      </Modal> : null
+      <BgCont>
+        <Modal>
+          <Deltext>정말 삭제하시겠습니까?</Deltext>
+          <Btn>
+            <BtnDel onClick={delComment}>삭제</BtnDel>
+            <BtnCancel onClick={()=>{setModal((prev)=>!prev); setDelModal((prev)=>!prev); setCloseFooter((prev)=>!prev)}}>취소</BtnCancel>
+          </Btn>
+        </Modal>
+      </BgCont> : null
       }
     </>
   );
 }
+
+const BgCont = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 10;
+`;
 
 const Modal = styled.div`
   width: 26rem;
@@ -66,6 +78,7 @@ const Modal = styled.div`
   transform: translate(-50%);
   padding: 3rem 0 0;
   box-sizing: border-box;
+  z-index: 10;
 `;
 
 const Btn = styled.div`
