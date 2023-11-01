@@ -59,12 +59,9 @@ export default function Footer() {
   return (
     <TabMenu>
       {tabs.map((tab) => (
-        <TabButton key={tab.name} active={toggleSwitch === tab.name}>
-          <TabBtnImg
-            src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon}
-            onClick={() => handleToggleSwitch(tab.name)}
-          />
-          <p>{tab.label}</p>
+        <TabButton key={tab.name} onClick={() => handleToggleSwitch(tab.name)}>
+          <TabBtnImg src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon} />
+          <TabLabel $colors={toggleSwitch === tab.name ? +true : +false}>{tab.label}</TabLabel>
         </TabButton>
       ))}
     </TabMenu>
@@ -82,7 +79,9 @@ const TabMenu = styled.div`
   transform: translateX(-50%);
 `;
 
-const TabButton = styled.button`
+const TabButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'active',
+})`
   width: 78px;
   height: 60px;
   display: flex;
@@ -90,13 +89,12 @@ const TabButton = styled.button`
   justify-content: center;
   align-items: center;
   gap: 4px;
-  p {
-    font-size: 10px;
-    color: #fff;
-    color: ${(props) => (props.active ? '#FFC700' : '#fff')};
-  }
 `;
 
 const TabBtnImg = styled.img`
   padding-top: 5px;
+`;
+const TabLabel = styled.span`
+  font-size: 10px;
+  color: ${(props) => (props.$colors ? '#FFC700' : '#fff')};
 `;
