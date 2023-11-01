@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Common/Button';
@@ -6,15 +5,16 @@ import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 
 FollowUser.propTypes = {
   src: PropTypes.string.isRequired,
+  userId: PropTypes.string,
+  userText: PropTypes.string,
 };
 
 export default function FollowUser(props) {
   const [isFollowed, setIsFollowed] = useState(false);
   const handleButtonClick = () => {
     setIsFollowed(!isFollowed);
-    console.log(isFollowed);
   };
-  const { image, userText, userId, backgroundColor, color } = props;
+  const { userText, userId } = props;
   return (
     <div>
       <FollowWrap>
