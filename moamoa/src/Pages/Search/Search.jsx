@@ -1,42 +1,53 @@
-import React from 'react';
+/* eslint-disable */
+import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import HeaderSearch from '../../Components/Common/HeaderSearch';
-import img from '../../Assets/images/followImg/child.jpg';
-import img2 from '../../Assets/images/followImg/dog.jpg';
-import img3 from '../../Assets/images/followImg/water.jpg';
+import UserSearch from '../../Components/Common/HeaderSearch';
+import { SearchAPI } from '../../API/Search/SearchAPI';
 import styled from 'styled-components';
 import Footer from '../../Components/Common/Footer';
+import { useRecoilValue } from 'recoil';
+import userTokenAtom from '../../Recoil/userTokenAtom';
+import useDebounce from '../../Hooks/Search/useDebounce';
+
 export default function Search() {
+  const [searchText, setSearchText] = useState('');
+  const [searchResults, setSearchResults] = useState(null);
+  const token = useRecoilValue(userTokenAtom);
+  const debounceValue = useDebounce(searchText, 10500);
+
+  useEffect(() => {
+    async function fetchData(debounceValue) {
+      console.log(debounceValue);
+      try {
+        const result = await SearchAPI(token, debounceValue);
+        setSearchResults(result);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (searchText) {
+      fetchData(debounceValue);
+    }
+  }, [debounceValue]);
+  console.log(searchResults);
   return (
     <Container>
-      <HeaderSearch></HeaderSearch>
-      <SearchWrap>
-        <SearchPhotoWrap>
-          <SearchImg src={img} alt='' />
-        </SearchPhotoWrap>
-        <UserInfo>
-          <UserId>수미아빠</UserId>
-          <UserText>마크업만 구현한 수미아빠입니다~</UserText>
-        </UserInfo>
-      </SearchWrap>
-      <SearchWrap>
-        <SearchPhotoWrap>
-          <SearchImg src={img2} alt='' />
-        </SearchPhotoWrap>
-        <UserInfo>
-          <UserId>돌돌이 형</UserId>
-          <UserText>마크업만 구현한 돌돌이형</UserText>
-        </UserInfo>
-      </SearchWrap>
-      <SearchWrap>
-        <SearchPhotoWrap>
-          <SearchImg src={img3} alt='' />
-        </SearchPhotoWrap>
-        <UserInfo>
-          <UserId>흑곰</UserId>
-          <UserText>수련하러 갑니다.</UserText>
-        </UserInfo>
-      </SearchWrap>
+      <UserSearch setSearchText={setSearchText}></UserSearch>
+      {searchResults && searchResults.length > 0 ? (
+        searchResults.slice(0, 5).map((item, index) => (
+          <SearchWrap key={index}>
+            <SearchPhotoWrap>
+              <SearchImg src={item.image} alt='' />
+            </SearchPhotoWrap>
+            <UserInfo>
+              <UserId>{item.username}</UserId>
+              <UserText>{item.intro}</UserText>
+            </UserInfo>
+          </SearchWrap>
+        ))
+      ) : (
+        <p>No results found</p>
+      )}
       <Footer></Footer>
     </Container>
   );

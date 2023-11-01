@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
-import Datacalc from '../Common/datecalc'
+import Datacalc from '../Common/datecalc';
 
 export default function PostCardDetail(post) {
   const [toggleCount, setToggleCount] = useState(true);
@@ -14,7 +14,7 @@ export default function PostCardDetail(post) {
 
   const postprop = post.post.post;
   const postImgUrl = `${postprop.image}`;
-  const accountName = postprop.author.accountname
+  const accountName = postprop.author.accountname;
 
   const handleHeartCount = () => {
     setToggleCount((prev) => !prev);
@@ -36,13 +36,16 @@ export default function PostCardDetail(post) {
                 username={postprop.author.username.slice(3)}
                 accountname={accountName}
               />
-              <MoreBtn accountname={accountName} onClick={()=>{
-                setShowModal(true);
-                console.log(showModal);
-                }}/>
+              <MoreBtn
+                accountname={accountName}
+                onClick={() => {
+                  setShowModal(true);
+                  console.log(showModal);
+                }}
+              />
             </Frofile>
-              <PostDesc>{postprop.content}</PostDesc>
-              {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
+            <PostDesc>{postprop.content}</PostDesc>
+            {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             <PostFooterContainer>
               <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
               <div>
@@ -54,7 +57,7 @@ export default function PostCardDetail(post) {
                 >
                   {postprop.heartCount}
                 </HeartBtn>
-                  <CommentBtn>{postprop.commentCount}</CommentBtn>
+                <CommentBtn>{postprop.commentCount}</CommentBtn>
               </div>
             </PostFooterContainer>
           </PostArticle>
@@ -65,9 +68,9 @@ export default function PostCardDetail(post) {
 }
 
 const PostList = styled.li`
-  &:first-child { 
-      padding-top: 4rem; 
-    }
+  &:first-child {
+    padding-top: 4rem;
+  }
 `;
 
 const PostArticle = styled.article`
