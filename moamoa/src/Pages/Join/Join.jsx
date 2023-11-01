@@ -4,6 +4,8 @@ import useJoin from '../../Hooks/Sign/useJoin.jsx';
 import styled from 'styled-components';
 import { Container } from '../../Components/Common/Container';
 import { Form, Input, Button, StyledErrorMsg } from '../../Components/Common/FormLoginAndJoin';
+import DefaultProfileImg from '../../Assets/images/profile-img.svg';
+import UploadFile from '../../Assets/images/upload-file.png';
 
 const Join = () => {
   const {
@@ -34,64 +36,77 @@ const Join = () => {
   return (
     <>
       {pageTransition ? (
-        <section>
+        <Container>
           <H2>프로필 설정</H2>
-          <p>나중에 언제든지 변경할 수 있습니다.</p>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor='profileImg'>
-              <img src={imgSrc} alt='' srcSet='' id='imagePre' />
-            </label>
-            <input
-              type='file'
-              id='profileImg'
-              name='image'
-              accept='image/*'
-              className='ir'
-              onChange={handleChangeImage}
-            />
-            <label htmlFor='userNameInput'>사용자 이름</label>
-            <input
-              value={userInfo.user.username}
-              onChange={handleInputChange}
-              type='text'
-              id='userNameInput'
-              name='username'
-              placeholder='2~10자 이내여야 합니다.'
-            />
-            <label htmlFor='userIdInput'>계정 ID</label>
-            <input
-              value={userInfo.user.accountname}
-              onChange={handleInputChange}
-              type='text'
-              id='userIdInput'
-              name='accountname'
-              placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
-            />
-            {errorMessage === '영문, 숫자, 밑줄, 마침표만 사용할 수 있습니다.' && errorMessage}
-            {errorMessage === '이미 사용중인 계정 ID입니다.' && errorMessage}
-            <label htmlFor='userIntroInput'>소개</label>
-            <input
-              value={userInfo.user.intro}
-              onChange={handleInputChange}
-              type='text'
-              id='userIntroInput'
-              name='intro'
-              placeholder={
-                userType === 'organization'
-                  ? '자신과 홍보할 행사에 대해 소개해 주세요.'
-                  : '자신에 대해 소개해 주세요.'
-              }
-            />
-            <button
+          <ProfileInfo>나중에 언제든지 변경할 수 있습니다.</ProfileInfo>
+          <ProfileForm onSubmit={handleSubmit}>
+            <ImgContainer>
+              <ImgLabel htmlFor='profileImg'>
+                <ProfileImg
+                  src={imgSrc ? imgSrc : DefaultProfileImg}
+                  alt=''
+                  srcSet=''
+                  id='imagePre'
+                />
+              </ImgLabel>
+              <input
+                type='file'
+                id='profileImg'
+                name='image'
+                accept='image/*'
+                className='a11y-hidden'
+                onChange={handleChangeImage}
+              />
+            </ImgContainer>
+            <TextContainer>
+              <TextLabel htmlFor='userNameInput'>사용자 이름</TextLabel>
+              <TextInput
+                value={userInfo.user.username}
+                onChange={handleInputChange}
+                type='text'
+                id='userNameInput'
+                name='username'
+                placeholder='2~10자 이내여야 합니다.'
+              />
+              <TextLabel htmlFor='userIdInput'>계정 ID</TextLabel>
+              <TextInput
+                value={userInfo.user.accountname}
+                onChange={handleInputChange}
+                type='text'
+                id='userIdInput'
+                name='accountname'
+                placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
+              />
+              {errorMessage === '*영문, 숫자, 밑줄, 마침표만 사용할 수 있습니다.' && (
+                <StyledErrorMsg>{errorMessage}</StyledErrorMsg>
+              )}
+              {errorMessage === '*이미 사용중인 계정 ID입니다.' && (
+                <StyledErrorMsg>{errorMessage}</StyledErrorMsg>
+              )}
+              <TextLabel htmlFor='userIntroInput'>소개</TextLabel>
+              <TextInput
+                value={userInfo.user.intro}
+                onChange={handleInputChange}
+                type='text'
+                id='userIntroInput'
+                name='intro'
+                placeholder={
+                  userType === 'organization'
+                    ? '자신과 홍보할 행사에 대해 소개해 주세요!'
+                    : '자신에 대해 소개해 주세요!'
+                }
+              />
+            </TextContainer>
+            <ProfileButton
               type='submit'
               disabled={
                 !userInfo.user.username || !userInfo.user.accountname || !userInfo.user.intro
               }
             >
               모아모아 시작하기
-            </button>
-          </form>
-        </section>
+            </ProfileButton>
+          </ProfileForm>
+        </Container>
       ) : (
         <Container>
           <H2>이메일로 회원가입</H2>
@@ -159,7 +174,7 @@ const H2 = styled.h2`
   text-align: center;
   font-weight: 400;
   font-size: 24px;
-  margin: 30px 0 45px 0;
+  margin-top: 30px;
 `;
 
 const SelectUserType = styled.div`
@@ -186,6 +201,86 @@ const SelectUserBtn = styled.button`
   font-weight: 700;
   padding: 11px 49px;
   letter-spacing: -1px;
+`;
+
+// 프로필 설정
+const ProfileInfo = styled.p`
+  text-align: center;
+  color: #767676;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 12px 0 30px 0;
+`;
+
+const ProfileForm = styled.form`
+  margin: 0 34px;
+`;
+
+const ImgContainer = styled.div`
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 35px;
+  position: relative;
+`;
+
+const ImgLabel = styled.label`
+  display: block;
+  width: 110px;
+  height: 110px;
+  position: relative;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    right: -10px;
+    bottom: 0;
+    background: url(${UploadFile}) 0 0 / cover;
+  }
+`;
+
+const ProfileImg = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const TextInput = styled.input`
+  border: none;
+  outline: none;
+  border-bottom: 1.5px solid #dbdbdb;
+  letter-spacing: -1px;
+  padding: 5px 0;
+
+  &:focus {
+    border-bottom: 1.5px solid #87b7e4;
+    transition: all 0.3s ease-in-out;
+  }
+`;
+
+const TextLabel = styled.label`
+  color: #767676;
+  margin-bottom: 4px;
+
+  &:nth-of-type(2),
+  &:nth-of-type(3) {
+    margin-top: 16px;
+  }
+`;
+
+const ProfileButton = styled(Button)`
+  width: 100%;
 `;
 
 export default Join;

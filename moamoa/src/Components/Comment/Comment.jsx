@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState,useEffect } from 'react'
+import React, { useState,useLayoutEffect } from 'react'
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import CommentItem from './CommentItem';
@@ -12,7 +12,7 @@ export default function Comment(postId) {
   const [comments,setComments] = useState("");
   const [addComment, setAddComment] = useState("");
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     async function getComment() {
       try {
         const res = await axios.get(`https://api.mandarin.weniv.co.kr/post/${postId.postId}/comments`, {
@@ -53,7 +53,6 @@ export default function Comment(postId) {
       }}
     postComment(AddData)
     setAddComment("")    
-    // getComment(); 
   }
 
   const handleCommnet = (e) => setAddComment(e.target.value)
@@ -66,7 +65,6 @@ export default function Comment(postId) {
         })}      
       </CommentList>
       <AddComment onSubmit={handleSubmit}>
-        {/* <img src="" alt="" /> */}
         <CommentContent type="text" value={addComment} onChange={handleCommnet} placeholder='댓글을 입력해주세요 :)'/>
         <AddCommentBtn addcomment={addComment}/>
       </AddComment>

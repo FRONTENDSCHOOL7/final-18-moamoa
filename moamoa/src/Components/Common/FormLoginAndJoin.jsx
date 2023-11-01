@@ -9,6 +9,7 @@ export const Form = styled.form`
   text-align: center;
   color: #767676;
   font-size: 12px;
+  margin-top: 45px;
 `;
 
 export const Input = styled.input`

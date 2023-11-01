@@ -43,7 +43,6 @@ export default function Home() {
   return (
     <>
       <Header/>
-      {console.log(posts)}
       {posts.length !== 0 ? (
         <HomeContainer>
           <PostList>

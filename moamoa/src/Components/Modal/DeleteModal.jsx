@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import postModalDelAtom from '../../Recoil/postModalDelAtom';
+import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
 
 export default function DeleteModal() {
   
@@ -13,6 +14,10 @@ export default function DeleteModal() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(true);
   const [delMadoal, setDelModal] = useRecoilState(postModalDelAtom);
+
+  const location = useLocation();
+  const post = location.pathname.slice(1,5);
+  console.log(post);
 
   const delPost = () => {
     const delReq = () => {
@@ -25,11 +30,16 @@ export default function DeleteModal() {
         alert('게시글이 삭제되었습니다.');
         navigate(-1)
       }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
-        alert('내가 작성한 게시글만 삭제할 수 있습니다.')
       }
 
     delReq();
       }
+
+    const handleProductDelete = ProductDeleteAPI(params);
+    const handleDelete = async () => {
+      await handleProductDelete();
+      navigate('/product/list');
+    };
 
   return (
     <>
@@ -37,7 +47,8 @@ export default function DeleteModal() {
       <Modal>
         <Deltext>정말 삭제하시겠습니까?</Deltext>
         <Btn>
-          <BtnDel onClick={()=>delPost()}>삭제</BtnDel>
+          <BtnDel onClick={ post === "post" ? ()=>delPost() : ()=>handleDelete()
+            }>삭제</BtnDel>
           <BtnCancel onClick={()=>{setShowModal((prev)=>!prev); setDelModal((prev)=>!prev);}}>취소</BtnCancel>
         </Btn>
       </Modal> : null
