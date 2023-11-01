@@ -1,10 +1,17 @@
 import React from 'react'
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-export default function AddCommentBtn(addcomment) {
-  return (
-    <>{ addcomment !== '' ? <AddBtn>게시</AddBtn> : <AddBtnOn>게시</AddBtnOn>}</>
-    
+AddCommentBtn.propTypes = {
+  addcomment: PropTypes.string
+}
+
+
+export default function AddCommentBtn({addcomment}) {
+  return (    
+    <>
+    { addcomment === '' ? <AddBtn>게시</AddBtn> : <AddBtnOn>게시</AddBtnOn>}
+    </>    
   )
 }
 const AddBtn = styled.button`
@@ -16,11 +23,7 @@ const AddBtn = styled.button`
 
 `;
 
-const AddBtnOn = styled.button`
-  width: 4.6rem;
-  height: 4rem;
-  border-radius: 1rem;
+const AddBtnOn = styled(AddBtn)`
   background-color: #87B7E4;
   color: white;
-
 `;

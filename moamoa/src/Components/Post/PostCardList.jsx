@@ -8,7 +8,7 @@ import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 
 export default function PostCardList(post) {
-  const [toggleCount, setToggleCount] = useState(false);
+  const [toggleCount, setToggleCount] = useState(true);
   const [heartcolor, setHeartColor] = useState(heartBg);
 
   const postprop = post.post;

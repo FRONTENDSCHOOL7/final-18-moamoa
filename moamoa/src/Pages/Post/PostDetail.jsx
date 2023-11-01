@@ -7,10 +7,14 @@ import detailPostAtom from '../../Recoil/detailPostAtom'; //파일 경로 변경
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
 import Header from '../../Components/Common/HeaderBasic';
+import postModalDelAtom from '../../Recoil/postModalDelAtom';
+import postModalOpenAtom from '../../Recoil/postModalOpenAtom';
 
 export default function ProductDetail() {
   const token = useRecoilValue(userTokenAtom);
   const [post, setPost] = useRecoilState(detailPostAtom);
+  const [, setShowModal] = useRecoilState(postModalOpenAtom);
+  const [, setDelPost] = useRecoilState(postModalDelAtom);
   const params = useParams();
 
   useLayoutEffect(() => {
@@ -28,7 +32,9 @@ export default function ProductDetail() {
 
         if (res.status === 200) {
           const result = await res.json();
-          setPost(result)
+          setPost(result);
+          setShowModal(false);
+          setDelPost(false);
         } else {
           console.error('페이지를 불러오는데 실패했습니다.');
         }
