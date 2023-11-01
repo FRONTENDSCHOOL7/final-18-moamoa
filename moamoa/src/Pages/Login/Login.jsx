@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useLogin from '../../Hooks/Sign/useLogin';
+import styled from 'styled-components';
+import { Container } from '../../Components/Common/Container';
+import { Form, Input, Button, StyledErrorMsg } from '../../Components/Common/FormLoginAndJoin';
 
 const LoginPage = () => {
   const {
@@ -13,10 +16,10 @@ const LoginPage = () => {
   } = useLogin();
 
   return (
-    <>
-      <h1>로그인</h1>
-      <form onSubmit={handleFormSubmit}>
-        <input
+    <Container>
+      <H1>로그인</H1>
+      <Form onSubmit={handleFormSubmit}>
+        <Input
           type='email'
           placeholder='이메일'
           name='email'
@@ -24,8 +27,10 @@ const LoginPage = () => {
           value={userInput.user.email}
           required
         />
-        {!userInput.user.email && !userInput.user.password && errorMsg}
-        <input
+        {!userInput.user.email && !userInput.user.password && (
+          <StyledErrorMsg>{errorMsg}</StyledErrorMsg>
+        )}
+        <Input
           type='password'
           placeholder='비밀번호'
           name='password'
@@ -33,19 +38,30 @@ const LoginPage = () => {
           value={userInput.user.password}
           required
         />
-        {userInput.user.email && !userInput.user.password && errorMsg}
-        {userInput.user.email && userInput.user.password && userErrorMessage}
-        <button
+        {userInput.user.email && !userInput.user.password && (
+          <StyledErrorMsg>{errorMsg}</StyledErrorMsg>
+        )}
+        {userInput.user.email && userInput.user.password && (
+          <StyledErrorMsg>{userErrorMessage}</StyledErrorMsg>
+        )}
+        <Button
           type='submit'
-          disabled={!userInput.user.email || !userInput.user.password}
           onClick={handleError}
+          disabled={!userInput.user.email || !userInput.user.password}
         >
           로그인
-        </button>
+        </Button>
         <Link to='/user/join'>이메일로 회원가입</Link>
-      </form>
-    </>
+      </Form>
+    </Container>
   );
 };
+
+const H1 = styled.h1`
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+  margin: 30px 0 45px 0;
+`;
 
 export default LoginPage;

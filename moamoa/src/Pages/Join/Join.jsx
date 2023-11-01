@@ -1,6 +1,9 @@
 import React from 'react';
 import { uploadImage } from '../../API/Img/UploadImageAPI';
 import useJoin from '../../Hooks/Sign/useJoin.jsx';
+import styled from 'styled-components';
+import { Container } from '../../Components/Common/Container';
+import { Form, Input, Button, StyledErrorMsg } from '../../Components/Common/FormLoginAndJoin';
 
 const Join = () => {
   const {
@@ -32,7 +35,7 @@ const Join = () => {
     <>
       {pageTransition ? (
         <section>
-          <h2>프로필 설정</h2>
+          <H2>프로필 설정</H2>
           <p>나중에 언제든지 변경할 수 있습니다.</p>
           <form onSubmit={handleSubmit}>
             <label htmlFor='profileImg'>
@@ -90,19 +93,31 @@ const Join = () => {
           </form>
         </section>
       ) : (
-        <section>
-          <h2>이메일로 회원가입</h2>
-          <form onSubmit={goNext}>
-            <h3>회원분류선택</h3>
-            <div>
-              <button type='button' name='individual' onClick={handleUserType}>
-                일반 회원
-              </button>
-              <button type='button' name='organization' onClick={handleUserType}>
-                기업 및 기관
-              </button>
-            </div>
-            <input
+        <Container>
+          <H2>이메일로 회원가입</H2>
+          <Form onSubmit={goNext}>
+            <SelectUserType>
+              <h3>회원분류선택</h3>
+              <SelectUserBtnContainer>
+                <SelectUserBtn
+                  type='button'
+                  name='individual'
+                  onClick={handleUserType}
+                  selected={userType === 'individual'}
+                >
+                  일반 회원
+                </SelectUserBtn>
+                <SelectUserBtn
+                  type='button'
+                  name='organization'
+                  onClick={handleUserType}
+                  selected={userType === 'organization'}
+                >
+                  기업 및 기관
+                </SelectUserBtn>
+              </SelectUserBtnContainer>
+            </SelectUserType>
+            <Input
               value={userInfo.user.email}
               onChange={handleInputChange}
               onBlur={handleEmailOnBlur}
@@ -111,8 +126,8 @@ const Join = () => {
               placeholder='이메일을 설정해 주세요.'
               required
             />
-            {emailError}
-            <input
+            <StyledErrorMsg>{emailError}</StyledErrorMsg>
+            <Input
               value={userInfo.user.password}
               onChange={handleInputChange}
               onBlur={handlePasswordValid}
@@ -121,23 +136,56 @@ const Join = () => {
               placeholder='비밀번호를 설정해 주세요.'
               required
             />
-            {passwordError}
-            <button
+            <StyledErrorMsg>{passwordError}</StyledErrorMsg>
+            <Button
               disabled={
                 !userType ||
                 !userInfo.user.email ||
                 !userInfo.user.password ||
-                emailError !== '사용 가능한 이메일 입니다.' ||
+                emailError !== '*사용 가능한 이메일 입니다.' ||
                 passwordError
               }
             >
               다음
-            </button>
-          </form>
-        </section>
+            </Button>
+          </Form>
+        </Container>
       )}
     </>
   );
 };
+
+const H2 = styled.h2`
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+  margin: 30px 0 45px 0;
+`;
+
+const SelectUserType = styled.div`
+  text-align: left;
+  margin-bottom: 25px;
+
+  h3 {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+`;
+
+const SelectUserBtnContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const SelectUserBtn = styled.button`
+  color: ${(props) => (props.selected ? 'white' : '#87b7e4')};
+  background-color: ${(props) => (props.selected ? '#87b7e4' : 'white')};
+  border-radius: 44px;
+  border: 2px solid #87b7e4;
+  font-weight: 700;
+  padding: 11px 49px;
+  letter-spacing: -1px;
+`;
 
 export default Join;
