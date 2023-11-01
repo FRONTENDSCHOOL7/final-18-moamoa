@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import UserSearch from '../../Components/Common/HeaderSearch';

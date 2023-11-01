@@ -1,7 +1,10 @@
-/*eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+Header.propTypes = {
+  setSearchText: PropTypes.func,
+};
 
 export default function Header({ setSearchText }) {
   return (

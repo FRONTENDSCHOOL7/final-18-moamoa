@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function useDebounce(value, delay = 1000500) {
   const [debounceValue, setDebounceValue] = useState(value);
