@@ -2,6 +2,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Common/Button';
+import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
+
+FollowUser.propTypes = {
+  src: PropTypes.string.isRequired,
+};
 
 export default function FollowUser(props) {
   const [isFollowed, setIsFollowed] = useState(false);
@@ -14,7 +19,7 @@ export default function FollowUser(props) {
     <div>
       <FollowWrap>
         <UserPhotoWrap>
-          <UserPhoto src={image} alt='Follower'></UserPhoto>
+          <UserPhoto src={props.src} alt='Follower'></UserPhoto>
         </UserPhotoWrap>
         <UserInfo>
           <UserId>{userId}</UserId>

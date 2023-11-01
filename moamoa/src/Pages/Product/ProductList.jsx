@@ -134,7 +134,7 @@ export default function ProductList() {
 
 const Nav = styled.div`
   /* display: flex; */
-  padding-top: 70px;
+  padding: 12px;
   padding-left: 10px;
   /* height: 100vh; */
 `;
@@ -145,7 +145,6 @@ const Button = styled.button`
   border-radius: 10px;
   font-weight: bold;
   margin-right: 6px;
-  margin-bottom: 16px;
 `;
 const FestivalBtn = styled(Button)`
   background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
@@ -163,12 +162,12 @@ const ProductContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  flex: 1;
+  /* flex: 1; */
   padding-bottom: 150px;
   background-image: url(${backgroundMoamoa});
   background-repeat: no-repeat;
   background-position: 110% 91%;
-  height: 100%;
+  /* height: 100%; */
   grid-template-rows: 160px;
 `;
 const ProductBox = styled.div`

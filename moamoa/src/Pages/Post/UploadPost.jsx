@@ -2,13 +2,30 @@
   설명: 게시글 등록 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.10.30
+  마지막 수정 날까: 2023.10.31
 */
 
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
+
 import userToken from '../../Recoil/userTokenAtom'; ////파일 경로 변경 완료
+import { Container } from '../../Components/Common/Container';
+import Gobackbtn from '../../Components/Common/GoBackbtn';
+import ButtonSubmit from '../../Components/Common/Button';
+
+import uploadFile from '../../Assets/images/upload-file.png';
+import xButton from '../../Assets/icons/x.svg';
+import {
+  HeaderContainer,
+  HiddenH1,
+  UploadPostBox,
+  ProfileImg,
+  TextArea,
+  ImgPre,
+  XButton,
+  InputImgIcon,
+} from './UloadEditPostStyle';
 
 export default function AddPost() {
   const token = useRecoilValue(userToken);
@@ -88,6 +105,15 @@ export default function AddPost() {
     uploadImage(imageFile);
   };
 
+  //textarea 높이 설정
+  const adjustTextareaHeight = (event) => {
+    const textarea = event.target;
+    // 높이 초기화
+    textarea.style.height = 'auto';
+    // 스크롤 높이만큼 textarea 높이 설정
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
   const submitAddPost = (e) => {
     e.preventDefault();
 
@@ -102,6 +128,7 @@ export default function AddPost() {
 
   const closeImg = () => {
     setPostImage('');
+    document.getElementById('profileImg').value = ''; // 파일 인풋 초기화
   };
 
   useEffect(() => {
@@ -118,45 +145,74 @@ export default function AddPost() {
   };
 
   return (
-    <section>
-      <h1>게시글 등록</h1>
-      <form onSubmit={handleFormSubmit}>
-        {/* 사용자 프로필 */}
-        <img src={userImage} alt='' />
+    <Container>
+      <HeaderContainer>
+        <Gobackbtn />
+        <ButtonSubmit
+          buttonText='업로드'
+          onClickHandler={submitAddPost}
+          disabled={isButtonDisabled}
+        />
+      </HeaderContainer>
+      <UploadPostBox>
+        <section>
+          <HiddenH1>
+            <h1>게시글 등록</h1>
+          </HiddenH1>
+          <form onSubmit={handleFormSubmit}>
+            <ProfileImg>
+              {/* 사용자 프로필 */}
+              <img src={userImage} alt='' />
+            </ProfileImg>
+            <TextArea>
+              <div>
+                {/* 내용 입력 창 */}
+                <textarea
+                  value={content}
+                  onChange={(e) => {
+                    inputContent(e);
+                    adjustTextareaHeight(e);
+                  }}
+                  id='contentTextarea'
+                  name='content'
+                  rows='1'
+                  cols='50'
+                  placeholder='내용을 입력해주세요'
+                ></textarea>
+              </div>
+            </TextArea>
 
-        {/* 게시글 이미지 */}
-        <button type='button' onClick={closeImg}>
-          {' '}
-          닫기{' '}
-        </button>
-        <div>
-          <label htmlFor='profileImg'>
-            <img src={image} alt='' id='imagePre' />
-          </label>
-          <input
-            type='file'
-            onChange={handleChangeImage}
-            id='profileImg'
-            name='image'
-            accept='image/*'
-          />
-        </div>
-        <div>
-          {/* 내용 입력 창 */}
-          <textarea
-            value={content}
-            onChange={inputContent}
-            id='contentTextarea'
-            name='content'
-            rows='10'
-            cols='50'
-            placeholder='내용을 입력해주세요'
-          ></textarea>
-        </div>
-        <button type='button' onClick={submitAddPost} disabled={isButtonDisabled}>
-          업로드
-        </button>
-      </form>
-    </section>
+            <div>
+              {/* 이미지 미리보기 */}
+              {image ? (
+                <ImgPre>
+                  <img src={image} alt='' id='imagePre' />
+                  <XButton>
+                    <button type='button' onClick={closeImg}>
+                      <img src={xButton} alt='' />
+                    </button>
+                  </XButton>
+                </ImgPre>
+              ) : null}
+
+              {/* 이미지 등록 버튼 */}
+              <InputImgIcon>
+                <label htmlFor='profileImg'>
+                  <img src={uploadFile} alt='' />
+                </label>
+                <input
+                  type='file'
+                  onChange={handleChangeImage}
+                  id='profileImg'
+                  name='image'
+                  accept='image/*'
+                  style={{ display: 'none' }}
+                />
+              </InputImgIcon>
+            </div>
+          </form>
+        </section>
+      </UploadPostBox>
+    </Container>
   );
 }

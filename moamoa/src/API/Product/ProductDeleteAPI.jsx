@@ -1,23 +1,20 @@
 import { useRecoilValue } from 'recoil';
-import { useCallback } from 'react';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 
-const ProductDetailAPI = (productId) => {
+const ProductDeleteAPI = (params) => {
   const reqURL = 'https://api.mandarin.weniv.co.kr';
   const token = useRecoilValue(userTokenAtom);
+  const productId = params.product_id;
 
-  const getProductDetail = useCallback(async () => {
+  const handleProductDelete = async () => {
     try {
-      const response = await fetch(reqURL + `/product/detail/${productId}`, {
-        method: 'GET',
+      await fetch(reqURL + `/product/${productId}`, {
+        method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-type': 'application/json',
         },
       });
-      const data = await response.json();
-
-      return data;
     } catch (err) {
       const { status, data } = err.response;
       if (status === 422) {
@@ -31,9 +28,9 @@ const ProductDetailAPI = (productId) => {
         console.log('Server error');
       }
     }
-  }, [productId, token]);
+  };
 
-  return getProductDetail;
+  return handleProductDelete;
 };
 
-export default ProductDetailAPI;
+export default ProductDeleteAPI;

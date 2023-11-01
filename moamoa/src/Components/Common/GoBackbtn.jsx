@@ -8,7 +8,7 @@ const GoBackImage = styled.img`
 `;
 export default function Gobackbtn() {
   const navigate = useNavigate();
-  console.log(navigate);
+  // console.log(navigate);
   const handleGoBack = () => {
     navigate(-1);
   };

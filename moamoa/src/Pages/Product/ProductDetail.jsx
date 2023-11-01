@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { atom, useRecoilState,useRecoilValue } from 'recoil';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom';
 import styled from 'styled-components';
 import Header from '../../Components/Common/HeaderBasic';
@@ -13,7 +13,6 @@ export default function ProductDetail() {
     default: null,
   });
   const token = useRecoilValue(userToken);
-  
 
   const [productData, setProductData] = useRecoilState(productState);
   const [productId, setProductId] = useState([]);
@@ -35,7 +34,7 @@ export default function ProductDetail() {
         if (res.status === 200) {
           const product = await res.json();
           setProductData(product);
-          console.log(product)
+          console.log(product);
 
           const idList = product.product.map((item) => item._id);
           console.log(idList);
@@ -61,40 +60,51 @@ export default function ProductDetail() {
     }
   }, [pageIdx]);
 
-  
   const resdate = (pageIndex) => {
-    console.log(productData)
+    console.log(productData);
     const date = productData.product[pageIndex].price.toString();
     console.log(date);
     const start = date.slice(0, 8);
-    const end = date.slice(8);  
+    const end = date.slice(8);
 
-    const result = `${start.slice(0, 4)}.${start.slice(4, 6)}.${start.slice(6)} ~ ${end.slice(0, 4)}.${end.slice(4, 6)}.${end.slice(6)}`;
+    const result = `${start.slice(0, 4)}.${start.slice(4, 6)}.${start.slice(6)} ~ ${end.slice(
+      0,
+      4,
+    )}.${end.slice(4, 6)}.${end.slice(6)}`;
     console.log(result);
     return result;
-  }
+  };
 
   return (
     <>
       {productData && pageIndex !== null && pageIndex !== -1 && (
         <>
-          
-          <Container>          
+          <Container>
             <FestivalContainer>
-              <Header/>
+              <Header />
               <Frofile>
-                <PostCardUser url={productData.product[pageIndex].itemImage} username={productData.product[pageIndex].author.username} accountname={productData.product[pageIndex].author.accountname}/>
-                <AskBtn accountname={productData.product[pageIndex].author.accountname}/>                
+                <PostCardUser
+                  url={productData.product[pageIndex].itemImage}
+                  username={productData.product[pageIndex].author.username}
+                  accountname={productData.product[pageIndex].author.accountname}
+                />
+                <AskBtn username={productData.product[pageIndex].author.username} />
               </Frofile>
               <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
               <InfoContainer>
-                <FestivalTitle>{productData.product[pageIndex]?.itemName || '행사명을 조회할 수 없습니다.'}</FestivalTitle>
+                <FestivalTitle>
+                  {productData.product[pageIndex]?.itemName || '행사명을 조회할 수 없습니다.'}
+                </FestivalTitle>
                 <FestivalInfo>행사 소개</FestivalInfo>
-                <FestivalDesc>{productData.product[pageIndex]?.link || '행사 상세 설명을 조회할 수 없습니다.'}</FestivalDesc>
+                <FestivalDesc>
+                  {productData.product[pageIndex]?.link || '행사 상세 설명을 조회할 수 없습니다.'}
+                </FestivalDesc>
                 <FestivalInfo>행사 기간</FestivalInfo>
-                <FestivalDesc>{
-                productData.product[pageIndex] ? resdate(pageIndex) : '행사 기간을 조회할 수 없습니다.'
-                }</FestivalDesc>
+                <FestivalDesc>
+                  {productData.product[pageIndex]
+                    ? resdate(pageIndex)
+                    : '행사 기간을 조회할 수 없습니다.'}
+                </FestivalDesc>
               </InfoContainer>
             </FestivalContainer>
           </Container>
@@ -118,7 +128,7 @@ const FestivalContainer = styled.div`
   overflow: hidden;
 `;
 
-const Frofile = styled.div`  
+const Frofile = styled.div`
   margin-top: 5.5rem;
   height: 4.2rem;
   padding: 0.7rem 1.2rem;
@@ -126,8 +136,8 @@ const Frofile = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-` ;
-const FestivalImg = styled.img`  
+`;
+const FestivalImg = styled.img`
   width: 39rem;
   height: 27rem;
   aspect-ratio: 39/27;
@@ -146,12 +156,12 @@ const FestivalInfo = styled.h4`
   font-size: 1.4rem;
   font-weight: bold;
   padding: 1.6rem 1.8rem 0.6rem;
-  border-top: 1px solid #DBDBDB;
+  border-top: 1px solid #dbdbdb;
 `;
 
 const FestivalDesc = styled.p`
   font-size: 1.4rem;
-  padding-left:1.8rem;
+  padding-left: 1.8rem;
   margin-bottom: 1.6rem;
   color: #767676;
 `;

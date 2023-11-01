@@ -1,16 +1,16 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
-import homeBg from '../../Assets/icons/character-yellow.png'
+import homeBg from '../../Assets/icons/character-yellow.png';
 
 export default function HomeFeed() {
   return (
-    <UserSearchHome>      
+    <UserSearchHome>
       <HomeCont>
         <SearchText>유저를 검색해 팔로우 해보세요!</SearchText>
         <SearchBtn>검색하기</SearchBtn>
       </HomeCont>
     </UserSearchHome>
-  )
+  );
 }
 const UserSearchHome = styled.div`
   width: 100%;
@@ -36,10 +36,10 @@ const SearchBtn = styled.button`
   width: 12.2rem;
   height: 4.4rem;
   border-radius: 4.4rem;
-  background-color: #87B7E4;
+  background-color: #87b7e4;
   color: white;
   font-weight: bold;
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 `;
