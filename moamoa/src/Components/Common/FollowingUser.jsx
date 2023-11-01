@@ -1,20 +1,16 @@
-/* eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Common/Button';
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 
 FollowUser.propTypes = {
   src: PropTypes.string.isRequired,
+  userId: PropTypes.string,
+  userText: PropTypes.string,
 };
 
 export default function FollowUser(props) {
-  const [isFollowed, setIsFollowed] = useState(false);
-
-  useEffect(() => {
-    // "isFollowed" 상태가 변경될 때마다 실행되는 효과 훅
-    console.log(isFollowed);
-  }, [isFollowed]);
+  const [isFollowed, setIsFollowed] = useState(true);
 
   const handleButtonClick = () => {
     setIsFollowed(!isFollowed);
@@ -32,11 +28,11 @@ export default function FollowUser(props) {
         </UserInfo>
         <Button
           width='56'
-          isFollowed={!isFollowed}
-          buttonText={!isFollowed ? '취소' : '팔로우'}
-          backgroundColor={!isFollowed ? '#fff' : '#87b7e4'}
-          color={!isFollowed ? '#767676' : '#fff'}
-          bordered={!isFollowed}
+          isFollowed={isFollowed}
+          buttonText={isFollowed ? '취소' : '팔로우'}
+          backgroundColor={isFollowed ? '#fff' : '#87b7e4'}
+          color={isFollowed ? '#767676' : '#fff'}
+          bordered={isFollowed}
           onClickHandler={handleButtonClick}
         ></Button>
       </FollowWrap>

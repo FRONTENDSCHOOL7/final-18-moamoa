@@ -61,7 +61,7 @@ const H1 = styled.h1`
   text-align: center;
   font-weight: 400;
   font-size: 24px;
-  margin: 30px 0 45px 0;
+  margin-top: 30px;
 `;
 
 export default LoginPage;

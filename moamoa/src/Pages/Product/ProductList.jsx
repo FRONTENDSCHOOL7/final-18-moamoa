@@ -93,7 +93,7 @@ export default function ProductList() {
                   </ProductBox>
                 ))
             : null}
-          {console.log('콘솔로그는 뭘까:', product)}
+          {/* {console.log('콘솔로그는 뭘까:', product)} */}
           {/* {console.log('아이디찾기:', product[0]._id)} */}
           {isExperienceActive
             ? product
@@ -146,12 +146,16 @@ const Button = styled.button`
   font-weight: bold;
   margin-right: 6px;
 `;
-const FestivalBtn = styled(Button)`
+const FestivalBtn = styled(Button).withConfig({
+  shouldForwardProp: (prop) => !['isActive', 'active'].includes(prop),
+})`
   background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
   color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
 `;
 
-const ExperienceBtn = styled(Button)`
+const ExperienceBtn = styled(Button).withConfig({
+  shouldForwardProp: (prop) => !['isActive', 'active'].includes(prop),
+})`
   background-color: ${({ isActive }) => (isActive ? '#87b7e4' : '#ffffff')};
   color: ${({ isActive }) => (isActive ? '#ffffff' : '#dadada')};
 `;
