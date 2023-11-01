@@ -17,12 +17,12 @@ export default function Header() {
 
 const HeaderContainer = styled.header`
   display: flex;
-  height: 55px;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
   width: 390px;
   justify-content: space-between;
-  position: fixed;
-  left: 50%;
-  translate: -50%;
+
   border-bottom: 1px solid #dbdbdb;
   background-color: #fff;
   align-items: center;
@@ -31,6 +31,7 @@ const HeaderContainer = styled.header`
   padding-left: 10px;
   padding-right: 10px;
   box-sizing: border-box;
+  margin: 0 auto;
 
   img {
     cursor: pointer;

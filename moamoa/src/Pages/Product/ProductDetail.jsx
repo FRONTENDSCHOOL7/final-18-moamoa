@@ -60,7 +60,10 @@ export default function ProductDetail() {
     const date = productData.product[pageIndex].price.toString();
     const start = date.slice(0, 8);
     const end = date.slice(8);
-    const result = `${start.slice(0, 4)}.${start.slice(4, 6)}.${start.slice(6)} ~ ${end.slice(0,4)}.${end.slice(4, 6)}.${end.slice(6)}`;
+    const result = `${start.slice(0, 4)}.${start.slice(4, 6)}.${start.slice(6)} ~ ${end.slice(
+      0,
+      4,
+    )}.${end.slice(4, 6)}.${end.slice(6)}`;
     return result;
   };
 
@@ -82,7 +85,8 @@ export default function ProductDetail() {
               <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
               <InfoContainer>
                 <FestivalTitle>
-                  {productData.product[pageIndex]?.itemName.slice(3) || '행사명을 조회할 수 없습니다.'}
+                  {productData.product[pageIndex]?.itemName.slice(3) ||
+                    '행사명을 조회할 수 없습니다.'}
                 </FestivalTitle>
                 <FestivalInfo>행사 소개</FestivalInfo>
                 <FestivalDesc>
@@ -118,7 +122,6 @@ const FestivalContainer = styled.div`
 `;
 
 const Frofile = styled.div`
-  margin-top: 5.5rem;
   height: 4.2rem;
   padding: 0.7rem 1.2rem;
   overflow: hidden;

@@ -75,13 +75,12 @@ export default function PostCardList(post) {
 
 const PostList = styled.li`
   &:first-child {
-    padding-top: 4rem;
+    padding-top: 1.5rem;
   }
+  margin-bottom: 25px;
 `;
 
-const PostArticle = styled.article`
-  margin-top: 3rem;
-`;
+const PostArticle = styled.article``;
 const Frofile = styled.div`
   margin: 0 auto;
   height: 4.2rem;
@@ -103,7 +102,7 @@ const PostImg = styled.img`
 `;
 const PostDesc = styled.p`
   font-size: 1.4rem;
-  margin: 1.2rem 0 1.6rem;
+  margin: 1.2rem 0 0;
   line-height: 2rem;
   word-break: break-all;
   &:hover {

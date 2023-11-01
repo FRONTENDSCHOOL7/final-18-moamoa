@@ -22,7 +22,9 @@ export default function Header({ setSearchText }) {
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-around;
-  height: 55px;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
   width: 390px;
 
   background-color: #fff;
