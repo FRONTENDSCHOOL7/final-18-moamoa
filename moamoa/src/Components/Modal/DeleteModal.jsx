@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -7,7 +7,6 @@ import userTokenAtom from '../../Recoil/userTokenAtom';
 import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
 
 export default function DeleteModal() {
-  
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const navigate = useNavigate();
@@ -17,13 +16,14 @@ export default function DeleteModal() {
   console.log(showModal)
 
   const location = useLocation();
-  const post = location.pathname.slice(1,5);
+  const post = location.pathname.slice(1, 5);
   console.log(post);
   
   const delPost = () => {
     const delReq = () => {
-      axios.delete(`https://api.mandarin.weniv.co.kr/post/${params.post_id}`,{
-        headers:{          
+      axios
+        .delete(`https://api.mandarin.weniv.co.kr/post/${params.post_id}`, {
+          headers: {
             Authorization: `Bearer ${token}`,
             'Content-type': 'application/json',
         }
@@ -84,17 +84,15 @@ const BtnCancel = styled.button`
   width: 12.5rem;
   height: 6.5rem;
   font-size: 1.4rem;
-  &:hover{
+  &:hover {
     font-weight: bold;
   }
 `;
 
 const BtnDel = styled(BtnCancel)`
-  color: #EB5757;
+  color: #eb5757;
   border-right: 1px solid #dbdbdb;
 `;
-
-
 
 const Deltext = styled.p`
   text-align: center;

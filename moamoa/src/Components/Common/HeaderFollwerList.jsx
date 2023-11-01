@@ -15,7 +15,9 @@ export default function HeaderFollowerList() {
 }
 const HeaderFollower = styled.div`
   display: flex;
-  height: 55px;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
   width: 390px;
   gap: 8px;
   border-bottom: 1px solid #dbdbdb;

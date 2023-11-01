@@ -2,6 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { uploadImage } from '../../API/Img/UploadImageAPI';
 import ProductUploadAPI from '../../API/Product/ProductUploadAPI';
+import { Container } from '../../Components/Common/Container';
+import Gobackbtn from '../../Components/Common/GoBackbtn';
+import DefaultImg from '../../Assets/images/img-product-default.png';
+import {
+  Form,
+  Header,
+  HeaderButton,
+  FirstContainer,
+  ImgLayoutContainer,
+  ImageLabel,
+  Image,
+  LayoutContainer,
+  SelectedButton,
+  EventNameInput,
+  PeriodInputContainer,
+  PeriodInput,
+  Textarea,
+  StyledErrorMsg,
+} from '../../Components/Common/ProductSharedStyle';
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -10,9 +29,7 @@ const AddProduct = () => {
   const [eventEndDate, setEventEndDate] = useState('');
   const [eventPeriod, setEventPeriod] = useState(1);
   const [periodInfoMsg, setPeriodInfoMsg] = useState('');
-  const [imgSrc, setImgSrc] = useState(
-    'https://cdn.visitkorea.or.kr/kfes/upload/contents/db/400_03e7c925-a8a5-4923-905c-e12586ec0a44_3.png',
-  );
+  const [imgSrc, setImgSrc] = useState(DefaultImg);
   const [eventDetail, setEventDetail] = useState('');
   const [eventType, setEventType] = useState('');
 
@@ -60,75 +77,11 @@ const AddProduct = () => {
 
   return (
     <>
-      <main>
-        <h1>상품 등록 페이지</h1>
-        <form onSubmit={submitProduct}>
-          <section>
-            <h2>이미지 등록</h2>
-            <label htmlFor='upload-file'>
-              <img src={imgSrc} alt='' srcSet='' id='imagePre' />
-            </label>
-            <input
-              id='upload-file'
-              type='file'
-              accept='image/*'
-              onChange={handleChangeImage}
-            ></input>
-            <p>* 행사 관련 이미지를 등록해주세요.</p>
-          </section>
-          <div>
-            <h2>카테고리</h2>
-            <button type='button' onClick={() => setEventType('festival')}>
-              축제
-            </button>
-            <button type='button' onClick={() => setEventType('experience')}>
-              체험
-            </button>
-          </div>
-          <div>
-            <label htmlFor='event-name'>행사명</label>
-            <input
-              id='event-name'
-              type='text'
-              placeholder='2~22자 이내여야 합니다.'
-              pattern='.{2,22}'
-              title='2~22자 이내여야 합니다.'
-              onChange={(e) => setEventName(e.target.value)}
-              value={eventName}
-            ></input>
-          </div>
-          <div>
-            <label htmlFor='event-period'>
-              행사 기간
-              <input
-                type='date'
-                id='event-period'
-                onChange={(e) => setEventStartDate(e.target.value)}
-                value={eventStartDate}
-                pattern='yyyy-MM-dd'
-                max='9999-12-31'
-              ></input>
-              <input
-                type='date'
-                id='event-period'
-                onChange={(e) => setEventEndDate(e.target.value)}
-                value={eventEndDate}
-                pattern='yyyy-MM-dd'
-                max='9999-12-31'
-              ></input>
-              {periodInfoMsg}
-            </label>
-          </div>
-          <div>
-            <label htmlFor='event-detail'>상세 설명</label>
-            <textarea
-              id='event-detail'
-              placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
-              onChange={(e) => setEventDetail(e.target.value)}
-              value={eventDetail}
-            ></textarea>
-          </div>
-          <button
+      <Container>
+        <Header>
+          <Gobackbtn />
+          <HeaderButton
+            onClick={submitProduct}
             disabled={
               !imgSrc ||
               !eventName ||
@@ -139,9 +92,92 @@ const AddProduct = () => {
             }
           >
             저장
-          </button>
-        </form>
-      </main>
+          </HeaderButton>
+        </Header>
+        <h1 className='a11y-hidden'>상품 등록 페이지</h1>
+        <Form>
+          <FirstContainer>
+            <h2>이미지 등록</h2>
+            <ImgLayoutContainer>
+              <ImageLabel htmlFor='upload-file'>
+                <Image src={imgSrc ? imgSrc : DefaultImg} alt={eventName} />
+              </ImageLabel>
+              <input
+                className='a11y-hidden'
+                id='upload-file'
+                type='file'
+                accept='image/*'
+                onChange={handleChangeImage}
+              ></input>
+            </ImgLayoutContainer>
+            <p>* 행사 관련 이미지를 등록해주세요.</p>
+          </FirstContainer>
+          <LayoutContainer>
+            <label htmlFor='category'>카테고리</label>
+            <div>
+              <SelectedButton
+                id='category'
+                type='button'
+                onClick={() => setEventType('festival')}
+                selected={eventType === 'festival'}
+              >
+                축제
+              </SelectedButton>
+              <SelectedButton
+                id='category'
+                type='button'
+                onClick={() => setEventType('experience')}
+                selected={eventType === 'experience'}
+              >
+                체험
+              </SelectedButton>
+            </div>
+          </LayoutContainer>
+          <LayoutContainer>
+            <label htmlFor='event-name'>행사명</label>
+            <EventNameInput
+              id='event-name'
+              type='text'
+              placeholder='2~22자 이내여야 합니다.'
+              pattern='.{2,22}'
+              title='2~22자 이내여야 합니다.'
+              onChange={(e) => setEventName(e.target.value)}
+              value={eventName}
+            ></EventNameInput>
+          </LayoutContainer>
+          <LayoutContainer>
+            <label htmlFor='event-period'>행사 기간</label>
+            <PeriodInputContainer>
+              <PeriodInput
+                type='date'
+                id='event-period'
+                onChange={(e) => setEventStartDate(e.target.value)}
+                value={eventStartDate}
+                pattern='yyyy-MM-dd'
+                max='9999-12-31'
+              ></PeriodInput>
+              <PeriodInput
+                type='date'
+                id='event-period'
+                onChange={(e) => setEventEndDate(e.target.value)}
+                value={eventEndDate}
+                pattern='yyyy-MM-dd'
+                max='9999-12-31'
+              ></PeriodInput>
+            </PeriodInputContainer>
+            <StyledErrorMsg>{periodInfoMsg}</StyledErrorMsg>
+          </LayoutContainer>
+          <LayoutContainer>
+            <label htmlFor='event-detail'>상세 설명</label>
+            <Textarea
+              id='event-detail'
+              placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
+              onChange={(e) => setEventDetail(e.target.value)}
+              value={eventDetail}
+            ></Textarea>
+          </LayoutContainer>
+        </Form>
+      </Container>
     </>
   );
 };
