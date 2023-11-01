@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지 공통 UI
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.10.30
+  마지막 수정 날까: 2023.11.01
 */
 
 import React, { useState, useEffect } from 'react';
@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 import userNameAtom from '../../Recoil/userNameAtom';
+import styled from 'styled-components';
 
 function PostCnt({ src, token, userType }) {
   const [postCount, setPostCount] = useState(0);
@@ -47,7 +48,12 @@ function PostCnt({ src, token, userType }) {
     fetchProductCount();
   }, [src, token]);
 
-  return <p>게시글 수 : {postCount + productCount}</p>;
+  return (
+    <PostCountWrap>
+      <p>{postCount + productCount}</p>
+      <p>게시글 수</p>
+    </PostCountWrap>
+  );
 }
 
 PostCnt.propTypes = {
@@ -110,23 +116,127 @@ export default function ProfileDetail() {
   const userType = profileUsername.includes('[o]') ? 'organization' : 'Individual';
 
   return (
-    <section>
-      <img src={profileImg} alt='Profile' />
-      <p>
-        닉네임:{' '}
-        {userType === 'organization'
-          ? profileUsername.replace('[o]', '')
-          : profileUsername.replace('[i]', '')}
-        {userType === 'organization' ? <span>★</span> : ''}
-      </p>
-      <p>계정 id: {profileAccountname}</p>
-      <p>소개글: {profileIntro}</p>
-      {/* <p>게시글 수: 행사</p>   */}
-      {profileAccountname && profileImg && profileUsername && (
-        <PostCnt src={profileAccountname} token={token} userType={userType} />
-      )}
-      <button>팔로워: {profileFollowerCount}</button>
-      <button>팔로잉: {profileFollowingCount}</button>
-    </section>
+    <ProfileDetailBox>
+      <section>
+        <ProfileImg>
+          <img src={profileImg} alt='Profile' />
+        </ProfileImg>
+        <ProfileInfo>
+          <div>
+            <p>
+              {userType === 'organization'
+                ? profileUsername.replace('[o]', '')
+                : profileUsername.replace('[i]', '')}
+              {userType === 'organization' ? <span>★</span> : ''}
+            </p>
+            <p>@{profileAccountname}</p>
+          </div>
+          <p className='profile-intro'>{profileIntro}</p>
+        </ProfileInfo>
+
+        <CountWrap>
+          {profileAccountname && profileImg && profileUsername && (
+            <PostCnt src={profileAccountname} token={token} userType={userType} />
+          )}
+          <span></span>
+          <button>
+            <p>{profileFollowerCount}</p>
+            <p>팔로워</p>
+          </button>
+          <span></span>
+          <button>
+            <p>{profileFollowingCount}</p>
+            <p>팔로잉</p>
+          </button>
+        </CountWrap>
+      </section>
+    </ProfileDetailBox>
   );
 }
+
+const ProfileDetailBox = styled.div`
+  height: 328px;
+`;
+const ProfileImg = styled.div`
+  background: linear-gradient(to bottom, #ffc700 50%, #ffc700 calc(30% + 65px), transparent 50%);
+  padding-top: 65px;
+  padding-left: 20px;
+
+  img {
+    width: 105px;
+    height: 105px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+  }
+`;
+
+const ProfileInfo = styled.div`
+  padding: 10px 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  background: red;
+
+  p {
+    color: #767676;
+    font-size: 12px;
+  }
+
+  p:first-child {
+    color: #000;
+    font-size: 16px;
+  }
+
+  .profile-intro {
+    font-size: 14px;
+  }
+`;
+
+const CountWrap = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  padding: 14px 0;
+  background: green;
+  text-align: center;
+
+  p {
+    font-size: 18px;
+  }
+
+  button {
+    display: flex; // button 내부를 flex 레이아웃으로 설정합니다.
+    flex-direction: column; // 세로 방향으로 아이템을 배치합니다.
+    gap: 5px; // p 태그 간의 간격을 5px로 설정합니다. 원하는 크기로 조절 가능합니다.
+    align-items: center;
+    p: last-child {
+      font-size: 10px; // 버튼 내의 <p> 태그에 대한 텍스트 크기
+      color: #767676;
+    }
+  }
+
+  span {
+    display: inline-block; // inline-block으로 설정해야 width와 height가 적용됩니다.
+    width: 0.5px; // 가로 길이를 50px로 설정
+    height: 22px; // 세로 길이를 2px로 설정 (원하는대로 조절 가능)
+    background-color: #e3e3e3; // span의 배경 색을 검정색으로 설정
+  }
+`;
+
+const PostCountWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  p {
+    font-size: 18px; // 여기에서 텍스트 사이즈를 10px로 변경합니다.
+  }
+
+  p:last-child {
+    font-size: 10px; // 첫 번째 p 태그 (게시글 수 숫자)는 기존대로 유지합니다.
+    color: #767676;
+  }
+`;
