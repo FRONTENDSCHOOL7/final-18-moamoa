@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 
-// 'src' 프로퍼티를 검증
 ProductImgBox.propTypes = {
   src: PropTypes.string.isRequired,
 };
