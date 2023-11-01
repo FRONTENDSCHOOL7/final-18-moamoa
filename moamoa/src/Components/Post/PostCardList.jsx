@@ -40,7 +40,7 @@ export default function PostCardList(post) {
             <Frofile>
               <PostCardUser
                 url={profileImgUrl}
-                username={postprop.author.username}
+                username={postprop.author.username.slice(3)}
                 accountname={postprop.author.accountname}
               />
               <MoreBtn />
@@ -104,6 +104,8 @@ const PostImg = styled.img`
 const PostDesc = styled.p`
   font-size: 1.4rem;
   margin: 1.2rem 0 1.6rem;
+  line-height: 2rem;
+  word-break: break-all;
   &:hover {
     cursor: default;
   }

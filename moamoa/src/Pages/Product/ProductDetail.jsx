@@ -34,10 +34,7 @@ export default function ProductDetail() {
         if (res.status === 200) {
           const product = await res.json();
           setProductData(product);
-          console.log(product);
-
           const idList = product.product.map((item) => item._id);
-          console.log(idList);
           setProductId(idList);
         } else {
           console.error('상세페이지를 불러오는데 실패했습니다.');
@@ -51,7 +48,6 @@ export default function ProductDetail() {
   }, []);
 
   const params = useParams();
-  console.log(params);
   const pageIdx = params.product_id ? productId.indexOf(params.product_id) : -1;
 
   useEffect(() => {
@@ -61,17 +57,10 @@ export default function ProductDetail() {
   }, [pageIdx]);
 
   const resdate = (pageIndex) => {
-    console.log(productData);
     const date = productData.product[pageIndex].price.toString();
-    console.log(date);
     const start = date.slice(0, 8);
     const end = date.slice(8);
-
-    const result = `${start.slice(0, 4)}.${start.slice(4, 6)}.${start.slice(6)} ~ ${end.slice(
-      0,
-      4,
-    )}.${end.slice(4, 6)}.${end.slice(6)}`;
-    console.log(result);
+    const result = `${start.slice(0, 4)}.${start.slice(4, 6)}.${start.slice(6)} ~ ${end.slice(0,4)}.${end.slice(4, 6)}.${end.slice(6)}`;
     return result;
   };
 
@@ -84,8 +73,8 @@ export default function ProductDetail() {
               <Header />
               <Frofile>
                 <PostCardUser
-                  url={productData.product[pageIndex].itemImage}
-                  username={productData.product[pageIndex].author.username}
+                  url={productData.product[pageIndex].author.image}
+                  username={productData.product[pageIndex].author.username.slice(3)}
                   accountname={productData.product[pageIndex].author.accountname}
                 />
                 <AskBtn username={productData.product[pageIndex].author.username} />
@@ -93,7 +82,7 @@ export default function ProductDetail() {
               <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
               <InfoContainer>
                 <FestivalTitle>
-                  {productData.product[pageIndex]?.itemName || '행사명을 조회할 수 없습니다.'}
+                  {productData.product[pageIndex]?.itemName.slice(3) || '행사명을 조회할 수 없습니다.'}
                 </FestivalTitle>
                 <FestivalInfo>행사 소개</FestivalInfo>
                 <FestivalDesc>
@@ -163,5 +152,6 @@ const FestivalDesc = styled.p`
   font-size: 1.4rem;
   padding-left: 1.8rem;
   margin-bottom: 1.6rem;
+  line-height: 2rem;
   color: #767676;
 `;

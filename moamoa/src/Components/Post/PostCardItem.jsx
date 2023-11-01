@@ -33,7 +33,7 @@ export default function PostCardDetail(post) {
             <Frofile>
               <PostCardUser
                 url={postprop.author.image}
-                username={postprop.author.username}
+                username={postprop.author.username.slice(3)}
                 accountname={accountName}
               />
               <MoreBtn accountname={accountName} onClick={()=>{
@@ -95,6 +95,7 @@ const PostImg = styled.img`
 const PostDesc = styled.p`
   font-size: 1.4rem;
   margin: 1.2rem 0 1.6rem;
+  word-break: break-all;
   &:hover {
     cursor: default;
   }

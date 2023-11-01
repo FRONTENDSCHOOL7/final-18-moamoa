@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import userNameAtom from '../../Recoil/userNameAtom';
-import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
+import PostModal from '../../Components/Modal/PostModal';
+import postModalOpenAtom from '../../Recoil/postModalOpenAtom';
 
 export default function AskBtn(username) {
   const userName = useRecoilValue(userNameAtom);
+  const [showModal, setShowModal] = useRecoilState(postModalOpenAtom);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -15,14 +17,7 @@ export default function AskBtn(username) {
     navigate('/product/edit', { state: params });
   };
 
-  const handleProductDelete = ProductDeleteAPI(params);
-  const handleDelete = async () => {
-    await handleProductDelete();
-    navigate('/product/list');
-  };
 
-  console.log(userName);
-  console.log(userName.username);
   return (
     <>
       {username.username !== userName ? (
@@ -30,7 +25,8 @@ export default function AskBtn(username) {
       ) : (
         <>
           <Eidt onClick={handleBtnClick}>상품수정</Eidt>
-          <Eidt onClick={handleDelete}>상품삭제</Eidt>
+          <Eidt onClick={()=>setShowModal((prev)=>!prev)}>상품삭제</Eidt>
+          {showModal &&<PostModal />}
         </>
       )}
     </>
