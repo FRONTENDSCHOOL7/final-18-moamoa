@@ -35,31 +35,33 @@ function MyProfile() {
       </HeaderContainer>
 
       <section>
-        <HiddenH1>
-          <h1>내 프로필</h1>
-        </HiddenH1>
-        <section>
-          <ProfileDetail />
-          <button
-            type='button'
-            onClick={() => {
-              navigate('/profile/edit');
-            }}
-          >
-            프로필 수정
-          </button>
-          {/* 일반 계정일 경우 상품등록 버튼 제거 */}
-          {userType === 'organization' ? (
-            <button
-              type='button'
-              onClick={() => {
-                navigate('/product');
-              }}
-            >
-              상품 등록
-            </button>
-          ) : null}
-        </section>
+        <HiddenH1>내 프로필</HiddenH1>
+        <ProfileTop>
+          <section>
+            <ProfileDetail />
+            <Btns>
+              <button
+                type='button'
+                onClick={() => {
+                  navigate('/profile/edit');
+                }}
+              >
+                프로필 수정
+              </button>
+              {/* 일반 계정일 경우 상품등록 버튼 제거 */}
+              {userType === 'organization' ? (
+                <button
+                  type='button'
+                  onClick={() => {
+                    navigate('/product');
+                  }}
+                >
+                  상품 등록
+                </button>
+              ) : null}
+            </Btns>
+          </section>
+        </ProfileTop>
         {userType === 'organization' ? <ProfileDetailProduct /> : null}
         <ProfileDetailPost />
         <Footer />
@@ -74,6 +76,8 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   height: 48px;
+  min-height: 48px;
+  max-height: 48px;
   gap: 65px;
   width: 390px;
   background-color: #fff;
@@ -93,10 +97,11 @@ const HeaderContainer = styled.header`
     height: 24px;
   }
 `;
+
 const a11yHidden = `
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
-  width: 1px
+  width: 1px;
 	height: 1px;
 	margin: -1px;
   overflow: hidden;
@@ -106,4 +111,26 @@ const a11yHidden = `
 
 const HiddenH1 = styled.h1`
   ${a11yHidden}
+`;
+
+const ProfileTop = styled.div`
+  position: relative;
+`;
+
+const Btns = styled.div`
+  position: absolute;
+  top: 128px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  button {
+    padding: 8px 23px;
+    border: 1px solid var(--DBDBDB, #dbdbdb);
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+
+    color: #767676;
+  }
 `;

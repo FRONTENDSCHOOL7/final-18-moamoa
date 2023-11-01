@@ -63,6 +63,8 @@ function MyProductClick({ productId, closeModal }) {
     setShowConfirmDelModal(false); // 삭제 확인 모달을 닫기
   };
 
+  const productID = { product_id: productId };
+
   return (
     <ModalCont>
       <Modal>
@@ -76,7 +78,7 @@ function MyProductClick({ productId, closeModal }) {
           <BtnModify
             type='button'
             onClick={() => {
-              navigate(`/product/${productId}`);
+              navigate('/product/edit', { state: productID });
             }}
           >
             수정
@@ -233,7 +235,8 @@ export default function ProfileDetailProduct() {
 const ProductItro = styled.div`
   padding: 16px;
   position: relative;
-
+  background-color: #fff;
+  border-bottom: 1px solid #dbdbdb;
   h2 {
     color: #000;
     font-size: 16px;
@@ -280,7 +283,7 @@ const ProfileProduct = styled.div`
 
 const MoveBtn = styled.div`
   position: absolute;
-  top: 40%; // 버튼을 부모 컨테이너의 수직 중앙에 위치시킵니다.
+  top: 30%; // 버튼을 부모 컨테이너의 수직 중앙에 위치시킵니다.
 
   z-index: 10; // 다른 요소들 위에 오도록 z-index 설정
 
@@ -312,17 +315,19 @@ const MoveBtn = styled.div`
 
 const ProductListBox = styled.div`
   display: flex;
-  background-color: yellow;
   gap: 10px;
   flex-wrap: nowrap;
   list-style: none;
   padding: 0;
   margin: 0;
   width: 100%;
+
+  p:last-child {
+    color: #87b7e4;
+  }
 `;
 
 const ProductBox = styled.ul`
-  background-color: green;
   max-width: 172px;
   margin: 0 auto;
   cursor: pointer;

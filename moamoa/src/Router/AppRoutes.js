@@ -83,7 +83,7 @@ export default function AppRoutes() {
 
       {/* 게시글 상세 */}
       <Route path='/post/:post_id' element={<PostDetail />} />
-      
+
       {/* 채팅 리스트 */}
       <Route path='/chat' element={<ChatList />} />
       {/* 검색 페이지 */}
@@ -92,7 +92,6 @@ export default function AppRoutes() {
       <Route path='/chat/kim' element={<ChatRoomKim />} />
       <Route path='/chat/sumiDad' element={<ChatRoomSumiDad />} />
       <Route path='/chat/darkHorse' element={<ChatRoomDarkHorse />} />
-
     </Routes>
   );
 }

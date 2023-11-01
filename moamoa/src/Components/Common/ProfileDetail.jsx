@@ -8,6 +8,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 import userNameAtom from '../../Recoil/userNameAtom';
@@ -65,6 +67,7 @@ PostCnt.propTypes = {
 export default function ProfileDetail() {
   const location = useLocation();
   const setUserName = useSetRecoilState(userNameAtom);
+  const navigate = useNavigate();
 
   const [profileImg, setProfileImg] = useState('');
   const [profileUsername, setProfileUsername] = useState('');
@@ -139,12 +142,22 @@ export default function ProfileDetail() {
             <PostCnt src={profileAccountname} token={token} userType={userType} />
           )}
           <span></span>
-          <button>
+          <button
+            type='button'
+            onClick={() => {
+              navigate(`/profile/${profileAccountname}/follower`);
+            }}
+          >
             <p>{profileFollowerCount}</p>
             <p>팔로워</p>
           </button>
           <span></span>
-          <button>
+          <button
+            type='button'
+            onClick={() => {
+              navigate(`/profile/${profileAccountname}/following`);
+            }}
+          >
             <p>{profileFollowingCount}</p>
             <p>팔로잉</p>
           </button>
@@ -155,7 +168,8 @@ export default function ProfileDetail() {
 }
 
 const ProfileDetailBox = styled.div`
-  height: 328px;
+  background-color: #fff;
+  border-bottom: 1px solid #dbdbdb;
 `;
 const ProfileImg = styled.div`
   background: linear-gradient(to bottom, #ffc700 50%, #ffc700 calc(30% + 65px), transparent 50%);
@@ -177,8 +191,6 @@ const ProfileInfo = styled.div`
   flex-direction: column;
   gap: 10px;
 
-  background: red;
-
   p {
     color: #767676;
     font-size: 12px;
@@ -187,6 +199,7 @@ const ProfileInfo = styled.div`
   p:first-child {
     color: #000;
     font-size: 16px;
+    margin-bottom: 0.2rem;
   }
 
   .profile-intro {
@@ -200,7 +213,6 @@ const CountWrap = styled.div`
   align-items: center;
 
   padding: 14px 0;
-  background: green;
   text-align: center;
 
   p {
@@ -219,10 +231,10 @@ const CountWrap = styled.div`
   }
 
   span {
-    display: inline-block; // inline-block으로 설정해야 width와 height가 적용됩니다.
-    width: 0.5px; // 가로 길이를 50px로 설정
-    height: 22px; // 세로 길이를 2px로 설정 (원하는대로 조절 가능)
-    background-color: #e3e3e3; // span의 배경 색을 검정색으로 설정
+    display: inline-block; // inline-block으로 설정해야 width와 height가 적용
+    width: 0.5px;
+    height: 22px;
+    background-color: #e3e3e3;
   }
 `;
 

@@ -2,12 +2,13 @@
   설명: 팔로우/언팔로우 버튼 - 남의 프로필
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.10.29
+  마지막 수정 날까: 2023.11.02
 */
 
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
+import styled from 'styled-components';
 
 // 팔로우
 function Follow() {
@@ -100,8 +101,26 @@ export default function FollowButton() {
   return (
     <div>
       {/* 남의 계정 페이지 버튼 */}
-      <button onClick={handleFollow}>{isFollow ? <p>언팔로우</p> : <p>팔로우</p>}</button>
+      <FollowBtn isFollow={isFollow}>
+        <button onClick={handleFollow}>{isFollow ? <p>언팔로우</p> : <p>팔로우</p>}</button>
+      </FollowBtn>
       {/* 라우터에 연결되면 채팅방으로 연결 */}
     </div>
   );
 }
+
+const FollowBtn = styled.div`
+  button {
+    padding: 9px 42px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #767676;
+    background-color: ${(props) => (props.isFollow ? '#87B7E4' : '#fff')};
+    border: 1px solid ${(props) => (props.isFollow ? '#87B7E4' : '#DBDBDB')};
+  }
+
+  p {
+    color: ${(props) => (props.isFollow ? '#fff' : '#767676')};
+  }
+`;

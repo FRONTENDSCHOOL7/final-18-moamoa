@@ -17,8 +17,10 @@ export default function Header() {
 
 const HeaderContainer = styled.header`
   display: flex;
-  height: 55px;
+  height: 48px;
   width: 390px;
+  min-height: 48px;
+  max-height: 48px;
   justify-content: space-between;
   border-bottom: 2px solid #dbdbdb;
   background-color: #fff;
