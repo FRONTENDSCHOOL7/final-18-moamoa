@@ -1,10 +1,11 @@
 import React from 'react'
-import MoreBtn from '../Common/MoreBtn'
+import CommentMoreBtn from '../Common/CommentMoreBtn'
 import TimeCalc from './timecalc';
 import styled from 'styled-components';
 
 export default function CommentItem(item) {
   const created = TimeCalc(item.item.createdAt)
+  console.log(item);
   return (
     <li>
       <Comment>
@@ -14,7 +15,7 @@ export default function CommentItem(item) {
             <UserName>{item.item.author.username}</UserName>
             <Time>{created}</Time>
           </UserInfo>
-          <MoreBtn />
+          <CommentMoreBtn />
         </CommentUser>
         <CommentDesc>{item.item.content}</CommentDesc>
       </Comment>

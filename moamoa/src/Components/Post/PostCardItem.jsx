@@ -8,7 +8,7 @@ import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc'
 
 export default function PostCardDetail(post) {
-  const [toggleCount, setToggleCount] = useState(false);
+  const [toggleCount, setToggleCount] = useState(true);
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [showModal, setShowModal] = useState(false);
 
@@ -17,6 +17,7 @@ export default function PostCardDetail(post) {
   const accountName = postprop.author.accountname
 
   const handleHeartCount = () => {
+    setToggleCount((prev) => !prev);
     if (toggleCount === true) {
       setHeartColor(heartBgFill);
     } else {
@@ -47,7 +48,6 @@ export default function PostCardDetail(post) {
               <div>
                 <HeartBtn
                   onClick={() => {
-                    setToggleCount((prev) => !prev);
                     handleHeartCount();
                   }}
                   heartcolor={heartcolor}
