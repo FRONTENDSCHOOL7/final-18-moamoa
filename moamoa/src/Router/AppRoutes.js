@@ -5,7 +5,7 @@ import Landing from '../Pages/Splash/Landing';
 import Home from '../Pages/Home/Home';
 import Login from '../Pages/Login/Login';
 import Join from '../Pages/Join/Join';
-// 도와주셍쇼!
+
 import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';
 import EditProfile from '../Pages/Profile/EditProfile';
@@ -79,10 +79,12 @@ export default function AppRoutes() {
       <Route path='/post' element={<UploadPost />} />
 
       {/* 게시글 수정 */}
-      <Route path='/post/edit' element={<EditPost />} />
+      <Route path='/post/edit/:post_id' element={<EditPost />} />
 
       {/* 게시글 상세 */}
       <Route path='/post/:post_id' element={<PostDetail />} />
+      
+      {/* 채팅 리스트 */}
       <Route path='/chat' element={<ChatList />} />
       {/* 검색 페이지 */}
       <Route path='/search' element={<Search />} />
@@ -91,8 +93,6 @@ export default function AppRoutes() {
       <Route path='/chat/sumiDad' element={<ChatRoomSumiDad />} />
       <Route path='/chat/darkHorse' element={<ChatRoomDarkHorse />} />
 
-      {/* <Route path='/user/login' element={<LoginPage />} />
-      <Route path='/user' element={<JoinPage />} /> */}
     </Routes>
   );
 }

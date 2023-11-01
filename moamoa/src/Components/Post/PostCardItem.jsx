@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PostCardUser from './PostCardUser';
 import MoreBtn from '../Common/MoreBtn';
 import styled from 'styled-components';
@@ -9,16 +8,13 @@ import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc'
 
 export default function PostCardDetail(post) {
-  // const [heartCount, setHeartCount] = useState("");
   const [toggleCount, setToggleCount] = useState(false);
   const [heartcolor, setHeartColor] = useState(heartBg);
-
-  // const baseUrl = `https://api.mandarin.weniv.co.kr/`
+  const [showModal, setShowModal] = useState(false);
 
   const postprop = post.post.post;
   const postImgUrl = `${postprop.image}`;
-  const postDetailId = post.post.id;
-  const postDetailUrl = `/post/${postDetailId}`;
+  const accountName = postprop.author.accountname
 
   const handleHeartCount = () => {
     if (toggleCount === true) {
@@ -37,14 +33,15 @@ export default function PostCardDetail(post) {
               <PostCardUser
                 url={postprop.author.image}
                 username={postprop.author.username}
-                accountname={postprop.author.accountname}
+                accountname={accountName}
               />
-              <MoreBtn />
+              <MoreBtn accountname={accountName} onClick={()=>{
+                setShowModal(true);
+                console.log(showModal);
+                }}/>
             </Frofile>
-            <Link to={postDetailUrl}>
-              <PostDesc>{post.post.content}</PostDesc>
+              <PostDesc>{postprop.content}</PostDesc>
               {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
-            </Link>
             <PostFooterContainer>
               <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
               <div>
@@ -57,9 +54,7 @@ export default function PostCardDetail(post) {
                 >
                   {postprop.heartCount}
                 </HeartBtn>
-                <Link to={postDetailUrl}>
                   <CommentBtn>{postprop.commentCount}</CommentBtn>
-                </Link>
               </div>
             </PostFooterContainer>
           </PostArticle>
@@ -103,6 +98,7 @@ const PostDesc = styled.p`
   &:hover {
     cursor: default;
   }
+  line-height: 2rem;
 `;
 const PostFooterContainer = styled.div`
   margin: 1.5rem 0.8rem 0;
