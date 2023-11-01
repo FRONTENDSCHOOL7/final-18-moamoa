@@ -7,7 +7,7 @@ const useJoin = () => {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [imgSrc, setImgSrc] = useState('');
+  const [imgSrc, setImgSrc] = useState();
   const [errorMessage, setErrorMessage] = useState('');
   const [pageTransition, setPageTransition] = useState(false);
   const [userType, setUserType] = useState('');
