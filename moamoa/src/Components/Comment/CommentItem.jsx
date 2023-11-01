@@ -18,7 +18,7 @@ export default function CommentItem(item) {
               <Time>{created}</Time>
             </UserInfo>
           </Link>
-          <CommentMoreBtn />
+          <CommentMoreBtn accountname={comment.author.accountname} commentid={comment.id}/>
         </CommentUser>
         <CommentDesc>{comment.content}</CommentDesc>
       </Comment>

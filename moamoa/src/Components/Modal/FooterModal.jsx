@@ -1,34 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom';
 import DeleteModal from './DeleteModal';
 import CloseIcon from '../../Assets/icons/x.png'
-import postModalOpenAtom from '../../Recoil/postModalOpenAtom';
-import { useRecoilState } from 'recoil';
-import postModalDelAtom from '../../Recoil/postModalDelAtom';
+import PropTypes from 'prop-types';
 
-export default function PostModal() {
+FooterModal.propTypes = {
+  closeFooter: PropTypes.bool,
+  setCloseFooter: PropTypes.func
+}
+
+export default function FooterModal({closeFooter, setCloseFooter}) {
+  const [showModal, setShowModal] = useState(true);
 
   const params = useParams();
   const editUrl = `/post/edit/${params.post_id}`
-  const [showModal, setShowModal] = useRecoilState(postModalOpenAtom);
-  const [delPost, setDelPost] = useRecoilState(postModalDelAtom);
+  
 
   return (
     <>
-      {showModal ? <ModalCont>
+      { !closeFooter && <ModalCont>
         <Modal>
-          <Btn onClick={()=>setShowModal(false)}><img src={CloseIcon} alt="닫기" /></Btn>
-          <BtnDel onClick={
-            ()=>{
-              setDelPost((prev)=>!prev)
-            }
-            }>삭제</BtnDel>
+          <Btn onClick={()=>setCloseFooter(true)}><img src={CloseIcon} alt="닫기" /></Btn>
+          <BtnDel onClick={()=>setShowModal((prev)=>!prev)}>삭제</BtnDel>
           <Link to={editUrl}><BtnModify>수정</BtnModify></Link>
         </Modal>
-        { delPost && <DeleteModal /> }
-      </ModalCont> : null}
+        { !showModal ? <DeleteModal /> : null }
+      </ModalCont> }
     </>
   )
 }
@@ -80,5 +79,3 @@ const BtnDel = styled(BtnModify)`
   border-bottom: 1px solid #dbdbdb;
   color: #EB5757;
 `;
-
-

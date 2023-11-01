@@ -1,49 +1,44 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
-import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
+import PropTypes from 'prop-types';
 
-export default function DeleteModal() {
+DeleteModal.propTypes = {
+  commentid: PropTypes.string,
+  setCloseFooter: PropTypes.func
+}
+
+export default function DeleteModal({commentid, setCloseFooter}) {
+
+
   
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
-  const navigate = useNavigate();
   const [modal, setModal] = useState(true);
   const [delMadoal, setDelModal] = useState(true);
-  const [showModal, setShowModal] = useState(true);
-  console.log(showModal)
 
-  const location = useLocation();
-  const post = location.pathname.slice(1,5);
-  console.log(post);
-  
-  const delPost = () => {
+  const delComment = () => {
     const delReq = () => {
-      axios.delete(`https://api.mandarin.weniv.co.kr/post/${params.post_id}`,{
+      axios.delete(`https://api.mandarin.weniv.co.kr/post/${params.post_id}/comments/${commentid}`,{
         headers:{          
             Authorization: `Bearer ${token}`,
             'Content-type': 'application/json',
         }
       }).then(()=>{
-        alert('게시글이 삭제되었습니다.');
-        navigate(-1);
-        setDelModal(false);
-        setShowModal(false);
-      }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
+        alert('댓글이 삭제되었습니다.');
+        setCloseFooter(true);
+
+      }).catch(()=>console.error('댓글 삭제를 실패했습니다.'))
       }
 
     delReq();
   }
 
-    const handleProductDelete = ProductDeleteAPI(params);
-    const handleDelete = async () => {
-      await handleProductDelete();
-      alert('게시물이 삭제되었습니다.');
-      navigate('/product/list');
-    };
+
+
 
   return (
     <>
@@ -51,10 +46,8 @@ export default function DeleteModal() {
       <Modal>
         <Deltext>정말 삭제하시겠습니까?</Deltext>
         <Btn>
-          <BtnDel onClick={ 
-            post === "post" ? delPost  : handleDelete
-            }>삭제</BtnDel>
-          <BtnCancel onClick={()=>{setModal((prev)=>!prev); setDelModal((prev)=>!prev);}}>취소</BtnCancel>
+          <BtnDel onClick={delComment}>삭제</BtnDel>
+          <BtnCancel onClick={()=>{setModal((prev)=>!prev); setDelModal((prev)=>!prev); setCloseFooter((prev)=>!prev)}}>취소</BtnCancel>
         </Btn>
       </Modal> : null
       }
