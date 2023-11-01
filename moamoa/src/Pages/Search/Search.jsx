@@ -45,7 +45,7 @@ export default function Search() {
           </SearchWrap>
         ))
       ) : (
-        <p>No results found</p>
+        <p>검색 결과가 없습니다.</p>
       )}
       <Footer></Footer>
     </Container>
