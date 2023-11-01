@@ -41,18 +41,24 @@ export default function DeleteModal() {
       navigate('/product/list');
     };
 
+    const selectDel = () => {
+      if (post === "post"){
+              delPost()
+            } else if(post === "prod"){
+              handleDelete()
+            } else {delPost()}
+    }
+
   return (
     <>
       { showModal && delMadoal ?       
       <Modal>
         <Deltext>정말 삭제하시겠습니까?</Deltext>
         <Btn>
-          <BtnDel onClick={ post === "post" ? ()=>delPost() : ()=>handleDelete()
-            }>삭제</BtnDel>
+          <BtnDel onClick={()=>selectDel(post)}>삭제</BtnDel>
           <BtnCancel onClick={()=>{setShowModal((prev)=>!prev); setDelModal((prev)=>!prev);}}>취소</BtnCancel>
         </Btn>
-      </Modal> : null
-      }
+      </Modal> : null }
     </>
   );
 }

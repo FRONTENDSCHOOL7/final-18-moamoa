@@ -1,23 +1,26 @@
 import React from 'react'
-import CommentMoreBtn from '../Common/CommentMoreBtn'
+import CommentMoreBtn from './CommentMoreBtn'
 import TimeCalc from './timecalc';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function CommentItem(item) {
   const created = TimeCalc(item.item.createdAt)
-  console.log(item);
+  const comment = item.item
   return (
     <li>
       <Comment>
         <CommentUser>
-          <UserInfo>
-            <FrofilImg src={item.item.author.image} alt="사용자 프로필" />
-            <UserName>{item.item.author.username}</UserName>
-            <Time>{created}</Time>
-          </UserInfo>
+          <Link to={`/profile/${comment.author.accountname}`}>
+            <UserInfo>
+              <FrofilImg src={comment.author.image} alt="사용자 프로필" />
+              <UserName>{comment.author.username.slice(3)}</UserName>
+              <Time>{created}</Time>
+            </UserInfo>
+          </Link>
           <CommentMoreBtn />
         </CommentUser>
-        <CommentDesc>{item.item.content}</CommentDesc>
+        <CommentDesc>{comment.content}</CommentDesc>
       </Comment>
     </li>
   )
