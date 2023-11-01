@@ -28,7 +28,6 @@ export default function Home() {
         if (res.status === 200) {
           const result = await res.json();
           setPosts(result.posts);
-
         } else {
           console.error('페이지를 불러오는데 실패했습니다.');
         }
@@ -42,7 +41,7 @@ export default function Home() {
 
   return (
     <>
-      <Header/>
+      <Header />
       {posts.length !== 0 ? (
         <HomeContainer>
           <PostList>
@@ -56,7 +55,7 @@ export default function Home() {
       ) : (
         <HomeContainer>
           <PostList>
-            <HomeFeed/>
+            <HomeFeed />
           </PostList>
         </HomeContainer>
       )}
@@ -69,7 +68,6 @@ const HomeContainer = styled.div`
   width: 100%;
   height: 100%;
   background-color: #fff9e4;
-  
 `;
 const PostList = styled.div`
   box-sizing: border-box;
@@ -78,5 +76,5 @@ const PostList = styled.div`
   height: 100%;
   margin: auto;
   background-color: #ffffff;
-  padding: 0 1.6rem 15rem;
+  padding: 0 1.6rem 8rem;
 `;
