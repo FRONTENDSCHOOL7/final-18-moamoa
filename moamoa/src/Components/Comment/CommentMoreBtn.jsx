@@ -1,19 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import more from '../../Assets/icons/s-icon-more-vertical.svg'
-import PostModal from '../Modal/PostModal';
-// import ReportModal from '../Modal/ReportModal';
-import postModalOpenAtom from '../../Recoil/postModalOpenAtom';
-import { useRecoilState } from 'recoil';
+import CommentDelModal from './CommentDelModal';
+import { useRecoilValue } from 'recoil';
+import accountNameAtom from '../../Recoil/accountNameAtom'; 
+import ReportModal from '../Modal/ReportModal';
+import PropTypes from 'prop-types';
 
-export default function MoreBtn() {
+MoreBtn.propTypes = {
+  accountname: PropTypes.string,
+  commentid: PropTypes.string
+}
 
+export default function MoreBtn({accountname,commentid}) {
 
-  const [showModal, setShowModal] = useRecoilState(postModalOpenAtom);
+  const accountName = useRecoilValue(accountNameAtom);
+  const [showModal, setShowModal] = useState(true);
   return (
     <>
-      <CommentMoreBtn onClick={()=> setShowModal((prev)=>!prev)}><MoreImg src={more} alt="더보기" /></CommentMoreBtn>
-      { showModal && <PostModal/>}
+      <CommentMoreBtn onClick={()=> setShowModal(false)}><MoreImg src={more} alt="더보기" /></CommentMoreBtn>
+      { !showModal ? (accountname === accountName ? <CommentDelModal commentid={commentid} closeFooter={showModal} setCloseFooter={setShowModal}/> : <ReportModal/>):null}
 
     </>
   )

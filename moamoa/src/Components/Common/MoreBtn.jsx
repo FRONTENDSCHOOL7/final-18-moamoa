@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import more from '../../Assets/icons/s-icon-more-vertical.svg'
-import PostModal from '../Modal/PostModal';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import FooterModal from '../Modal/FooterModal';
+import { useRecoilValue } from 'recoil';
 import accountNameAtom from '../../Recoil/accountNameAtom'; 
 import ReportModal from '../Modal/ReportModal';
-import postModalOpenAtom from '../../Recoil/postModalOpenAtom';
 
 export default function MoreBtn(accountname) {
   const accountName = useRecoilValue(accountNameAtom);
-  const [showModal, setShowModal] = useRecoilState(postModalOpenAtom);
+  const [showModal, setShowModal] = useState(true);
+  const openModal = () => {
+    setShowModal(false)    
+  }
 
   return (
     <>
-      <PostMoreBtn onClick={(e)=> {e.preventDefault(); setShowModal((prev)=>!prev)}}><MoreImg src={more} alt="더보기" /></PostMoreBtn>
-      { showModal ? ( accountname.accountname === accountName ? <PostModal /> : <ReportModal/>) : null}
+      <PostMoreBtn onClick={openModal}><MoreImg src={more} alt="더보기" /></PostMoreBtn>
+      { !showModal ? (accountname.accountname === accountName ? <FooterModal closeFooter={showModal} setCloseFooter={setShowModal}/> : <ReportModal/>):null}
     </>
   )
 

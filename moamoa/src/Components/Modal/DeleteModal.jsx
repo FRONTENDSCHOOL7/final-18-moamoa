@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
-import postModalDelAtom from '../../Recoil/postModalDelAtom';
 import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
 
 export default function DeleteModal() {
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const navigate = useNavigate();
+  const [modal, setModal] = useState(true);
+  const [delMadoal, setDelModal] = useState(true);
   const [showModal, setShowModal] = useState(true);
-  const [delMadoal, setDelModal] = useRecoilState(postModalDelAtom);
+  console.log(showModal)
 
   const location = useLocation();
   const post = location.pathname.slice(1, 5);
   console.log(post);
-
+  
   const delPost = () => {
     const delReq = () => {
       axios
@@ -25,52 +26,38 @@ export default function DeleteModal() {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-type': 'application/json',
-          },
-        })
-        .then(() => {
-          alert('게시글이 삭제되었습니다.');
-          navigate(-1);
-        })
-        .catch(() => console.error('게시글 삭제를 실패했습니다.'));
-    };
+        }
+      }).then(()=>{
+        alert('게시글이 삭제되었습니다.');
+        navigate(-1);
+        setDelModal(false);
+        setShowModal(false);
+      }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
+      }
 
     delReq();
-  };
+  }
 
-  const handleProductDelete = ProductDeleteAPI(params);
-  const handleDelete = async () => {
-    await handleProductDelete();
-    navigate('/product/list');
-  };
-
-  const selectDel = () => {
-    if (post === 'post') {
-      delPost();
-    } else if (post === 'prod') {
-      handleDelete();
-    } else {
-      delPost();
-    }
-  };
+    const handleProductDelete = ProductDeleteAPI(params);
+    const handleDelete = async () => {
+      await handleProductDelete();
+      alert('게시물이 삭제되었습니다.');
+      navigate('/product/list');
+    };
 
   return (
     <>
-      {showModal && delMadoal ? (
-        <Modal>
-          <Deltext>정말 삭제하시겠습니까?</Deltext>
-          <Btn>
-            <BtnDel onClick={() => selectDel(post)}>삭제</BtnDel>
-            <BtnCancel
-              onClick={() => {
-                setShowModal((prev) => !prev);
-                setDelModal((prev) => !prev);
-              }}
-            >
-              취소
-            </BtnCancel>
-          </Btn>
-        </Modal>
-      ) : null}
+      { modal && delMadoal ?       
+      <Modal>
+        <Deltext>정말 삭제하시겠습니까?</Deltext>
+        <Btn>
+          <BtnDel onClick={ 
+            post === "post" ? delPost  : handleDelete
+            }>삭제</BtnDel>
+          <BtnCancel onClick={()=>{setModal((prev)=>!prev); setDelModal((prev)=>!prev);}}>취소</BtnCancel>
+        </Btn>
+      </Modal> : null
+      }
     </>
   );
 }
