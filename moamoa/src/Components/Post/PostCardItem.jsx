@@ -36,7 +36,7 @@ export default function PostCardDetail(post) {
                 username={postprop.author.username.slice(3)}
                 accountname={accountName}
               />
-              <MoreBtn accountname={accountName} onClick={()=>{
+              <MoreBtn accountname={accountName} onClick={(e)=>{e.preventDefault();
                 setShowModal(true);
                 console.log(showModal);
                 }}/>
