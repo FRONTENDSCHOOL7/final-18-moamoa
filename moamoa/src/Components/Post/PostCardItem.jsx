@@ -42,7 +42,8 @@ export default function PostCardDetail(post) {
               />
               {accountAtom === accountName ? <MyPostMoreBtn
                 accountname={accountName}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   setShowModal(true);
                   console.log(showModal);
                 }}

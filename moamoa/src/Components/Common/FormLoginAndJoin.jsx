@@ -28,14 +28,14 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-background-color: ${(props) => (props.disabled ? '#D8E7F5' : '#87B7E4')};
-border-radius: 44px;
-font-weight: 700;
-padding: 11px;
-color: white;
-margin: 26px 0 21px 0;
-letter-spacing: -1px;
- }`;
+  background-color: ${(props) => (props.disabled ? '#D8E7F5' : '#87B7E4')};
+  border-radius: 44px;
+  font-weight: 700;
+  padding: 11px;
+  color: white;
+  margin: 26px 0 21px 0;
+  letter-spacing: -1px;
+`;
 
 export const StyledErrorMsg = styled.div`
   color: red;

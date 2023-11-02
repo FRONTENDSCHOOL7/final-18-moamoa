@@ -2,27 +2,35 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Common/Button';
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
+import { useNavigate } from 'react-router-dom';
 
 FollowUser.propTypes = {
   src: PropTypes.string.isRequired,
   userId: PropTypes.string,
   userText: PropTypes.string,
+  accountname: PropTypes.string,
 };
 
 export default function FollowUser(props) {
   const [isFollowed, setIsFollowed] = useState(true);
-
+  const navigate = useNavigate();
   const handleButtonClick = () => {
     setIsFollowed(!isFollowed);
   };
-
+  const handleUser = (accountname) => {
+    navigate(`/profile/${accountname}`);
+  };
   return (
     <div>
       <FollowWrap>
         <UserPhotoWrap>
-          <UserPhoto src={props.src} alt='Follower'></UserPhoto>
+          <UserPhoto
+            src={props.src}
+            alt='Follower'
+            onClick={() => handleUser(props.accountname)}
+          ></UserPhoto>
         </UserPhotoWrap>
-        <UserInfo>
+        <UserInfo onClick={() => handleUser(props.accountname)}>
           <UserId>{props.userId}</UserId>
           <UserText>{props.userText}</UserText>
         </UserInfo>
@@ -60,6 +68,7 @@ const UserPhotoWrap = styled.div`
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 `;
 const UserPhoto = styled.img`
   width: 100%;

@@ -6,18 +6,19 @@ import Footer from '../../Components/Common/Footer';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { FollowerAPI } from '../../API/Follow/FollowerAPI';
 import { useRecoilValue } from 'recoil';
-import accountNameAtom from '../../Recoil/accountNameAtom';
+import { useParams } from 'react-router-dom';
 
 export default function FollowerList() {
   const token = useRecoilValue(userTokenAtom);
-  const accountName = useRecoilValue(accountNameAtom);
+  const { accountname } = useParams();
+
   const [follower, setfollower] = useState([]);
   const [setError] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const followerList = await FollowerAPI(token, accountName);
+        const followerList = await FollowerAPI(token, accountname);
         setfollower(followerList);
       } catch (error) {
         setError(error);
@@ -34,7 +35,13 @@ export default function FollowerList() {
         {follower.map((item, index) => {
           const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
           return (
-            <FollowUser key={index} src={item.image} userId={cleanedUserId} userText={item.intro} />
+            <FollowUser
+              key={index}
+              src={item.image}
+              userId={cleanedUserId}
+              userText={item.intro}
+              accountname={item.accountname}
+            />
           );
         })}
 
