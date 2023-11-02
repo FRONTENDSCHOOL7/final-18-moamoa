@@ -14,6 +14,7 @@ import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 import userNameAtom from '../../Recoil/userNameAtom';
 import styled from 'styled-components';
+import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
 function PostCnt({ src, token, userType }) {
   const [postCount, setPostCount] = useState(0);
@@ -130,7 +131,7 @@ export default function ProfileDetail() {
               {userType === 'organization'
                 ? profileUsername.replace('[o]', '')
                 : profileUsername.replace('[i]', '')}
-              {userType === 'organization' ? <span>★</span> : ''}
+              {userType === 'organization' ? <img src={UserTypeCheck} alt='' /> : ''}
             </p>
             <p>@{profileAccountname}</p>
           </div>
@@ -181,6 +182,7 @@ const ProfileImg = styled.div`
     height: 105px;
     border-radius: 50%;
     border: 5px solid #fff;
+    background: #fff;
   }
 `;
 
@@ -204,6 +206,14 @@ const ProfileInfo = styled.div`
 
   .profile-intro {
     font-size: 14px;
+  }
+
+  div {
+    p:first-child {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
   }
 `;
 

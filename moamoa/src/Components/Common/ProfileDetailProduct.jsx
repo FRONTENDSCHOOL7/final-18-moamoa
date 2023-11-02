@@ -186,46 +186,51 @@ export default function ProfileDetailProduct() {
       <article>
         <h2>진행중인 행사</h2>
         <ProfileProductWrapper>
-          <MoveBtn>
-            <button className='left-btn' onClick={scrollLeft}>
-              <img src={leftBtn} alt='' />
-            </button>
-          </MoveBtn>
-          <ProfileProduct ref={profileProductRef}>
-            {showMyProductOptions && (
-              <MyProductClick productId={productId} closeModal={closeModal} />
-            )}
+          {eventList.length > 0 && (
+            <>
+              <MoveBtn>
+                <button className='left-btn' onClick={scrollLeft}>
+                  <img src={leftBtn} alt='' />
+                </button>
+              </MoveBtn>
 
-            <ProductListBox>
-              {eventList.map((event) => (
-                //
-                <ProductBox key={event.id}>
-                  <li key={event.id} onClick={() => handleProductClick(event.id)}>
-                    <ProductImgBox src={event.itemImage} />
-                    <p className='itemName'>{event.itemName.replace('[f]', '')}</p>
-                    <p className='itemDate'>
-                      {'행사기간: ' +
-                        `${event.price.toString().slice(2, 4)}.${event.price
-                          .toString()
-                          .slice(4, 6)}.${event.price.toString().slice(6, 8)}~${event.price
-                          .toString()
-                          .slice(10, 12)}.${event.price.toString().slice(12, 14)}.${event.price
-                          .toString()
-                          .slice(14, 16)}`}
-                    </p>
-                  </li>
-                  {showMyProductOptions && (
-                    <MyProductClick productId={productId} closeModal={closeModal} />
-                  )}
-                </ProductBox>
-              ))}
-            </ProductListBox>
-          </ProfileProduct>
-          <MoveBtn>
-            <button className='right-btn' onClick={scrollRight}>
-              <img src={rightBtn} alt='' />
-            </button>
-          </MoveBtn>
+              <ProfileProduct ref={profileProductRef}>
+                {showMyProductOptions && (
+                  <MyProductClick productId={productId} closeModal={closeModal} />
+                )}
+
+                <ProductListBox>
+                  {eventList.map((event) => (
+                    //
+                    <ProductBox key={event.id}>
+                      <li key={event.id} onClick={() => handleProductClick(event.id)}>
+                        <ProductImgBox src={event.itemImage} />
+                        <p className='itemName'>{event.itemName.replace('[f]', '')}</p>
+                        <p className='itemDate'>
+                          {'행사기간: ' +
+                            `${event.price.toString().slice(2, 4)}.${event.price
+                              .toString()
+                              .slice(4, 6)}.${event.price.toString().slice(6, 8)}~${event.price
+                              .toString()
+                              .slice(10, 12)}.${event.price.toString().slice(12, 14)}.${event.price
+                              .toString()
+                              .slice(14, 16)}`}
+                        </p>
+                      </li>
+                      {showMyProductOptions && (
+                        <MyProductClick productId={productId} closeModal={closeModal} />
+                      )}
+                    </ProductBox>
+                  ))}
+                </ProductListBox>
+              </ProfileProduct>
+              <MoveBtn>
+                <button className='right-btn' onClick={scrollRight}>
+                  <img src={rightBtn} alt='' />
+                </button>
+              </MoveBtn>
+            </>
+          )}
         </ProfileProductWrapper>
       </article>
     </ProductItro>

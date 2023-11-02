@@ -75,7 +75,7 @@ export default function PostCardList(post) {
 
 const PostList = styled.li`
   &:first-child {
-    padding-top: 1.5rem;
+    padding-top: 0rem;
   }
   margin-bottom: 25px;
 `;
