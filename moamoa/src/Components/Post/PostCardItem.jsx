@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import PostCardUser from './PostCardUser';
-import MoreBtn from '../Common/MoreBtn';
+import MyPostMoreBtn from '../Post/MyPostMoreBtn';
+import YourPostMoreBtn from '../Post/YourPostMoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
+import { useRecoilValue } from 'recoil';
+import accountNameAtom from '../../Recoil/accountNameAtom'; 
 
 export default function PostCardDetail(post) {
+  const accountAtom = useRecoilValue(accountNameAtom);
   const [toggleCount, setToggleCount] = useState(true);
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [showModal, setShowModal] = useState(false);
@@ -36,13 +40,19 @@ export default function PostCardDetail(post) {
                 username={postprop.author.username.slice(3)}
                 accountname={accountName}
               />
-              <MoreBtn
+              {accountAtom === accountName ? <MyPostMoreBtn
                 accountname={accountName}
                 onClick={() => {
                   setShowModal(true);
                   console.log(showModal);
                 }}
-              />
+              /> : <YourPostMoreBtn
+                accountname={accountName}
+                onClick={() => {
+                  setShowModal(true);
+                  console.log(showModal);
+                }}
+              /> }
             </Frofile>
             <PostDesc>{postprop.content}</PostDesc>
             {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}

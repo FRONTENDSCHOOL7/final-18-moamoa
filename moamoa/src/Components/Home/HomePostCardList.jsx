@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PostCardUser from './PostCardUser';
-import MyPostMoreBtn from '../Post/MyPostMoreBtn';
+import PostCardUser from '../Post/PostCardUser';
+import HomePostMoreBtn from './HomePostMoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
 
-export default function PostCardList(post) {
+export default function HomePostCardList(post) {
   const [toggleCount, setToggleCount] = useState(true);
   const [heartcolor, setHeartColor] = useState(heartBg);
 
-  const [showModal, setShowModal] = useState(false);
   const postprop = post.post;
   const profileImgUrl = `${postprop.author.image}`;
   const postImgUrl = `${postprop.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
-  const postid = postprop.id;
+  console.log('postprop : ', postDetailUrl);
 
   const handleHeartCount = () => {
     if (toggleCount === true) {
@@ -39,13 +38,7 @@ export default function PostCardList(post) {
                 username={postprop.author.username.slice(3)}
                 accountname={postprop.author.accountname}
               />
-              <MyPostMoreBtn postid={postid}
-                accountname={postprop.author.accountname}
-                onClick={() => {
-                  setShowModal(true);
-                  console.log(showModal);
-                }}
-              />
+              <HomePostMoreBtn postid={post.post.id}/>
             </Frofile>
             <Link to={postDetailUrl}>
               <PostDesc>{post.post.content}</PostDesc>
