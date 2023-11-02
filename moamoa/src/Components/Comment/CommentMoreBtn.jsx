@@ -4,7 +4,7 @@ import more from '../../Assets/icons/s-icon-more-vertical.svg'
 import CommentDelModal from './CommentDelModal';
 import { useRecoilValue } from 'recoil';
 import accountNameAtom from '../../Recoil/accountNameAtom'; 
-import ReportModal from '../Modal/ReportModal';
+import CommentReportModal from './CommentReportModal';
 import PropTypes from 'prop-types';
 
 MoreBtn.propTypes = {
@@ -19,7 +19,7 @@ export default function MoreBtn({accountname,commentid}) {
   return (
     <>
       <CommentMoreBtn onClick={()=> setShowModal(false)}><MoreImg src={more} alt="더보기" /></CommentMoreBtn>
-      { !showModal ? (accountname === accountName ? <CommentDelModal commentid={commentid} closeFooter={showModal} setCloseFooter={setShowModal}/> : <ReportModal/>):null}
+      { !showModal ? (accountname === accountName ? <CommentDelModal commentid={commentid} closeFooter={showModal} setCloseFooter={setShowModal}/> : <CommentReportModal commentid={commentid} showModal={showModal} setShowModal={setShowModal}/>):null}
 
     </>
   )

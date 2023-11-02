@@ -6,18 +6,20 @@ import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
 
-export default function DeleteModal() {
+export default function DeleteModal(postid) {
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const navigate = useNavigate();
   const [modal, setModal] = useState(true);
   const [delMadoal, setDelModal] = useState(true);
-  const [showModal, setShowModal] = useState(true);
-  console.log(showModal)
+  // const [showModal, setShowModal] = useState(true);
+  // console.log(showModal)
 
   const location = useLocation();
   const post = location.pathname.slice(1, 5);
   console.log(post);
+
+  const postId = postid.postid;
   
   const delPost = () => {
     const delReq = () => {
@@ -31,12 +33,32 @@ export default function DeleteModal() {
         alert('게시글이 삭제되었습니다.');
         navigate(-1);
         setDelModal(false);
-        setShowModal(false);
+        // setShowModal(false);
       }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
       }
 
     delReq();
   }
+
+  const delPostListItem = () => {
+    const delReq = () => {
+      axios
+        .delete(`https://api.mandarin.weniv.co.kr/post/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+        }
+      }).then(()=>{
+        alert('게시글이 삭제되었습니다.');
+        navigate('/profile/myInfo');
+        setDelModal(false);
+        setModal(false);
+      }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
+      }
+
+    delReq();
+  }
+
 
     const handleProductDelete = ProductDeleteAPI(params);
     const handleDelete = async () => {
@@ -52,9 +74,13 @@ export default function DeleteModal() {
         <Deltext>정말 삭제하시겠습니까?</Deltext>
         <Btn>
           <BtnDel onClick={ 
-            post === "post" ? delPost  : handleDelete
+            post !== "post" &&  post !== "post" ?  delPostListItem  : post==="post" ?  delPost  : handleDelete
+
+
+
+            // post === "post" ? delPost  : handleDelete
             }>삭제</BtnDel>
-          <BtnCancel onClick={()=>{setModal((prev)=>!prev); setDelModal((prev)=>!prev);}}>취소</BtnCancel>
+          <BtnCancel onClick={()=>{setDelModal(false);}}>취소</BtnCancel>
         </Btn>
       </Modal> : null
       }
