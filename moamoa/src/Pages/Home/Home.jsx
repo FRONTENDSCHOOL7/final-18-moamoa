@@ -76,5 +76,5 @@ const PostList = styled.div`
   height: 100%;
   margin: auto;
   background-color: #ffffff;
-  padding: 0 1.6rem 8rem;
+  padding: 15px 1.6rem 8rem;
 `;

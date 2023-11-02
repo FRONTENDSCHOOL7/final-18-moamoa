@@ -9,6 +9,13 @@ import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경완료
+import { Container } from '../../Components/Common/Container';
+import Gobackbtn from '../../Components/Common/GoBackbtn';
+import ButtonSubmit from '../../Components/Common/Button';
+import uploadFile from '../../Assets/images/upload-file.png';
+import styled from 'styled-components';
+
+import { HeaderContainer, HiddenH1 } from '../Post/UloadEditPostStyle';
 
 function EditProfile() {
   //기존 사용자의 정보를 가져오기
@@ -187,67 +194,154 @@ function EditProfile() {
   };
 
   return (
-    <>
+    <Container>
+      <HeaderContainer>
+        <Gobackbtn />
+        <ButtonSubmit buttonText='저장' onClickHandler={submitEdit} disabled={isButtonDisabled} />
+      </HeaderContainer>
+
       <section>
-        <h1>내 프로필 수정</h1>
+        <HiddenH1>내 프로필 수정</HiddenH1>
         <form onSubmit={handleFormSubmit}>
-          <label htmlFor='profileImg'>
-            <img src={imgSrc || initImgSrc} alt='Profile' id='imagePre' />
-          </label>
-          <input
-            type='file'
-            onChange={handleChangeImage}
-            id='profileImg'
-            name='image'
-            accept='image/*'
-            required
-          />
-          <p style={{ color: 'red' }}>{errorMessage}</p>
-          <div>
-            <label htmlFor='userNameInput'>사용자 이름</label>
+          {/* 프로필 이미지 */}
+          <ProfileImg>
+            <label htmlFor='profileImg'>
+              <img src={imgSrc || initImgSrc} alt='Profile' id='imagePre' />
+              <img src={uploadFile} alt='' />
+            </label>
             <input
-              value={username}
-              onChange={inputUsername}
-              type='text'
-              id='userNameInput'
-              name='username'
-              placeholder='2~10자 이내여야 합니다.'
+              type='file'
+              onChange={handleChangeImage}
+              id='profileImg'
+              name='image'
+              accept='image/*'
+              style={{ display: 'none' }}
               required
             />
-            {userNameError && <p style={{ color: 'red' }}>{userNameError}</p>}
-          </div>
-          <div>
-            <label htmlFor='userIdInput'>계정 ID</label>
-            <input
-              value={accountname}
-              onChange={inputAccountname}
-              type='text'
-              id='userIdInput'
-              name='accountname'
-              placeholder='영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.'
-              required
-            />
-            {duplicateIdError && <p style={{ color: 'red' }}>{duplicateIdError}</p>}
-            {accountError && <p style={{ color: 'red' }}>{accountError}</p>}
-          </div>
-          <div>
-            <label htmlFor='userIntroInput'>소개</label>
-            <input
-              value={intro}
-              onChange={inputInfo}
-              type='text'
-              id='userIntroInput'
-              name='intro'
-              placeholder='자신과 판매할 상품에 대해 소개해 주세요!'
-              required
-            />
-          </div>
-          <button type='button' onClick={submitEdit} disabled={isButtonDisabled}>
-            수정하기
-          </button>
+            <EorrorMsg style={{ color: 'red' }}>{errorMessage}</EorrorMsg>
+          </ProfileImg>
+          <EditProfileBox>
+            <div>
+              <TextLabel>
+                <label htmlFor='userNameInput'>사용자 이름</label>
+              </TextLabel>
+              <TextInput>
+                <input
+                  value={username}
+                  onChange={inputUsername}
+                  type='text'
+                  id='userNameInput'
+                  name='username'
+                  placeholder='2~10자 이내여야 합니다.'
+                  required
+                />
+              </TextInput>
+              {userNameError && <EorrorMsg>{userNameError}</EorrorMsg>}
+            </div>
+            <div>
+              <TextLabel>
+                <label htmlFor='userIdInput'>계정 ID</label>
+              </TextLabel>
+              <TextInput>
+                <input
+                  value={accountname}
+                  onChange={inputAccountname}
+                  type='text'
+                  id='userIdInput'
+                  name='accountname'
+                  placeholder='영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.'
+                  required
+                />
+              </TextInput>
+              {duplicateIdError && <EorrorMsg>{duplicateIdError}</EorrorMsg>}
+              {accountError && <EorrorMsg>{accountError}</EorrorMsg>}
+            </div>
+            <div>
+              <TextLabel>
+                <label htmlFor='userIntroInput'>소개</label>
+              </TextLabel>
+              <TextInput>
+                <input
+                  value={intro}
+                  onChange={inputInfo}
+                  type='text'
+                  id='userIntroInput'
+                  name='intro'
+                  placeholder='자신과 판매할 상품에 대해 소개해 주세요!'
+                  required
+                />
+              </TextInput>
+            </div>
+          </EditProfileBox>
         </form>
       </section>
-    </>
+    </Container>
   );
 }
 export default EditProfile;
+
+const ProfileImg = styled.div`
+  background: linear-gradient(to bottom, #ffc700 50%, #ffc700 calc(30% + 65px), transparent 50%);
+  padding-top: 65px;
+  padding-left: 20px;
+
+  label {
+    cursor: pointer;
+    position: relative;
+
+    img:first-child {
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+      background: #fff;
+    }
+
+    img:last-child {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      bottom: 0px;
+      left: 85px;
+    }
+  }
+`;
+
+const EditProfileBox = styled.div`
+  // background: yellow;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+`;
+
+const TextInput = styled.div`
+  width: 100%;
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    border-bottom: 1.5px solid #dbdbdb;
+    letter-spacing: -1px;
+    padding: 8px 0;
+
+    font-size: 14px;
+
+    &:focus {
+      border-bottom: 1.5px solid #ffc700;
+      transition: border-color 0.3s ease-in-out;
+    }
+  }
+`;
+
+const TextLabel = styled.div`
+  font-size: 12px;
+  color: #767676;
+`;
+
+const EorrorMsg = styled.p`
+  color: red;
+  text-align: left;
+  margin-top: 6px;
+`;
