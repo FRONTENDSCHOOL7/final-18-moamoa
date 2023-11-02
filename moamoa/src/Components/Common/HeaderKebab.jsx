@@ -64,6 +64,8 @@ export default function HeaderKebab() {
 
 const HeaderContainer = styled.header`
   display: flex;
+  margin: 0 auto;
+
   height: 48px;
   min-height: 48px;
   max-height: 48px;
