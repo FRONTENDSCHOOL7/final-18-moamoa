@@ -2,7 +2,7 @@
   설명: 사용자 accountname의 프로필 페이지(남의 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.23
-  마지막 수정 날까: 2023.10.29
+  마지막 수정 날까: 2023.11.03
 */
 
 import React from 'react';
@@ -15,15 +15,13 @@ import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
 import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
 import userNameAtom from '../../Recoil/userNameAtom';
 import styled from 'styled-components';
-import Gobackbtn from '../../Components/Common/GoBackbtn';
-import KebabBtn from '../../Assets/images/icon- more-vertical.png';
 
 import MsgIcon from '../../Assets/icons/message-btn.svg';
 import ShareIcon from '../../Assets/icons/share-btn.svg';
 
-// import Header from '../../Components/Common/HeaderBasic';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
+import HeaderKebab from '../../Components/Common/HeaderKebab';
 
 // 프로필보기
 function YourProfile() {
@@ -47,11 +45,7 @@ function YourProfile() {
   return (
     <Container>
       <section>
-        <HeaderContainer>
-          <Gobackbtn />
-          <img src={KebabBtn} />
-        </HeaderContainer>
-        {/* <Header /> */}
+        <HeaderKebab />
         <HiddenH1>남의 프로필</HiddenH1>
         <section>
           <ProfileTop>
@@ -85,32 +79,6 @@ function YourProfile() {
 }
 
 export default YourProfile;
-
-const HeaderContainer = styled.header`
-  display: flex;
-  justify-content: space-between;
-  height: 48px;
-  min-height: 48px;
-  max-height: 48px;
-  gap: 65px;
-  width: 390px;
-  background-color: #fff;
-  border-bottom: 1px solid #dbdbdb;
-  align-items: center;
-  font-size: 21px;
-  font-weight: bold;
-  box-sizing: border-box;
-  padding-left: 10px;
-  padding-right: 10px;
-
-  img {
-    cursor: pointer;
-    align-items: center;
-    gap: 5px;
-    width: 24px;
-    height: 24px;
-  }
-`;
 
 const a11yHidden = `
   clip: rect(1px, 1px, 1px, 1px);

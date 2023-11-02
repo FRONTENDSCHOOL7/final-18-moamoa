@@ -2,11 +2,12 @@
   설명: 사용자 accountname의 프로필 페이지(내 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.01
+  마지막 수정 날까: 2023.11.02
 */
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import ProfileDetail from '../../Components/Common/ProfileDetail';
 import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
@@ -14,26 +15,22 @@ import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
 import { Container } from '../../Components/Common/Container';
 
 import userNameAtom from '../../Recoil/userNameAtom';
-import { useRecoilValue } from 'recoil';
+
 import Footer from '../../Components/Common/Footer';
 import styled from 'styled-components';
-import Gobackbtn from '../../Components/Common/GoBackbtn';
-import KebabBtn from '../../Assets/images/icon- more-vertical.png';
+import HeaderKebab from '../../Components/Common/HeaderKebab';
 
 // 프로필보기
 function MyProfile() {
   const navigate = useNavigate();
-  // const joinData = useRecoilValue(userTypeAtom);
+
   const userType = useRecoilValue(userNameAtom).includes('[o]') ? 'organization' : 'Individual';
+
   console.log(`userType : ${userType}`);
 
   return (
     <Container>
-      <HeaderContainer>
-        <Gobackbtn />
-        <img src={KebabBtn} />
-      </HeaderContainer>
-
+      <HeaderKebab />
       <section>
         <HiddenH1>내 프로필</HiddenH1>
         <ProfileTop>
@@ -64,6 +61,7 @@ function MyProfile() {
         </ProfileTop>
         {userType === 'organization' ? <ProfileDetailProduct /> : null}
         <ProfileDetailPost />
+
         <Footer />
       </section>
     </Container>
@@ -71,32 +69,6 @@ function MyProfile() {
 }
 
 export default MyProfile;
-
-const HeaderContainer = styled.header`
-  display: flex;
-  justify-content: space-between;
-  height: 48px;
-  min-height: 48px;
-  max-height: 48px;
-  gap: 65px;
-  width: 390px;
-  background-color: #fff;
-  border-bottom: 1px solid #dbdbdb;
-  align-items: center;
-  font-size: 21px;
-  font-weight: bold;
-  box-sizing: border-box;
-  padding-left: 10px;
-  padding-right: 10px;
-
-  img {
-    cursor: pointer;
-    align-items: center;
-    gap: 5px;
-    width: 24px;
-    height: 24px;
-  }
-`;
 
 const a11yHidden = `
   clip: rect(1px, 1px, 1px, 1px);

@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지 내 게시물 목록(기본형/앨범형)
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.10.29
+  마지막 수정 날까: 2023.11.02
 */
 
 import React, { useState, useEffect } from 'react';
@@ -139,11 +139,6 @@ const BtnIcons = styled.div`
 const Views = styled.div`
   padding: 16px;
   padding-bottom: 6rem;
-
-  .rlqco:first-child {
-    padding-top: 0px;
-    margin: 0px;
-  }
   ul {
     li {
       padding-top: 0px;
@@ -155,10 +150,6 @@ const Views = styled.div`
 `;
 
 const HamView = styled.div`
-  .tlJAy:first-child {
-    padding: 0px;
-    margin: 0px;
-  }
   article {
     margin-bottom: 20px;
   }
@@ -171,7 +162,7 @@ const BenView = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-
+  margin-bottom: 20px;
   ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
