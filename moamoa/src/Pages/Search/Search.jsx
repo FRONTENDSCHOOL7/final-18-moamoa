@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import useDebounce from '../../Hooks/Search/useDebounce';
 import { useNavigate } from 'react-router-dom';
+import SearchHighLight from '../../Components/Common/SearchHighLight';
 
 export default function Search() {
   const [searchText, setSearchText] = useState('');
@@ -16,6 +17,7 @@ export default function Search() {
   const debounceValue = useDebounce(searchText, 10500);
   const [, setError] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchData(debounceValue) {
       console.log(debounceValue);
@@ -45,7 +47,7 @@ export default function Search() {
               <SearchImg src={item.image} alt='' />
             </SearchPhotoWrap>
             <UserInfo>
-              <UserId>{item.username}</UserId>
+              <UserId>{SearchHighLight(item.username, searchText)}</UserId>
               <UserText>{item.intro}</UserText>
             </UserInfo>
           </SearchWrap>

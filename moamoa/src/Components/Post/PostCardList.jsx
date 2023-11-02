@@ -11,12 +11,14 @@ import userTokenAtom from '../../Recoil/userTokenAtom';
 import { useRecoilValue } from 'recoil';
 
 export default function PostCardList(post) {
+
   const [showModal, setShowModal] = useState(false);
   const postprop = post.post;
   const profileImgUrl = `${postprop.author.image}`;
   const postImgUrl = `${postprop.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
+
   const postId = postprop.id;
   const token = useRecoilValue(userTokenAtom);
 
@@ -59,8 +61,6 @@ const unheartPost = async () => {
     }
   };
 
-
-
   const handleHeartCount = () => {
       setHeartColor(heartBgFill);
       setHeartCount((prev)=>prev + 1);
@@ -86,7 +86,9 @@ const unheartPost = async () => {
                 username={postprop.author.username.slice(3)}
                 accountname={postprop.author.accountname}
               />
+
               <MyPostMoreBtn postid={postId}
+
                 accountname={postprop.author.accountname}
                 onClick={() => {
                   setShowModal(true);

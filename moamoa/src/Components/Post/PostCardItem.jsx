@@ -9,6 +9,7 @@ import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
 import { useRecoilValue } from 'recoil';
 import accountNameAtom from '../../Recoil/accountNameAtom'; 
+
 import PropTypes from 'prop-types';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 
@@ -22,6 +23,7 @@ export default function PostCardDetail({post}) {
   const postprop = post.post;
 
   const accountAtom = useRecoilValue(accountNameAtom);
+
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postprop.heartCount);
   const [showModal, setShowModal] = useState(false);
