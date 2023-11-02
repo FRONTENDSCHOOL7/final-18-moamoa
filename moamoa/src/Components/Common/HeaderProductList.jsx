@@ -2,13 +2,16 @@ import React from 'react';
 import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
 import iconSearch from '../../Assets/icons/icon-search.svg';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
     <HeaderContainer>
       <Gobackbtn />
       <h2>모아모아 축제목록</h2>
-      <img src={iconSearch}></img>
+      <Link to='/search'>
+        <img src={iconSearch}></img>
+      </Link>
     </HeaderContainer>
   );
 }

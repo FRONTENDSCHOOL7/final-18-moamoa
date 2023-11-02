@@ -7,13 +7,15 @@ import Footer from '../../Components/Common/Footer';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import useDebounce from '../../Hooks/Search/useDebounce';
+import { useNavigate } from 'react-router-dom';
 
 export default function Search() {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const token = useRecoilValue(userTokenAtom);
   const debounceValue = useDebounce(searchText, 10500);
-
+  const [, setError] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchData(debounceValue) {
       console.log(debounceValue);
@@ -21,6 +23,7 @@ export default function Search() {
         const result = await SearchAPI(token, debounceValue);
         setSearchResults(result);
       } catch (error) {
+        setError(error);
         console.error(error);
       }
     }
@@ -29,12 +32,15 @@ export default function Search() {
     }
   }, [debounceValue]);
   console.log(searchResults);
+  const handleUser = (accountname) => {
+    navigate(`/profile/${accountname}`);
+  };
   return (
     <Container>
       <UserSearch setSearchText={setSearchText}></UserSearch>
       {searchResults && searchResults.length > 0 ? (
         searchResults.slice(0, 5).map((item, index) => (
-          <SearchWrap key={index}>
+          <SearchWrap onClick={() => handleUser(item.accountname)} key={index}>
             <SearchPhotoWrap>
               <SearchImg src={item.image} alt='' />
             </SearchPhotoWrap>
@@ -61,16 +67,10 @@ const SearchImg = styled.img`
 const SearchWrap = styled.div`
   width: 358px;
   height: 50px;
-
   width: 100%;
   display: flex;
   align-items: center;
   padding: 8px 0 8px 16px;
-  Button {
-    font-size: 12px;
-    font-weight: bold;
-    margin-left: 80px;
-  }
 `;
 const SearchPhotoWrap = styled.div`
   border: 1px solid var(--DBDBDB, #dbdbdb);
@@ -78,6 +78,7 @@ const SearchPhotoWrap = styled.div`
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const UserInfo = styled.div`
