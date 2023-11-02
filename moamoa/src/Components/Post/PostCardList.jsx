@@ -7,10 +7,10 @@ import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
+import userTokenAtom from '../../Recoil/userTokenAtom';
+import { useRecoilValue } from 'recoil';
 
 export default function PostCardList(post) {
-  const [toggleCount, setToggleCount] = useState(true);
-  const [heartcolor, setHeartColor] = useState(heartBg);
 
   const [showModal, setShowModal] = useState(false);
   const postprop = post.post;
@@ -18,15 +18,62 @@ export default function PostCardList(post) {
   const postImgUrl = `${postprop.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
-  const postid = postprop.id;
 
-  const handleHeartCount = () => {
-    if (toggleCount === true) {
-      setHeartColor(heartBgFill);
-    } else {
-      setHeartColor(heartBg);
+  const postId = postprop.id;
+  const token = useRecoilValue(userTokenAtom);
+
+  const [heartValue, setHeartValue] = useState(postprop.hearted);
+  const [heartcolor, setHeartColor] = useState(heartBg);
+  const [heartcount, setHeartCount] = useState(postprop.heartCount);
+
+  const heartPost = async () => {
+    try {
+      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postId}/heart`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+      
+    } catch (error) {
+      console.error('API 응답에 실패하였습니다.', error);
     }
   };
+
+const unheartPost = async () => {
+    try {
+      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postId}/unheart`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('API 응답에 실패하였습니다.', error);
+    }
+  };
+
+  const handleHeartCount = () => {
+      setHeartColor(heartBgFill);
+      setHeartCount((prev)=>prev + 1);
+      setHeartValue((prev)=>!prev)
+      heartPost();
+  };
+
+  const handleUnheartCount = () => {
+    setHeartCount((prev)=>prev -1)
+    setHeartValue((prev)=>!prev)
+    unheartPost()
+    setHeartColor(heartBg);
+  }
 
   return (
     <>
@@ -39,7 +86,9 @@ export default function PostCardList(post) {
                 username={postprop.author.username.slice(3)}
                 accountname={postprop.author.accountname}
               />
-              <MyPostMoreBtn postid={postid}
+
+              <MyPostMoreBtn postid={postId}
+
                 accountname={postprop.author.accountname}
                 onClick={() => {
                   setShowModal(true);
@@ -54,15 +103,19 @@ export default function PostCardList(post) {
             <PostFooterContainer>
               <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
               <div>
-                <HeartBtn
+                { heartValue ? <HeartBtn
+                  onClick={() => { handleUnheartCount(); }}
+                  heartcolor={heartBgFill}
+                >
+                  {heartcount}
+                </HeartBtn>:<HeartBtn
                   onClick={() => {
-                    setToggleCount((prev) => !prev);
                     handleHeartCount();
                   }}
                   heartcolor={heartcolor}
                 >
-                  {postprop.heartCount}
-                </HeartBtn>
+                  {heartcount}
+                </HeartBtn>}
                 <Link to={postDetailUrl}>
                   <CommentBtn>{postprop.commentCount}</CommentBtn>
                 </Link>
@@ -125,8 +178,9 @@ const CreateDate = styled.p`
 
 const HeartBtn = styled.button`
   padding-left: 2.6rem;
+  padding-right: 1.6rem;
   height: 2rem;
-  color: transparent;
+  color: #767676;
   background: url(${(props) => props.heartcolor}) 0.2rem no-repeat;
   &:hover {
     cursor: pointer;

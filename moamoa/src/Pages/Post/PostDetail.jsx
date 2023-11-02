@@ -44,7 +44,7 @@ export default function ProductDetail() {
         <Header />
         <BgCont>
           <PostCardContainer>
-            <PostCardItem post={post} />
+            <PostCardItem post={post}/>
           </PostCardContainer>
           <Comment postId={params.post_id} />
         </BgCont>
