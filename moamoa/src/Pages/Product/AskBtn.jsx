@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import userNameAtom from '../../Recoil/userNameAtom';
-import PostModal from '../../Components/Modal/PostModal';
-import postModalOpenAtom from '../../Recoil/postModalOpenAtom';
+import DeleteModal from '../../Components/Modal/DeleteModal';
 
 export default function AskBtn(username) {
   const userName = useRecoilValue(userNameAtom);
-  const [showModal, setShowModal] = useRecoilState(postModalOpenAtom);
+  const [showModal, setShowModal] = useState(true);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -26,7 +25,7 @@ export default function AskBtn(username) {
         <>
           <Eidt onClick={handleBtnClick}>상품수정</Eidt>
           <Eidt onClick={()=>setShowModal((prev)=>!prev)}>상품삭제</Eidt>
-          {showModal &&<PostModal />}
+          { !showModal && <BgCont><DeleteModal /></BgCont>}
         </>
       )}
     </>
@@ -61,4 +60,13 @@ const Eidt = styled.button`
     color: #000;
   }
   margin-left: 1rem;
+`;
+
+const BgCont = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0,0,0.3);
 `;

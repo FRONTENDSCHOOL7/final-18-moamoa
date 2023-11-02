@@ -38,7 +38,8 @@ export default function PostCardDetail(post) {
               />
               <MoreBtn
                 accountname={accountName}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   setShowModal(true);
                   console.log(showModal);
                 }}

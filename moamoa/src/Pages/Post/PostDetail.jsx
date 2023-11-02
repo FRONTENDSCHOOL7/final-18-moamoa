@@ -1,23 +1,18 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
 import PostCardItem from '../../Components/Post/PostCardItem';
-import detailPostAtom from '../../Recoil/detailPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
 import Header from '../../Components/Common/HeaderBasic';
-import postModalDelAtom from '../../Recoil/postModalDelAtom';
-import postModalOpenAtom from '../../Recoil/postModalOpenAtom';
 
 export default function ProductDetail() {
   const token = useRecoilValue(userTokenAtom);
-  const [post, setPost] = useRecoilState(detailPostAtom);
-  const [, setShowModal] = useRecoilState(postModalOpenAtom);
-  const [, setDelPost] = useRecoilState(postModalDelAtom);
+  const [post, setPost] = useState(null);
   const params = useParams();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const getPostInfo = async () => {
       const reqUrl = `https://api.mandarin.weniv.co.kr/post/${params.post_id}`;
 
@@ -32,9 +27,8 @@ export default function ProductDetail() {
 
         if (res.status === 200) {
           const result = await res.json();
+          console.log(result)
           setPost(result);
-          setShowModal(false);
-          setDelPost(false);
         } else {
           console.error('페이지를 불러오는데 실패했습니다.');
         }
@@ -45,17 +39,18 @@ export default function ProductDetail() {
 
     getPostInfo();
   }, [token]);
-  
   return (
-    <PostContainer>
-      <Header />
-      <BgCont>
-        <PostCardContainer>
-          <PostCardItem post={post} />
-        </PostCardContainer>
-        <Comment postId={params.post_id} />
-      </BgCont>
-    </PostContainer>
+    <>
+      { post && <PostContainer>
+        <Header />
+        <BgCont>
+          <PostCardContainer>
+            <PostCardItem post={post} />
+          </PostCardContainer>
+          <Comment postId={params.post_id} />
+        </BgCont>
+      </PostContainer>}
+    </>
   );
 }
 

@@ -3,10 +3,10 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
-const postModalOpenAtom = atom({
-  key: 'postModalOpenAtom',
+const moreBtnPostAtom = atom({
+  key: 'moreBtnPostAtom',
   default: false,
   effects_UNSTABLE: [persistAtom],
 });
 
-export default postModalOpenAtom;
+export default moreBtnPostAtom;
