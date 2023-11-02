@@ -71,7 +71,6 @@ const SearchWrap = styled.div`
   display: flex;
   align-items: center;
   padding: 8px 0 8px 16px;
-  cursor: pointer;
 `;
 const SearchPhotoWrap = styled.div`
   border: 1px solid var(--DBDBDB, #dbdbdb);
@@ -79,6 +78,7 @@ const SearchPhotoWrap = styled.div`
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 `;
 
 const UserInfo = styled.div`

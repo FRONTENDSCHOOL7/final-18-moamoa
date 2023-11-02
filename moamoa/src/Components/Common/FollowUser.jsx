@@ -69,6 +69,7 @@ const UserPhotoWrap = styled.div`
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 `;
 const UserPhoto = styled.img`
   width: 100%;
