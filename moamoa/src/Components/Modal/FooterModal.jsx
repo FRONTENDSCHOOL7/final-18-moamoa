@@ -1,35 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import DeleteModal from './DeleteModal';
-import CloseIcon from '../../Assets/icons/x.png'
+import CloseIcon from '../../Assets/icons/x.png';
 import PropTypes from 'prop-types';
 
 FooterModal.propTypes = {
   closeFooter: PropTypes.bool,
-  setCloseFooter: PropTypes.func
-}
+  setCloseFooter: PropTypes.func,
+};
 
-export default function FooterModal({closeFooter, setCloseFooter}) {
+export default function FooterModal({ closeFooter, setCloseFooter }) {
   const [showModal, setShowModal] = useState(true);
 
   const params = useParams();
-  const editUrl = `/post/edit/${params.post_id}`
-  
+  const editUrl = `/post/edit/${params.post_id}`;
 
   return (
     <>
-      { !closeFooter && <ModalCont>
-        <Modal>
-          <Btn onClick={()=>setCloseFooter(true)}><img src={CloseIcon} alt="닫기" /></Btn>
-          <BtnDel onClick={()=>setShowModal((prev)=>!prev)}>삭제</BtnDel>
-          <Link to={editUrl}><BtnModify>수정</BtnModify></Link>
-        </Modal>
-        { !showModal ? <DeleteModal /> : null }
-      </ModalCont> }
+      {!closeFooter && (
+        <ModalCont>
+          <Modal>
+            <Btn onClick={() => setCloseFooter(true)}>
+              <img src={CloseIcon} alt='닫기' />
+            </Btn>
+            <BtnDel onClick={() => setShowModal((prev) => !prev)}>삭제</BtnDel>
+            <Link to={editUrl}>
+              <BtnModify>수정</BtnModify>
+            </Link>
+          </Modal>
+          {!showModal ? <DeleteModal /> : null}
+        </ModalCont>
+      )}
     </>
-  )
+  );
 }
 
 const ModalCont = styled.div`
@@ -38,7 +43,7 @@ const ModalCont = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 10;
 `;
 
@@ -67,15 +72,14 @@ const BtnModify = styled.button`
   width: 39rem;
   padding: 2rem;
   margin-top: 1rem;
-  color: #4F9EE9;
-  &:hover{
+  color: #4f9ee9;
+  &:hover {
     font-weight: bold;
   }
-
 `;
 
 const BtnDel = styled(BtnModify)`
   margin-top: 1.2rem;
   border-bottom: 1px solid #dbdbdb;
-  color: #EB5757;
+  color: #eb5757;
 `;

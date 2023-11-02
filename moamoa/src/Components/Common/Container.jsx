@@ -12,3 +12,6 @@ export const Container = styled.div`
   background-color: #fff;
   /* border: 1px solid black; */
 `;
+export const ContainerPercent = styled(Container)`
+  height: 100%;
+`;
