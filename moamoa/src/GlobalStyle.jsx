@@ -13,6 +13,10 @@ body{
 	background-color:#fff9e4;
 	/* 바디에 배경색 */
 	font-family: 'Pretendard', sans-serif;
+	
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 a{
 	text-decoration:none;

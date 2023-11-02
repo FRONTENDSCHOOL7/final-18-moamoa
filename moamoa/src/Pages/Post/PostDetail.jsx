@@ -42,12 +42,10 @@ export default function ProductDetail() {
     <>
       { post && <PostContainer>
         <Header />
-        <BgCont>
           <PostCardContainer>
             <PostCardItem post={post}/>
           </PostCardContainer>
           <Comment postId={params.post_id} />
-        </BgCont>
       </PostContainer>}
     </>
   );
@@ -56,15 +54,13 @@ export default function ProductDetail() {
 const PostContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #fff9e4;
-`;
-const BgCont = styled.div`
-  box-sizing: border-box;
   max-width: 39rem;
-  width: 100%;
-  height: 100%;
   margin: auto;
   background-color: #ffffff;
+  box-sizing: border-box;   
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const PostCardContainer = styled.div`
   padding: 0 1.6rem 1.5rem;
