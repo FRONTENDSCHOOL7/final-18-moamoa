@@ -4,19 +4,20 @@ import HeaderFollowingList from '../../Components/Common/HeaderFollowingList';
 import FollowingUser from '../../Components/Common/FollowingUser';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { useRecoilValue } from 'recoil';
-import accountNameAtom from '../../Recoil/accountNameAtom';
+import { useParams } from 'react-router-dom';
 import { FollowingAPI } from '../../API/Follow/FollowingAPI';
 import Footer from '../../Components/Common/Footer';
+
 export default function FollowingList() {
   const token = useRecoilValue(userTokenAtom);
-  const accountName = useRecoilValue(accountNameAtom);
+  const { accountname } = useParams();
   const [following, setfollowing] = useState([]);
   const [setError] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const followerList = await FollowingAPI(token, accountName);
+        const followerList = await FollowingAPI(token, accountname);
         setfollowing(followerList);
       } catch (error) {
         setError(error);
@@ -38,6 +39,7 @@ export default function FollowingList() {
               src={item.image}
               userId={cleanedUserId}
               userText={item.intro}
+              accountname={item.accountname}
             />
           );
         })}

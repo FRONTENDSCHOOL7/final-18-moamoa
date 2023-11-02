@@ -2,26 +2,36 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Common/Button';
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
+import { useNavigate } from 'react-router-dom';
 
 FollowUser.propTypes = {
   src: PropTypes.string.isRequired,
   userId: PropTypes.string,
   userText: PropTypes.string,
+  accountname: PropTypes.string,
 };
 
 export default function FollowUser(props) {
   const [isFollowed, setIsFollowed] = useState(false);
+  const navigate = useNavigate();
   const handleButtonClick = () => {
     setIsFollowed(!isFollowed);
   };
   const { userText, userId } = props;
+  const handleUser = (accountname) => {
+    navigate(`/profile/${accountname}`);
+  };
   return (
     <div>
       <FollowWrap>
         <UserPhotoWrap>
-          <UserPhoto src={props.src} alt='Follower'></UserPhoto>
+          <UserPhoto
+            src={props.src}
+            onClick={() => handleUser(props.accountname)}
+            alt='Follower'
+          ></UserPhoto>
         </UserPhotoWrap>
-        <UserInfo>
+        <UserInfo onClick={() => handleUser(props.accountname)}>
           <UserId>{userId}</UserId>
           <UserText>{userText}</UserText>
         </UserInfo>
