@@ -141,9 +141,14 @@ const Views = styled.div`
   padding-bottom: 6rem;
 
   .rlqco:first-child {
-    padding-top: 4px;
+    padding-top: 0px;
+    margin: 0px;
   }
-
+  ul {
+    li {
+      padding-top: 0px;
+    }
+  }
   li {
     width: 100%;
   }
@@ -152,11 +157,13 @@ const Views = styled.div`
 const HamView = styled.div`
   .tlJAy:first-child {
     padding: 0px;
+    margin: 0px;
   }
   article {
     margin-bottom: 20px;
   }
   article:first-child {
+    margin: 0px;
   }
 `;
 
