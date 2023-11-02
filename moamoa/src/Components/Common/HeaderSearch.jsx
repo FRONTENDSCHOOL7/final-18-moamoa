@@ -1,12 +1,20 @@
 import React from 'react';
 import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+Header.propTypes = {
+  setSearchText: PropTypes.func,
+};
 
-export default function Header() {
+export default function Header({ setSearchText }) {
   return (
     <HeaderContainer>
       <Gobackbtn />
-      <input type='text' />
+      <input
+        type='search'
+        placeholder='아이디를 입력하세요'
+        onChange={(e) => setSearchText(e.target.value)}
+      />
     </HeaderContainer>
   );
 }

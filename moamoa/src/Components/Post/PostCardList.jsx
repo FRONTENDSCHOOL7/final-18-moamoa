@@ -16,7 +16,7 @@ export default function PostCardList(post) {
   const postImgUrl = `${postprop.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
-
+  console.log('postprop : ', postDetailUrl);
   const inputDate = postprop.createdAt;
   const dateset = inputDate.split('').slice(0, 10).join('');
   const year = dateset.slice(0, 4);
