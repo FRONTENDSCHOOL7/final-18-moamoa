@@ -7,10 +7,11 @@ import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
+import userTokenAtom from '../../Recoil/userTokenAtom';
+import { useRecoilValue } from 'recoil';
 
 export default function HomePostCardList(post) {
-  const [toggleCount, setToggleCount] = useState(true);
-  const [heartcolor, setHeartColor] = useState(heartBg);
+  const token = useRecoilValue(userTokenAtom);
 
   const postprop = post.post;
   const profileImgUrl = `${postprop.author.image}`;
@@ -19,14 +20,60 @@ export default function HomePostCardList(post) {
   const postDetailUrl = `/post/${postDetailId}`;
   console.log('postprop : ', postDetailUrl);
 
-  const handleHeartCount = () => {
-    if (toggleCount === true) {
-      setHeartColor(heartBgFill);
-    } else {
-      setHeartColor(heartBg);
+  const [heartValue, setHeartValue] = useState(postprop.hearted);
+  const [heartcolor, setHeartColor] = useState(heartBg);
+  const [heartcount, setHeartCount] = useState(postprop.heartCount);
+
+  const heartPost = async () => {
+    try {
+      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postDetailId}/heart`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+      
+    } catch (error) {
+      console.error('API 응답에 실패하였습니다.', error);
     }
   };
 
+const unheartPost = async () => {
+    try {
+      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postDetailId}/unheart`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('API 응답에 실패하였습니다.', error);
+    }
+  };
+
+
+
+  const handleHeartCount = () => {
+      setHeartColor(heartBgFill);
+      setHeartCount((prev)=>prev + 1);
+      setHeartValue((prev)=>!prev)
+      heartPost();
+  };
+
+  const handleUnheartCount = () => {
+    setHeartCount((prev)=>prev -1)
+    setHeartValue((prev)=>!prev)
+    unheartPost()
+    setHeartColor(heartBg);
+  }
   return (
     <>
       {post && (
@@ -47,15 +94,19 @@ export default function HomePostCardList(post) {
             <PostFooterContainer>
               <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
               <div>
-                <HeartBtn
+                { heartValue ? <HeartBtn
+                  onClick={() => { handleUnheartCount(); }}
+                  heartcolor={heartBgFill}
+                >
+                  {heartcount}
+                </HeartBtn>:<HeartBtn
                   onClick={() => {
-                    setToggleCount((prev) => !prev);
                     handleHeartCount();
                   }}
                   heartcolor={heartcolor}
                 >
-                  {postprop.heartCount}
-                </HeartBtn>
+                  {heartcount}
+                </HeartBtn>}
                 <Link to={postDetailUrl}>
                   <CommentBtn>{postprop.commentCount}</CommentBtn>
                 </Link>
@@ -118,8 +169,9 @@ const CreateDate = styled.p`
 
 const HeartBtn = styled.button`
   padding-left: 2.6rem;
+  padding-right: 1.6rem;
   height: 2rem;
-  color: transparent;
+  color: #767676;
   background: url(${(props) => props.heartcolor}) 0.2rem no-repeat;
   &:hover {
     cursor: pointer;
