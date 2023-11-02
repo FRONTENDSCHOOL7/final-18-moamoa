@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
-import PostCardUser from './PostCardUser';
-import MyPostMoreBtn from '../Post/MyPostMoreBtn';
-import YourPostMoreBtn from '../Post/YourPostMoreBtn';
+import { Link } from 'react-router-dom';
+import PostCardUser from '../Post/PostCardUser';
+import HomePostMoreBtn from './HomePostMoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
-import { useRecoilValue } from 'recoil';
-import accountNameAtom from '../../Recoil/accountNameAtom'; 
 
-export default function PostCardDetail(post) {
-  const accountAtom = useRecoilValue(accountNameAtom);
+export default function HomePostCardList(post) {
   const [toggleCount, setToggleCount] = useState(true);
   const [heartcolor, setHeartColor] = useState(heartBg);
-  const [showModal, setShowModal] = useState(false);
 
-  const postprop = post.post.post;
+  const postprop = post.post;
+  const profileImgUrl = `${postprop.author.image}`;
   const postImgUrl = `${postprop.image}`;
-  const accountName = postprop.author.accountname;
+  const postDetailId = post.post.id;
+  const postDetailUrl = `/post/${postDetailId}`;
+  console.log('postprop : ', postDetailUrl);
 
   const handleHeartCount = () => {
-    setToggleCount((prev) => !prev);
     if (toggleCount === true) {
       setHeartColor(heartBgFill);
     } else {
@@ -36,39 +34,31 @@ export default function PostCardDetail(post) {
           <PostArticle>
             <Frofile>
               <PostCardUser
-                url={postprop.author.image}
+                url={profileImgUrl}
                 username={postprop.author.username.slice(3)}
-                accountname={accountName}
+                accountname={postprop.author.accountname}
               />
-              {accountAtom === accountName ? <MyPostMoreBtn
-                accountname={accountName}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowModal(true);
-                  console.log(showModal);
-                }}
-              /> : <YourPostMoreBtn
-                accountname={accountName}
-                onClick={() => {
-                  setShowModal(true);
-                  console.log(showModal);
-                }}
-              /> }
+              <HomePostMoreBtn postid={post.post.id}/>
             </Frofile>
-            <PostDesc>{postprop.content}</PostDesc>
-            {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
+            <Link to={postDetailUrl}>
+              <PostDesc>{post.post.content}</PostDesc>
+              {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
+            </Link>
             <PostFooterContainer>
               <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
               <div>
                 <HeartBtn
                   onClick={() => {
+                    setToggleCount((prev) => !prev);
                     handleHeartCount();
                   }}
                   heartcolor={heartcolor}
                 >
                   {postprop.heartCount}
                 </HeartBtn>
-                <CommentBtn>{postprop.commentCount}</CommentBtn>
+                <Link to={postDetailUrl}>
+                  <CommentBtn>{postprop.commentCount}</CommentBtn>
+                </Link>
               </div>
             </PostFooterContainer>
           </PostArticle>
@@ -80,13 +70,12 @@ export default function PostCardDetail(post) {
 
 const PostList = styled.li`
   &:first-child {
-    padding-top: 4rem;
+    padding-top: 1.5rem;
   }
+  margin-bottom: 25px;
 `;
 
-const PostArticle = styled.article`
-  margin-top: 3rem;
-`;
+const PostArticle = styled.article``;
 const Frofile = styled.div`
   margin: 0 auto;
   height: 4.2rem;
@@ -108,12 +97,12 @@ const PostImg = styled.img`
 `;
 const PostDesc = styled.p`
   font-size: 1.4rem;
-  margin: 1.2rem 0 1.6rem;
+  margin: 1.2rem 0 0;
+  line-height: 2rem;
   word-break: break-all;
   &:hover {
     cursor: default;
   }
-  line-height: 2rem;
 `;
 const PostFooterContainer = styled.div`
   margin: 1.5rem 0.8rem 0;
