@@ -1,29 +1,90 @@
 import React, { useState } from 'react';
 import PostCardUser from './PostCardUser';
-import MoreBtn from '../Common/MoreBtn';
+import MyPostMoreBtn from '../Post/MyPostMoreBtn';
+import YourPostMoreBtn from '../Post/YourPostMoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
+import { useRecoilValue } from 'recoil';
+import accountNameAtom from '../../Recoil/accountNameAtom'; 
 
-export default function PostCardDetail(post) {
-  const [toggleCount, setToggleCount] = useState(true);
+import PropTypes from 'prop-types';
+import userTokenAtom from '../../Recoil/userTokenAtom';
+
+
+PostCardDetail.propTypes = {
+  post: PropTypes.object
+}
+
+export default function PostCardDetail({post}) {
+  const token = useRecoilValue(userTokenAtom);
+  const postprop = post.post;
+
+  const accountAtom = useRecoilValue(accountNameAtom);
+
   const [heartcolor, setHeartColor] = useState(heartBg);
+  const [heartcount, setHeartCount] = useState(postprop.heartCount);
   const [showModal, setShowModal] = useState(false);
+  const [heartValue, setHeartValue] = useState(postprop.hearted);
 
-  const postprop = post.post.post;
+  console.log(postprop);
   const postImgUrl = `${postprop.image}`;
   const accountName = postprop.author.accountname;
+  const postId = postprop.id;
+  console.log(postId)
 
-  const handleHeartCount = () => {
-    setToggleCount((prev) => !prev);
-    if (toggleCount === true) {
-      setHeartColor(heartBgFill);
-    } else {
-      setHeartColor(heartBg);
+  const heartPost = async () => {
+    try {
+      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postId}/heart`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+      
+    } catch (error) {
+      console.error('API 응답에 실패하였습니다.', error);
     }
   };
+
+const unheartPost = async () => {
+    try {
+      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postId}/unheart`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('API 응답에 실패하였습니다.', error);
+    }
+  };
+
+
+
+  const handleHeartCount = () => {
+      setHeartColor(heartBgFill);
+      setHeartCount((prev)=>prev + 1);
+      setHeartValue((prev)=>!prev)
+      heartPost();
+  };
+
+  const handleUnheartCount = () => {
+    setHeartCount((prev)=>prev -1)
+    setHeartValue((prev)=>!prev)
+    unheartPost()
+    setHeartColor(heartBg);
+  }
 
   return (
     <>
@@ -36,28 +97,39 @@ export default function PostCardDetail(post) {
                 username={postprop.author.username.slice(3)}
                 accountname={accountName}
               />
-              <MoreBtn
+              {accountAtom === accountName ? <MyPostMoreBtn
                 accountname={accountName}
                 onClick={(e) => {
                   e.preventDefault();
                   setShowModal(true);
                   console.log(showModal);
                 }}
-              />
+              /> : <YourPostMoreBtn
+                accountname={accountName}
+                onClick={() => {
+                  setShowModal(true);
+                  console.log(showModal);
+                }}
+              /> }
             </Frofile>
             <PostDesc>{postprop.content}</PostDesc>
             {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             <PostFooterContainer>
               <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
               <div>
-                <HeartBtn
+                { heartValue ? <HeartBtn
+                  onClick={() => { handleUnheartCount(); }}
+                  heartcolor={heartBgFill}
+                >
+                  {heartcount}
+                </HeartBtn>:<HeartBtn
                   onClick={() => {
                     handleHeartCount();
                   }}
                   heartcolor={heartcolor}
                 >
-                  {postprop.heartCount}
-                </HeartBtn>
+                  {heartcount}
+                </HeartBtn>}
                 <CommentBtn>{postprop.commentCount}</CommentBtn>
               </div>
             </PostFooterContainer>
@@ -119,8 +191,9 @@ const CreateDate = styled.p`
 
 const HeartBtn = styled.button`
   padding-left: 2.6rem;
+  padding-right: 1.6rem;
   height: 2rem;
-  color: transparent;
+  color: #767676;
   background: url(${(props) => props.heartcolor}) 0.2rem no-repeat;
   &:hover {
     cursor: pointer;
