@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ProductImgBox from '../../Components/Common/ProductImgBox';
 import Header from '../../Components/Common/HeaderProductList';
-import { Container } from '../../Components/Common/Container';
+import { ContainerPercent } from '../../Components/Common/Container';
 import Footer from '../../Components/Common/Footer';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { ProductListAPI } from '../../API/Product/ProductListAPI';
@@ -46,7 +46,7 @@ export default function ProductList() {
 
   //   리턴
   return (
-    <Container>
+    <ContainerPercent>
       <Header />
       <Nav>
         <FestivalBtn isActive={isFestivalActive} onClick={toggleFestival}>
@@ -128,7 +128,7 @@ export default function ProductList() {
         </ProductContainer>
       )}
       <Footer></Footer>
-    </Container>
+    </ContainerPercent>
   );
 }
 
