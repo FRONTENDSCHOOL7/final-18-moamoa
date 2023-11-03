@@ -3,7 +3,7 @@ import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
-import MoreBtn from '../../Components/Common/MoreBtn';
+import moreBtn from '../../Assets/icons/s-icon-more-vertical.svg';
 import img from '../../Assets/images/followImg/fog.jpg';
 import img2 from '../../Assets/images/followImg/human.jpg';
 import img3 from '../../Assets/images/followImg/woman2.jpg';
@@ -14,7 +14,7 @@ export default function ChatList() {
       <Container>
         <Header>
           <Gobackbtn />
-          <MoreBtn />
+          <img src={moreBtn} alt='' />
         </Header>
         <SearchWrap>
           <SearchPhotoWrap>
@@ -76,7 +76,7 @@ const Header = styled.div`
   align-items: center;
   font-size: 24px;
   font-weight: bold;
-  padding-left: 10px;
+  padding-left: 15px;
   padding-right: 10px;
   box-sizing: border-box;
   margin-bottom: 6px;

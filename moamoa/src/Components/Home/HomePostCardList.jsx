@@ -7,6 +7,7 @@ import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
+
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { useRecoilValue } from 'recoil';
 
@@ -19,7 +20,7 @@ export default function HomePostCardList(post) {
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
   console.log('postItem : ', postDetailUrl);
-
+  
   const [heartValue, setHeartValue] = useState(postItem.hearted);
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postItem.heartCount);
@@ -58,9 +59,7 @@ const unheartPost = async () => {
       console.error('API 응답에 실패하였습니다.', error);
     }
   };
-
-
-
+  
   const handleHeartCount = () => {
       setHeartColor(heartBgFill);
       setHeartCount((prev)=>prev + 1);
@@ -74,6 +73,7 @@ const unheartPost = async () => {
     unheartPost()
     setHeartColor(heartBg);
   }
+
   return (
     <>
       {post && (
@@ -94,6 +94,7 @@ const unheartPost = async () => {
             <PostFooterContainer>
               <CreateDate>{Datacalc(postItem.createdAt)}</CreateDate>
               <div>
+
                 { heartValue ? <HeartBtn
                   onClick={() => { handleUnheartCount(); }}
                   heartcolor={heartBgFill}
@@ -101,12 +102,14 @@ const unheartPost = async () => {
                   {heartcount}
                 </HeartBtn>:<HeartBtn
                   onClick={() => {
+
                     handleHeartCount();
                   }}
                   heartcolor={heartcolor}
                 >
                   {heartcount}
                 </HeartBtn>}
+
                 <Link to={postDetailUrl}>
                   <CommentBtn>{postItem.commentCount}</CommentBtn>
                 </Link>
@@ -169,9 +172,11 @@ const CreateDate = styled.p`
 
 const HeartBtn = styled.button`
   padding-left: 2.6rem;
+
   padding-right: 1.6rem;
   height: 2rem;
   color: #767676;
+
   background: url(${(props) => props.heartcolor}) 0.2rem no-repeat;
   &:hover {
     cursor: pointer;

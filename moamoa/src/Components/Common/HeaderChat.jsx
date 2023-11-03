@@ -1,6 +1,6 @@
 import React from 'react';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
-import MoreBtn from '../../Components/Common/MoreBtn';
+import ChatMoreBtn from '../../Components/Common/ChatMoreBtn';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -15,7 +15,7 @@ export default function HeaderChat(props) {
     <HeaderChatRoom>
       <Gobackbtn />
       <h2>{headerText}</h2>
-      <MoreBtn />
+      <ChatMoreBtn />
     </HeaderChatRoom>
   );
 }
