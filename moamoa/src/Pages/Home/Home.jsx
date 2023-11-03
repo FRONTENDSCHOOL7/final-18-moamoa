@@ -73,7 +73,7 @@ const PostList = styled.div`
   box-sizing: border-box;
   max-width: 39rem;
   width: 39rem;
-  height: 100%;
+  height: 100vh;
   margin: auto;
   background-color: #ffffff;
   padding: 15px 1.6rem 8rem;

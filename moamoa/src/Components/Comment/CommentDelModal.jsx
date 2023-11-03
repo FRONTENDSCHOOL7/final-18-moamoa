@@ -59,12 +59,15 @@ export default function DeleteModal({commentid, setCloseFooter}) {
 
 const BgCont = styled.div`
   width: 100%;
-  height: 100%;
+  height: 170vh;
   position: absolute;
   left: 0;
   top: 0;
   background-color: rgba(0,0,0,0.3);
-  z-index: 10;
+  z-index: 10;  
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Modal = styled.div`
