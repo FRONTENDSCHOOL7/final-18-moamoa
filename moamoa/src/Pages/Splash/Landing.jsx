@@ -183,20 +183,23 @@ const BlueMoa = styled(TempLoginButton)`
   background-position: 14px 2px;
 `;
 const Kakao = styled(TempLoginButton)`
-  border: 1px solid #f0e2b9;
+  border: 1px solid #ebce78;
   background-image: url(${kakao});
   background-size: 24px;
   background-position: 16px 9px;
+  opacity: 0.5;
 `;
 const Google = styled(TempLoginButton)`
-  border: 1px solid #888282;
+  border: 1px solid #eed3d3;
   background-image: url(${google});
   background-size: 30px;
   background-position: 14px 6px;
+  opacity: 0.5;
 `;
 const Naver = styled(TempLoginButton)`
   border: 1px solid #a1e9a0;
   background-image: url(${naver});
   background-size: 30px;
   background-position: 14px 6px;
+  opacity: 0.5;
 `;
