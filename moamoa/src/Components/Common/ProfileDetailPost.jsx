@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import HomePostCardList from '../Home/HomePostCardList';
 import PostCardList from '../Post/PostCardList';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
@@ -80,13 +81,20 @@ export default function ProfileDetailPost() {
         <Views>
           <HamView>
             {/* 햄버거 버튼 */}
-            {view === 'PostList' && (
+            {(view === 'PostList' && userAccountname === 'myInfo') ? (
+              // 조건부 렌더링을 사용하여 내프로필 or 남의 프로필 목록 출력 _ ( 23/11/03/13:50 수정자 : 장수연 )
               <ul>
                 {myPostList.map((item) => {
                   return <PostCardList key={item.id} post={item} />;
                 })}
               </ul>
-            )}
+            ):
+              <ul>
+                {myPostList.map((item) => {
+                  return <HomePostCardList key={item.id} post={item} />;
+                })}
+              </ul>
+            }
           </HamView>
           <BenView>
             {/* 벤토 버튼 */}
