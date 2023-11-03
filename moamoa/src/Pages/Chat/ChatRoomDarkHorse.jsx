@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
 import HeaderChat from '../../Components/Common/HeaderChat';
@@ -10,14 +10,31 @@ export default function ChatRoomKim() {
   const [file, setFile] = useState(null);
   const [ButtonActive, setButtonActive] = useState(false);
   const fileInputRef = useRef(null);
+  const [sendMsg, setSendMsg] = useState([]);
+  const bottomRef = useRef(null);
+  const [scrollDown, setScrollDown] = useState(false);
   const handleInputChange = (event) => {
     setMessage(event.target.value);
   };
+
   const handleSendClick = () => {
     if (message.trim() !== '') {
-      console.log('메시지 전송:', message);
+      const newMessage = message;
+      const updatedSendMsg = [...sendMsg, newMessage];
+      setScrollDown(true);
+      setSendMsg(updatedSendMsg);
+      setMessage('');
     }
   };
+  useLayoutEffect(() => {
+    if (scrollDown) {
+      bottomRef.current.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
+      setScrollDown(false);
+    }
+  }, [scrollDown]);
 
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
@@ -38,16 +55,16 @@ export default function ChatRoomKim() {
     setFile(null);
     setButtonActive(false);
   };
-
-  console.log(file);
-  console.log(ButtonActive);
-  console.log(fileInputRef);
-
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSendClick();
+    }
+  };
   return (
     <Container>
       <HeaderChat headerText={'승마체험 곽사장'}></HeaderChat>
       <ChatRoom>
-        <ChatMessages>
+        <ChatMessages ref={bottomRef}>
           <div className='talkBox'>
             <Photo src={img} />
             <div>
@@ -61,14 +78,13 @@ export default function ChatRoomKim() {
           <div className='talkBox'>
             <Photo src={img} />
             <div>
-              <UserName>양떼목장 김사장</UserName>
+              <UserName>승마체험 곽사장</UserName>
               <Message>말 밥 먹이러 올래?</Message>
             </div>
           </div>
-          <MyTalk>
-            옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다. 이상의 청춘의 뼈
-            따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게 뛰노는 인생의 힘있다.
-          </MyTalk>
+          {sendMsg.map((msg, index) => (
+            <MyTalk key={index}>{msg}</MyTalk>
+          ))}
         </ChatMessages>
         {file && (
           <RemoveFile>
@@ -94,6 +110,7 @@ export default function ChatRoomKim() {
             placeholder='메시지 입력하기...'
             value={message}
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
           />
           <SendButton onClick={handleSendClick} disabled={message.trim() === '' && !ButtonActive}>
             전송
@@ -202,6 +219,7 @@ const MyTalk = styled.p`
   box-sizing: border-box;
   padding: 10px 12px 12px;
   line-height: normal;
+  white-space: pre-line;
 `;
 const RemoveFile = styled.div`
   button {

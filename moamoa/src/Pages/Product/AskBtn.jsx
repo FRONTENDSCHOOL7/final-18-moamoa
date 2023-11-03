@@ -15,17 +15,22 @@ export default function AskBtn(username) {
   const handleBtnClick = () => {
     navigate('/product/edit', { state: params });
   };
-
-
+  const chatUserName = username.username;
+  const handleChatRoom = () => {
+    navigate(`/chat/${chatUserName}`);
+  };
+  console.log(chatUserName);
   return (
     <>
       {username.username !== userName ? (
-        <Ask>문의하기</Ask>
+        <Ask chatUserName={chatUserName} onClick={handleChatRoom}>
+          문의하기
+        </Ask>
       ) : (
         <>
           <Eidt onClick={handleBtnClick}>상품수정</Eidt>
-          <Eidt onClick={()=>setShowModal(false)}>상품삭제</Eidt>
-          { !showModal && <DeleteModal />}
+          <Eidt onClick={() => setShowModal(false)}>상품삭제</Eidt>
+          {!showModal && <DeleteModal />}
         </>
       )}
     </>
