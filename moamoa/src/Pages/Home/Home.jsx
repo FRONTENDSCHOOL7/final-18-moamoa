@@ -54,9 +54,7 @@ export default function Home() {
         </HomeContainer>
       ) : (
         <HomeContainer>
-          <PostList>
             <HomeFeed />
-          </PostList>
         </HomeContainer>
       )}
       <Footer />

@@ -1,20 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 import homeBg from '../../Assets/icons/character-yellow.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function HomeFeed() {
+
+  const navigate = useNavigate();
+
   return (
     <UserSearchHome>
       <HomeCont>
         <SearchText>유저를 검색해 팔로우 해보세요!</SearchText>
-        <SearchBtn>검색하기</SearchBtn>
+        <SearchBtn onClick={()=> {navigate('/search')}}>검색하기</SearchBtn>
       </HomeCont>
     </UserSearchHome>
   );
 }
 const UserSearchHome = styled.div`
   width: 100%;
+  max-width: 39rem;
   height: 100vh;
+  background-color: #fff;
+  margin: auto;
 `;
 const HomeCont = styled.div`
   padding-top: 22.8rem;
@@ -36,10 +43,11 @@ const SearchBtn = styled.button`
   width: 12.2rem;
   height: 4.4rem;
   border-radius: 4.4rem;
+  font-size: 1.4rem;
   background-color: #87b7e4;
   color: white;
-  font-weight: bold;
   &:hover {
     cursor: pointer;
+    font-weight: bold;
   }
 `;
