@@ -93,12 +93,11 @@ export default function AppRoutes() {
       <Route path='/chat/kim' element={<ChatRoomKim />} />
       <Route path='/chat/sumiDad' element={<ChatRoomSumiDad />} />
       <Route path='/chat/darkHorse' element={<ChatRoomDarkHorse />} />
-<<<<<<< HEAD
+
       <Route path='/chat/:chatUserName' element={<ChatRoomAccount />} />
-=======
+
       {/* 404 페이지} */}
       <Route path='/*' element={<NotFound />} />
->>>>>>> develop
     </Routes>
   );
 }
