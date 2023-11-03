@@ -16,8 +16,8 @@ export default function PostCardList(post) {
   const postItem = post.post;
   const profileImgUrl = `${postItem.author.image}`;
   const postImgUrl = `${postItem.image}`;
-  const postDetailId = post.post.id;
   const postId = postItem.id;
+  const postDetailUrl = `/post/${postId}`;
   const token = useRecoilValue(userTokenAtom);
 
   const [heartValue, setHeartValue] = useState(postItem.hearted);
