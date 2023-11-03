@@ -46,12 +46,10 @@ export default function ProductDetail() {
         <PostContainer>
           <HeaderKebab />
           {/* <Header /> */}
-          <BgCont>
             <PostCardContainer>
               <PostCardItem post={post} />
             </PostCardContainer>
             <Comment postId={params.post_id} />
-          </BgCont>
         </PostContainer>
       )}
 
