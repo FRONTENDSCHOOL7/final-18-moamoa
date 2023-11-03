@@ -44,13 +44,13 @@ export default function Home() {
       <Header />
       {posts.length !== 0 ? (
         <HomeContainer>
-          <PostList>
-            <ul>
+          <PostBg>
+            <PostList>
               {posts.map((item) => {
                 return <HomePostCardList key={item.id} post={item} />;
               })}
-            </ul>
-          </PostList>
+            </PostList>
+          </PostBg>
         </HomeContainer>
       ) : (
         <HomeContainer>
@@ -64,17 +64,20 @@ export default function Home() {
   );
 }
 
+
 const HomeContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #fff9e4;
+  padding-bottom: 5rem;
 `;
-const PostList = styled.div`
-  box-sizing: border-box;
+const PostBg = styled.div`
   max-width: 39rem;
-  width: 39rem;
-  height: 100vh;
+  height: 100%;
   margin: auto;
+  background-color: #fff;
+`;
+const PostList = styled.ul`
+  box-sizing: border-box;
   background-color: #ffffff;
   padding: 15px 1.6rem 8rem;
 `;

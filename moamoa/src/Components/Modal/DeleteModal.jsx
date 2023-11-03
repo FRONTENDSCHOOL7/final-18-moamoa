@@ -12,14 +12,13 @@ export default function DeleteModal(postid) {
   const navigate = useNavigate();
   const [modal, setModal] = useState(true);
   const [delMadoal, setDelModal] = useState(true);
+  const [postId, setPostId] =  useState(postid.postid)
   // const [showModal, setShowModal] = useState(true);
   // console.log(showModal)
 
   const location = useLocation();
   const post = location.pathname.slice(1, 5);
   console.log(post);
-
-  const postId = postid.postid;
   
   const delPost = () => {
     const delReq = () => {
@@ -33,6 +32,7 @@ export default function DeleteModal(postid) {
         alert('게시글이 삭제되었습니다.');
         navigate(-1);
         setDelModal(false);
+        setPostId(null);
         // setShowModal(false);
       }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
       }
