@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import MoreImg from '../../Assets/icons/s-icon-more-vertical.svg';
+import MoreImg from '../../Assets/icons/icon-more.svg';
 
 export default function ChatModal() {
   const [modal, setModal] = useState(false);
@@ -40,9 +40,7 @@ export default function ChatModal() {
 
 const Quitbtn = styled.div`
   cursor: pointer;
-  img {
-    width: 24px;
-  }
+  font-size: 24px;
 `;
 const BgCont = styled.div`
   width: 100%;

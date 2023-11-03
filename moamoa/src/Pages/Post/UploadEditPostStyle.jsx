@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
+  z-index: 10;
   display: flex;
   height: 48px;
   min-height: 48px;
@@ -15,6 +16,8 @@ export const HeaderContainer = styled.header`
   padding-left: 10px;
   padding-right: 10px;
   box-sizing: border-box;
+
+  position: fixed;
 
   img {
     cursor: pointer;
@@ -40,6 +43,8 @@ export const UploadPostBox = styled.div`
   flex: 1;
   padding: 16px;
   position: relative;
+  background-color: #fff;
+  margin-top: 48px;
 `;
 
 export const ProfileImg = styled.div`

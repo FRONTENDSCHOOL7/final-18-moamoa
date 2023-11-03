@@ -4,18 +4,26 @@ import UploadFile from '../../Assets/images/upload-file.png';
 
 export const Form = styled.form`
   padding: 0 34px;
-  margin-top: 30px;
+  margin-top: 78px;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
   gap: 18px;
 `;
 
 export const Header = styled.header`
+  position: fixed;
+  z-index: 10;
+  width: 390px;
   display: flex;
   padding: 8px 16px;
+
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
   border-bottom: 1px solid #dbdbdb;
+
+  box-sizing: border-box;
 `;
 
 export const HeaderButton = styled.button`

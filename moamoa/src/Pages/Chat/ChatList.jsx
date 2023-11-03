@@ -15,18 +15,12 @@ export default function ChatList() {
   return (
     <div>
       <Container>
-
-        {/* <Header>
-            <Gobackbtn />
-            <MoreBtn />
-          </Header> */}
         <HeaderKebab />
         <ChatListWrap>
           <SearchWrap>
             <SearchPhotoWrap>
               <SearchImg src={img} alt='' />
             </SearchPhotoWrap>
-
 
             <Link to='/chat/kim'>
               <UserInfo className='unRead'>
@@ -74,29 +68,13 @@ export default function ChatList() {
   );
 }
 
-// const Header = styled.div`
-//   display: flex;
-//   height: 48px;
-//   min-height: 48px;
-//   max-height: 48px;
-//   width: 390px;
-//   justify-content: space-between;
-//   border-bottom: 1px solid #dbdbdb;
-//   background-color: #fff;
-//   align-items: center;
-//   font-size: 24px;
-//   font-weight: bold;
-//   padding-left: 10px;
-//   padding-right: 10px;
-//   box-sizing: border-box;
-//   margin-bottom: 6px;
-// `;
-
 const ChatListWrap = styled.div`
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  margin-top: 48px;
 `;
 
 const SearchImg = styled.img`
@@ -138,8 +116,8 @@ const UserInfo = styled.div`
     height: 13px;
     border-radius: 50px;
     background-color: tomato;
-    left: 4%;
-    top: 12%;
+    left: 0px;
+    top: 0px;
   }
 `;
 const UserId = styled.h2`
