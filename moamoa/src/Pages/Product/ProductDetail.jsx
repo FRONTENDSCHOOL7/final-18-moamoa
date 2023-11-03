@@ -80,7 +80,10 @@ export default function ProductDetail() {
                   username={productData.product[pageIndex].author.username.slice(3)}
                   accountname={productData.product[pageIndex].author.accountname}
                 />
-                <AskBtn username={productData.product[pageIndex].author.username} />
+                <AskBtn
+                  username={productData.product[pageIndex].author.username}
+                  productData={productData}
+                />
               </Frofile>
               <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
               <InfoContainer>

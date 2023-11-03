@@ -26,6 +26,7 @@ import Search from '../Pages/Search/Search';
 import ChatRoomKim from '../Pages/Chat/ChatRoomKim';
 import ChatRoomSumiDad from '../Pages/Chat/ChatRoomSumiDad';
 import ChatRoomDarkHorse from '../Pages/Chat/ChatRoomDarkHorse';
+import ChatRoomAccount from '../Pages/Chat/ChatRoomAccount';
 
 // import ChatRoom from '../Pages/Chat/ChatRoom';
 // import ChatList from '../Pages/Chat/ChatList';
@@ -92,6 +93,7 @@ export default function AppRoutes() {
       <Route path='/chat/kim' element={<ChatRoomKim />} />
       <Route path='/chat/sumiDad' element={<ChatRoomSumiDad />} />
       <Route path='/chat/darkHorse' element={<ChatRoomDarkHorse />} />
+      <Route path='/chat/:chatUserName' element={<ChatRoomAccount />} />
     </Routes>
   );
 }
