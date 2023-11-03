@@ -30,7 +30,7 @@ import ChatRoomDarkHorse from '../Pages/Chat/ChatRoomDarkHorse';
 // import ChatRoom from '../Pages/Chat/ChatRoom';
 // import ChatList from '../Pages/Chat/ChatList';
 
-// import Error from '../Pages/Error';
+import NotFound from '../Pages/NotFound';
 // import Search from '../Pages/Search/Search';
 
 export default function AppRoutes() {
@@ -92,6 +92,8 @@ export default function AppRoutes() {
       <Route path='/chat/kim' element={<ChatRoomKim />} />
       <Route path='/chat/sumiDad' element={<ChatRoomSumiDad />} />
       <Route path='/chat/darkHorse' element={<ChatRoomDarkHorse />} />
+      {/* 404 페이지} */}
+      <Route path='/*' element={<NotFound />} />
     </Routes>
   );
 }

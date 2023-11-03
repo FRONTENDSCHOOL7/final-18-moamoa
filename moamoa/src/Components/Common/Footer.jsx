@@ -82,16 +82,19 @@ const TabMenu = styled.div`
 const TabButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'active',
 })`
-  width: 78px;
   height: 60px;
+  width: 78px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   align-items: center;
   gap: 4px;
 `;
-
 const TabBtnImg = styled.img`
+  &:hover {
+    opacity: 0.5;
+  }
   padding-top: 5px;
 `;
 const TabLabel = styled.span`

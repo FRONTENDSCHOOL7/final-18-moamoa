@@ -38,7 +38,7 @@ export default function ProductDetail() {
     };
 
     getPostInfo();
-  }, [token]);
+  }, [token, post]);
   return (
     <>
       {post && (

@@ -20,15 +20,13 @@ import CloseIcon from '../../Assets/icons/x.png';
 // 상품 수정 페이지 이동 테스트 필요
 const ConfirmDelModal = ({ delProduct, closeModal }) => {
   return (
-    <Modal>
-      <ConfirmWrap>
-        <p>정말 삭제하시겠습니까?</p>
-        <DelBtn>
-          <button onClick={delProduct}>삭제</button>
-          <button onClick={closeModal}>취소</button>
-        </DelBtn>
-      </ConfirmWrap>
-    </Modal>
+    <ConfirmModal>
+      <Deltext>정말 삭제하시겠습니까?</Deltext>
+      <BtnWrap>
+          <DelBtn onClick={delProduct}>삭제</DelBtn>
+          <CancelBtn onClick={closeModal}>취소</CancelBtn>
+      </BtnWrap>
+    </ConfirmModal>
   );
 };
 ConfirmDelModal.propTypes = {
@@ -53,6 +51,7 @@ function MyProductClick({ productId, closeModal }) {
     const json = await res.json();
     console.log(json);
     closeModal();
+    alert("행사가 삭제되었습니다.")
   };
 
   const openConfirmDelModal = () => {
@@ -83,19 +82,19 @@ function MyProductClick({ productId, closeModal }) {
           >
             수정
           </BtnModify>
-          <BtnModify
+          <BtnProductDesc
             type='button'
             onClick={() => {
               navigate(`/product/detail/${productId}`);
             }}
           >
             상품 상세 보기
-          </BtnModify>
+          </BtnProductDesc>
         </section>
       </Modal>
-      {showConfirmDelModal && (
-        <ConfirmDelModal delProduct={delProduct} closeModal={closeConfirmDelModal} />
-      )}
+        {showConfirmDelModal && (
+          <ConfirmDelModal delProduct={delProduct} closeModal={closeConfirmDelModal} />
+        )}
     </ModalCont>
   );
 }
@@ -377,6 +376,7 @@ const Modal = styled.div`
   flex-direction: column;
 `;
 
+
 const Btn = styled.button`
   width: 5rem;
   height: 5rem;
@@ -384,51 +384,65 @@ const Btn = styled.button`
   right: 0;
 `;
 
-const BtnModify = styled.button`
-  width: 39rem;
-  padding: 2rem;
-  margin-top: 1rem;
-  color: #000;
-  border-top: 1px solid #dbdbdb;
-  &:hover {
-    font-weight: bold;
-  }
-`;
-
 const BtnDel = styled.button`
   width: 39rem;
   padding: 2rem;
   margin-top: 1rem;
+  font-size: 1.4rem;
+  color: #eb5757;
+  &:hover {
+    font-weight: bold;
+  }
+`;
+
+const BtnModify = styled((BtnDel))`
+  color: #4f9ee9;
+  border-top: 1px solid #dbdbdb;
+  padding-top: 2.5rem;
+`;
+
+const BtnProductDesc = styled((BtnModify))`
+  color: #000;
+`;
+
+const ConfirmModal = styled.div`
+  width: 26rem;
+  height: 14rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%);
+  padding: 3rem 0 0;
+  box-sizing: border-box;
+`;
+
+const BtnWrap = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const Deltext = styled.p`
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #dbdbdb;
+`;
+
+const CancelBtn = styled.button`
+  width: 12.5rem;
+  height: 6.5rem;
+  font-size: 1.4rem;
   color: #000;
   &:hover {
     font-weight: bold;
   }
 `;
 
-const ConfirmWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  flex: 1;
-  font-size: 1.4rem;
+const DelBtn = styled(CancelBtn)` 
+  color: #eb5757;
+  border-right: 1px solid #dbdbdb;
 `;
 
-const DelBtn = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%; // 전체 너비를 차지하도록 설정
-
-  button {
-    height: 100%;
-    transition: font-weight 0.3s ease; // 부드러운 전환 효과를 위해 추가
-    padding: 10px;
-    &:hover {
-      font-weight: bold;
-      color: #ffc700;
-    }
-  }
-`;

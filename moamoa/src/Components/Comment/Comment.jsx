@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState,useLayoutEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import CommentItem from './CommentItem';
@@ -11,22 +11,6 @@ export default function Comment(postId) {
   const token = useRecoilValue(userTokenAtom)
   const [comments,setComments] = useState("");
   const [addComment, setAddComment] = useState("");
-
-  useLayoutEffect(() => {
-    async function getComment() {
-      try {
-        const res = await axios.get(`https://api.mandarin.weniv.co.kr/post/${postId.postId}/comments`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setComments(res.data.comments);
-    } catch (error) {
-        console.error('데이터를 가져오지 못했습니다:', error);
-      }
-    }
-    getComment(); 
-  }, [postId, addComment, token]);
 
 
   const postComment = async (AddData)=>{
@@ -42,6 +26,8 @@ export default function Comment(postId) {
     }
   }
 
+  const handleCommnet = (e) => setAddComment(e.target.value)
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if(addComment.trim().length === 0){
@@ -51,11 +37,26 @@ export default function Comment(postId) {
       comment:{
         content:addComment
       }}
-    postComment(AddData)
-    setAddComment("")    
+    postComment(AddData) 
+    setAddComment("")   
   }
 
-  const handleCommnet = (e) => setAddComment(e.target.value)
+  useEffect(() => {
+    async function getComment() {
+      try {
+        const res = await axios.get(`https://api.mandarin.weniv.co.kr/post/${postId.postId}/comments`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setComments(res.data.comments);
+    } catch (error) {
+        console.error('데이터를 가져오지 못했습니다:', error);
+      }
+    }
+    getComment(); 
+  }, [postId, comments, token]);
+
 
   return (
     <CommentContainer>
@@ -84,7 +85,7 @@ const CommentList = styled.ul`
   margin: auto;
   background-color: #ffffff;
   box-sizing: border-box;
-  padding: 1.8rem 1.6rem 50rem;  
+  padding: 1.8rem 1.6rem 54rem;  
   &::-webkit-scrollbar {
     display: none;
   }

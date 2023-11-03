@@ -46,13 +46,13 @@ export default function Home() {
       <HomeWrap>
         {posts.length !== 0 ? (
           <HomeContainer>
-            <PostList>
-              <ul>
+            <PostBg>
+              <PostList>
                 {posts.map((item) => {
                   return <HomePostCardList key={item.id} post={item} />;
                 })}
-              </ul>
-            </PostList>
+              </PostList>
+            </PostBg>
           </HomeContainer>
         ) : (
           <HomeContainer>
@@ -77,12 +77,16 @@ const HomeWrap = styled.div`
 const HomeContainer = styled.div`
   width: 100%;
   height: 100%;
+  background-color: #fff9e4;
 `;
-const PostList = styled.div`
-  box-sizing: border-box;
+const PostBg = styled.div`
   max-width: 39rem;
   height: 100%;
   margin: auto;
+  background-color: #fff;
+`;
+const PostList = styled.ul`
+  box-sizing: border-box;
   background-color: #ffffff;
   margin: 15px 1.6rem 8rem;
 `;
