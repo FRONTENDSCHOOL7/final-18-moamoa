@@ -19,7 +19,6 @@ export default function HomePostCardList(post) {
   const postImgUrl = `${postItem.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
-  console.log('postItem : ', postDetailUrl);
   
   const [heartValue, setHeartValue] = useState(postItem.hearted);
   const [heartcolor, setHeartColor] = useState(heartBg);
@@ -88,7 +87,7 @@ const unheartPost = async () => {
               <HomePostMoreBtn postid={post.post.id}/>
             </Frofile>
             <Link to={postDetailUrl}>
-              <PostDesc>{post.post.content}</PostDesc>
+              <PostDesc>{postItem.content}</PostDesc>
               {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             </Link>
             <PostFooterContainer>
@@ -153,6 +152,10 @@ const PostDesc = styled.p`
   font-size: 1.4rem;
   margin: 1.2rem 0;
   line-height: 2rem;
+  overflow:hidden;  
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
   word-break: break-all;
   &:hover {
     cursor: default;

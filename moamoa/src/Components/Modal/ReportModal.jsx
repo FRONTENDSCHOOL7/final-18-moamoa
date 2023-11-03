@@ -71,7 +71,7 @@ console.log(closemodal)
 const BgCont = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   background-color: rgba(0,0,0,0.3);
@@ -86,7 +86,7 @@ const Modal = styled.div`
   border-radius: 1rem;
   position: fixed;
   left: 50%;
-  top: 30%;
+  top: 40%;
   transform: translate(-50%);
   padding: 3rem 0 0;
   box-sizing: border-box;

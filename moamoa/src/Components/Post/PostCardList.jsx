@@ -156,6 +156,10 @@ const PostDesc = styled.p`
   font-size: 1.4rem;
   margin: 1.2rem 0;
   line-height: 2rem;
+  overflow:hidden;  
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
   word-break: break-all;
   &:hover {
     cursor: default;
