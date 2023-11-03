@@ -40,21 +40,23 @@ export default function Search() {
   return (
     <Container>
       <UserSearch setSearchText={setSearchText}></UserSearch>
-      {searchResults && searchResults.length > 0 ? (
-        searchResults.slice(0, 5).map((item, index) => (
-          <SearchWrap onClick={() => handleUser(item.accountname)} key={index}>
-            <SearchPhotoWrap>
-              <SearchImg src={item.image} alt='' />
-            </SearchPhotoWrap>
-            <UserInfo>
-              <UserId>{SearchHighLight(item.username, searchText)}</UserId>
-              <UserText>{item.intro}</UserText>
-            </UserInfo>
-          </SearchWrap>
-        ))
-      ) : (
-        <p>검색 결과가 없습니다.</p>
-      )}
+      <SearchListWrap>
+        {searchResults && searchResults.length > 0 ? (
+          searchResults.slice(0, 5).map((item, index) => (
+            <SearchWrap onClick={() => handleUser(item.accountname)} key={index}>
+              <SearchPhotoWrap>
+                <SearchImg src={item.image} alt='' />
+              </SearchPhotoWrap>
+              <UserInfo>
+                <UserId>{SearchHighLight(item.username, searchText)}</UserId>
+                <UserText>{item.intro}</UserText>
+              </UserInfo>
+            </SearchWrap>
+          ))
+        ) : (
+          <p>검색 결과가 없습니다.</p>
+        )}
+      </SearchListWrap>
       <Footer></Footer>
     </Container>
   );
@@ -66,13 +68,22 @@ const SearchImg = styled.img`
   object-fit: cover;
   border-radius: 50px;
 `;
+
+const SearchListWrap = styled.div`
+  margin-top: 48px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
 const SearchWrap = styled.div`
   width: 358px;
   height: 50px;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 8px 0 8px 16px;
 `;
 const SearchPhotoWrap = styled.div`
   border: 1px solid var(--DBDBDB, #dbdbdb);

@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom';
 
 import Gobackbtn from '../../Components/Common/GoBackbtn';
-import more from '../../Assets/icons/s-icon-more-vertical.svg';
+import more from '../../Assets/icons/icon-more.svg';
 import styled from 'styled-components';
 import LogoutModal from '../../Components/Modal/LogoutModal';
 import ConfirmLogoutModal from '../../Components/Modal/ConfirmLogoutModal';
@@ -51,13 +51,13 @@ export default function HeaderKebab() {
         <button type='button' onClick={handleKebabClick}>
           <img src={more} />
         </button>
+        {showMyProfileOptions && (
+          <LogoutModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
+        )}
+        {showConfirmLogoutModal && (
+          <ConfirmLogoutModal logout={logout} closeModal={closeConfirmLogoutModal} />
+        )}
       </HeaderContainer>
-      {showMyProfileOptions && (
-        <LogoutModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
-      )}
-      {showConfirmLogoutModal && (
-        <ConfirmLogoutModal logout={logout} closeModal={closeConfirmLogoutModal} />
-      )}
     </>
   );
 }
@@ -65,11 +65,12 @@ export default function HeaderKebab() {
 const HeaderContainer = styled.header`
   display: flex;
   margin: 0 auto;
-
+  z-index: 100;
   height: 48px;
-  min-height: 48px;
-  max-height: 48px;
   width: 390px;
+
+  position: fixed;
+
   justify-content: space-between;
   border-bottom: 1px solid #dbdbdb;
   background-color: #fff;

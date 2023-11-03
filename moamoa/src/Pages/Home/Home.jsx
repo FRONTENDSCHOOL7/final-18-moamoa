@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import HomeFeed from './HomeFeed';
 import Header from '../../Components/Common/HeaderBasic';
 import Footer from '../../Components/Common/Footer';
+import { Container } from '../../Components/Common/Container';
 
 export default function Home() {
   const [posts, setPosts] = useRecoilState(followPostAtom);
@@ -40,41 +41,48 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <Container>
       <Header />
-      {posts.length !== 0 ? (
-        <HomeContainer>
-          <PostList>
-            <ul>
-              {posts.map((item) => {
-                return <HomePostCardList key={item.id} post={item} />;
-              })}
-            </ul>
-          </PostList>
-        </HomeContainer>
-      ) : (
-        <HomeContainer>
-          <PostList>
-            <HomeFeed />
-          </PostList>
-        </HomeContainer>
-      )}
+      <HomeWrap>
+        {posts.length !== 0 ? (
+          <HomeContainer>
+            <PostList>
+              <ul>
+                {posts.map((item) => {
+                  return <HomePostCardList key={item.id} post={item} />;
+                })}
+              </ul>
+            </PostList>
+          </HomeContainer>
+        ) : (
+          <HomeContainer>
+            <PostList>
+              <HomeFeed />
+            </PostList>
+          </HomeContainer>
+        )}
+      </HomeWrap>
       <Footer />
-    </>
+    </Container>
   );
 }
 
+const HomeWrap = styled.div`
+  background-color: #fff;
+  margin-top: 35px;
+  margin-bottom: 60px;
+  flex: 1;
+  // height: 100%;
+`;
 const HomeContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #fff9e4;
 `;
 const PostList = styled.div`
   box-sizing: border-box;
   max-width: 39rem;
-  width: 39rem;
-  height: 100vh;
+  height: 100%;
   margin: auto;
   background-color: #ffffff;
-  padding: 15px 1.6rem 8rem;
+  margin: 15px 1.6rem 8rem;
 `;

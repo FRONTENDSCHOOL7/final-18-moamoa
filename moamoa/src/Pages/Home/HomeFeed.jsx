@@ -14,17 +14,19 @@ export default function HomeFeed() {
 }
 const UserSearchHome = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  display: flex;
 `;
 const HomeCont = styled.div`
-  padding-top: 22.8rem;
+  position: relative;
   height: 20.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  margin: auto;
   background: url(${homeBg}) 10.4rem 10.8rem no-repeat;
-  background-position: 50% 80%;
+  background-position: 50% 35%;
 `;
 
 const SearchText = styled.p`

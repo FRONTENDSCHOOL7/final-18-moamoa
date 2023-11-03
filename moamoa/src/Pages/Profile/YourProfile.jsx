@@ -97,6 +97,7 @@ const HiddenH1 = styled.h1`
 
 const ProfileTop = styled.div`
   position: relative;
+  margin-top: 48px;
 `;
 
 const Btns = styled.div`
@@ -107,9 +108,6 @@ const Btns = styled.div`
   flex-direction: column;
   align-items: end;
   gap: 6px;
-
-  button {
-  }
 `;
 
 const CircleBtn = styled.div`
