@@ -9,7 +9,6 @@ import {
   Form,
   Header,
   HeaderButton,
-  FirstContainer,
   ImgLayoutContainer,
   ImageLabel,
   Image,
@@ -84,11 +83,12 @@ const AddProduct = () => {
             onClick={submitProduct}
             disabled={
               !imgSrc ||
-              !eventName ||
+              eventName.length < 2 ||
               !eventStartDate ||
               !eventEndDate ||
               !eventDetail ||
-              !eventType
+              !eventType ||
+              eventStartDate > eventEndDate
             }
           >
             저장
@@ -96,22 +96,20 @@ const AddProduct = () => {
         </Header>
         <h1 className='a11y-hidden'>상품 등록 페이지</h1>
         <Form>
-          <FirstContainer>
+          <ImgLayoutContainer>
             <h2>이미지 등록</h2>
-            <ImgLayoutContainer>
-              <ImageLabel htmlFor='upload-file'>
-                <Image src={imgSrc ? imgSrc : DefaultImg} alt={eventName} />
-              </ImageLabel>
-              <input
-                className='a11y-hidden'
-                id='upload-file'
-                type='file'
-                accept='image/*'
-                onChange={handleChangeImage}
-              ></input>
-            </ImgLayoutContainer>
+            <ImageLabel htmlFor='upload-file'>
+              <Image src={imgSrc ? imgSrc : DefaultImg} alt={eventName} />
+            </ImageLabel>
+            <input
+              className='a11y-hidden'
+              id='upload-file'
+              type='file'
+              accept='image/*'
+              onChange={handleChangeImage}
+            ></input>
             <p>* 행사 관련 이미지를 등록해주세요.</p>
-          </FirstContainer>
+          </ImgLayoutContainer>
           <LayoutContainer>
             <label htmlFor='category'>카테고리</label>
             <div>
@@ -143,6 +141,8 @@ const AddProduct = () => {
               title='2~22자 이내여야 합니다.'
               onChange={(e) => setEventName(e.target.value)}
               value={eventName}
+              minLength={2}
+              maxLength={22}
             ></EventNameInput>
           </LayoutContainer>
           <LayoutContainer>

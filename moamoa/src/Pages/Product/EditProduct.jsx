@@ -10,7 +10,6 @@ import {
   Form,
   Header,
   HeaderButton,
-  FirstContainer,
   ImgLayoutContainer,
   ImageLabel,
   Image,
@@ -148,11 +147,12 @@ const EditProduct = () => {
           onClick={editProduct}
           disabled={
             !productInputs.product.itemImage ||
-            !productInputs.product.itemName ||
+            productInputs.product.itemName.length < 2 ||
             !eventStartDate ||
             !eventEndDate ||
             !productInputs.product.link ||
-            !eventType
+            !eventType ||
+            eventStartDate > eventEndDate
           }
         >
           수정
@@ -160,25 +160,23 @@ const EditProduct = () => {
       </Header>
       <h1 className='a11y-hidden'>상품 수정 페이지</h1>
       <Form>
-        <FirstContainer>
+        <ImgLayoutContainer>
           <h2>이미지 등록</h2>
-          <ImgLayoutContainer>
-            <ImageLabel htmlFor='upload-file'>
-              <Image
-                src={productInputs.product.itemImage || DefaultImg}
-                alt={productInputs.product.itemName}
-              />
-            </ImageLabel>
-            <input
-              className='a11y-hidden'
-              id='upload-file'
-              type='file'
-              accept='image/*'
-              onChange={handleChangeImage}
-            ></input>
-          </ImgLayoutContainer>
+          <ImageLabel htmlFor='upload-file'>
+            <Image
+              src={productInputs.product.itemImage || DefaultImg}
+              alt={productInputs.product.itemName}
+            />
+          </ImageLabel>
+          <input
+            className='a11y-hidden'
+            id='upload-file'
+            type='file'
+            accept='image/*'
+            onChange={handleChangeImage}
+          ></input>
           <p>* 행사 관련 이미지를 등록해주세요.</p>
-        </FirstContainer>
+        </ImgLayoutContainer>
         <LayoutContainer>
           <label htmlFor='category'>카테고리</label>
           <div>
@@ -211,6 +209,8 @@ const EditProduct = () => {
             onChange={handleInputChange}
             name='itemName'
             value={productInputs.product.itemName}
+            minLength={2}
+            maxLength={22}
           ></EventNameInput>
         </LayoutContainer>
         <LayoutContainer>
