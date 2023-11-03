@@ -13,17 +13,17 @@ import { useRecoilValue } from 'recoil';
 
 export default function HomePostCardList(post) {
   const token = useRecoilValue(userTokenAtom);
-  const postprop = post.post;
-  const profileImgUrl = `${postprop.author.image}`;
-  const postImgUrl = `${postprop.image}`;
+
+  const postItem = post.post;
+  const profileImgUrl = `${postItem.author.image}`;
+  const postImgUrl = `${postItem.image}`;
   const postDetailId = post.post.id;
   const postDetailUrl = `/post/${postDetailId}`;
-  console.log('postprop : ', postDetailUrl);
-
-
-  const [heartValue, setHeartValue] = useState(postprop.hearted);
+  console.log('postItem : ', postDetailUrl);
+  
+  const [heartValue, setHeartValue] = useState(postItem.hearted);
   const [heartcolor, setHeartColor] = useState(heartBg);
-  const [heartcount, setHeartCount] = useState(postprop.heartCount);
+  const [heartcount, setHeartCount] = useState(postItem.heartCount);
 
   const heartPost = async () => {
     try {
@@ -82,8 +82,8 @@ const unheartPost = async () => {
             <Frofile>
               <PostCardUser
                 url={profileImgUrl}
-                username={postprop.author.username.slice(3)}
-                accountname={postprop.author.accountname}
+                username={postItem.author.username.slice(3)}
+                accountname={postItem.author.accountname}
               />
               <HomePostMoreBtn postid={post.post.id}/>
             </Frofile>
@@ -92,7 +92,7 @@ const unheartPost = async () => {
               {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             </Link>
             <PostFooterContainer>
-              <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
+              <CreateDate>{Datacalc(postItem.createdAt)}</CreateDate>
               <div>
 
                 { heartValue ? <HeartBtn
@@ -111,7 +111,7 @@ const unheartPost = async () => {
                 </HeartBtn>}
 
                 <Link to={postDetailUrl}>
-                  <CommentBtn>{postprop.commentCount}</CommentBtn>
+                  <CommentBtn>{postItem.commentCount}</CommentBtn>
                 </Link>
               </div>
             </PostFooterContainer>
@@ -151,7 +151,7 @@ const PostImg = styled.img`
 `;
 const PostDesc = styled.p`
   font-size: 1.4rem;
-  margin: 1.2rem 0 0;
+  margin: 1.2rem 0;
   line-height: 2rem;
   word-break: break-all;
   &:hover {

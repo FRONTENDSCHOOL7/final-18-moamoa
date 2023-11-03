@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
 import HeaderChat from '../../Components/Common/HeaderChat';
@@ -7,19 +7,42 @@ import img from '../../Assets/images/followImg/fog.jpg';
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
 export default function ChatRoomKim() {
   const [message, setMessage] = useState('');
-
+  const [file, setFile] = useState(null);
+  const [ButtonActive, setButtonActive] = useState(false);
+  const fileInputRef = useRef(null);
   const handleInputChange = (event) => {
     setMessage(event.target.value);
   };
-
   const handleSendClick = () => {
-    // Send 버튼을 클릭했을 때 실행되는 로직 추가
     if (message.trim() !== '') {
-      // 메시지가 비어 있지 않다면 처리
-      console.log('Sending message:', message);
-      // 여기에서 메시지를 서버로 전송하는 로직을 추가하면 됩니다.
+      console.log('메시지 전송:', message);
     }
   };
+
+  const handleFileChange = (e) => {
+    if (e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+      console.log(setFile(e.target.files[0]));
+      setButtonActive(true);
+    } else {
+      setFile(null);
+      setButtonActive(false);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+      console.log('test:', fileInputRef);
+    }
+    setFile(null);
+    setButtonActive(false);
+  };
+
+  console.log(file);
+  console.log(ButtonActive);
+  console.log(fileInputRef);
+
   return (
     <Container>
       <HeaderChat headerText={'양떼목장 김사장'}></HeaderChat>
@@ -47,12 +70,24 @@ export default function ChatRoomKim() {
             따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게 뛰노는 인생의 힘있다.
           </MyTalk>
         </ChatMessages>
+        {file && (
+          <RemoveFile>
+            <button onClick={handleRemoveFile}>파일 삭제</button>
+            <p className='removeFileName'>{file.name.slice(0, 8)}</p>
+          </RemoveFile>
+        )}
         <InputArea>
           <FileBox>
             <label htmlFor='file'>
               <img src={iconImageButton} alt='이미지 첨부' className='fileImg' />
             </label>
-            <FileInput type='file' id='file' accept='image/*' />
+            <FileInput
+              type='file'
+              id='file'
+              accept='image/*'
+              onChange={handleFileChange}
+              ref={fileInputRef}
+            />
           </FileBox>
           <MessageInput
             type='text'
@@ -60,7 +95,7 @@ export default function ChatRoomKim() {
             value={message}
             onChange={handleInputChange}
           />
-          <SendButton onClick={handleSendClick} disabled={message.trim() === ''}>
+          <SendButton onClick={handleSendClick} disabled={message.trim() === '' && !ButtonActive}>
             전송
           </SendButton>
         </InputArea>
@@ -128,10 +163,12 @@ const SendButton = styled.button`
   height: 40px;
   font-size: 14px;
   font-weight: bold;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
+
   box-sizing: border-box;
 `;
 const FileBox = styled.div`
+  width: 30px;
   margin-left: 6px;
   .fileImg {
     cursor: pointer;
@@ -163,4 +200,15 @@ const MyTalk = styled.p`
   box-sizing: border-box;
   padding: 10px 12px 12px;
   line-height: normal;
+`;
+const RemoveFile = styled.div`
+  button {
+    color: red;
+    font-size: 12px;
+    border: 1px solid red;
+  }
+  .removeFileName {
+    margin: 3px;
+  }
+  margin: 0px 10px;
 `;

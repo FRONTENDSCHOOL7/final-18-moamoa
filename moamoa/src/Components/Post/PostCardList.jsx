@@ -13,18 +13,16 @@ import { useRecoilValue } from 'recoil';
 export default function PostCardList(post) {
 
   const [showModal, setShowModal] = useState(false);
-  const postprop = post.post;
-  const profileImgUrl = `${postprop.author.image}`;
-  const postImgUrl = `${postprop.image}`;
+  const postItem = post.post;
+  const profileImgUrl = `${postItem.author.image}`;
+  const postImgUrl = `${postItem.image}`;
   const postDetailId = post.post.id;
-  const postDetailUrl = `/post/${postDetailId}`;
-
-  const postId = postprop.id;
+  const postId = postItem.id;
   const token = useRecoilValue(userTokenAtom);
 
-  const [heartValue, setHeartValue] = useState(postprop.hearted);
+  const [heartValue, setHeartValue] = useState(postItem.hearted);
   const [heartcolor, setHeartColor] = useState(heartBg);
-  const [heartcount, setHeartCount] = useState(postprop.heartCount);
+  const [heartcount, setHeartCount] = useState(postItem.heartCount);
 
   const heartPost = async () => {
     try {
@@ -83,13 +81,12 @@ const unheartPost = async () => {
             <Frofile>
               <PostCardUser
                 url={profileImgUrl}
-                username={postprop.author.username.slice(3)}
-                accountname={postprop.author.accountname}
+                username={postItem.author.username.slice(3)}
+                accountname={postItem.author.accountname}
               />
 
               <MyPostMoreBtn postid={postId}
-
-                accountname={postprop.author.accountname}
+                accountname={postItem.author.accountname}
                 onClick={() => {
                   setShowModal(true);
                   console.log(showModal);
@@ -101,7 +98,7 @@ const unheartPost = async () => {
               {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             </Link>
             <PostFooterContainer>
-              <CreateDate>{Datacalc(postprop.createdAt)}</CreateDate>
+              <CreateDate>{Datacalc(postItem.createdAt)}</CreateDate>
               <div>
                 { heartValue ? <HeartBtn
                   onClick={() => { handleUnheartCount(); }}
@@ -117,7 +114,7 @@ const unheartPost = async () => {
                   {heartcount}
                 </HeartBtn>}
                 <Link to={postDetailUrl}>
-                  <CommentBtn>{postprop.commentCount}</CommentBtn>
+                  <CommentBtn>{postItem.commentCount}</CommentBtn>
                 </Link>
               </div>
             </PostFooterContainer>
@@ -157,7 +154,7 @@ const PostImg = styled.img`
 `;
 const PostDesc = styled.p`
   font-size: 1.4rem;
-  margin: 1.2rem 0 0;
+  margin: 1.2rem 0;
   line-height: 2rem;
   word-break: break-all;
   &:hover {

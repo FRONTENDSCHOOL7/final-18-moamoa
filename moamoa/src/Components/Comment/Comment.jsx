@@ -84,7 +84,10 @@ const CommentList = styled.ul`
   margin: auto;
   background-color: #ffffff;
   box-sizing: border-box;
-  padding: 1.8rem 1.6rem 3rem;
+  padding: 1.8rem 1.6rem 50rem;  
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const AddComment = styled.form`

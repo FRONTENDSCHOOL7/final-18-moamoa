@@ -2,8 +2,10 @@ import React from 'react';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
+
 // import Gobackbtn from '../../Components/Common/GoBackbtn';
 // import MoreBtn from '../../Components/Common/MoreBtn';
+
 import img from '../../Assets/images/followImg/fog.jpg';
 import img2 from '../../Assets/images/followImg/human.jpg';
 import img3 from '../../Assets/images/followImg/woman2.jpg';
@@ -13,6 +15,7 @@ export default function ChatList() {
   return (
     <div>
       <Container>
+
         {/* <Header>
             <Gobackbtn />
             <MoreBtn />
@@ -23,6 +26,7 @@ export default function ChatList() {
             <SearchPhotoWrap>
               <SearchImg src={img} alt='' />
             </SearchPhotoWrap>
+
 
             <Link to='/chat/kim'>
               <UserInfo className='unRead'>
