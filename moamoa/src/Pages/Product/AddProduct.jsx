@@ -44,7 +44,7 @@ const AddProduct = () => {
   const handleChangeImage = async (e) => {
     const imageFile = e.target.files[0];
     const response = await uploadImage(imageFile);
-    setImgSrc(response);
+    setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
   };
 
   const checkTwoDates = () => {

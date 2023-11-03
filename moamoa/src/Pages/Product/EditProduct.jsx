@@ -81,7 +81,10 @@ const EditProduct = () => {
     const response = await uploadImage(imageFile);
     setProductInputs({
       ...productInputs,
-      product: { ...productInputs.product, itemImage: response },
+      product: {
+        ...productInputs.product,
+        itemImage: `https://api.mandarin.weniv.co.kr/${response.data.filename}`,
+      },
     });
   };
 
