@@ -2,85 +2,103 @@ import React from 'react';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
-import Gobackbtn from '../../Components/Common/GoBackbtn';
-import moreBtn from '../../Assets/icons/s-icon-more-vertical.svg';
+
+// import Gobackbtn from '../../Components/Common/GoBackbtn';
+// import MoreBtn from '../../Components/Common/MoreBtn';
+
 import img from '../../Assets/images/followImg/fog.jpg';
 import img2 from '../../Assets/images/followImg/human.jpg';
 import img3 from '../../Assets/images/followImg/woman2.jpg';
 import { Link } from 'react-router-dom';
+import HeaderKebab from '../../Components/Common/HeaderKebab';
 export default function ChatList() {
   return (
     <div>
       <Container>
-        <Header>
-          <Gobackbtn />
-          <img src={moreBtn} alt='' />
-        </Header>
-        <SearchWrap>
-          <SearchPhotoWrap>
-            <SearchImg src={img} alt='' />
-          </SearchPhotoWrap>
 
-          <Link to='/chat/kim'>
-            <UserInfo className='unRead'>
-              <UserId>양떼목장 김사장</UserId>
-              <UserText>애들이 많이 놀러와~</UserText>
-            </UserInfo>
-          </Link>
-          <ChatDateBox>
-            <ChatDate>2023.10.25</ChatDate>
-          </ChatDateBox>
-        </SearchWrap>
-        <SearchWrap>
-          <SearchPhotoWrap>
-            <SearchImg src={img2} alt='' />
-          </SearchPhotoWrap>
-          <Link to='/chat/sumiDad'>
-            <UserInfo>
-              <UserId>텃밭체험 수미아빠</UserId>
-              <UserText>토마토가 증말 맛있어~</UserText>
-            </UserInfo>
-          </Link>
-          <ChatDateBox>
-            <ChatDate>2023.10.25</ChatDate>
-          </ChatDateBox>
-        </SearchWrap>
-        <SearchWrap>
-          <SearchPhotoWrap>
-            <SearchImg src={img3} alt='' />
-          </SearchPhotoWrap>
-          <Link to='/chat/darkHorse'>
-            <UserInfo>
-              <UserId>승마체험 곽사장</UserId>
-              <UserText>말 밥 먹이러 올래?</UserText>
-            </UserInfo>
-          </Link>
-          <ChatDateBox>
-            <ChatDate>2020.10.25</ChatDate>
-          </ChatDateBox>
-        </SearchWrap>
+        {/* <Header>
+            <Gobackbtn />
+            <MoreBtn />
+          </Header> */}
+        <HeaderKebab />
+        <ChatListWrap>
+          <SearchWrap>
+            <SearchPhotoWrap>
+              <SearchImg src={img} alt='' />
+            </SearchPhotoWrap>
 
-        <Footer></Footer>
+
+            <Link to='/chat/kim'>
+              <UserInfo className='unRead'>
+                <UserId>양떼목장 김사장</UserId>
+                <UserText>애들이 많이 놀러와~</UserText>
+              </UserInfo>
+            </Link>
+            <ChatDateBox>
+              <ChatDate>2023.10.25</ChatDate>
+            </ChatDateBox>
+          </SearchWrap>
+          <SearchWrap>
+            <SearchPhotoWrap>
+              <SearchImg src={img2} alt='' />
+            </SearchPhotoWrap>
+            <Link to='/chat/sumiDad'>
+              <UserInfo>
+                <UserId>텃밭체험 수미아빠</UserId>
+                <UserText>토마토가 증말 맛있어~</UserText>
+              </UserInfo>
+            </Link>
+            <ChatDateBox>
+              <ChatDate>2023.10.25</ChatDate>
+            </ChatDateBox>
+          </SearchWrap>
+          <SearchWrap>
+            <SearchPhotoWrap>
+              <SearchImg src={img3} alt='' />
+            </SearchPhotoWrap>
+            <Link to='/chat/darkHorse'>
+              <UserInfo>
+                <UserId>승마체험 곽사장</UserId>
+                <UserText>말 밥 먹이러 올래?</UserText>
+              </UserInfo>
+            </Link>
+            <ChatDateBox>
+              <ChatDate>2020.10.25</ChatDate>
+            </ChatDateBox>
+          </SearchWrap>
+
+          <Footer></Footer>
+        </ChatListWrap>
       </Container>
     </div>
   );
 }
 
-const Header = styled.div`
+// const Header = styled.div`
+//   display: flex;
+//   height: 48px;
+//   min-height: 48px;
+//   max-height: 48px;
+//   width: 390px;
+//   justify-content: space-between;
+//   border-bottom: 1px solid #dbdbdb;
+//   background-color: #fff;
+//   align-items: center;
+//   font-size: 24px;
+//   font-weight: bold;
+//   padding-left: 10px;
+//   padding-right: 10px;
+//   box-sizing: border-box;
+//   margin-bottom: 6px;
+// `;
+
+const ChatListWrap = styled.div`
+  padding: 16px;
   display: flex;
-  height: 55px;
-  width: 390px;
-  justify-content: space-between;
-  border-bottom: 1px solid #dbdbdb;
-  background-color: #fff;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  padding-left: 15px;
-  padding-right: 10px;
-  box-sizing: border-box;
-  margin-bottom: 6px;
+  flex-direction: column;
+  gap: 16px;
 `;
+
 const SearchImg = styled.img`
   width: 50px;
   height: 50px;
@@ -91,10 +109,9 @@ const SearchImg = styled.img`
 const SearchWrap = styled.div`
   position: relative;
   height: 50px;
-  width: 100%;
   display: flex;
   align-items: center;
-  padding: 8px 0 8px 16px;
+
   Button {
     font-size: 12px;
     font-weight: bold;
@@ -140,11 +157,12 @@ const ChatDate = styled.span`
   color: #dbdbdb;
   font-size: 10px;
 `;
+
 const ChatDateBox = styled.div`
   display: flex;
   vertical-align: baseline;
   margin-left: 50px;
   position: absolute;
   bottom: 22%;
-  right: 32px;
+  right: 0px;
 `;

@@ -2,12 +2,14 @@
   설명: 게시글 수정 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.30
-  마지막 수정 날까: 2023.10.31
+  마지막 수정 날까: 2023.11.03
 */
 
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
 import userToken from '../../Recoil/userTokenAtom';
 
 import { Container } from '../../Components/Common/Container';
@@ -29,9 +31,13 @@ import {
 } from './UloadEditPostStyle';
 
 export default function EditPost() {
+  const location = useLocation();
   const token = useRecoilValue(userToken);
   const navigate = useNavigate();
-  const postId = '6538602fb2cb205663861cdc';
+
+  const postId = location.pathname.replace('/post/edit/', ''); // 경로에서 사용자 accountname을 추출
+
+  // const postId = '6538602fb2cb205663861cdc';
 
   const [userImage, setUserImage] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);

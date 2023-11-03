@@ -28,7 +28,7 @@ const HeaderContainer = styled.header`
   width: 390px;
 
   background-color: #fff;
-  border-bottom: 2px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
   align-items: center;
   box-sizing: border-box;
   margin-bottom: 10px;

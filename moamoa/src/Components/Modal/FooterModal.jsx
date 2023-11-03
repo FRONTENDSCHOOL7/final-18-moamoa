@@ -1,37 +1,48 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components'
-import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+// import { useParams } from 'react-router-dom';
 import DeleteModal from './DeleteModal';
-import CloseIcon from '../../Assets/icons/x.png'
+import CloseIcon from '../../Assets/icons/x.png';
 import PropTypes from 'prop-types';
 
 FooterModal.propTypes = {
   accountname: PropTypes.string,
   postid: PropTypes.string,
   closeFooter: PropTypes.bool,
-  setCloseFooter: PropTypes.func
-}
+  setCloseFooter: PropTypes.func,
+};
 
-export default function FooterModal({accountname, closeFooter, setCloseFooter, postid}) {
+export default function FooterModal({ accountname, closeFooter, setCloseFooter, postid }) {
   const [showModal, setShowModal] = useState(true);
-  console.log(accountname)
-  const params = useParams();
-  const editUrl = `/post/edit/${params.post_id}`
-  
+  console.log(accountname);
+  // const params = useParams();
+  const editUrl = `/post/edit/${postid}`;
 
   return (
     <>
-      { !closeFooter && <ModalCont>
-        <Modal>
-          <Btn onClick={()=>setCloseFooter((prev)=>!prev)}><img src={CloseIcon} alt="닫기" /></Btn>
-          <BtnDel onClick={()=>setShowModal((prev)=>!prev)}>삭제</BtnDel>
-          <Link to={editUrl}><BtnModify>수정</BtnModify></Link>
-        </Modal>
-        { !showModal ? <DeleteModal postid={postid} setCloseFooter={setCloseFooter} closeFooter={closeFooter}/> : null }
-      </ModalCont> }
+      {!closeFooter && (
+        <ModalCont>
+          <Modal>
+            <Btn onClick={() => setCloseFooter((prev) => !prev)}>
+              <img src={CloseIcon} alt='닫기' />
+            </Btn>
+            <BtnDel onClick={() => setShowModal((prev) => !prev)}>삭제</BtnDel>
+            <Link to={editUrl}>
+              <BtnModify>수정</BtnModify>
+            </Link>
+          </Modal>
+          {!showModal ? (
+            <DeleteModal
+              postid={postid}
+              setCloseFooter={setCloseFooter}
+              closeFooter={closeFooter}
+            />
+          ) : null}
+        </ModalCont>
+      )}
     </>
-  )
+  );
 }
 
 const ModalCont = styled.div`
@@ -40,7 +51,7 @@ const ModalCont = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 10;
 `;
 
@@ -70,15 +81,14 @@ const BtnModify = styled.button`
   padding: 2rem;
   margin-top: 1rem;
   font-size: 1.4rem;
-  color: #4F9EE9;
-  &:hover{
+  color: #4f9ee9;
+  &:hover {
     font-weight: bold;
   }
-
 `;
 
 const BtnDel = styled(BtnModify)`
   margin-top: 1.2rem;
   border-bottom: 1px solid #dbdbdb;
-  color: #EB5757;
+  color: #eb5757;
 `;

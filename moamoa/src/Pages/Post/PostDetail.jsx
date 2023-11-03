@@ -5,7 +5,8 @@ import userTokenAtom from '../../Recoil/userTokenAtom'; //파일 경로 변경 �
 import PostCardItem from '../../Components/Post/PostCardItem';
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
-import Header from '../../Components/Common/HeaderBasic';
+// import Header from '../../Components/Common/HeaderBasic';
+import HeaderKebab from '../../Components/Common/HeaderKebab';
 
 export default function ProductDetail() {
   const token = useRecoilValue(userTokenAtom);
@@ -40,13 +41,20 @@ export default function ProductDetail() {
   }, [token]);
   return (
     <>
-      { post && <PostContainer>
-        <Header />
-          <PostCardContainer>
-            <PostCardItem post={post}/>
-          </PostCardContainer>
-          <Comment postId={params.post_id} />
-      </PostContainer>}
+
+      {post && (
+        <PostContainer>
+          <HeaderKebab />
+          {/* <Header /> */}
+          <BgCont>
+            <PostCardContainer>
+              <PostCardItem post={post} />
+            </PostCardContainer>
+            <Comment postId={params.post_id} />
+          </BgCont>
+        </PostContainer>
+      )}
+
     </>
   );
 }
