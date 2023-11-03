@@ -9,6 +9,8 @@ const useJoin = () => {
   const [passwordError, setPasswordError] = useState('');
   const [imgSrc, setImgSrc] = useState();
   const [errorMessage, setErrorMessage] = useState('');
+  const [accountInfoMsg, setAccountInfoMsg] = useState('');
+  const [introInfoMsg, setIntroInfoMsg] = useState('');
   const [pageTransition, setPageTransition] = useState(false);
   const [userType, setUserType] = useState('');
   const [userInfo, setUserInfo] = useState({
@@ -59,6 +61,20 @@ const useJoin = () => {
     }
   };
 
+  const handleAccountNameValid = () => {
+    setAccountInfoMsg('2~15자 이내여야 합니다.');
+    if (userInfo.user.accountname.length > 1 || errorMessage) {
+      setAccountInfoMsg('');
+    }
+  };
+
+  const handleIntroValid = () => {
+    setIntroInfoMsg('2~50자 이내여야 합니다.');
+    if (userInfo.user.intro.length > 1 || errorMessage) {
+      setIntroInfoMsg('');
+    }
+  };
+
   const goNext = (e) => {
     e.preventDefault();
     if (userInfo.user.email && userInfo.user.password && !passwordError) {
@@ -95,12 +111,16 @@ const useJoin = () => {
     pageTransition,
     emailError,
     passwordError,
+    accountInfoMsg,
+    introInfoMsg,
     errorMessage,
     handleSubmit,
     handleInputChange,
     handleUserType,
     handlePasswordValid,
     handleEmailOnBlur,
+    handleAccountNameValid,
+    handleIntroValid,
   };
 };
 

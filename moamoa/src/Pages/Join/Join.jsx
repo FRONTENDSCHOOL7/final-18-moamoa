@@ -22,8 +22,12 @@ const Join = () => {
     goNext,
     emailError,
     passwordError,
+    accountInfoMsg,
+    introInfoMsg,
     errorMessage,
     handlePasswordValid,
+    handleAccountNameValid,
+    handleIntroValid,
   } = useJoin();
 
   const handleChangeImage = async (e) => {
@@ -69,6 +73,8 @@ const Join = () => {
                 id='userNameInput'
                 name='username'
                 placeholder='2~10자 이내여야 합니다.'
+                minLength={2}
+                maxLength={10}
               />
               <TextLabel htmlFor='userIdInput'>계정 ID</TextLabel>
               <TextInput
@@ -78,7 +84,11 @@ const Join = () => {
                 id='userIdInput'
                 name='accountname'
                 placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
+                minLength={2}
+                maxLength={15}
+                onBlur={handleAccountNameValid}
               />
+              <StyledErrorMsg>{accountInfoMsg}</StyledErrorMsg>
               {errorMessage === '*영문, 숫자, 밑줄, 마침표만 사용할 수 있습니다.' && (
                 <StyledErrorMsg>{errorMessage}</StyledErrorMsg>
               )}
@@ -97,7 +107,11 @@ const Join = () => {
                     ? '자신과 홍보할 행사에 대해 소개해 주세요!'
                     : '자신에 대해 소개해 주세요!'
                 }
+                minLength={2}
+                maxLength={50}
+                onBlur={handleIntroValid}
               />
+              <StyledErrorMsg>{introInfoMsg}</StyledErrorMsg>
             </TextContainer>
             <ProfileButton
               type='submit'
