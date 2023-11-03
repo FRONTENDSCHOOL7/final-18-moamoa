@@ -4,8 +4,8 @@ import useJoin from '../../Hooks/Sign/useJoin.jsx';
 import styled from 'styled-components';
 import { Container } from '../../Components/Common/Container';
 import { Form, Input, Button, StyledErrorMsg } from '../../Components/Common/FormLoginAndJoin';
-import DefaultProfileImg from '../../Assets/images/profile-img.svg';
 import UploadFile from '../../Assets/images/upload-file.png';
+import DefaultProfile from '../../Assets/images/profile-img.svg';
 
 const Join = () => {
   const {
@@ -29,8 +29,15 @@ const Join = () => {
   const handleChangeImage = async (e) => {
     const imageFile = e.target.files[0];
     const response = await uploadImage(imageFile);
-    setUserInfo({ ...userInfo, user: { ...userInfo.user, image: response } });
-    setImgSrc(response);
+    setUserInfo({
+      ...userInfo,
+      user: {
+        ...userInfo.user,
+        image: `https://api.mandarin.weniv.co.kr/${response.data.filename}`,
+      },
+    });
+
+    setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
   };
 
   return (
@@ -42,12 +49,7 @@ const Join = () => {
           <ProfileForm onSubmit={handleSubmit}>
             <ImgContainer>
               <ImgLabel htmlFor='profileImg'>
-                <ProfileImg
-                  src={imgSrc ? imgSrc : DefaultProfileImg}
-                  alt=''
-                  srcSet=''
-                  id='imagePre'
-                />
+                <ProfileImg src={imgSrc ? imgSrc : DefaultProfile} alt='' srcSet='' id='imagePre' />
               </ImgLabel>
               <input
                 type='file'

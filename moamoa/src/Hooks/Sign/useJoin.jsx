@@ -18,7 +18,7 @@ const useJoin = () => {
       password: '',
       accountname: '',
       intro: '',
-      image: '',
+      image: 'https://api.mandarin.weniv.co.kr/1698856499022.png',
     },
   });
 

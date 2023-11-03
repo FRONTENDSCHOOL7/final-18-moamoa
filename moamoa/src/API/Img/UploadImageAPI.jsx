@@ -13,8 +13,7 @@ export const uploadImage = async (imageFile) => {
       },
     });
 
-    const filename = `https://api.mandarin.weniv.co.kr/${res.data.filename}`;
-    return filename;
+    return res;
   } catch (error) {
     console.error('이미지 업로드 실패');
   }
