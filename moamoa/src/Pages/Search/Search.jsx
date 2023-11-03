@@ -9,12 +9,12 @@ import userTokenAtom from '../../Recoil/userTokenAtom';
 import useDebounce from '../../Hooks/Search/useDebounce';
 import { useNavigate } from 'react-router-dom';
 import SearchHighLight from '../../Components/Common/SearchHighLight';
-
+import iconSearchNotFound from '../../Assets/icons/icon-searchNotFound.svg';
 export default function Search() {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const token = useRecoilValue(userTokenAtom);
-  const debounceValue = useDebounce(searchText, 10500);
+  const debounceValue = useDebounce(searchText, 3000);
   const [, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -41,19 +41,26 @@ export default function Search() {
     <Container>
       <UserSearch setSearchText={setSearchText}></UserSearch>
       {searchResults && searchResults.length > 0 ? (
-        searchResults.slice(0, 5).map((item, index) => (
-          <SearchWrap onClick={() => handleUser(item.accountname)} key={index}>
-            <SearchPhotoWrap>
-              <SearchImg src={item.image} alt='' />
-            </SearchPhotoWrap>
-            <UserInfo>
-              <UserId>{SearchHighLight(item.username, searchText)}</UserId>
-              <UserText>{item.intro}</UserText>
-            </UserInfo>
-          </SearchWrap>
-        ))
+        searchResults.slice(0, 5).map((item, index) => {
+          const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
+
+          return (
+            <SearchWrap onClick={() => handleUser(item.accountname)} key={index}>
+              <SearchPhotoWrap>
+                <SearchImg src={item.image} alt='' />
+              </SearchPhotoWrap>
+              <UserInfo>
+                <UserId>{SearchHighLight(cleanedUserId, searchText)}</UserId>
+                <UserText>{item.intro}</UserText>
+              </UserInfo>
+            </SearchWrap>
+          );
+        })
       ) : (
-        <p>검색 결과가 없습니다.</p>
+        <NotFoundWrap>
+          <img src={iconSearchNotFound} alt='' />
+          <p>검색 결과가 없습니다.</p>
+        </NotFoundWrap>
       )}
       <Footer></Footer>
     </Container>
@@ -99,4 +106,23 @@ const UserText = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+const NotFoundWrap = styled.div`
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 120px;
+    margin-bottom: 30px;
+    transform: translateX(-5%);
+  }
+  p {
+    font-size: 20px;
+    transform: translateX(5%);
+    color: #919191;
+  }
 `;
