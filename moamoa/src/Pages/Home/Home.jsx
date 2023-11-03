@@ -52,15 +52,14 @@ export default function Home() {
                   return <HomePostCardList key={item.id} post={item} />;
                 })}
               </PostList>
-            </PostBg>
-          </HomeContainer>
-        ) : (
-          <HomeContainer>
-            <PostList>
-              <HomeFeed />
-            </PostList>
-          </HomeContainer>
-        )}
+            
+          </PostBg>
+        </HomeContainer>
+      ) : (
+        <HomeContainer>
+            <HomeFeed />
+        </HomeContainer>
+      )}
       </HomeWrap>
       <Footer />
     </Container>
