@@ -3,13 +3,14 @@ import Email from '../../Assets/icons/icon-email.svg';
 import Lock from '../../Assets/icons/icon-lock.svg';
 
 export const Form = styled.form`
-  margin: 0 34px;
+  padding: 0 34px;
   display: flex;
   flex-direction: column;
   text-align: center;
   color: #767676;
   font-size: 12px;
-  margin-top: 45px;
+  margin: 45px 0 0 0;
+  background-color: #fff;
 `;
 
 export const Input = styled.input`
@@ -33,7 +34,7 @@ export const Button = styled.button`
   font-weight: 700;
   padding: 11px;
   color: white;
-  margin: 26px 0 21px 0;
+  margin: 26px 0 80px 0;
   letter-spacing: -1px;
 `;
 
