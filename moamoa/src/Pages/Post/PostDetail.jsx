@@ -11,11 +11,11 @@ import HeaderKebab from '../../Components/Common/HeaderKebab';
 export default function ProductDetail() {
   const token = useRecoilValue(userTokenAtom);
   const [post, setPost] = useState(null);
-  const params = useParams();
+  const {post_id} = useParams();
 
   useEffect(() => {
     const getPostInfo = async () => {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/post/${params.post_id}`;
+      const reqUrl = `https://api.mandarin.weniv.co.kr/post/${post_id}`;
 
       try {
         const res = await fetch(reqUrl, {
@@ -28,7 +28,7 @@ export default function ProductDetail() {
 
         if (res.status === 200) {
           const result = await res.json();
-          setPost(result);
+          setPost(result.post);
         } else {
           console.error('페이지를 불러오는데 실패했습니다.');
         }
@@ -38,18 +38,18 @@ export default function ProductDetail() {
     };
 
     getPostInfo();
-  }, [token, post]);
+  }, [token]);
+
   return (
     <>
 
       {post && (
         <PostContainer>
           <HeaderKebab />
-          {/* <Header /> */}
             <PostCardContainer>
               <PostCardItem post={post} />
             </PostCardContainer>
-            <Comment postId={params.post_id} />
+            <Comment postId={post_id} />
         </PostContainer>
       )}
 

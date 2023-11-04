@@ -20,7 +20,7 @@ PostCardDetail.propTypes = {
 
 export default function PostCardDetail({post}) {
   const token = useRecoilValue(userTokenAtom);
-  const postItem = post.post;
+  const postItem = post;
 
   const accountAtom = useRecoilValue(accountNameAtom);
 
@@ -29,7 +29,6 @@ export default function PostCardDetail({post}) {
   const [showModal, setShowModal] = useState(false);
   const [heartValue, setHeartValue] = useState(postItem.hearted);
 
-  console.log(postItem);
   const postImgUrl = `${postItem.image}`;
   const accountName = postItem.author.accountname;
   const postId = postItem.id;
@@ -92,8 +91,8 @@ const unheartPost = async () => {
         <PostList>
           <PostArticle>
             <Frofile>
-              <PostCardUser
-                url={postItem.author.image}
+              {/* author 하나만 넘겨서 사용하는 방법으로 수정하기 */}
+              <PostCardUser url={postItem.author.image}
                 username={postItem.author.username.slice(3)}
                 accountname={accountName}
               />
