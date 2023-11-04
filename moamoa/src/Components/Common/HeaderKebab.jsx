@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import userToken from '../../Recoil/userTokenAtom';
+import isLoginAtom from '../../Recoil/isLoginAtom';
+import accountNameAtom from '../../Recoil/accountNameAtom';
+import userNameAtom from '../../Recoil/userNameAtom';
 
 import Gobackbtn from '../../Components/Common/GoBackbtn';
 import more from '../../Assets/icons/icon-more.svg';
@@ -13,6 +16,9 @@ import ConfirmLogoutModal from '../../Components/Modal/ConfirmLogoutModal';
 export default function HeaderKebab() {
   const navigate = useNavigate();
   const setToken = useSetRecoilState(userToken);
+  const setIsLoginState = useSetRecoilState(isLoginAtom);
+  const setAccountName = useSetRecoilState(accountNameAtom);
+  const setUserName = useSetRecoilState(userNameAtom);
 
   const [showMyProfileOptions, setShowMyProfileOptions] = useState(false);
   const [showConfirmLogoutModal, setShowConfirmLogoutModal] = useState(false);
@@ -33,6 +39,9 @@ export default function HeaderKebab() {
 
     setToken('');
     localStorage.removeItem('token');
+    setIsLoginState(false);
+    setAccountName('');
+    setUserName('');
     navigate('/user/login');
   };
 
