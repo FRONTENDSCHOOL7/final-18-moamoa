@@ -74,31 +74,33 @@ export default function ProductDetail() {
           <Container>
             <FestivalContainer>
               <Header />
-              <Frofile>
-                <PostCardUser
-                  url={productData.product[pageIndex].author.image}
-                  username={productData.product[pageIndex].author.username.slice(3)}
-                  accountname={productData.product[pageIndex].author.accountname}
-                />
-                <AskBtn username={productData.product[pageIndex].author.username} />
-              </Frofile>
-              <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
-              <InfoContainer>
-                <FestivalTitle>
-                  {productData.product[pageIndex]?.itemName.slice(3) ||
-                    '행사명을 조회할 수 없습니다.'}
-                </FestivalTitle>
-                <FestivalInfo>행사 소개</FestivalInfo>
-                <FestivalDesc>
-                  {productData.product[pageIndex]?.link || '행사 상세 설명을 조회할 수 없습니다.'}
-                </FestivalDesc>
-                <FestivalInfo>행사 기간</FestivalInfo>
-                <FestivalDesc>
-                  {productData.product[pageIndex]
-                    ? resdate(pageIndex)
-                    : '행사 기간을 조회할 수 없습니다.'}
-                </FestivalDesc>
-              </InfoContainer>
+              <FestivalWrap>
+                <Frofile>
+                  <PostCardUser
+                    url={productData.product[pageIndex].author.image}
+                    username={productData.product[pageIndex].author.username.slice(3)}
+                    accountname={productData.product[pageIndex].author.accountname}
+                  />
+                  <AskBtn username={productData.product[pageIndex].author.username} />
+                </Frofile>
+                <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
+                <InfoContainer>
+                  <FestivalTitle>
+                    {productData.product[pageIndex]?.itemName.slice(3) ||
+                      '행사명을 조회할 수 없습니다.'}
+                  </FestivalTitle>
+                  <FestivalInfo>행사 소개</FestivalInfo>
+                  <FestivalDesc>
+                    {productData.product[pageIndex]?.link || '행사 상세 설명을 조회할 수 없습니다.'}
+                  </FestivalDesc>
+                  <FestivalInfo>행사 기간</FestivalInfo>
+                  <FestivalDesc>
+                    {productData.product[pageIndex]
+                      ? resdate(pageIndex)
+                      : '행사 기간을 조회할 수 없습니다.'}
+                  </FestivalDesc>
+                </InfoContainer>
+              </FestivalWrap>
             </FestivalContainer>
           </Container>
         </>
@@ -117,10 +119,13 @@ const FestivalContainer = styled.div`
   width: 100%;
   height: 100%;
   margin: auto;
+
   background-color: #ffffff;
   overflow: hidden;
 `;
-
+const FestivalWrap = styled.div`
+  margin-top: 48px;
+`;
 const Frofile = styled.div`
   height: 4.2rem;
   padding: 0.7rem 1.2rem;

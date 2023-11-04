@@ -42,7 +42,6 @@ export default function ProductDetail() {
 
   return (
     <>
-
       {post && (
         <PostContainer>
           <HeaderKebab />
@@ -52,7 +51,6 @@ export default function ProductDetail() {
             <Comment postId={post_id} />
         </PostContainer>
       )}
-
     </>
   );
 }
@@ -63,11 +61,17 @@ const PostContainer = styled.div`
   max-width: 39rem;
   margin: auto;
   background-color: #ffffff;
-  box-sizing: border-box;   
+  box-sizing: border-box;
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 const PostCardContainer = styled.div`
   padding: 0 1.6rem 1.5rem;
+  padding-top: 64px;
+  li {
+    article {
+      margin-top: 0;
+    }
+  }
 `;

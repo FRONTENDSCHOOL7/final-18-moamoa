@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import userToken from '../../Recoil/userTokenAtom';
+import isLoginAtom from '../../Recoil/isLoginAtom';
+import accountNameAtom from '../../Recoil/accountNameAtom';
+import userNameAtom from '../../Recoil/userNameAtom';
 
 import Gobackbtn from '../../Components/Common/GoBackbtn';
-import more from '../../Assets/icons/s-icon-more-vertical.svg';
+import more from '../../Assets/icons/icon-more.svg';
 import styled from 'styled-components';
 import LogoutModal from '../../Components/Modal/LogoutModal';
 import ConfirmLogoutModal from '../../Components/Modal/ConfirmLogoutModal';
@@ -13,6 +16,9 @@ import ConfirmLogoutModal from '../../Components/Modal/ConfirmLogoutModal';
 export default function HeaderKebab() {
   const navigate = useNavigate();
   const setToken = useSetRecoilState(userToken);
+  const setIsLoginState = useSetRecoilState(isLoginAtom);
+  const setAccountName = useSetRecoilState(accountNameAtom);
+  const setUserName = useSetRecoilState(userNameAtom);
 
   const [showMyProfileOptions, setShowMyProfileOptions] = useState(false);
   const [showConfirmLogoutModal, setShowConfirmLogoutModal] = useState(false);
@@ -33,6 +39,9 @@ export default function HeaderKebab() {
 
     setToken('');
     localStorage.removeItem('token');
+    setIsLoginState(false);
+    setAccountName('');
+    setUserName('');
     navigate('/user/login');
   };
 
@@ -51,13 +60,13 @@ export default function HeaderKebab() {
         <button type='button' onClick={handleKebabClick}>
           <img src={more} />
         </button>
+        {showMyProfileOptions && (
+          <LogoutModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
+        )}
+        {showConfirmLogoutModal && (
+          <ConfirmLogoutModal logout={logout} closeModal={closeConfirmLogoutModal} />
+        )}
       </HeaderContainer>
-      {showMyProfileOptions && (
-        <LogoutModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
-      )}
-      {showConfirmLogoutModal && (
-        <ConfirmLogoutModal logout={logout} closeModal={closeConfirmLogoutModal} />
-      )}
     </>
   );
 }
@@ -65,11 +74,12 @@ export default function HeaderKebab() {
 const HeaderContainer = styled.header`
   display: flex;
   margin: 0 auto;
-
+  z-index: 100;
   height: 48px;
-  min-height: 48px;
-  max-height: 48px;
   width: 390px;
+
+  position: fixed;
+
   justify-content: space-between;
   border-bottom: 1px solid #dbdbdb;
   background-color: #fff;

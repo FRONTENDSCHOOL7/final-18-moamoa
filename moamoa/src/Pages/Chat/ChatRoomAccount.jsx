@@ -2,9 +2,10 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
 import HeaderChat from '../../Components/Common/HeaderChat';
-import Photo from '../../Components/Common/ChatPhoto';
-import img from '../../Assets/images/followImg/human.jpg';
+
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
+import { useParams } from 'react-router-dom';
+
 export default function ChatRoomKim() {
   const [message, setMessage] = useState('');
   const [file, setFile] = useState(null);
@@ -26,6 +27,7 @@ export default function ChatRoomKim() {
       setMessage('');
     }
   };
+  const { chatUserName } = useParams();
   useLayoutEffect(() => {
     if (scrollDown) {
       bottomRef.current.scrollTo({
@@ -60,28 +62,14 @@ export default function ChatRoomKim() {
       handleSendClick();
     }
   };
+  const cleanedChatUserName = chatUserName.replace(/\[o\]|\[i\]/g, '');
+
+  console.log(chatUserName);
   return (
     <Container>
-      <HeaderChat headerText={'텃밭체험 수미아빠'}></HeaderChat>
+      <HeaderChat headerText={cleanedChatUserName}></HeaderChat>
       <ChatRoom>
         <ChatMessages ref={bottomRef}>
-          <div className='talkBox'>
-            <Photo src={img} />
-            <div>
-              <UserName>텃밭체험 수미아빠</UserName>
-              <Message>
-                옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다. 이상의 청춘의 뼈
-                따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게 뛰노는 인생의 힘있다.
-              </Message>
-            </div>
-          </div>
-          <div className='talkBox'>
-            <Photo src={img} />
-            <div>
-              <UserName>텃밭체험 수미아빠</UserName>
-              <Message>토마토가 증말 맛있어~</Message>
-            </div>
-          </div>
           {sendMsg.map((msg, index) => (
             <MyTalk key={index}>{msg}</MyTalk>
           ))}
@@ -133,7 +121,6 @@ const ChatRoom = styled.div`
     display: flex;
     flex-direction: row;
   }
-  margin-top: 48px;
 `;
 
 const ChatMessages = styled.div`
@@ -142,17 +129,17 @@ const ChatMessages = styled.div`
   padding: 20px;
 `;
 
-const Message = styled.div`
-  width: 220px;
-  font-size: 14px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 0px 30px 30px 30px;
-  margin: 0px 10px 10px;
-  padding: 10px 12px 12px;
-  line-height: normal;
-  box-sizing: border-box;
-`;
+// const Message = styled.div`
+//   width: 220px;
+//   font-size: 14px;
+//   background-color: #ffffff;
+//   border: 1px solid #ddd;
+//   border-radius: 0px 30px 30px 30px;
+//   margin: 0px 10px 10px;
+//   padding: 10px 12px 12px;
+//   line-height: normal;
+//   box-sizing: border-box;
+// `;
 
 const InputArea = styled.div`
   display: flex;
@@ -200,14 +187,14 @@ const FileInput = styled.input`
   overflow: hidden;
   border: 0;
 `;
-const UserName = styled.h2`
-  display: block;
-  margin-left: 8px;
-  margin-bottom: 5px;
-  font-size: 12px;
-  color: gray;
-  font-weight: 500;
-`;
+// const UserName = styled.h2`
+//   display: block;
+//   margin-left: 8px;
+//   margin-bottom: 5px;
+//   font-size: 12px;
+//   color: gray;
+//   font-weight: 500;
+// `;
 const MyTalk = styled.p`
   width: 220px;
   font-size: 14px;
@@ -216,7 +203,7 @@ const MyTalk = styled.p`
   border-radius: 30px 0px 30px 30px;
   margin: 0px 80px 10px;
   box-sizing: border-box;
-  padding: 10px 12px 12px;
+  padding: 10px 15px 12px;
   line-height: normal;
   white-space: pre-line;
 `;

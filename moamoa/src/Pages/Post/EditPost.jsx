@@ -28,7 +28,7 @@ import {
   ImgPre,
   XButton,
   InputImgIcon,
-} from './UloadEditPostStyle';
+} from './UploadEditPostStyle';
 
 export default function EditPost() {
   const location = useLocation();

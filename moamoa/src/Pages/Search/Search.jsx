@@ -40,28 +40,30 @@ export default function Search() {
   return (
     <Container>
       <UserSearch setSearchText={setSearchText}></UserSearch>
-      {searchResults && searchResults.length > 0 ? (
-        searchResults.slice(0, 5).map((item, index) => {
-          const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
+      <SearchListWrap>
+        {searchResults && searchResults.length > 0 ? (
+          searchResults.slice(0, 5).map((item, index) => {
+            const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
 
-          return (
-            <SearchWrap onClick={() => handleUser(item.accountname)} key={index}>
-              <SearchPhotoWrap>
-                <SearchImg src={item.image} alt='' />
-              </SearchPhotoWrap>
-              <UserInfo>
-                <UserId>{SearchHighLight(cleanedUserId, searchText)}</UserId>
-                <UserText>{item.intro}</UserText>
-              </UserInfo>
-            </SearchWrap>
-          );
-        })
-      ) : (
-        <NotFoundWrap>
-          <img src={iconSearchNotFound} alt='' />
-          <p>검색 결과가 없습니다.</p>
-        </NotFoundWrap>
-      )}
+            return (
+              <SearchWrap onClick={() => handleUser(item.accountname)} key={index}>
+                <SearchPhotoWrap>
+                  <SearchImg src={item.image} alt='' />
+                </SearchPhotoWrap>
+                <UserInfo>
+                  <UserId>{SearchHighLight(cleanedUserId, searchText)}</UserId>
+                  <UserText>{item.intro}</UserText>
+                </UserInfo>
+              </SearchWrap>
+            );
+          })
+        ) : (
+          <NotFoundWrap>
+            <img src={iconSearchNotFound} alt='' />
+            <p>검색 결과가 없습니다.</p>
+          </NotFoundWrap>
+        )}
+      </SearchListWrap>
       <Footer></Footer>
     </Container>
   );
@@ -73,13 +75,22 @@ const SearchImg = styled.img`
   object-fit: cover;
   border-radius: 50px;
 `;
+
+const SearchListWrap = styled.div`
+  margin-top: 48px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
 const SearchWrap = styled.div`
   width: 358px;
   height: 50px;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 8px 0 8px 16px;
 `;
 const SearchPhotoWrap = styled.div`
   border: 1px solid var(--DBDBDB, #dbdbdb);

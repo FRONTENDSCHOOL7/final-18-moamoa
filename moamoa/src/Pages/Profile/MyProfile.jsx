@@ -87,6 +87,7 @@ const HiddenH1 = styled.h1`
 
 const ProfileTop = styled.div`
   position: relative;
+  margin-top: 48px;
 `;
 
 const Btns = styled.div`

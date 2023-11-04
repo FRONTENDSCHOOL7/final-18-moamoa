@@ -25,7 +25,7 @@ import {
   ImgPre,
   XButton,
   InputImgIcon,
-} from './UloadEditPostStyle';
+} from './UploadEditPostStyle';
 
 export default function AddPost() {
   const token = useRecoilValue(userToken);

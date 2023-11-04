@@ -8,6 +8,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 18px;
+  background-color: #fff;
 `;
 
 export const Header = styled.header`
@@ -28,7 +29,7 @@ export const HeaderButton = styled.button`
   border-radius: 32px;
 `;
 
-export const FirstContainer = styled.div`
+export const ImgLayoutContainer = styled.div`
   position: relative;
 
   h2 {
@@ -37,20 +38,10 @@ export const FirstContainer = styled.div`
   }
 
   p {
-    position: absolute;
-    right: 0;
-    bottom: 11px;
     color: #979797;
+    text-align: right;
+    margin-top: 7px;
   }
-`;
-
-export const ImgLayoutContainer = styled.div`
-  width: 322px;
-  height: 206px;
-  overflow: hidden;
-  margin: 0 auto 30px;
-  position: relative;
-  border-radius: 10px;
 `;
 
 export const ImageLabel = styled.label`
@@ -66,15 +57,16 @@ export const ImageLabel = styled.label`
     height: 36px;
     border-radius: 50%;
     right: 10px;
-    bottom: 10px;
+    bottom: 30px;
     background: url(${UploadFile}) 0 0 / cover;
   }
 `;
 
 export const Image = styled.img`
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  aspect-ratio: 322/204;
   object-fit: cover;
+  border-radius: 10px;
 `;
 
 export const LayoutContainer = styled.div`
@@ -148,6 +140,8 @@ export const Textarea = styled.textarea`
   height: 145px;
   border-radius: 5px;
   border: 2px solid #dbdbdb;
+  margin-bottom: 60px;
+  font-size: 13px;
 
   &:focus {
     border-color: #87b7e4;

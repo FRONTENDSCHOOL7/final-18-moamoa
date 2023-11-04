@@ -22,6 +22,8 @@ export default function HeaderChat(props) {
 const HeaderChatRoom = styled.div`
   display: flex;
   height: 48px;
+
+  position: fixed;
   min-height: 48px;
   max-height: 48px;
   width: 390px;

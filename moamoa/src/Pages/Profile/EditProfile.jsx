@@ -15,7 +15,7 @@ import ButtonSubmit from '../../Components/Common/Button';
 import uploadFile from '../../Assets/images/upload-file.png';
 import styled from 'styled-components';
 
-import { HeaderContainer, HiddenH1 } from '../Post/UloadEditPostStyle';
+import { HeaderContainer, HiddenH1 } from '../Post/UploadEditPostStyle';
 
 function EditProfile() {
   //기존 사용자의 정보를 가져오기

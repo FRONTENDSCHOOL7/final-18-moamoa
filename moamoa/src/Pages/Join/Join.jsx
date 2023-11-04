@@ -116,7 +116,9 @@ const Join = () => {
             <ProfileButton
               type='submit'
               disabled={
-                !userInfo.user.username || !userInfo.user.accountname || !userInfo.user.intro
+                userInfo.user.username.length < 2 ||
+                !userInfo.user.accountname ||
+                !userInfo.user.intro
               }
             >
               모아모아 시작하기
@@ -229,7 +231,9 @@ const ProfileInfo = styled.p`
 `;
 
 const ProfileForm = styled.form`
-  margin: 0 34px;
+  padding: 0 34px;
+  background-color: #fff;
+  margin-bottom: 60px;
 `;
 
 const ImgContainer = styled.div`
