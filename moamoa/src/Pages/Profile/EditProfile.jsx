@@ -28,6 +28,8 @@ function EditProfile() {
   const [intro, setIntro] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [accountError, setAccountError] = useState('');
+  const [accountLengthError, setAccountLengthError] = useState('');
+  const [introError, setIntroError] = useState('');
   const [duplicateIdError, setDuplicateIdError] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -89,8 +91,11 @@ function EditProfile() {
     const pattern = /^[a-zA-Z0-9._]+$/; // 영문, 숫자, ., _ 만 허용
     if (!pattern.test(value)) {
       setAccountError('영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.');
+    } else if (value.length < 2 || value.length > 15) {
+      setAccountLengthError('2~15자 이내여야 합니다.');
     } else {
       setAccountError('');
+      setAccountLengthError('');
     }
   };
 
@@ -99,6 +104,14 @@ function EditProfile() {
       setUserNameError('사용자 이름은 2~10자 이내여야 합니다.');
     } else {
       setUserNameError('');
+    }
+  };
+
+  const validateIntroLength = (value) => {
+    if (value.length < 2 || value.length > 50) {
+      setIntroError('2~50자 이내여야 합니다.');
+    } else {
+      setIntroError('');
     }
   };
 
@@ -115,6 +128,7 @@ function EditProfile() {
   };
   const inputInfo = (e) => {
     setIntro(e.target.value);
+    validateIntroLength(e.target.value);
   };
 
   const uploadImage = async (imageFile) => {
@@ -173,6 +187,8 @@ function EditProfile() {
     const isAllValid =
       !userNameError &&
       !accountError &&
+      !introError &&
+      !accountLengthError &&
       !duplicateIdError &&
       username &&
       accountname &&
@@ -181,7 +197,17 @@ function EditProfile() {
 
     // 상태 변수 업데이트
     setIsButtonDisabled(!isAllValid);
-  }, [userNameError, accountError, duplicateIdError, username, accountname, imgSrc, intro]);
+  }, [
+    userNameError,
+    accountError,
+    accountLengthError,
+    introError,
+    duplicateIdError,
+    username,
+    accountname,
+    imgSrc,
+    intro,
+  ]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -250,6 +276,7 @@ function EditProfile() {
               </TextInput>
               {duplicateIdError && <EorrorMsg>{duplicateIdError}</EorrorMsg>}
               {accountError && <EorrorMsg>{accountError}</EorrorMsg>}
+              {accountLengthError && <EorrorMsg>{accountLengthError}</EorrorMsg>}
             </div>
             <div>
               <TextLabel>
@@ -266,6 +293,7 @@ function EditProfile() {
                   required
                 />
               </TextInput>
+              {introError && <EorrorMsg>{introError}</EorrorMsg>}
             </div>
           </EditProfileBox>
         </form>
