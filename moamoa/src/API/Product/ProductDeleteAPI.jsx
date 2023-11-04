@@ -1,9 +1,5 @@
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
-
-const ProductDeleteAPI = (params) => {
+const ProductDeleteAPI = (params, token) => {
   const reqURL = 'https://api.mandarin.weniv.co.kr';
-  const token = useRecoilValue(userTokenAtom);
   const productId = params.product_id;
 
   const handleProductDelete = async () => {

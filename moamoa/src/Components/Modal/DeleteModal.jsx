@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
+import PostDeleteAPI from '../../API/Post/PostDeleteAPI';
 
 export default function DeleteModal(postid) {
   const token = useRecoilValue(userTokenAtom);
@@ -13,59 +13,46 @@ export default function DeleteModal(postid) {
   const [modal, setModal] = useState(true);
   const [delMadoal, setDelModal] = useState(true);
   const [postId, setPostId] =  useState(postid.postid)
-  // const [showModal, setShowModal] = useState(true);
-  // console.log(showModal)
 
   const location = useLocation();
   const post = location.pathname.slice(1, 5);
-  console.log(post);
-  
-  const delPost = () => {
-    const delReq = () => {
-      axios
-        .delete(`https://api.mandarin.weniv.co.kr/post/${params.post_id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-        }
-      }).then(()=>{
-        alert('게시글이 삭제되었습니다.');
-        navigate(-1);
-        setDelModal(false);
-        setPostId(null);
-        // setShowModal(false);
-      }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
-      }
 
-    delReq();
-  }
+  // 게시글 상세 페이지에서 게시글 삭제
+  const handlePostDelete = PostDeleteAPI(token, postId)
+  const deletePost = async () => {
+      await handlePostDelete();
+      alert('게시물이 삭제되었습니다.');
+      navigate(-1);
+      setDelModal(false);
+      setPostId(null);
+    };
 
-  const delPostListItem = () => {
-    const delReq = () => {
-      axios
-        .delete(`https://api.mandarin.weniv.co.kr/post/${postId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-        }
-      }).then(()=>{
-        alert('게시글이 삭제되었습니다.');
-        navigate('/profile/myInfo');
-        setDelModal(false);
-        setModal(false);
-      }).catch(()=>console.error('게시글 삭제를 실패했습니다.'))
-      }
+  // myInfo 페이지에서 게시글 삭제
+  const delMyPostListItem = async () => {
+      await handlePostDelete();
+      alert('게시글이 삭제되었습니다.');
+      navigate('/profile/myInfo');
+      setDelModal(false);
+      setModal(false);
+    };
 
-    delReq();
-  }
-
-
-    const handleProductDelete = ProductDeleteAPI(params);
-    const handleDelete = async () => {
+    // 상품 상세 페이지에서 상품 삭제
+    const handleProductDelete = ProductDeleteAPI(params, token);
+    const deleteProduct = async () => {
       await handleProductDelete();
       alert('게시물이 삭제되었습니다.');
       navigate('/product/list');
     };
+  
+    const deletefunc = () => {
+      if(post === "prof"){
+        delMyPostListItem();
+      } else if(post === "post"){
+        deletePost();
+      } else {
+        deleteProduct();
+      }      
+    }
 
   return (
     <>
@@ -73,13 +60,7 @@ export default function DeleteModal(postid) {
       <Modal>
         <Deltext>정말 삭제하시겠습니까?</Deltext>
         <Btn>
-          <BtnDel onClick={ 
-            post !== "post" &&  post !== "post" ?  delPostListItem  : post==="post" ?  delPost  : handleDelete
-
-
-
-            // post === "post" ? delPost  : handleDelete
-            }>삭제</BtnDel>
+          <BtnDel onClick={deletefunc}>삭제</BtnDel>
           <BtnCancel onClick={()=>{setDelModal(false);}}>취소</BtnCancel>
         </Btn>
       </Modal> : null
