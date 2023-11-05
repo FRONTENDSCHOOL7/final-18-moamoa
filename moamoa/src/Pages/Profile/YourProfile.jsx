@@ -79,7 +79,8 @@ function YourProfile() {
     isFollow,
   };
 
-  console.log(userInfoData);
+  console.log('유저인포데이타', userInfoData.profileUsername);
+  const userName = userInfoData.profileUsername;
 
   console.log(userType);
   // 현제 페이지 주소 복사
@@ -114,7 +115,7 @@ function YourProfile() {
                 <button
                   type='button'
                   onClick={() => {
-                    navigate(`/chat`);
+                    navigate(`/chat/${userName}`);
                   }}
                 >
                   <img src={MsgIcon} alt='' />
