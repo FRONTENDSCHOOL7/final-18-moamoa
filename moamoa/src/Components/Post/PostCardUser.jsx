@@ -6,14 +6,19 @@ import { Link } from 'react-router-dom';
 PostCardUser.propTypes = {
   url: PropTypes.string,
   username: PropTypes.string,
-  accountname: PropTypes.string
+  accountname: PropTypes.string,
+  loginAccountName: PropTypes.string
 }
 
-export default function PostCardUser({url, username, accountname }) {
+export default function PostCardUser({url, username, accountname, loginAccountName }) {
   return (
     <Container>
         <>
-          <Link to={`/profile/${accountname}`}>
+          <Link to={ 
+            loginAccountName === accountname ? 
+            `/profile/myInfo`
+            : `/profile/${accountname}`
+          }>
             <UserInfo>
               <FrofileImg src={url} alt="사용자프로필"/>        
               <InfoText>

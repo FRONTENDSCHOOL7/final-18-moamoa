@@ -2,11 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
-import userNameAtom from '../../Recoil/userNameAtom';
+import accountNameAtom from '../../Recoil/accountNameAtom';
 import DeleteModal from '../../Components/Modal/DeleteModal';
+import PropTypes from 'prop-types';
 
-export default function AskBtn(username) {
-  const userName = useRecoilValue(userNameAtom);
+AskBtn.propTypes = {
+  accountname: PropTypes.string,
+  userName: PropTypes.string
+}
+
+
+export default function AskBtn({accountname, userName}) {
+
+  const loginAccountName = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(true);
 
   const navigate = useNavigate();
@@ -15,15 +23,13 @@ export default function AskBtn(username) {
   const handleBtnClick = () => {
     navigate('/product/edit', { state: params });
   };
-  const chatUserName = username.username;
   const handleChatRoom = () => {
-    navigate(`/chat/${chatUserName}`);
+    navigate(`/chat/${userName}`);
   };
-  console.log(chatUserName);
   return (
     <>
-      {username.username !== userName ? (
-        <Ask chatUserName={chatUserName} onClick={handleChatRoom}>
+      {accountname !== loginAccountName ? (
+        <Ask onClick={handleChatRoom}>
           문의하기
         </Ask>
       ) : (
