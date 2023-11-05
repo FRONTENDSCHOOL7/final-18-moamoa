@@ -6,6 +6,7 @@ import userTokenAtom from '../../Recoil/userTokenAtom';
 import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
 import PostDeleteAPI from '../../API/Post/PostDeleteAPI';
 import PropTypes from 'prop-types';
+import NoticeModal from './NoticeModal';
 
 DeleteModal.propTypes = {
   postid: PropTypes.string
@@ -67,6 +68,7 @@ export default function DeleteModal({postid}) {
         </Btn>
       </Modal> : null
       }
+      <NoticeModal/>
     </>
   );
 }
