@@ -17,7 +17,7 @@ export default function DeleteModal(postid) {
   const post = location.pathname.slice(1, 5);
 
   // 게시글 상세 페이지에서 게시글 삭제
-  const handlePostDelete = PostDeleteAPI(token, postId)
+  const handlePostDelete = () => PostDeleteAPI(token, postId)
   const deletePost = async () => {
       await handlePostDelete();
       alert('게시물이 삭제되었습니다.');
@@ -34,7 +34,7 @@ export default function DeleteModal(postid) {
       setDelModal(false);    };
 
     // 상품 상세 페이지에서 상품 삭제
-    const handleProductDelete = ProductDeleteAPI(params, token);
+    const handleProductDelete = () => ProductDeleteAPI(params, token);
     const deleteProduct = async () => {
       await handleProductDelete();
       alert('게시물이 삭제되었습니다.');

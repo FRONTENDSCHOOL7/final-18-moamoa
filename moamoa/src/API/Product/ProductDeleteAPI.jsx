@@ -14,6 +14,7 @@ const ProductDeleteAPI = (params, token) => {
     } catch (error) {
       if (error.response) {
         const { status, data } = error.response;
+        console.log('게시물 삭제에 실패했습니다.')
         if (status === 422 || status === 404) {
           console.log(data.message);
         }
