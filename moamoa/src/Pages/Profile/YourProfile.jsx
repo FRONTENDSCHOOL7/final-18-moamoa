@@ -5,30 +5,84 @@
   마지막 수정 날까: 2023.11.03
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import ProfileDetail from '../../Components/Common/ProfileDetail';
 import FollowButton from '../../Components/Common/FollowButton';
 import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
 import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
-import userNameAtom from '../../Recoil/userNameAtom';
+// import userNameAtom from '../../Recoil/userNameAtom';
 import styled from 'styled-components';
 
 import MsgIcon from '../../Assets/icons/message-btn.svg';
 import ShareIcon from '../../Assets/icons/share-btn.svg';
+import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import HeaderKebab from '../../Components/Common/HeaderKebab';
 
+import GetYourinfoAPI from '../../API/Profile/GetYourinfoAPI';
+
 // 프로필보기
 function YourProfile() {
   const navigate = useNavigate();
+  const location = useLocation();
+  // const userAccountname = location.pathname.replace('/profile/', '');
 
-  const userType =
-    useRecoilValue(userNameAtom).slice(0, 3) === '[o]' ? 'organization' : 'Individual';
+  const token = useRecoilValue(userToken);
+
+  const [profileImg, setProfileImg] = useState('');
+  const [profileUsername, setProfileUsername] = useState('');
+  const [profileAccountname, setProfileAccountname] = useState('');
+  const [profileIntro, setProfileIntro] = useState('');
+  const [profileFollowerCount, setProfileFollowerCount] = useState(0);
+  const [profileFollowingCount, setProfileFollowingCount] = useState(0);
+  const [isFollow, setIsFollow] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+
+  useEffect(() => {
+    async function UserInfo() {
+      setIsLoading(true); // API 호출 전에 로딩 상태를 true로 설정
+      try {
+        const infoUrl = location.pathname;
+        const res = await GetYourinfoAPI(infoUrl, token);
+
+        setProfileImg(res.profile['image']);
+        setProfileAccountname(res.profile['accountname']);
+        setProfileUsername(res.profile['username']);
+        setProfileIntro(res.profile['intro']);
+        setProfileFollowerCount(res.profile['followerCount']);
+        setProfileFollowingCount(res.profile['followingCount']);
+        setIsFollow(res.profile['isfollow']);
+      } catch (error) {
+        console.error('An error occurred while fetching user info:', error);
+      }
+      setIsLoading(false); // API 호출이 끝난 후 로딩 상태를 false로 설정
+    }
+    UserInfo();
+  }, [token]); // `token`이 변경될 때만 `fetchUserInfo`를 호출합니다.
+
+  const userType = profileUsername.slice(0, 3) === '[o]' ? 'organization' : 'Individual';
+
+  console.log(`userType : ${userType}`);
+  const userInfoData = {
+    profileImg,
+    profileUsername,
+    profileAccountname,
+    profileIntro,
+    profileFollowerCount,
+    profileFollowingCount,
+    userType,
+    isFollow,
+  };
+
+  console.log(userInfoData);
+
   console.log(userType);
   // 현제 페이지 주소 복사
   function copyURLToClipboard() {
@@ -50,9 +104,13 @@ function YourProfile() {
         <HiddenH1>남의 프로필</HiddenH1>
         <section>
           <ProfileTop>
-            <ProfileDetail />
+            <ProfileDetail userInfoData={userInfoData} token={token} />
             <Btns>
-              <FollowButton />
+              <FollowButton
+                userAccount={userInfoData.profileAccountname}
+                token={token}
+                isFollow={!isLoading && userInfoData.isFollow}
+              />
               <CircleBtn>
                 <button
                   type='button'
