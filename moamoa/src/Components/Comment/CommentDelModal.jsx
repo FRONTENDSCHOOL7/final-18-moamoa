@@ -64,7 +64,7 @@ const BgCont = styled.div`
   left: 0;
   top: 0;
   background-color: rgba(0,0,0,0.3);
-  z-index: 10;  
+  z-index: 100;  
   &::-webkit-scrollbar {
     display: none;
   }

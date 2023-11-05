@@ -1,5 +1,9 @@
+import { useRecoilValue } from 'recoil';
+import userTokenAtom from '../../Recoil/userTokenAtom';
 
-const HeartCountUpAPI = (postId, token)  => {
+const HeartCountUpAPI = (postId)  => {
+
+  const token = useRecoilValue(userTokenAtom);
 
   const heartPost = async () => {
     try {
@@ -22,6 +26,5 @@ const HeartCountUpAPI = (postId, token)  => {
   return heartPost;
 
 };
-
 
 export default HeartCountUpAPI

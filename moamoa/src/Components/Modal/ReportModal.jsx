@@ -75,14 +75,14 @@ const BgCont = styled.div`
   left: 0;
   top: 0;
   background-color: rgba(0,0,0,0.3);
-  z-index: 10
+  z-index: 100
   ;
 `;
 
 const Modal = styled.div`
   width: 26rem;
   height: 14rem;
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 1rem;
   position: fixed;
   left: 50%;
