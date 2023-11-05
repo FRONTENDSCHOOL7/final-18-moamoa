@@ -120,15 +120,16 @@ const UserText = styled.span`
 `;
 const NotFoundWrap = styled.div`
   width: 100%;
-  height: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+
   justify-content: center;
   align-items: center;
 
   img {
     width: 120px;
-    margin-bottom: 30px;
+    margin-block: 60px 20px;
     transform: translateX(-5%);
   }
   p {

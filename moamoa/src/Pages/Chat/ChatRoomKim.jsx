@@ -133,8 +133,6 @@ const ChatRoom = styled.div`
     display: flex;
     flex-direction: row;
   }
-
-  margin-top: 48px;
 `;
 
 const ChatMessages = styled.div`
