@@ -24,7 +24,10 @@ export default function Landing() {
 
   useEffect(() => {
     if (userToken) {
-      navigate('/home');
+      navigate('/');
+      setTimeout(() => {
+        navigate('/home');
+      }, 2000);
     } else {
       navigate('/');
     }
