@@ -22,7 +22,7 @@ const ProductDeleteAPI = (params, token) => {
     }
   };
 
-  return handleProductDelete;
+  return handleProductDelete();
 };
 
 export default ProductDeleteAPI;
