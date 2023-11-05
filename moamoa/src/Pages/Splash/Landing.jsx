@@ -27,7 +27,7 @@ export default function Landing() {
       navigate('/');
       setTimeout(() => {
         navigate('/home');
-      }, 1999);
+      }, 1998);
     } else {
       navigate('/');
     }
