@@ -10,7 +10,7 @@ import useDebounce from '../../Hooks/Search/useDebounce';
 import { useNavigate } from 'react-router-dom';
 import SearchHighLight from '../../Components/Common/SearchHighLight';
 import iconSearchNotFound from '../../Assets/icons/icon-searchNotFound.svg';
-/* eslint-disable */
+
 import Loader from './Loader';
 export default function Search() {
   const [searchText, setSearchText] = useState('');
