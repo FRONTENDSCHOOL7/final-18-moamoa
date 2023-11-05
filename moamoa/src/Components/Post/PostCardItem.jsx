@@ -69,7 +69,7 @@ export default function PostCardDetail({post}) {
             <Frofile>
               <PostCardUser url={postAuthorInfo.image}
                 username={postAuthorInfo.username.slice(3)}
-                accountname={accountName}
+                accountname={accountName} loginAccountName={accountAtom}
               />
               {accountAtom === accountName ? <MyPostMoreBtn
                 accountname={accountName}
