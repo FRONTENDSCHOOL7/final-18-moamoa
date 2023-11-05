@@ -23,8 +23,8 @@ const ConfirmDelModal = ({ delProduct, closeModal }) => {
     <ConfirmModal>
       <Deltext>정말 삭제하시겠습니까?</Deltext>
       <BtnWrap>
-          <DelBtn onClick={delProduct}>삭제</DelBtn>
-          <CancelBtn onClick={closeModal}>취소</CancelBtn>
+        <DelBtn onClick={delProduct}>삭제</DelBtn>
+        <CancelBtn onClick={closeModal}>취소</CancelBtn>
       </BtnWrap>
     </ConfirmModal>
   );
@@ -51,7 +51,7 @@ function MyProductClick({ productId, closeModal }) {
     const json = await res.json();
     console.log(json);
     closeModal();
-    alert("행사가 삭제되었습니다.")
+    alert('행사가 삭제되었습니다.');
   };
 
   const openConfirmDelModal = () => {
@@ -92,9 +92,9 @@ function MyProductClick({ productId, closeModal }) {
           </BtnProductDesc>
         </section>
       </Modal>
-        {showConfirmDelModal && (
-          <ConfirmDelModal delProduct={delProduct} closeModal={closeConfirmDelModal} />
-        )}
+      {showConfirmDelModal && (
+        <ConfirmDelModal delProduct={delProduct} closeModal={closeConfirmDelModal} />
+      )}
     </ModalCont>
   );
 }
@@ -204,7 +204,11 @@ export default function ProfileDetailProduct() {
                     <ProductBox key={event.id}>
                       <li key={event.id} onClick={() => handleProductClick(event.id)}>
                         <ProductImgBox src={event.itemImage} />
-                        <p className='itemName'>{event.itemName.replace('[f]', '')}</p>
+                        <p className='itemName'>
+                          {event.itemName.slice(0, 3) === '[f]'
+                            ? event.itemName.replace('[f]', '')
+                            : event.itemName.replace('[e]', '')}
+                        </p>
                         <p className='itemDate'>
                           {'행사기간: ' +
                             `${event.price.toString().slice(2, 4)}.${event.price
@@ -216,9 +220,6 @@ export default function ProfileDetailProduct() {
                               .slice(14, 16)}`}
                         </p>
                       </li>
-                      {showMyProductOptions && (
-                        <MyProductClick productId={productId} closeModal={closeModal} />
-                      )}
                     </ProductBox>
                   ))}
                 </ProductListBox>
@@ -356,7 +357,7 @@ const ModalCont = styled.div`
   left: 0;
   top: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 10;
+  z-index: 100;
 `;
 
 const Modal = styled.div`
@@ -376,7 +377,6 @@ const Modal = styled.div`
   flex-direction: column;
 `;
 
-
 const Btn = styled.button`
   width: 5rem;
   height: 5rem;
@@ -395,13 +395,13 @@ const BtnDel = styled.button`
   }
 `;
 
-const BtnModify = styled((BtnDel))`
+const BtnModify = styled(BtnDel)`
   color: #4f9ee9;
   border-top: 1px solid #dbdbdb;
   padding-top: 2.5rem;
 `;
 
-const BtnProductDesc = styled((BtnModify))`
+const BtnProductDesc = styled(BtnModify)`
   color: #000;
 `;
 
@@ -441,8 +441,7 @@ const CancelBtn = styled.button`
   }
 `;
 
-const DelBtn = styled(CancelBtn)` 
+const DelBtn = styled(CancelBtn)`
   color: #eb5757;
   border-right: 1px solid #dbdbdb;
 `;
-

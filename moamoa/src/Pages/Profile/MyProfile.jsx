@@ -24,7 +24,8 @@ import HeaderKebab from '../../Components/Common/HeaderKebab';
 function MyProfile() {
   const navigate = useNavigate();
 
-  const userType = useRecoilValue(userNameAtom).includes('[o]') ? 'organization' : 'Individual';
+  const userType =
+    useRecoilValue(userNameAtom).slice(0, 3) === '[o]' ? 'organization' : 'Individual';
 
   console.log(`userType : ${userType}`);
 

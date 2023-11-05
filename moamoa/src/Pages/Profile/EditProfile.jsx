@@ -22,10 +22,18 @@ function EditProfile() {
   const token = useRecoilValue(userToken);
   const navigate = useNavigate();
 
-  const [initUsername, setInitUsername] = useState('');
-  const [initAccountname, setInitAccountname] = useState('');
-  const [initIntron, setInitIntron] = useState('');
-  const [initImgSrc, setInitImgSrc] = useState(''); // 이미 있는 이미지 주소
+  const [username, setUsername] = useState('');
+  const [accountname, setAccountname] = useState('');
+  const [imgSrc, setImgSrc] = useState('');
+  const [intro, setIntro] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [accountError, setAccountError] = useState('');
+  const [accountLengthError, setAccountLengthError] = useState('');
+  const [introError, setIntroError] = useState('');
+  const [duplicateIdError, setDuplicateIdError] = useState('');
+  const [userNameError, setUserNameError] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [userType, setUserType] = useState('');
 
   // 내 정보 API
   const getInitInfo = async () => {
@@ -40,16 +48,14 @@ function EditProfile() {
     console.log(json);
 
     if (json && json.user) {
-      setInitImgSrc(json.user['image'] || '');
       setImgSrc(json.user['image'] || '');
 
-      setInitAccountname(json.user['accountname'] || '');
-      setAccountname(json.user['accountname'] || '');
+      setAccountname(json.user['accountname']);
 
-      setInitUsername(json.user['username'] || '');
-      setUsername(json.user['username'] || '');
+      setUserType(json.user['username'].slice(0, 3));
 
-      setInitIntron(json.user['intro'] || '');
+      setUsername(json.user['username'].slice(3, json.user['username'].length) || '');
+
       setIntro(json.user['intro'] || '');
     }
   };
@@ -58,17 +64,6 @@ function EditProfile() {
     // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행합니다.
     getInitInfo();
   }, []);
-
-  const [username, setUsername] = useState(initUsername);
-  const [accountname, setAccountname] = useState(initAccountname);
-  const [imgSrc, setImgSrc] = useState(initImgSrc);
-  const [intro, setIntro] = useState(initIntron);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [accountError, setAccountError] = useState('');
-  const [duplicateIdError, setDuplicateIdError] = useState('');
-  const [userNameError, setUserNameError] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
   // 프로필 수정 API
   const edit = async (editData) => {
     // const token = localStorage.getItem('token');
@@ -96,8 +91,11 @@ function EditProfile() {
     const pattern = /^[a-zA-Z0-9._]+$/; // 영문, 숫자, ., _ 만 허용
     if (!pattern.test(value)) {
       setAccountError('영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.');
+    } else if (value.length < 2 || value.length > 15) {
+      setAccountLengthError('2~15자 이내여야 합니다.');
     } else {
       setAccountError('');
+      setAccountLengthError('');
     }
   };
 
@@ -106,6 +104,14 @@ function EditProfile() {
       setUserNameError('사용자 이름은 2~10자 이내여야 합니다.');
     } else {
       setUserNameError('');
+    }
+  };
+
+  const validateIntroLength = (value) => {
+    if (value.length < 2 || value.length > 50) {
+      setIntroError('2~50자 이내여야 합니다.');
+    } else {
+      setIntroError('');
     }
   };
 
@@ -122,6 +128,7 @@ function EditProfile() {
   };
   const inputInfo = (e) => {
     setIntro(e.target.value);
+    validateIntroLength(e.target.value);
   };
 
   const uploadImage = async (imageFile) => {
@@ -162,9 +169,11 @@ function EditProfile() {
   const submitEdit = (e) => {
     e.preventDefault();
 
+    const fullUsername = userType + username;
+
     const editData = {
       user: {
-        username: username,
+        username: fullUsername,
         accountname: accountname,
         intro: intro,
         image: imgSrc,
@@ -178,6 +187,8 @@ function EditProfile() {
     const isAllValid =
       !userNameError &&
       !accountError &&
+      !introError &&
+      !accountLengthError &&
       !duplicateIdError &&
       username &&
       accountname &&
@@ -186,7 +197,17 @@ function EditProfile() {
 
     // 상태 변수 업데이트
     setIsButtonDisabled(!isAllValid);
-  }, [userNameError, accountError, duplicateIdError, username, accountname, imgSrc, intro]);
+  }, [
+    userNameError,
+    accountError,
+    accountLengthError,
+    introError,
+    duplicateIdError,
+    username,
+    accountname,
+    imgSrc,
+    intro,
+  ]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -206,7 +227,7 @@ function EditProfile() {
           {/* 프로필 이미지 */}
           <ProfileImg>
             <label htmlFor='profileImg'>
-              <img src={imgSrc || initImgSrc} alt='Profile' id='imagePre' />
+              <img src={imgSrc} alt='Profile' id='imagePre' />
               <img src={uploadFile} alt='' />
             </label>
             <input
@@ -255,6 +276,7 @@ function EditProfile() {
               </TextInput>
               {duplicateIdError && <EorrorMsg>{duplicateIdError}</EorrorMsg>}
               {accountError && <EorrorMsg>{accountError}</EorrorMsg>}
+              {accountLengthError && <EorrorMsg>{accountLengthError}</EorrorMsg>}
             </div>
             <div>
               <TextLabel>
@@ -271,6 +293,7 @@ function EditProfile() {
                   required
                 />
               </TextInput>
+              {introError && <EorrorMsg>{introError}</EorrorMsg>}
             </div>
           </EditProfileBox>
         </form>
