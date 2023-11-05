@@ -2,7 +2,7 @@
   설명: 사용자 accountname의 프로필 페이지(남의 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.23
-  마지막 수정 날까: 2023.11.03
+  마지막 수정 날까: 2023.11.05
 */
 
 import React, { useState, useEffect } from 'react';
@@ -15,7 +15,6 @@ import ProfileDetail from '../../Components/Common/ProfileDetail';
 import FollowButton from '../../Components/Common/FollowButton';
 import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
 import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
-// import userNameAtom from '../../Recoil/userNameAtom';
 import styled from 'styled-components';
 
 import MsgIcon from '../../Assets/icons/message-btn.svg';
@@ -32,7 +31,6 @@ import GetYourinfoAPI from '../../API/Profile/GetYourinfoAPI';
 function YourProfile() {
   const navigate = useNavigate();
   const location = useLocation();
-  // const userAccountname = location.pathname.replace('/profile/', '');
 
   const token = useRecoilValue(userToken);
 
@@ -45,31 +43,31 @@ function YourProfile() {
   const [isFollow, setIsFollow] = useState(true);
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
-  useEffect(() => {
-    async function UserInfo() {
-      setIsLoading(true); // API 호출 전에 로딩 상태를 true로 설정
-      try {
-        const infoUrl = location.pathname;
-        const res = await GetYourinfoAPI(infoUrl, token);
+  async function UserInfo() {
+    setIsLoading(true); // API 호출 전에 로딩 상태를 true로 설정
+    try {
+      const infoUrl = location.pathname;
+      const res = await GetYourinfoAPI(infoUrl, token);
 
-        setProfileImg(res.profile['image']);
-        setProfileAccountname(res.profile['accountname']);
-        setProfileUsername(res.profile['username']);
-        setProfileIntro(res.profile['intro']);
-        setProfileFollowerCount(res.profile['followerCount']);
-        setProfileFollowingCount(res.profile['followingCount']);
-        setIsFollow(res.profile['isfollow']);
-      } catch (error) {
-        console.error('An error occurred while fetching user info:', error);
-      }
-      setIsLoading(false); // API 호출이 끝난 후 로딩 상태를 false로 설정
+      setProfileImg(res.profile['image']);
+      setProfileAccountname(res.profile['accountname']);
+      setProfileUsername(res.profile['username']);
+      setProfileIntro(res.profile['intro']);
+      setProfileFollowerCount(res.profile['followerCount']);
+      setProfileFollowingCount(res.profile['followingCount']);
+      setIsFollow(res.profile['isfollow']);
+    } catch (error) {
+      console.error('An error occurred while fetching user info:', error);
     }
+    setIsLoading(false); // API 호출이 끝난 후 로딩 상태를 false로 설정
+  }
+
+  useEffect(() => {
     UserInfo();
-  }, [token]); // `token`이 변경될 때만 `fetchUserInfo`를 호출합니다.
+  }, [token, location.pathname]); // `token`이 변경될 때만 `fetchUserInfo`를 호출합니다.
 
   const userType = profileUsername.slice(0, 3) === '[o]' ? 'organization' : 'Individual';
 
-  console.log(`userType : ${userType}`);
   const userInfoData = {
     profileImg,
     profileUsername,
@@ -110,6 +108,7 @@ function YourProfile() {
                 userAccount={userInfoData.profileAccountname}
                 token={token}
                 isFollow={!isLoading && userInfoData.isFollow}
+                reFetchInfo={UserInfo}
               />
               <CircleBtn>
                 <button

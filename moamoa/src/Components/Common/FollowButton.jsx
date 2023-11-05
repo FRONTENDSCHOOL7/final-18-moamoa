@@ -2,7 +2,7 @@
   설명: 팔로우/언팔로우 버튼 - 남의 프로필
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.02
+  마지막 수정 날까: 2023.11.05
 */
 
 import React, { useState, useEffect } from 'react';
@@ -17,23 +17,22 @@ FollowButton.propTypes = {
   userAccount: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   isFollow: PropTypes.bool.isRequired,
+  reFetchInfo: PropTypes.func.isRequired,
 };
 
-export default function FollowButton({ userAccount, token, isFollow }) {
+export default function FollowButton({ userAccount, token, isFollow, reFetchInfo }) {
   const [isFollowed, setIsFollowed] = useState(isFollow);
 
   useEffect(() => {
     setIsFollowed(isFollow);
   }, [isFollow]);
 
-  console.log(`isFollow: ${isFollow}`);
-  console.log(`isFollowed : ${isFollowed}`);
   // 팔로우/언팔로우
   const handleFollow = async () => {
     if (isFollowed === true) {
-      await UnFollowAPI(userAccount, token);
+      await UnFollowAPI(userAccount, token, reFetchInfo);
     } else {
-      await FollowAPI(userAccount, token);
+      await FollowAPI(userAccount, token, reFetchInfo);
     }
     setIsFollowed(!isFollowed);
   };
@@ -41,7 +40,7 @@ export default function FollowButton({ userAccount, token, isFollow }) {
   return (
     <div>
       {/* 남의 계정 페이지 버튼 */}
-      <FollowBtn isFollow={isFollowed}>
+      <FollowBtn className={isFollowed ? 'followed' : 'not-followed'}>
         <button onClick={handleFollow}>{isFollowed ? <p>언팔로우</p> : <p>팔로우</p>}</button>
       </FollowBtn>
       {/* 라우터에 연결되면 채팅방으로 연결 */}
@@ -56,11 +55,20 @@ const FollowBtn = styled.div`
     font-size: 14px;
     font-weight: 700;
     color: #767676;
-    background-color: ${(props) => (props.isFollow ? '#87B7E4' : '#fff')};
-    border: 1px solid ${(props) => (props.isFollow ? '#87B7E4' : '#DBDBDB')};
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
   }
 
   p {
-    color: ${(props) => (props.isFollow ? '#fff' : '#767676')};
+    color: #767676;
+  }
+
+  &.followed button {
+    background-color: #87b7e4;
+    border-color: #87b7e4;
+  }
+
+  &.followed p {
+    color: #fff;
   }
 `;
