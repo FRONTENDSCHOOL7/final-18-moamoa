@@ -11,7 +11,8 @@ import { useRecoilValue } from 'recoil';
 import accountNameAtom from '../../Recoil/accountNameAtom'; 
 
 import PropTypes from 'prop-types';
-import userTokenAtom from '../../Recoil/userTokenAtom';
+import HeartCountDownAPI from '../../API/Post/HeartCountDownAPI';
+import HeartCountUpAPI from '../../API/Post/HeartCountUpAPI';
 
 
 PostCardDetail.propTypes = {
@@ -19,69 +20,44 @@ PostCardDetail.propTypes = {
 }
 
 export default function PostCardDetail({post}) {
-  const token = useRecoilValue(userTokenAtom);
-  const postItem = post;
+  const postItemInfo = post;
+  const postAuthorInfo = post.author;
 
   const accountAtom = useRecoilValue(accountNameAtom);
 
   const [heartcolor, setHeartColor] = useState(heartBg);
-  const [heartcount, setHeartCount] = useState(postItem.heartCount);
+  const [heartcount, setHeartCount] = useState(postItemInfo.heartCount);
   const [showModal, setShowModal] = useState(false);
-  const [heartValue, setHeartValue] = useState(postItem.hearted);
+  const [heartValue, setHeartValue] = useState(postItemInfo.hearted);
 
-  const postImgUrl = `${postItem.image}`;
-  const accountName = postItem.author.accountname;
-  const postId = postItem.id;
-  console.log(postId)
+  const postImgUrl = `${postItemInfo.image}`;
+  const accountName = postAuthorInfo.accountname;
+  const postId = postItemInfo.id;
+  
+  const heartPost = HeartCountUpAPI(postId)
 
-  const heartPost = async () => {
-    try {
-      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postId}/heart`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      return data;
-      
-    } catch (error) {
-      console.error('API 응답에 실패하였습니다.', error);
-    }
-  };
+  const hearted = async () => {
+      await heartPost();
+  }
 
-const unheartPost = async () => {
-    try {
-      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postId}/unheart`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('API 응답에 실패하였습니다.', error);
-    }
-  };
+  const ununheartPost = HeartCountDownAPI(postId)
 
+  const unhearted = async () => {
+      await ununheartPost();
+  }
 
 
   const handleHeartCount = () => {
       setHeartColor(heartBgFill);
       setHeartCount((prev)=>prev + 1);
       setHeartValue((prev)=>!prev)
-      heartPost();
+      hearted();
   };
 
   const handleUnheartCount = () => {
     setHeartCount((prev)=>prev -1)
     setHeartValue((prev)=>!prev)
-    unheartPost()
+    unhearted()
     setHeartColor(heartBg);
   }
 
@@ -91,9 +67,8 @@ const unheartPost = async () => {
         <PostList>
           <PostArticle>
             <Frofile>
-              {/* author 하나만 넘겨서 사용하는 방법으로 수정하기 */}
-              <PostCardUser url={postItem.author.image}
-                username={postItem.author.username.slice(3)}
+              <PostCardUser url={postAuthorInfo.image}
+                username={postAuthorInfo.username.slice(3)}
                 accountname={accountName}
               />
               {accountAtom === accountName ? <MyPostMoreBtn
@@ -111,10 +86,10 @@ const unheartPost = async () => {
                 }}
               /> }
             </Frofile>
-            <PostDesc>{postItem.content}</PostDesc>
+            <PostDesc>{postItemInfo.content}</PostDesc>
             {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             <PostFooterContainer>
-              <CreateDate>{Datacalc(postItem.createdAt)}</CreateDate>
+              <CreateDate>{Datacalc(postItemInfo.createdAt)}</CreateDate>
               <div>
                 { heartValue ? <HeartBtn
                   onClick={() => { handleUnheartCount(); }}
@@ -129,7 +104,7 @@ const unheartPost = async () => {
                 >
                   {heartcount}
                 </HeartBtn>}
-                <CommentBtn>{postItem.commentCount}</CommentBtn>
+                <CommentBtn>{postItemInfo.commentCount}</CommentBtn>
               </div>
             </PostFooterContainer>
           </PostArticle>

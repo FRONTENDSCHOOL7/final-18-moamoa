@@ -5,50 +5,35 @@ import userTokenAtom from '../../Recoil/userTokenAtom'; //파일 경로 변경 �
 import PostCardItem from '../../Components/Post/PostCardItem';
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
-// import Header from '../../Components/Common/HeaderBasic';
 import HeaderKebab from '../../Components/Common/HeaderKebab';
+import PostDetailAPI from '../../API/Post/PostDetailAPI';
 
 export default function ProductDetail() {
   const token = useRecoilValue(userTokenAtom);
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState();
   const {post_id} = useParams();
 
-  useEffect(() => {
-    const getPostInfo = async () => {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/post/${post_id}`;
+  const getPostDetail = (data) => {
+    setPost(data.post);
+  }
 
-      try {
-        const res = await fetch(reqUrl, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        });
+  const getPostData = PostDetailAPI(token, post_id, getPostDetail);
 
-        if (res.status === 200) {
-          const result = await res.json();
-          setPost(result.post);
-        } else {
-          console.error('페이지를 불러오는데 실패했습니다.');
-        }
-      } catch (error) {
-        console.error('서버와 통신을 실패했습니다.', error);
-      }
-    };
-
-    getPostInfo();
-  }, [token]);
-
+  useEffect(()=>{
+    const getData = async () => {
+      await getPostData();
+    }
+  getData();
+  },[])
   return (
     <>
       {post && (
         <PostContainer>
           <HeaderKebab />
-            <PostCardContainer>
-              <PostCardItem post={post} />
-            </PostCardContainer>
-            <Comment postId={post_id} />
+          <PostCardContainer>
+            <PostCardItem post={post} />
+          </PostCardContainer>
+          <Comment postId={post_id} />
         </PostContainer>
       )}
     </>

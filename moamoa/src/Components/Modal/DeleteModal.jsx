@@ -10,7 +10,6 @@ export default function DeleteModal(postid) {
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const navigate = useNavigate();
-  const [modal, setModal] = useState(true);
   const [delMadoal, setDelModal] = useState(true);
   const [postId, setPostId] =  useState(postid.postid)
 
@@ -32,9 +31,7 @@ export default function DeleteModal(postid) {
       await handlePostDelete();
       alert('게시글이 삭제되었습니다.');
       navigate('/profile/myInfo');
-      setDelModal(false);
-      setModal(false);
-    };
+      setDelModal(false);    };
 
     // 상품 상세 페이지에서 상품 삭제
     const handleProductDelete = ProductDeleteAPI(params, token);
@@ -56,7 +53,7 @@ export default function DeleteModal(postid) {
 
   return (
     <>
-      { modal && delMadoal ?       
+      { delMadoal ?       
       <Modal>
         <Deltext>정말 삭제하시겠습니까?</Deltext>
         <Btn>
