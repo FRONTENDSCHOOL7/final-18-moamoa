@@ -2,20 +2,18 @@
   설명: 프로필 상세 페이지 공통 UI
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.01
+  마지막 수정 날까: 2023.11.05
 */
 
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useLocation } from 'react-router-dom';
+
 import { useNavigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
-import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
-import userNameAtom from '../../Recoil/userNameAtom';
 import styled from 'styled-components';
 import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
+// 게시글 수
 function PostCnt({ src, token, userType }) {
   const [postCount, setPostCount] = useState(0);
   const [productCount, setProductCount] = useState(0);
@@ -64,102 +62,68 @@ PostCnt.propTypes = {
   token: PropTypes.string.isRequired,
   userType: PropTypes.string.isRequired,
 };
+ProfileDetail.propTypes = {
+  userInfoData: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
-export default function ProfileDetail() {
-  const location = useLocation();
-  const setUserName = useSetRecoilState(userNameAtom);
+export default function ProfileDetail({ userInfoData, token }) {
   const navigate = useNavigate();
+  const [followerCount, setFollowerCount] = useState(userInfoData.profileFollowerCount);
 
-  const [profileImg, setProfileImg] = useState('');
-  const [profileUsername, setProfileUsername] = useState('');
-  const [profileAccountname, setProfileAccountname] = useState('');
-  const [profileIntro, setProfileIntro] = useState('');
-  const [profileFollowerCount, setProfileFollowerCount] = useState(0);
-  const [profileFollowingCount, setProfileFollowingCount] = useState(0);
-
-  const token = useRecoilValue(userToken);
-  const userAccountname = location.pathname.replace('/profile/', ''); // 경로에서 사용자 accountname을 추출
-  const myUrl = `https://api.mandarin.weniv.co.kr/user/myinfo`;
-  const yourUrl = `https://api.mandarin.weniv.co.kr/profile/${userAccountname}`;
-  let resultUrl = userAccountname === 'myInfo' ? myUrl : yourUrl;
-
-  const getYourinfo = async () => {
-    const res = await fetch(resultUrl, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    console.log(json);
-
-    if (userAccountname === 'myInfo') {
-      setProfileImg(json.user['image']);
-      setProfileAccountname(json.user['accountname']);
-      setProfileUsername(json.user['username']);
-      setProfileIntro(json.user['intro']);
-      setProfileFollowerCount(JSON.stringify(json.user['followerCount']));
-      setProfileFollowingCount(JSON.stringify(json.user['followingCount']));
-      setUserName(json.user['username']);
-    } else {
-      setProfileImg(json.profile['image']);
-      setProfileAccountname(json.profile['accountname']);
-      setProfileUsername(json.profile['username']);
-      setProfileIntro(json.profile['intro']);
-      setProfileFollowerCount(JSON.stringify(json.profile['followerCount']));
-      setProfileFollowingCount(JSON.stringify(json.profile['followingCount']));
-      setUserName(json.profile['username']);
-    }
-  };
-
+  // 부모 컴포넌트로부터 받은 userInfoData의 변경사항을 감지
   useEffect(() => {
-    getYourinfo(); // 컴포넌트가 마운트될 때 getMyinfo 함수 호출
-  }, []); // 빈 의존성 배열을 전달하여 마운트될 때만 실행
-
-  const userType = profileUsername.includes('[o]') ? 'organization' : 'Individual';
+    // 팔로워 수가 변경되었는지 확인하고 state를 업데이트합니다.
+    setFollowerCount(userInfoData.profileFollowerCount);
+  }, [userInfoData.profileFollowerCount]);
 
   return (
     <ProfileDetailBox>
       <section>
         <ProfileImg>
-          <img src={profileImg} alt='Profile' />
+          <img src={userInfoData.profileImg} alt='Profile' />
         </ProfileImg>
         <ProfileInfo>
           <div>
             <p>
-              {userType === 'organization'
-                ? profileUsername.replace('[o]', '')
-                : profileUsername.replace('[i]', '')}
-              {userType === 'organization' ? <img src={UserTypeCheck} alt='' /> : ''}
+              {userInfoData.userType === 'organization'
+                ? userInfoData.profileUsername.replace('[o]', '')
+                : userInfoData.profileUsername.replace('[i]', '')}
+              {userInfoData.userType === 'organization' ? <img src={UserTypeCheck} alt='' /> : ''}
             </p>
-            <p>@{profileAccountname}</p>
+            <p>@{userInfoData.profileAccountname}</p>
           </div>
-          <p className='profile-intro'>{profileIntro}</p>
+          <p className='profile-intro'>{userInfoData.profileIntro}</p>
         </ProfileInfo>
 
         <CountWrap>
-          {profileAccountname && profileImg && profileUsername && (
-            <PostCnt src={profileAccountname} token={token} userType={userType} />
-          )}
+          {userInfoData.profileAccountname &&
+            userInfoData.profileImg &&
+            userInfoData.profileUsername && (
+              <PostCnt
+                src={userInfoData.profileAccountname}
+                token={token}
+                userType={userInfoData.userType}
+              />
+            )}
           <span></span>
           <button
             type='button'
             onClick={() => {
-              navigate(`/profile/${profileAccountname}/follower`);
+              navigate(`/profile/${userInfoData.profileAccountname}/follower`);
             }}
           >
-            <p>{profileFollowerCount}</p>
+            <p>{followerCount}</p>
             <p>팔로워</p>
           </button>
           <span></span>
           <button
             type='button'
             onClick={() => {
-              navigate(`/profile/${profileAccountname}/following`);
+              navigate(`/profile/${userInfoData.profileAccountname}/following`);
             }}
           >
-            <p>{profileFollowingCount}</p>
+            <p>{userInfoData.profileFollowingCount}</p>
             <p>팔로잉</p>
           </button>
         </CountWrap>

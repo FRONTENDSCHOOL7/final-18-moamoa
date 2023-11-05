@@ -2,10 +2,11 @@
   설명: 사용자 accountname의 프로필 페이지(내 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.02
+  마지막 수정 날까: 2023.11.05
 */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -14,20 +15,60 @@ import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
 import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
 import { Container } from '../../Components/Common/Container';
 
-import userNameAtom from '../../Recoil/userNameAtom';
+// import userNameAtom from '../../Recoil/userNameAtom';
+import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import Footer from '../../Components/Common/Footer';
 import styled from 'styled-components';
 import HeaderKebab from '../../Components/Common/HeaderKebab';
 
+import GetYourinfoAPI from '../../API/Profile/GetYourinfoAPI';
+
 // 프로필보기
 function MyProfile() {
   const navigate = useNavigate();
+  const token = useRecoilValue(userToken);
 
-  const userType =
-    useRecoilValue(userNameAtom).slice(0, 3) === '[o]' ? 'organization' : 'Individual';
+  const [profileImg, setProfileImg] = useState('');
+  const [profileUsername, setProfileUsername] = useState('');
+  const [profileAccountname, setProfileAccountname] = useState('');
+  const [profileIntro, setProfileIntro] = useState('');
+  const [profileFollowerCount, setProfileFollowerCount] = useState(0);
+  const [profileFollowingCount, setProfileFollowingCount] = useState(0);
+
+  useEffect(() => {
+    async function UserInfo() {
+      try {
+        const infoUrl = '/user/myinfo';
+        const res = await GetYourinfoAPI(infoUrl, token);
+
+        setProfileImg(res.user['image']);
+        setProfileAccountname(res.user['accountname']);
+        setProfileUsername(res.user['username']);
+        setProfileIntro(res.user['intro']);
+        setProfileFollowerCount(res.user['followerCount']);
+        setProfileFollowingCount(res.user['followingCount']);
+      } catch (error) {
+        console.error('An error occurred while fetching user info:', error);
+      }
+    }
+    UserInfo();
+  }, [token]); // `token`이 변경될 때만 `fetchUserInfo`를 호출합니다.
+
+  const userType = profileUsername.slice(0, 3) === '[o]' ? 'organization' : 'Individual';
 
   console.log(`userType : ${userType}`);
+  const userInfoData = {
+    profileImg,
+    profileUsername,
+    profileAccountname,
+    profileIntro,
+    profileFollowerCount,
+    profileFollowingCount,
+    userType,
+  };
+
+  console.log(userInfoData);
 
   return (
     <Container>
@@ -36,7 +77,7 @@ function MyProfile() {
         <HiddenH1>내 프로필</HiddenH1>
         <ProfileTop>
           <section>
-            <ProfileDetail />
+            <ProfileDetail userInfoData={userInfoData} token={token} />
             <Btns>
               <button
                 type='button'
@@ -54,7 +95,7 @@ function MyProfile() {
                     navigate('/product');
                   }}
                 >
-                  상품 등록
+                  행사 등록
                 </button>
               ) : null}
             </Btns>
