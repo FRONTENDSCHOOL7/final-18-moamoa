@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
+import LoginAPI from '../../API/Auth/LoginAPI';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import isLoginAtom from '../../Recoil/isLoginAtom';
 import accountNameAtom from '../../Recoil/accountNameAtom';
-import LoginAPI from '../../API/Auth/LoginAPI';
 import userNameAtom from '../../Recoil/userNameAtom';
 
 const useLogin = () => {
@@ -13,20 +13,20 @@ const useLogin = () => {
   const [userErrorMessage, setUserErrorMessage] = useState('');
   const [userInput, setUserInput] = useState({
     user: {
-      email: 'green@green.com', //무작위 테스트 용입니다
+      email: 'green@green.com',
       password: 'greengreen',
     },
   });
 
   const setUserToken = useSetRecoilState(userTokenAtom);
-  const [isLoginState, setIsLoginState] = useRecoilState(isLoginAtom);
+  const setIsLoginState = useSetRecoilState(isLoginAtom);
   const setAccountName = useSetRecoilState(accountNameAtom);
   const setUserName = useSetRecoilState(userNameAtom);
 
   const handleError = () => {
     const user = userInput.user;
     if (!user.email && !user.password) {
-      setErrorMsg('*아이디를 입력해주세요.');
+      setErrorMsg('*이메일을 입력해주세요.');
     } else if (user.email && !user.password) {
       setErrorMsg('*비밀번호를 입력해주세요.');
     } else {
@@ -67,7 +67,6 @@ const useLogin = () => {
   };
 
   return {
-    isLoginState,
     userInput,
     handleError,
     handleInputChange,

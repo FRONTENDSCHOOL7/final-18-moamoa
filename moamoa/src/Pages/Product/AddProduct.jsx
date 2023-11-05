@@ -63,9 +63,8 @@ const AddProduct = () => {
       datesArr.push(eventEndDate);
     }
 
-    const putDatesIntoArray = datesArr
-      .map((date) => parseInt(date.replaceAll('-', '')))
-      .sort((firstDate, lastDate) => firstDate - lastDate);
+    const putDatesIntoArray = datesArr.map((date) => parseInt(date.replaceAll('-', '')));
+    // .sort((firstDate, lastDate) => firstDate - lastDate);
     setEventPeriod(parseInt(putDatesIntoArray.join('')));
   };
 

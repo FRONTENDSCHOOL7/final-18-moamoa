@@ -12,9 +12,13 @@ export const uploadImage = async (imageFile) => {
         'Content-Type': 'multipart/form-data',
       },
     });
-
     return res;
   } catch (error) {
-    console.error('이미지 업로드 실패');
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status === 422 || status === 404) {
+        console.log(data.message);
+      }
+    }
   }
 };

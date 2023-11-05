@@ -29,10 +29,8 @@ const ProductUploadAPI = (inputValue) => {
     } catch (error) {
       if (error.response) {
         const { status, data } = error.response;
-        if (status === 422) {
+        if (status === 422 || status === 404) {
           console.log(data.message);
-        } else if (status === 404) {
-          //404 이미지 출력
         }
       }
     }
