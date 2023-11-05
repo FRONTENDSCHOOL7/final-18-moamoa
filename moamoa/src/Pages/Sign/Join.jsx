@@ -1,33 +1,38 @@
 import React from 'react';
-import { uploadImage } from '../../API/Img/UploadImageAPI';
 import useJoin from '../../Hooks/Sign/useJoin.jsx';
-import styled from 'styled-components';
-import { Container } from '../../Components/Common/Container';
-import { Form, Input, Button, StyledErrorMsg } from '../../Components/Common/FormLoginAndJoin';
+import { uploadImage } from '../../API/Img/UploadImageAPI';
 import UploadFile from '../../Assets/images/upload-file.png';
 import DefaultProfile from '../../Assets/images/profile-img.svg';
+import styled from 'styled-components';
+import {
+  LoginAndJoinContainer,
+  Form,
+  CommonInput,
+  StyledErrorMsg,
+  CommonBtn,
+} from '../../Components/Common/FormLoginAndJoin';
 
 const Join = () => {
   const {
     pageTransition,
-    handleSubmit,
     imgSrc,
     setImgSrc,
-    userInfo,
     userType,
+    userInfo,
     setUserInfo,
-    handleInputChange,
-    handleUserType,
-    handleEmailOnBlur,
-    goNext,
-    emailError,
-    passwordError,
     accountInfoMsg,
     introInfoMsg,
+    emailError,
+    passwordError,
     errorMessage,
+    goNext,
+    handleInputChange,
+    handleUserType,
     handlePasswordValid,
+    handleEmailOnBlur,
     handleAccountNameValid,
     handleIntroValid,
+    handleSubmit,
   } = useJoin();
 
   const handleChangeImage = async (e) => {
@@ -40,15 +45,15 @@ const Join = () => {
         image: `https://api.mandarin.weniv.co.kr/${response.data.filename}`,
       },
     });
-
     setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
   };
 
   return (
     <>
+      <h1 className='a11y-hidden'>이메일로 회원가입 및 프로필 설정</h1>
       {pageTransition ? (
-        <Container>
-          <H2>프로필 설정</H2>
+        <LoginAndJoinContainer>
+          <h2>프로필 설정</h2>
           <ProfileInfo>나중에 언제든지 변경할 수 있습니다.</ProfileInfo>
           <ProfileForm onSubmit={handleSubmit}>
             <ImgContainer>
@@ -89,10 +94,8 @@ const Join = () => {
                 onBlur={handleAccountNameValid}
               />
               <StyledErrorMsg>{accountInfoMsg}</StyledErrorMsg>
-              {errorMessage === '*영문, 숫자, 밑줄, 마침표만 사용할 수 있습니다.' && (
-                <StyledErrorMsg>{errorMessage}</StyledErrorMsg>
-              )}
-              {errorMessage === '*이미 사용중인 계정 ID입니다.' && (
+              {(errorMessage === '*영문, 숫자, 밑줄, 마침표만 사용할 수 있습니다.' ||
+                errorMessage === '*이미 사용중인 계정 ID입니다.') && (
                 <StyledErrorMsg>{errorMessage}</StyledErrorMsg>
               )}
               <TextLabel htmlFor='userIntroInput'>소개</TextLabel>
@@ -124,10 +127,10 @@ const Join = () => {
               모아모아 시작하기
             </ProfileButton>
           </ProfileForm>
-        </Container>
+        </LoginAndJoinContainer>
       ) : (
-        <Container>
-          <H2>이메일로 회원가입</H2>
+        <LoginAndJoinContainer>
+          <h2>이메일로 회원가입</h2>
           <Form onSubmit={goNext}>
             <SelectUserType>
               <h3>회원분류선택</h3>
@@ -150,7 +153,7 @@ const Join = () => {
                 </SelectUserBtn>
               </SelectUserBtnContainer>
             </SelectUserType>
-            <Input
+            <CommonInput
               value={userInfo.user.email}
               onChange={handleInputChange}
               onBlur={handleEmailOnBlur}
@@ -160,7 +163,7 @@ const Join = () => {
               required
             />
             <StyledErrorMsg>{emailError}</StyledErrorMsg>
-            <Input
+            <CommonInput
               value={userInfo.user.password}
               onChange={handleInputChange}
               onBlur={handlePasswordValid}
@@ -170,7 +173,7 @@ const Join = () => {
               required
             />
             <StyledErrorMsg>{passwordError}</StyledErrorMsg>
-            <Button
+            <JoinBtn
               disabled={
                 !userType ||
                 !userInfo.user.email ||
@@ -180,20 +183,13 @@ const Join = () => {
               }
             >
               다음
-            </Button>
+            </JoinBtn>
           </Form>
-        </Container>
+        </LoginAndJoinContainer>
       )}
     </>
   );
 };
-
-const H2 = styled.h2`
-  text-align: center;
-  font-weight: 400;
-  font-size: 24px;
-  margin-top: 30px;
-`;
 
 const SelectUserType = styled.div`
   text-align: left;
@@ -211,14 +207,15 @@ const SelectUserBtnContainer = styled.div`
   justify-content: space-between;
 `;
 
-const SelectUserBtn = styled.button`
+const SelectUserBtn = styled(CommonBtn)`
   color: ${(props) => (props.selected ? 'white' : '#87b7e4')};
   background-color: ${(props) => (props.selected ? '#87b7e4' : 'white')};
-  border-radius: 44px;
   border: 2px solid #87b7e4;
-  font-weight: 700;
   padding: 11px 49px;
-  letter-spacing: -1px;
+`;
+
+const JoinBtn = styled(CommonBtn)`
+  margin: 26px 0 80px 0;
 `;
 
 // 프로필 설정
@@ -276,17 +273,9 @@ const TextContainer = styled.div`
   flex-direction: column;
 `;
 
-const TextInput = styled.input`
-  border: none;
-  outline: none;
-  border-bottom: 1.5px solid #dbdbdb;
-  letter-spacing: -1px;
+const TextInput = styled(CommonInput)`
+  background-image: none;
   padding: 5px 0;
-
-  &:focus {
-    border-bottom: 1.5px solid #87b7e4;
-    transition: all 0.3s ease-in-out;
-  }
 `;
 
 const TextLabel = styled.label`
@@ -299,7 +288,8 @@ const TextLabel = styled.label`
   }
 `;
 
-const ProfileButton = styled(Button)`
+const ProfileButton = styled(CommonBtn)`
+  margin: 26px 0 80px 0;
   width: 100%;
 `;
 

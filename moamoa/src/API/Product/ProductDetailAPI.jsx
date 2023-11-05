@@ -18,17 +18,12 @@ const ProductDetailAPI = (productId) => {
       const data = await response.json();
 
       return data;
-    } catch (err) {
-      const { status, data } = err.response;
-      if (status === 422) {
-        console.log(data);
-      }
-      if (status === 404) {
-        //404 이미지 출력
-      }
-
-      if (status === 500) {
-        console.log('Server error');
+    } catch (error) {
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 422 || status === 404) {
+          console.log(data.message);
+        }
       }
     }
   }, [productId, token]);

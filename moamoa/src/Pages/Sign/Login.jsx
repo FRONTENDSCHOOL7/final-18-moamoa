@@ -2,8 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import useLogin from '../../Hooks/Sign/useLogin';
 import styled from 'styled-components';
-import { Container } from '../../Components/Common/Container';
-import { Form, Input, StyledErrorMsg } from '../../Components/Common/FormLoginAndJoin';
+import {
+  LoginAndJoinContainer,
+  Form,
+  CommonInput,
+  StyledErrorMsg,
+  CommonBtn,
+} from '../../Components/Common/FormLoginAndJoin';
 
 const LoginPage = () => {
   const {
@@ -16,10 +21,10 @@ const LoginPage = () => {
   } = useLogin();
 
   return (
-    <Container>
-      <H1>로그인</H1>
+    <LoginAndJoinContainer>
+      <h1>로그인</h1>
       <Form onSubmit={handleFormSubmit}>
-        <Input
+        <CommonInput
           type='email'
           placeholder='이메일'
           name='email'
@@ -30,7 +35,7 @@ const LoginPage = () => {
         {!userInput.user.email && !userInput.user.password && (
           <StyledErrorMsg>{errorMsg}</StyledErrorMsg>
         )}
-        <Input
+        <CommonInput
           type='password'
           placeholder='비밀번호'
           name='password'
@@ -44,36 +49,23 @@ const LoginPage = () => {
         {userInput.user.email && userInput.user.password && (
           <StyledErrorMsg>{userErrorMessage}</StyledErrorMsg>
         )}
-        <Button
+        <LoginBtn
           type='submit'
           onClick={handleError}
           disabled={!userInput.user.email || !userInput.user.password}
         >
           로그인
-        </Button>
+        </LoginBtn>
         <LinkContainer>
           <Link to='/user/join'>이메일로 회원가입</Link>
         </LinkContainer>
       </Form>
-    </Container>
+    </LoginAndJoinContainer>
   );
 };
 
-const H1 = styled.h1`
-  text-align: center;
-  font-weight: 400;
-  font-size: 24px;
-  margin-top: 30px;
-`;
-
-const Button = styled.button`
-  background-color: ${(props) => (props.disabled ? '#D8E7F5' : '#87B7E4')};
-  border-radius: 44px;
-  font-weight: 700;
-  padding: 11px;
-  color: white;
+const LoginBtn = styled(CommonBtn)`
   margin: 26px 0 21px 0;
-  letter-spacing: -1px;
 `;
 
 const LinkContainer = styled.div`

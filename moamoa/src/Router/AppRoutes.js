@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 
 import Landing from '../Pages/Splash/Landing';
 import Home from '../Pages/Home/Home';
-import Login from '../Pages/Login/Login';
-import Join from '../Pages/Join/Join';
+import Login from '../Pages/Sign/Login';
+import Join from '../Pages/Sign/Join';
 
 import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';

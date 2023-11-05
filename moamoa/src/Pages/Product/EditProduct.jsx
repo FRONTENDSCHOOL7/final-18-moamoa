@@ -114,9 +114,8 @@ const EditProduct = () => {
       datesArr.push(eventEndDate);
     }
 
-    const putDatesIntoArray = datesArr
-      .map((date) => parseInt(date.replaceAll('-', '')))
-      .sort((firstDate, lastDate) => firstDate - lastDate);
+    const putDatesIntoArray = datesArr.map((date) => parseInt(date.replaceAll('-', '')));
+    // .sort((firstDate, lastDate) => firstDate - lastDate);
     setEventPeriod(parseInt(putDatesIntoArray.join('')));
   };
 
@@ -130,10 +129,6 @@ const EditProduct = () => {
     await handleProductEdit();
     setIsModified(true);
   };
-
-  // useEffect(() => {
-  //   if (isModified) navigate(`/product/detail/${productParam}`, { state: { isModified } });
-  // }, [isModified, navigate]); //해당 상품 상세 페이지로 이동
 
   useEffect(() => {
     if (isModified) navigate(`/product/list`, { state: { isModified } });

@@ -1,6 +1,21 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Email from '../../Assets/icons/icon-email.svg';
 import Lock from '../../Assets/icons/icon-lock.svg';
+import { Container } from '../../Components/Common/Container';
+
+const HeadCss = css`
+  text-align: center;
+  font-weight: 400;
+  font-size: 24px;
+  margin-top: 30px;
+`;
+
+export const LoginAndJoinContainer = styled(Container)`
+  h1,
+  h2 {
+    ${HeadCss}
+  }
+`;
 
 export const Form = styled.form`
   padding: 0 34px;
@@ -13,7 +28,7 @@ export const Form = styled.form`
   background-color: #fff;
 `;
 
-export const Input = styled.input`
+export const CommonInput = styled.input`
   border: none;
   outline: none;
   border-bottom: 1.5px solid #dbdbdb;
@@ -28,13 +43,12 @@ export const Input = styled.input`
   }
 `;
 
-export const Button = styled.button`
+export const CommonBtn = styled.button`
   background-color: ${(props) => (props.disabled ? '#D8E7F5' : '#87B7E4')};
   border-radius: 44px;
   font-weight: 700;
   padding: 11px;
   color: white;
-  margin: 26px 0 80px 0;
   letter-spacing: -1px;
 `;
 

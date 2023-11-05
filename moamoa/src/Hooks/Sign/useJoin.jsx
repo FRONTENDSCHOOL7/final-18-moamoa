@@ -43,7 +43,6 @@ const useJoin = () => {
 
   const handleEmailValid = async () => {
     const res = await EmailValidAPI({ user: { email: userInfo.user.email } });
-
     if (res) {
       setEmailError(`*` + res.message);
     }
@@ -86,10 +85,8 @@ const useJoin = () => {
 
   const handleJoin = async () => {
     const res = await JoinAPI(userInfo, userType);
-
     if (res) {
       setErrorMessage(`*` + res.message);
-
       if (res.message === '회원가입 성공') {
         navigate('/user/login');
       }
@@ -102,25 +99,25 @@ const useJoin = () => {
   };
 
   return {
+    pageTransition,
     imgSrc,
     setImgSrc,
-    userInfo,
     userType,
+    userInfo,
     setUserInfo,
-    goNext,
-    pageTransition,
-    emailError,
-    passwordError,
     accountInfoMsg,
     introInfoMsg,
+    emailError,
+    passwordError,
     errorMessage,
-    handleSubmit,
+    goNext,
     handleInputChange,
     handleUserType,
     handlePasswordValid,
     handleEmailOnBlur,
     handleAccountNameValid,
     handleIntroValid,
+    handleSubmit,
   };
 };
 

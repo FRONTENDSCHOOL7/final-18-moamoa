@@ -12,7 +12,12 @@ const AccountValidAPI = async (userAccount) => {
     const result = await response.json();
     return result;
   } catch (error) {
-    console.error('API 응답에 실패하였습니다.', error);
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status === 422 || status === 404) {
+        console.log(data.message);
+      }
+    }
   }
 };
 
