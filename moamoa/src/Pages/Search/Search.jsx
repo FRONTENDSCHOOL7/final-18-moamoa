@@ -30,7 +30,6 @@ export default function Search() {
       try {
         const result = await SearchAPI(token, debounceValue);
         if (!cancel) {
-          // 취소되지 않았을 때에만 결과 업데이트
           setSearchResults(result);
           setIsLoading(false);
         }
