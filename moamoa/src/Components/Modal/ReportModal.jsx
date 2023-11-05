@@ -14,11 +14,6 @@ ReportModal.propTypes = {
 }
 
 export default function ReportModal({closemodal, setclosemodal,postid}) {
-console.log(closemodal)
-
-      {console.log(postid)}
-
-
   
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();

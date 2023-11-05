@@ -7,67 +7,49 @@ import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
-import userTokenAtom from '../../Recoil/userTokenAtom';
+import HeartCountDownAPI from '../../API/Post/HeartCountDownAPI';
+import HeartCountUpAPI from '../../API/Post/HeartCountUpAPI';
+import accountNameAtom from '../../Recoil/accountNameAtom'; 
 import { useRecoilValue } from 'recoil';
 
 export default function PostCardList(post) {
+
+  const accountAtom = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(false);
   const postItem = post.post;
-  const profileImgUrl = `${postItem.author.image}`;
+  const postAuthorInfo = postItem.author;
+  const profileImgUrl = `${postAuthorInfo.image}`;
   const postImgUrl = `${postItem.image}`;
   const postId = postItem.id;
   const postDetailUrl = `/post/${postId}`;
-  const token = useRecoilValue(userTokenAtom);
 
   const [heartValue, setHeartValue] = useState(postItem.hearted);
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postItem.heartCount);
 
-  const heartPost = async () => {
-    try {
-      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postId}/heart`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('API 응답에 실패하였습니다.', error);
-    }
-  };
+  const heartPost = HeartCountUpAPI(postId)
 
-  const unheartPost = async () => {
-    try {
-      const response = await fetch(`https://api.mandarin.weniv.co.kr/post/${postId}/unheart`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error('API 응답에 실패하였습니다.', error);
-    }
-  };
+  const hearted = async () => {
+      await heartPost();
+  }
+
+  const ununheartPost = HeartCountDownAPI(postId)
+
+  const unhearted = async () => {
+      await ununheartPost();
+  }
 
   const handleHeartCount = () => {
     setHeartColor(heartBgFill);
     setHeartCount((prev) => prev + 1);
     setHeartValue((prev) => !prev);
-    heartPost();
+    hearted();
   };
 
   const handleUnheartCount = () => {
     setHeartCount((prev) => prev - 1);
     setHeartValue((prev) => !prev);
-    unheartPost();
+    unhearted();
     setHeartColor(heartBg);
   };
 
@@ -79,13 +61,14 @@ export default function PostCardList(post) {
             <Frofile>
               <PostCardUser
                 url={profileImgUrl}
-                username={postItem.author.username.slice(3)}
-                accountname={postItem.author.accountname}
+                username={postAuthorInfo.username.slice(3)}
+                accountname={postAuthorInfo.accountname}
+                loginAccountName={accountAtom}
               />
 
               <MyPostMoreBtn
                 postid={postId}
-                accountname={postItem.author.accountname}
+                accountname={postAuthorInfo.accountname}
                 onClick={() => {
                   setShowModal(true);
                   console.log(showModal);

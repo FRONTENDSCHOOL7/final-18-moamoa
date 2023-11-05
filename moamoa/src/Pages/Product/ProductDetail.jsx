@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Header from '../../Components/Common/HeaderBasic';
 import AskBtn from './AskBtn';
 import PostCardUser from '../../Components/Post/PostCardUser';
+import Footer from '../../Components/Common/Footer';
 
 export default function ProductDetail() {
   const productState = atom({
@@ -81,7 +82,7 @@ export default function ProductDetail() {
                     username={productData.product[pageIndex].author.username.slice(3)}
                     accountname={productData.product[pageIndex].author.accountname}
                   />
-                  <AskBtn username={productData.product[pageIndex].author.username} />
+                  <AskBtn accountname={productData.product[pageIndex].author.accountname} userName={productData.product[pageIndex].author.username.slice(3)} />
                 </Frofile>
                 <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
                 <InfoContainer>
@@ -101,6 +102,7 @@ export default function ProductDetail() {
                   </FestivalDesc>
                 </InfoContainer>
               </FestivalWrap>
+              <Footer />
             </FestivalContainer>
           </Container>
         </>

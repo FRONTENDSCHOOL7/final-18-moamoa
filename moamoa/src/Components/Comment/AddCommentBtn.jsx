@@ -25,5 +25,6 @@ const AddBtn = styled.button`
 
 const AddBtnOn = styled(AddBtn)`
   background-color: #87B7E4;
+  border: 1px solid #87B7E4;
   color: white;
 `;
