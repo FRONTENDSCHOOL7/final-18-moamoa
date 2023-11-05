@@ -72,7 +72,7 @@ export default function PostCardDetail({post}) {
                 accountname={accountName} loginAccountName={accountAtom}
               />
               {accountAtom === accountName ? <MyPostMoreBtn
-                accountname={accountName}
+                accountname={accountName} postid={postId}
                 onClick={(e) => {
                   e.preventDefault();
                   setShowModal(true);

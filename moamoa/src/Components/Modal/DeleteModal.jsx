@@ -5,14 +5,18 @@ import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
 import PostDeleteAPI from '../../API/Post/PostDeleteAPI';
+import PropTypes from 'prop-types';
 
-export default function DeleteModal(postid) {
+DeleteModal.propTypes = {
+  postid: PropTypes.string
+};
+
+export default function DeleteModal({postid}) {
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const navigate = useNavigate();
   const [delMadoal, setDelModal] = useState(true);
-  const [postId, setPostId] =  useState(postid.postid)
-
+  const [postId, setPostId] =  useState(postid)
   const location = useLocation();
   const post = location.pathname.slice(1, 5);
 
@@ -28,10 +32,11 @@ export default function DeleteModal(postid) {
 
   // myInfo 페이지에서 게시글 삭제
   const delMyPostListItem = async () => {
-      await handlePostDelete();
-      alert('게시글이 삭제되었습니다.');
-      navigate('/profile/myInfo');
-      setDelModal(false);    };
+    await handlePostDelete();
+    alert('게시글이 삭제되었습니다.');
+    setDelModal(false);
+    window.location.reload();
+  };
 
     // 상품 상세 페이지에서 상품 삭제
     const handleProductDelete = () => ProductDeleteAPI(params, token);

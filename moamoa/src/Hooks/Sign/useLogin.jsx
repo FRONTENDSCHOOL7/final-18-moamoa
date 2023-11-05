@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import LoginAPI from '../../API/Auth/LoginAPI';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import isLoginAtom from '../../Recoil/isLoginAtom';
 import accountNameAtom from '../../Recoil/accountNameAtom';
 import userNameAtom from '../../Recoil/userNameAtom';
+import followPostAtom from '../../Recoil/followPostAtom';
 
 const useLogin = () => {
   const navigate = useNavigate();
@@ -18,10 +19,19 @@ const useLogin = () => {
     },
   });
 
-  const setUserToken = useSetRecoilState(userTokenAtom);
-  const setIsLoginState = useSetRecoilState(isLoginAtom);
-  const setAccountName = useSetRecoilState(accountNameAtom);
-  const setUserName = useSetRecoilState(userNameAtom);
+  const [userToken, setUserToken] = useRecoilState(userTokenAtom);
+  const [isLoginState, setIsLoginState] = useRecoilState(isLoginAtom);
+  const [accountName, setAccountName] = useRecoilState(accountNameAtom);
+  const [userName, setUserName] = useRecoilState(userNameAtom);
+  const [followPost, setFollowPost] = useRecoilState(followPostAtom);
+
+  useEffect(() => {
+    userToken && setUserToken('');
+    isLoginState && setIsLoginState(false);
+    accountName && setAccountName('');
+    userName && setUserName('');
+    followPost && setFollowPost([]);
+  }, []);
 
   const handleError = () => {
     const user = userInput.user;

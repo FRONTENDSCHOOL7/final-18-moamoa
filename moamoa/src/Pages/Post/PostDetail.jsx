@@ -17,7 +17,7 @@ export default function ProductDetail() {
     setPost(data.post);
   }
 
-  const getPostData = PostDetailAPI(token, post_id, getPostDetail);
+  const getPostData = () => PostDetailAPI(token, post_id, getPostDetail);
 
   useEffect(()=>{
     const getData = async () => {

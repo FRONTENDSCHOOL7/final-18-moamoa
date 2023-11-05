@@ -16,6 +16,7 @@ FooterModal.propTypes = {
 export default function FooterModal({ accountname, closeFooter, setCloseFooter, postid }) {
   const [showModal, setShowModal] = useState(true);
   console.log(accountname);
+  console.log(postid);
   // const params = useParams();
   const editUrl = `/post/edit/${postid}`;
 
@@ -35,8 +36,6 @@ export default function FooterModal({ accountname, closeFooter, setCloseFooter, 
           {!showModal ? (
             <DeleteModal
               postid={postid}
-              setCloseFooter={setCloseFooter}
-              closeFooter={closeFooter}
             />
           ) : null}
         </ModalCont>
