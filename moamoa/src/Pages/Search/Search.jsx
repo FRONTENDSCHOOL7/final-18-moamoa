@@ -10,6 +10,8 @@ import useDebounce from '../../Hooks/Search/useDebounce';
 import { useNavigate } from 'react-router-dom';
 import SearchHighLight from '../../Components/Common/SearchHighLight';
 import iconSearchNotFound from '../../Assets/icons/icon-searchNotFound.svg';
+
+import Loader from './Loader';
 export default function Search() {
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState(null);
@@ -17,22 +19,46 @@ export default function Search() {
   const debounceValue = useDebounce(searchText, 3000);
   const [, setError] = useState(null);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    let cancel = false;
+
     async function fetchData(debounceValue) {
-      console.log(debounceValue);
+      setIsLoading(true);
+
       try {
         const result = await SearchAPI(token, debounceValue);
-        setSearchResults(result);
+        if (!cancel) {
+          setSearchResults(result);
+          setIsLoading(false);
+        }
       } catch (error) {
-        setError(error);
-        console.error(error);
+        if (!cancel) {
+          setError(error);
+          setIsLoading(false);
+          console.error(error);
+        }
       }
     }
+
     if (searchText) {
       fetchData(debounceValue);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
     }
-  }, [debounceValue]);
+
+    return () => {
+      cancel = true;
+      setSearchResults(null);
+    };
+  }, [debounceValue, searchText, token]);
+
+  useEffect(() => {
+    setSearchResults(null);
+  }, [searchText]);
+
   console.log(searchResults);
   const handleUser = (accountname) => {
     navigate(`/profile/${accountname}`);
@@ -41,7 +67,9 @@ export default function Search() {
     <Container>
       <UserSearch setSearchText={setSearchText}></UserSearch>
       <SearchListWrap>
-        {searchResults && searchResults.length > 0 ? (
+        {isLoading ? (
+          <Loader />
+        ) : searchResults && searchResults.length > 0 ? (
           searchResults.slice(0, 5).map((item, index) => {
             const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
 
