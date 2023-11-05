@@ -36,7 +36,7 @@ export default function AskBtn({accountname, userName}) {
         <>
           <Eidt onClick={handleBtnClick}>상품수정</Eidt>
           <Eidt onClick={() => setShowModal(false)}>상품삭제</Eidt>
-          {!showModal && <DeleteModal />}
+          {!showModal && <DelCont><DeleteModal /></DelCont>}
         </>
       )}
     </>
@@ -71,4 +71,14 @@ const Eidt = styled.button`
     color: #000;
   }
   margin-left: 1rem;
+`;
+
+const DelCont = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100;
 `;
