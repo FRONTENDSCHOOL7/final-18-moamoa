@@ -79,29 +79,25 @@ export default function ProfileDetailPost() {
         </BtnIcons>
 
         <Views>
-          <HamView>
-            {/* 햄버거 버튼 */}
-            {(view === 'PostList' && userAccountname === 'myInfo') ? (
-              // 조건부 렌더링을 사용하여 내프로필 or 남의 프로필 목록 출력 _ ( 23/11/03/13:50 수정자 : 장수연 )
+          {view === 'PostList' ? (
+            <HamView>
+              {/* 햄버거 버튼 */}
               <ul>
                 {myPostList.map((item) => {
-                  return <PostCardList key={item.id} post={item} />;
+                  // 여기서 myInfo 조건을 확인하여 다른 컴포넌트 렌더링
+                  return userAccountname === 'myInfo' ? (
+                    <PostCardList key={item.id} post={item} />
+                  ) : (
+                    <HomePostCardList key={item.id} post={item} />
+                  );
                 })}
               </ul>
-            ):
+            </HamView>
+          ) : (
+            <BenView>
+              {/* 벤토 버튼 */}
               <ul>
                 {myPostList.map((item) => {
-                  return <HomePostCardList key={item.id} post={item} />;
-                })}
-              </ul>
-            }
-          </HamView>
-          <BenView>
-            {/* 벤토 버튼 */}
-            {view === 'PostImgList' && (
-              <ul>
-                {myPostList.map((item) => {
-                  // 조건부 렌더링을 사용하여 이미지가 없는 경우에는 li를 생성하지 않음
                   return item.image ? (
                     <li onClick={() => handlePostClick(item.id)} key={item.id}>
                       <img src={item.image} alt='Product' />
@@ -109,8 +105,8 @@ export default function ProfileDetailPost() {
                   ) : null;
                 })}
               </ul>
-            )}
-          </BenView>
+            </BenView>
+          )}
         </Views>
       </div>
     </PostListBox>

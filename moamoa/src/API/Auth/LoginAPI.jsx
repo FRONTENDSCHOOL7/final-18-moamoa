@@ -17,7 +17,12 @@ const LoginAPI = async (userInput) => {
       throw new Error('아이디 혹은 비밀번호가 일치하지 않습니다.');
     }
   } catch (error) {
-    console.error('API 응답에 실패하였습니다.', error);
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status === 422 || status === 404) {
+        console.log(data.message);
+      }
+    }
   }
 };
 

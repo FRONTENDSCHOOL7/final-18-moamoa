@@ -25,7 +25,12 @@ const ProductEditAPI = (productParam, productInputs, eventType, eventPeriod) => 
         }),
       });
     } catch (error) {
-      console.error('API 응답에 실패하였습니다.', error);
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 422 || status === 404) {
+          console.log(data.message);
+        }
+      }
     }
   };
 

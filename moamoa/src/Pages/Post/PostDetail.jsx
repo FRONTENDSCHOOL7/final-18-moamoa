@@ -25,7 +25,6 @@ export default function ProductDetail() {
     }
   getData();
   },[])
-
   return (
     <>
       {post && (

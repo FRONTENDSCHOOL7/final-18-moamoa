@@ -7,6 +7,7 @@ import userTokenAtom from '../../Recoil/userTokenAtom';
 import { FollowerAPI } from '../../API/Follow/FollowerAPI';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 export default function FollowerList() {
   const token = useRecoilValue(userTokenAtom);
@@ -32,21 +33,27 @@ export default function FollowerList() {
     <div>
       <Container>
         <HeaderFollwerList />
-        {follower.map((item, index) => {
-          const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
-          return (
-            <FollowUser
-              key={index}
-              src={item.image}
-              userId={cleanedUserId}
-              userText={item.intro}
-              accountname={item.accountname}
-            />
-          );
-        })}
+        <FollowerWrap>
+          {follower.map((item, index) => {
+            const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
+            return (
+              <FollowUser
+                key={index}
+                src={item.image}
+                userId={cleanedUserId}
+                userText={item.intro}
+                accountname={item.accountname}
+              />
+            );
+          })}
+        </FollowerWrap>
 
         <Footer></Footer>
       </Container>
     </div>
   );
 }
+
+const FollowerWrap = styled.div`
+  margin-top: 48px;
+`;

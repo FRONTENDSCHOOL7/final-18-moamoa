@@ -11,17 +11,12 @@ const ProductDeleteAPI = (params, token) => {
           'Content-type': 'application/json',
         },
       });
-    } catch (err) {
-      const { status, data } = err.response;
-      if (status === 422) {
-        console.log(data);
-      }
-      if (status === 404) {
-        //404 이미지 출력
-      }
-
-      if (status === 500) {
-        console.log('Server error');
+    } catch (error) {
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 422 || status === 404) {
+          console.log(data.message);
+        }
       }
     }
   };
