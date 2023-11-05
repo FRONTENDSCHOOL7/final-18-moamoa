@@ -14,11 +14,10 @@ export default function MyPostMoreBtn({accountname, postid}) {
   const openModal = () => {
     setShowModal((prev)=>!prev)    
   }
-
   return (
     <>
       <PostMoreBtn onClick={openModal}><MoreImg src={more} alt="더보기" /></PostMoreBtn>
-      { !showModal ? <FooterModal postid={postid} accountname={accountname.accountname} closeFooter={showModal} setCloseFooter={setShowModal}/>:null}
+      { !showModal ? <FooterModal postid={postid} accountname={accountname} closeFooter={showModal} setCloseFooter={setShowModal}/>:null}
     </>
   )
 

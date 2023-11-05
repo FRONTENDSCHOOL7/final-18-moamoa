@@ -23,5 +23,5 @@ export default function PostDeleteAPI(token, postId) {
       }
     }
 
-  return handlePostDelete
+  return handlePostDelete()
 }

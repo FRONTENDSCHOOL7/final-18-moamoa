@@ -21,5 +21,5 @@ export default function PostDetailAPI(token, post_id, getPostDetail) {
       console.error('서버와 통신을 실패했습니다.', error);
     }
   };
-  return getPostInfo;
+  return getPostInfo();
 }

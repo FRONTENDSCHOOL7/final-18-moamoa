@@ -5,40 +5,53 @@ import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
 import PostDeleteAPI from '../../API/Post/PostDeleteAPI';
+import PropTypes from 'prop-types';
+import NoticeModal from './NoticeModal';
 
-export default function DeleteModal(postid) {
+DeleteModal.propTypes = {
+  postid: PropTypes.string
+};
+
+export default function DeleteModal({postid}) {
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const navigate = useNavigate();
   const [delMadoal, setDelModal] = useState(true);
-  const [postId, setPostId] =  useState(postid.postid)
-
+  const [postId, setPostId] =  useState(postid)
   const location = useLocation();
   const post = location.pathname.slice(1, 5);
+  const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   // 게시글 상세 페이지에서 게시글 삭제
-  const handlePostDelete = PostDeleteAPI(token, postId)
+  const handlePostDelete = () => PostDeleteAPI(token, postId)
   const deletePost = async () => {
-      await handlePostDelete();
-      alert('게시물이 삭제되었습니다.');
+    await handlePostDelete();
+    setShowNoticeModal(false);
+    await setTimeout(() => {
       navigate(-1);
+    }, 1000);
       setDelModal(false);
       setPostId(null);
     };
 
   // myInfo 페이지에서 게시글 삭제
   const delMyPostListItem = async () => {
-      await handlePostDelete();
-      alert('게시글이 삭제되었습니다.');
-      navigate('/profile/myInfo');
-      setDelModal(false);    };
+    await handlePostDelete();
+    setShowNoticeModal(false);
+    setDelModal(false);
+    await setTimeout(() => {
+      window.location.reload();    
+    }, 1000);
+  };
 
     // 상품 상세 페이지에서 상품 삭제
-    const handleProductDelete = ProductDeleteAPI(params, token);
+    const handleProductDelete = () => ProductDeleteAPI(params, token);
     const deleteProduct = async () => {
       await handleProductDelete();
-      alert('게시물이 삭제되었습니다.');
-      navigate('/product/list');
+      setShowNoticeModal(false);
+      await setTimeout(() => {
+        navigate('/product/list');
+      }, 1000);
     };
   
     const deletefunc = () => {
@@ -62,6 +75,7 @@ export default function DeleteModal(postid) {
         </Btn>
       </Modal> : null
       }
+      { !showNoticeModal && <NoticeModal/>}
     </>
   );
 }
