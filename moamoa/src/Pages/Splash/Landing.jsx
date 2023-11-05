@@ -71,6 +71,7 @@ const MoaMoaBox = styled.div`
   height: 100vh;
   margin: 0 auto;
   p {
+    padding-top: 10px;
     color: #ffffff;
     font-size: 18px;
   }
@@ -91,16 +92,17 @@ const SVGgroup = styled.div`
     width: 109px;
     height: 13px;
     animation: blink 3s;
-    transform: translateX(-55%);
+    transform: translateX(-38%);
   }
   .blinkfireworks {
-    transform: translateX(95%);
+    transform: translate(57%, 20%);
+
     justify-content: center;
     width: 57px;
     height: 57px;
   }
   img {
-    width: 250px;
+    width: 202px;
   }
   @keyframes blink {
     0% {
