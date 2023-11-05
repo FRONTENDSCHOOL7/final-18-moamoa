@@ -27,6 +27,15 @@ const Cont = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  animation: fadein 0.3s;
+  @keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+  }
   &::before {
     content: "";
     width: 3.8rem;

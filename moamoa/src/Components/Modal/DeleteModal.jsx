@@ -20,13 +20,16 @@ export default function DeleteModal({postid}) {
   const [postId, setPostId] =  useState(postid)
   const location = useLocation();
   const post = location.pathname.slice(1, 5);
+  const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   // 게시글 상세 페이지에서 게시글 삭제
   const handlePostDelete = () => PostDeleteAPI(token, postId)
   const deletePost = async () => {
-      await handlePostDelete();
-      alert('게시물이 삭제되었습니다.');
+    await handlePostDelete();
+    setShowNoticeModal(false);
+    await setTimeout(() => {
       navigate(-1);
+    }, 1000);
       setDelModal(false);
       setPostId(null);
     };
@@ -34,17 +37,21 @@ export default function DeleteModal({postid}) {
   // myInfo 페이지에서 게시글 삭제
   const delMyPostListItem = async () => {
     await handlePostDelete();
-    alert('게시글이 삭제되었습니다.');
+    setShowNoticeModal(false);
     setDelModal(false);
-    window.location.reload();
+    await setTimeout(() => {
+      window.location.reload();    
+    }, 1000);
   };
 
     // 상품 상세 페이지에서 상품 삭제
     const handleProductDelete = () => ProductDeleteAPI(params, token);
     const deleteProduct = async () => {
       await handleProductDelete();
-      alert('게시물이 삭제되었습니다.');
-      navigate('/product/list');
+      setShowNoticeModal(false);
+      await setTimeout(() => {
+        navigate('/product/list');
+      }, 1000);
     };
   
     const deletefunc = () => {
@@ -68,7 +75,7 @@ export default function DeleteModal({postid}) {
         </Btn>
       </Modal> : null
       }
-      <NoticeModal/>
+      { !showNoticeModal && <NoticeModal/>}
     </>
   );
 }
