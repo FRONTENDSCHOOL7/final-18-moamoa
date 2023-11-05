@@ -24,4 +24,6 @@ export default function PostDetailAPI(token, post_id, getPostDetail) {
 
     };
 
-    return getPostInfo;
+    return getPostInfo
+
+}
