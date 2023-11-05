@@ -4,14 +4,19 @@ import homeBg from '../../Assets/icons/character-yellow.png';
 import { useNavigate } from 'react-router-dom';
 
 export default function HomeFeed() {
-
   const navigate = useNavigate();
 
   return (
     <UserSearchHome>
       <HomeCont>
         <SearchText>유저를 검색해 팔로우 해보세요!</SearchText>
-        <SearchBtn onClick={()=> {navigate('/search')}}>검색하기</SearchBtn>
+        <SearchBtn
+          onClick={() => {
+            navigate('/search');
+          }}
+        >
+          검색하기
+        </SearchBtn>
       </HomeCont>
     </UserSearchHome>
   );
@@ -20,7 +25,7 @@ const UserSearchHome = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-
+  background-color: #fff;
 `;
 const HomeCont = styled.div`
   position: relative;

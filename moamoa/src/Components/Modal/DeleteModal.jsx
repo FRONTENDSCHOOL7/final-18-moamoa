@@ -31,8 +31,7 @@ export default function DeleteModal(postid) {
       await handlePostDelete();
       alert('게시글이 삭제되었습니다.');
       navigate('/profile/myInfo');
-      setDelModal(false);
-    };
+      setDelModal(false);    };
 
     // 상품 상세 페이지에서 상품 삭제
     const handleProductDelete = ProductDeleteAPI(params, token);

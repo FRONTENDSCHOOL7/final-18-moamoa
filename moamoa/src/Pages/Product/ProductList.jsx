@@ -48,85 +48,87 @@ export default function ProductList() {
   return (
     <ContainerPercent>
       <Header />
-      <Nav>
-        <FestivalBtn isActive={isFestivalActive} onClick={toggleFestival}>
-          축제
-        </FestivalBtn>
-        <ExperienceBtn isActive={isExperienceActive} onClick={toggleExperience}>
-          체험
-        </ExperienceBtn>
-      </Nav>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error:{error.message}</p>
-      ) : (
-        <ProductContainer>
-          {isFestivalActive
-            ? product
+      <ProductListWrap>
+        <Nav>
+          <FestivalBtn isActive={isFestivalActive} onClick={toggleFestival}>
+            축제
+          </FestivalBtn>
+          <ExperienceBtn isActive={isExperienceActive} onClick={toggleExperience}>
+            체험
+          </ExperienceBtn>
+        </Nav>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error:{error.message}</p>
+        ) : (
+          <ProductContainer>
+            {isFestivalActive
+              ? product
 
-                .filter((item) => {
-                  if (item.price.toString().length >= 16) {
-                    return true;
-                  }
-                  return false;
-                })
-                .filter((item) => {
-                  return item.itemName.includes('[f]');
-                })
-                .map((item, index) => (
-                  <ProductBox key={index}>
-                    <Link to={`/product/detail/${item._id}`} key={index}>
-                      <ProductImgBox src={item.itemImage} />
-                    </Link>
-                    <p className='itemName'>{item.itemName.replace('[f]', '')}</p>
-                    <p className='itemDate'>
-                      {'행사기간: ' +
-                        `${item.price.toString().slice(2, 4)}.${item.price
-                          .toString()
-                          .slice(4, 6)}.${item.price.toString().slice(6, 8)}~${item.price
-                          .toString()
-                          .slice(10, 12)}.${item.price.toString().slice(12, 14)}.${item.price
-                          .toString()
-                          .slice(14, 16)}`}
-                    </p>
-                  </ProductBox>
-                ))
-            : null}
-          {/* {console.log('콘솔로그는 뭘까:', product)} */}
-          {/* {console.log('아이디찾기:', product[0]._id)} */}
-          {isExperienceActive
-            ? product
-                .filter((item) => {
-                  if (item.price.toString().length >= 16) {
-                    return true;
-                  }
-                  return false;
-                })
-                .filter((item) => {
-                  return item.itemName.includes('[e]');
-                })
-                .map((item, index) => (
-                  <ProductBox key={index}>
-                    <Link to={`/product/detail/${item._id}`} key={index}>
-                      <ProductImgBox src={item.itemImage} />
-                    </Link>
-                    <p className='itemName'>{item.itemName.replace('[e]', '')}</p>
-                    <p className='itemDate'>
-                      {'행사기간: ' +
-                        `${item.price.toString().slice(2, 4)}.${item.price
-                          .toString()
-                          .slice(4, 6)}.${item.price.toString().slice(6, 8)}~${item.price
-                          .toString()
-                          .slice(10, 12)}.${item.price.toString().slice(12, 14)}.${item.price
-                          .toString()
-                          .slice(14, 16)}`}
-                    </p>
-                  </ProductBox>
-                ))
-            : null}
-        </ProductContainer>
-      )}
+                  .filter((item) => {
+                    if (item.price.toString().length >= 16) {
+                      return true;
+                    }
+                    return false;
+                  })
+                  .filter((item) => {
+                    return item.itemName.includes('[f]');
+                  })
+                  .map((item, index) => (
+                    <ProductBox key={index}>
+                      <Link to={`/product/detail/${item._id}`} key={index}>
+                        <ProductImgBox src={item.itemImage} />
+                      </Link>
+                      <p className='itemName'>{item.itemName.replace('[f]', '')}</p>
+                      <p className='itemDate'>
+                        {'행사기간: ' +
+                          `${item.price.toString().slice(2, 4)}.${item.price
+                            .toString()
+                            .slice(4, 6)}.${item.price.toString().slice(6, 8)}~${item.price
+                            .toString()
+                            .slice(10, 12)}.${item.price.toString().slice(12, 14)}.${item.price
+                            .toString()
+                            .slice(14, 16)}`}
+                      </p>
+                    </ProductBox>
+                  ))
+              : null}
+            {/* {console.log('콘솔로그는 뭘까:', product)} */}
+            {/* {console.log('아이디찾기:', product[0]._id)} */}
+            {isExperienceActive
+              ? product
+                  .filter((item) => {
+                    if (item.price.toString().length >= 16) {
+                      return true;
+                    }
+                    return false;
+                  })
+                  .filter((item) => {
+                    return item.itemName.includes('[e]');
+                  })
+                  .map((item, index) => (
+                    <ProductBox key={index}>
+                      <Link to={`/product/detail/${item._id}`} key={index}>
+                        <ProductImgBox src={item.itemImage} />
+                      </Link>
+                      <p className='itemName'>{item.itemName.replace('[e]', '')}</p>
+                      <p className='itemDate'>
+                        {'행사기간: ' +
+                          `${item.price.toString().slice(2, 4)}.${item.price
+                            .toString()
+                            .slice(4, 6)}.${item.price.toString().slice(6, 8)}~${item.price
+                            .toString()
+                            .slice(10, 12)}.${item.price.toString().slice(12, 14)}.${item.price
+                            .toString()
+                            .slice(14, 16)}`}
+                      </p>
+                    </ProductBox>
+                  ))
+              : null}
+          </ProductContainer>
+        )}
+      </ProductListWrap>
       <Footer></Footer>
     </ContainerPercent>
   );
@@ -135,8 +137,11 @@ export default function ProductList() {
 const Nav = styled.div`
   /* display: flex; */
   padding: 12px;
-  padding-left: 18px;
   /* height: 100vh; */
+`;
+
+const ProductListWrap = styled.div`
+  margin-top: 48px;
 `;
 const Button = styled.button`
   width: 80px;
