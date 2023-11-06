@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
+import NoticeModal from '../Modal/NoticeModal';
 
 DeleteModal.propTypes = {
   commentid: PropTypes.string,
@@ -19,6 +20,7 @@ export default function DeleteModal({commentid, setCloseFooter}) {
   const params = useParams();
   const [modal, setModal] = useState(true);
   const [delMadoal, setDelModal] = useState(true);
+  const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   const delComment = () => {
     const delReq = () => {
@@ -28,8 +30,6 @@ export default function DeleteModal({commentid, setCloseFooter}) {
             'Content-type': 'application/json',
         }
       }).then(()=>{
-        alert('댓글이 삭제되었습니다.');
-        setCloseFooter(true);
 
       }).catch(()=>console.error('댓글 삭제를 실패했습니다.'))
       }
@@ -37,6 +37,15 @@ export default function DeleteModal({commentid, setCloseFooter}) {
     delReq();
   }
 
+  const handleCommemtDelete = async() => {
+        await delComment();
+        setShowNoticeModal(false);
+        setCloseFooter(true);
+        // 추후 수정 필요
+        setTimeout(() => {
+        setShowNoticeModal(true);
+      }, 1000);
+  }
 
 
 
@@ -47,10 +56,11 @@ export default function DeleteModal({commentid, setCloseFooter}) {
         <Modal>
           <Deltext>정말 삭제하시겠습니까?</Deltext>
           <Btn>
-            <BtnDel onClick={delComment}>삭제</BtnDel>
+            <BtnDel onClick={handleCommemtDelete}>삭제</BtnDel>
             <BtnCancel onClick={()=>{setModal((prev)=>!prev); setDelModal((prev)=>!prev); setCloseFooter((prev)=>!prev)}}>취소</BtnCancel>
           </Btn>
         </Modal>
+      { !showNoticeModal && <NoticeModal/>}
       </BgCont> : null
       }
     </>

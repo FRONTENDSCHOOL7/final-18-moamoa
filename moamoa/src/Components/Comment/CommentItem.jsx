@@ -3,6 +3,7 @@ import CommentMoreBtn from './CommentMoreBtn'
 import TimeCalc from './timecalc';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
 export default function CommentItem(item) {
   const created = TimeCalc(item.item.createdAt)
@@ -14,7 +15,13 @@ export default function CommentItem(item) {
           <Link to={`/profile/${comment.author.accountname}`}>
             <UserInfo>
               <FrofilImg src={comment.author.image} alt="사용자 프로필" />
+
+                <OrCont>
               <UserName>{comment.author.username.slice(3)}</UserName>
+              {comment.author.username.slice(0,3) === '[o]'?                
+                  <UserCheck src={UserTypeCheck} alt=''/> : null
+                  }
+                </OrCont>
               <Time>{created}</Time>
             </UserInfo>
           </Link>
@@ -65,4 +72,14 @@ const CommentDesc = styled.p`
   margin-left: 4.8rem;
   font-size: 1.4rem;
   color: #333;
+`;
+const OrCont = styled.div`
+  display: flex;
+  align-items: center;
+  vertical-align: top;
+`;
+
+const UserCheck = styled.img`
+  padding-left: 0.3rem;
+  width: 1.2rem
 `;

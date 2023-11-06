@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
+import NoticeReportModal from '../Modal/NoticeReportModal';
 
 
 CommentReportModal.propTypes = {
@@ -18,7 +19,7 @@ export default function CommentReportModal({commentid, showModal , setShowModal}
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const path = params.post_id;
-  // const [closeModal, setCloseModal] = useState(true);
+  const [showAlert, setShowAlert] = useState(true);
 
   const report = async() => {
     try {
@@ -27,8 +28,11 @@ export default function CommentReportModal({commentid, showModal , setShowModal}
             Authorization: `Bearer ${token}`
         }
       });
-        alert('게시물이 신고되었습니다.');
-        setShowModal(true)
+        setShowAlert(false)
+        setTimeout(()=>{
+          setShowAlert(true)
+          setShowModal(true)
+        },1000)
       } catch(error){console.error('게시물 신고를 실패했습니다.',error);    
     }
   }
@@ -44,6 +48,7 @@ export default function CommentReportModal({commentid, showModal , setShowModal}
             <BtnCancel onClick={()=>setShowModal(true)}>취소</BtnCancel>
           </Btn>
         </Modal>
+        { !showAlert? <NoticeReportModal/>:null}
       </BgCont>
       }
     </>
