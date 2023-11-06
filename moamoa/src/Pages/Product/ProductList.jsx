@@ -9,6 +9,7 @@ import Footer from '../../Components/Common/Footer';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { ProductListAPI } from '../../API/Product/ProductListAPI';
 import backgroundMoamoa from '../../Assets/images/backgroundMoamoa.png';
+import LoaderProductList from './LoaderProductList';
 export const ProductAtom = atom({
   key: 'ProductState',
   default: [],
@@ -58,7 +59,7 @@ export default function ProductList() {
           </ExperienceBtn>
         </Nav>
         {loading ? (
-          <p>Loading...</p>
+          <LoaderProductList />
         ) : error ? (
           <p>Error:{error.message}</p>
         ) : (

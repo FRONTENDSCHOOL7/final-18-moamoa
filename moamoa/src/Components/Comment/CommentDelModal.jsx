@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -9,13 +9,10 @@ import NoticeModal from '../Modal/NoticeModal';
 
 DeleteModal.propTypes = {
   commentid: PropTypes.string,
-  setCloseFooter: PropTypes.func
-}
+  setCloseFooter: PropTypes.func,
+};
 
-export default function DeleteModal({commentid, setCloseFooter}) {
-
-
-  
+export default function DeleteModal({ commentid, setCloseFooter }) {
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const [modal, setModal] = useState(true);
@@ -24,45 +21,52 @@ export default function DeleteModal({commentid, setCloseFooter}) {
 
   const delComment = () => {
     const delReq = () => {
-      axios.delete(`https://api.mandarin.weniv.co.kr/post/${params.post_id}/comments/${commentid}`,{
-        headers:{          
+      axios
+        .delete(`https://api.mandarin.weniv.co.kr/post/${params.post_id}/comments/${commentid}`, {
+          headers: {
             Authorization: `Bearer ${token}`,
             'Content-type': 'application/json',
-        }
-      }).then(()=>{
-
-      }).catch(()=>console.error('댓글 삭제를 실패했습니다.'))
-      }
+          },
+        })
+        .then(() => {})
+        .catch(() => console.error('댓글 삭제를 실패했습니다.'));
+    };
 
     delReq();
-  }
+  };
 
-  const handleCommemtDelete = async() => {
-        await delComment();
-        setShowNoticeModal(false);
-        setCloseFooter(true);
-        // 추후 수정 필요
-        setTimeout(() => {
-        setShowNoticeModal(true);
-      }, 1000);
-  }
-
-
+  const handleCommemtDelete = async () => {
+    await delComment();
+    setShowNoticeModal(false);
+    setCloseFooter(true);
+    // 추후 수정 필요
+    setTimeout(() => {
+      setShowNoticeModal(true);
+    }, 1000);
+  };
 
   return (
     <>
-      { modal && delMadoal ?       
-      <BgCont>
-        <Modal>
-          <Deltext>정말 삭제하시겠습니까?</Deltext>
-          <Btn>
-            <BtnDel onClick={handleCommemtDelete}>삭제</BtnDel>
-            <BtnCancel onClick={()=>{setModal((prev)=>!prev); setDelModal((prev)=>!prev); setCloseFooter((prev)=>!prev)}}>취소</BtnCancel>
-          </Btn>
-        </Modal>
-      { !showNoticeModal && <NoticeModal/>}
-      </BgCont> : null
-      }
+      {modal && delMadoal ? (
+        <BgCont>
+          <Modal>
+            <Deltext>정말 삭제하시겠습니까?</Deltext>
+            <Btn>
+              <BtnDel onClick={handleCommemtDelete}>삭제</BtnDel>
+              <BtnCancel
+                onClick={() => {
+                  setModal((prev) => !prev);
+                  setDelModal((prev) => !prev);
+                  setCloseFooter((prev) => !prev);
+                }}
+              >
+                취소
+              </BtnCancel>
+            </Btn>
+          </Modal>
+          {!showNoticeModal && <NoticeModal />}
+        </BgCont>
+      ) : null}
     </>
   );
 }
@@ -73,8 +77,8 @@ const BgCont = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  background-color: rgba(0,0,0,0.3);
-  z-index: 100;  
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -103,17 +107,15 @@ const BtnCancel = styled.button`
   width: 12.5rem;
   height: 6.5rem;
   font-size: 1.4rem;
-  &:hover{
+  &:hover {
     font-weight: bold;
   }
 `;
 
 const BtnDel = styled(BtnCancel)`
-  color: #EB5757;
+  color: #eb5757;
   border-right: 1px solid #dbdbdb;
 `;
-
-
 
 const Deltext = styled.p`
   text-align: center;
