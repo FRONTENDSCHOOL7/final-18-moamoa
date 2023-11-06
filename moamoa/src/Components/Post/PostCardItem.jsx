@@ -68,8 +68,12 @@ export default function PostCardDetail({ post }) {
               <PostCardUser
                 url={postAuthorInfo.image}
                 username={postAuthorInfo.username}
+<<<<<<< HEAD
                 accountname={accountName}
                 loginAccountName={accountAtom}
+=======
+                accountname={accountName} loginAccountName={accountAtom}
+>>>>>>> develop
               />
               {accountAtom === accountName ? (
                 <MyPostMoreBtn

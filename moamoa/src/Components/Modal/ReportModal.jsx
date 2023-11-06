@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
+import NoticeReportModal from './NoticeReportModal';
 
 
 ReportModal.propTypes = {
@@ -18,6 +19,7 @@ export default function ReportModal({closemodal, setclosemodal,postid}) {
   const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const path = params.post_id;
+  const [showAlert, setShowAlert] = useState(true);
 
   const report = async() => {
     try {
@@ -26,8 +28,11 @@ export default function ReportModal({closemodal, setclosemodal,postid}) {
             Authorization: `Bearer ${token}`
         }
       });
-        alert('게시물이 신고되었습니다.');
-        setclosemodal((prev)=>!prev)
+        setShowAlert(false)
+        setTimeout(()=>{
+          setShowAlert(true)
+          setclosemodal((prev)=>!prev)
+        },1000)
       } catch(error){console.error('게시물 신고를 실패했습니다.',error);    
     }
   }
@@ -39,8 +44,11 @@ export default function ReportModal({closemodal, setclosemodal,postid}) {
             Authorization: `Bearer ${token}`
         }
       });
-        alert('게시물이 신고되었습니다.');
-        setclosemodal((prev)=>!prev)
+        setShowAlert(false)
+        setTimeout(()=>{
+          setclosemodal((prev)=>!prev)
+          setShowAlert(true)
+        },1000)
       } catch(error){console.error('게시물 신고를 실패했습니다.',error);    
     }
   }
@@ -58,6 +66,7 @@ export default function ReportModal({closemodal, setclosemodal,postid}) {
             <BtnCancel onClick={()=>{setclosemodal((prev)=>!prev)}}>취소</BtnCancel>
           </Btn>
         </Modal>
+        { !showAlert? <NoticeReportModal/>:null}
       </BgCont> : null
       }
     </>
