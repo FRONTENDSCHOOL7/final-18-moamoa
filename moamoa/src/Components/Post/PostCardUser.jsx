@@ -23,10 +23,12 @@ export default function PostCardUser({url, username, accountname, loginAccountNa
             <UserInfo>
               <FrofileImg src={url} alt="사용자프로필"/>        
               <InfoText>
-                {username.slice(0,3) !== '[o]'?                
-                <UserName>{username.slice(3)}</UserName> :
-                <OrCont><UserName>{username.slice(3)}<UserCheck src={UserTypeCheck} alt=''/></UserName></OrCont>
-                }
+                <OrCont>
+                  <UserName>{username.slice(3)}</UserName>
+                  {username.slice(0,3) === '[o]'?                
+                  <UserCheck src={UserTypeCheck} alt=''/> : null
+                  }
+                </OrCont>
                 <AccountName>@{accountname}</AccountName>
               </InfoText>
             </UserInfo>
@@ -47,7 +49,7 @@ const FrofileImg = styled.img`
   width: 4.2rem;
   height: 4.2rem;
   border-radius: 100%;
-  margin-right: 1.2rem;
+  margin-right: 0.8rem;
 ` ;
 const UserInfo = styled.div`
   display: flex;

@@ -10,6 +10,7 @@ import useDebounce from '../../Hooks/Search/useDebounce';
 import { useNavigate } from 'react-router-dom';
 import SearchHighLight from '../../Components/Common/SearchHighLight';
 import iconSearchNotFound from '../../Assets/icons/icon-searchNotFound.svg';
+import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
 import Loader from './Loader';
 export default function Search() {
@@ -71,7 +72,7 @@ export default function Search() {
           <Loader />
         ) : searchResults && searchResults.length > 0 ? (
           searchResults.slice(0, 5).map((item, index) => {
-            const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
+            const cleanedUserId = item.username.slice(3);
 
             return (
               <SearchWrap onClick={() => handleUser(item.accountname)} key={index}>
@@ -79,7 +80,10 @@ export default function Search() {
                   <SearchImg src={item.image} alt='' />
                 </SearchPhotoWrap>
                 <UserInfo>
-                  <UserId>{SearchHighLight(cleanedUserId, searchText)}</UserId>
+                  <OrCont>
+                    <UserId>{SearchHighLight(cleanedUserId, searchText)}</UserId>
+                    {item.username.slice(0,3)==="[o]" ? <UserCheck src={UserTypeCheck} alt=''/> : null}
+                </OrCont>
                   <UserText>{item.intro}</UserText>
                 </UserInfo>
               </SearchWrap>
@@ -165,4 +169,14 @@ const NotFoundWrap = styled.div`
     transform: translateX(5%);
     color: #919191;
   }
+`;
+
+const OrCont = styled.div`
+  display: flex;
+  align-items: center;
+  vertical-align: top;
+`;
+const UserCheck = styled.img`
+  padding-left: 0.3rem;
+  width: 1.2rem
 `;

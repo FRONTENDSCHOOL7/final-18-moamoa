@@ -144,7 +144,7 @@ const PostImg = styled.img`
 `;
 const PostDesc = styled.p`
   font-size: 1.4rem;
-  margin: 1.2rem 0 1.6rem;
+  margin: 1.2rem 0;
   word-break: break-all;
   &:hover {
     cursor: default;
