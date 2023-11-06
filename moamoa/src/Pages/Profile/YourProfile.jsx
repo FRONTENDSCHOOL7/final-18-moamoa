@@ -79,8 +79,10 @@ function YourProfile() {
     isFollow,
   };
 
-  console.log('유저인포데이타', userInfoData.profileUsername);
-  const userName = userInfoData.profileUsername;
+  // console.log('유저인포데이타', userInfoData.profileUsername);
+  const userName = userInfoData.profileUsername
+    .slice(3, userInfoData.profileUsername.length)
+    .replace(/ /g, '-');
 
   console.log(userType);
   // 현제 페이지 주소 복사
