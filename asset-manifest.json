@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/final-18-moamoa/static/css/main.31d6cfe0.css",
-    "main.js": "/final-18-moamoa/static/js/main.44b9a277.js",
+    "main.js": "/final-18-moamoa/static/js/main.438a5bba.js",
     "static/media/woman2.jpg": "/final-18-moamoa/static/media/woman2.94280b249937a70d2e24.jpg",
     "static/media/fog.jpg": "/final-18-moamoa/static/media/fog.abc37dc00a5fb772eea1.jpg",
     "static/media/human.jpg": "/final-18-moamoa/static/media/human.63979edf0d8696da1e65.jpg",
@@ -37,10 +37,10 @@
     "static/media/icon-post.svg": "/final-18-moamoa/static/media/icon-post.8ad448c4dd2188bd00ec23075ef98f36.svg",
     "static/media/icon-email.svg": "/final-18-moamoa/static/media/icon-email.c6c24c2ce4a6a61bf9f698f69f74908c.svg",
     "static/media/icon-usertype-check.svg": "/final-18-moamoa/static/media/icon-usertype-check.4e8866e1ffdb4c867c73ac0b0def3fae.svg",
-    "main.44b9a277.js.map": "/final-18-moamoa/static/js/main.44b9a277.js.map"
+    "main.438a5bba.js.map": "/final-18-moamoa/static/js/main.438a5bba.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.44b9a277.js"
+    "static/js/main.438a5bba.js"
   ]
 }
