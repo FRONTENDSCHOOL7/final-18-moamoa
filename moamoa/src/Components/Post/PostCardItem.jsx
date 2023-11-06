@@ -8,18 +8,17 @@ import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
 import { useRecoilValue } from 'recoil';
-import accountNameAtom from '../../Recoil/accountNameAtom'; 
+import accountNameAtom from '../../Recoil/accountNameAtom';
 
 import PropTypes from 'prop-types';
 import HeartCountDownAPI from '../../API/Post/HeartCountDownAPI';
 import HeartCountUpAPI from '../../API/Post/HeartCountUpAPI';
 
-
 PostCardDetail.propTypes = {
-  post: PropTypes.object
-}
+  post: PropTypes.object,
+};
 
-export default function PostCardDetail({post}) {
+export default function PostCardDetail({ post }) {
   const postItemInfo = post;
   const postAuthorInfo = post.author;
 
@@ -33,33 +32,32 @@ export default function PostCardDetail({post}) {
   const postImgUrl = `${postItemInfo.image}`;
   const accountName = postAuthorInfo.accountname;
   const postId = postItemInfo.id;
-  
-  const heartPost = HeartCountUpAPI(postId)
+
+  const heartPost = HeartCountUpAPI(postId);
 
   const hearted = async () => {
-      await heartPost();
-  }
+    await heartPost();
+  };
 
-  const ununheartPost = HeartCountDownAPI(postId)
+  const ununheartPost = HeartCountDownAPI(postId);
 
   const unhearted = async () => {
-      await ununheartPost();
-  }
-
+    await ununheartPost();
+  };
 
   const handleHeartCount = () => {
-      setHeartColor(heartBgFill);
-      setHeartCount((prev)=>prev + 1);
-      setHeartValue((prev)=>!prev)
-      hearted();
+    setHeartColor(heartBgFill);
+    setHeartCount((prev) => prev + 1);
+    setHeartValue((prev) => !prev);
+    hearted();
   };
 
   const handleUnheartCount = () => {
-    setHeartCount((prev)=>prev -1)
-    setHeartValue((prev)=>!prev)
-    unhearted()
+    setHeartCount((prev) => prev - 1);
+    setHeartValue((prev) => !prev);
+    unhearted();
     setHeartColor(heartBg);
-  }
+  };
 
   return (
     <>
@@ -79,31 +77,54 @@ export default function PostCardDetail({post}) {
                   console.log(showModal);
                 }}
               /> : <YourPostMoreBtn
+
                 accountname={accountName}
-                onClick={() => {
-                  setShowModal(true);
-                  console.log(showModal);
-                }}
-              /> }
+                loginAccountName={accountAtom}
+              />
+              {accountAtom === accountName ? (
+                <MyPostMoreBtn
+                  accountname={accountName}
+                  postid={postId}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowModal(true);
+                    console.log(showModal);
+                  }}
+                />
+              ) : (
+                <YourPostMoreBtn
+                  accountname={accountName}
+                  onClick={() => {
+                    setShowModal(true);
+                    console.log(showModal);
+                  }}
+                />
+              )}
             </Frofile>
             <PostDesc>{postItemInfo.content}</PostDesc>
             {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             <PostFooterContainer>
               <CreateDate>{Datacalc(postItemInfo.createdAt)}</CreateDate>
               <div>
-                { heartValue ? <HeartBtn
-                  onClick={() => { handleUnheartCount(); }}
-                  heartcolor={heartBgFill}
-                >
-                  {heartcount}
-                </HeartBtn>:<HeartBtn
-                  onClick={() => {
-                    handleHeartCount();
-                  }}
-                  heartcolor={heartcolor}
-                >
-                  {heartcount}
-                </HeartBtn>}
+                {heartValue ? (
+                  <HeartBtn
+                    onClick={() => {
+                      handleUnheartCount();
+                    }}
+                    heartcolor={heartBgFill}
+                  >
+                    {heartcount}
+                  </HeartBtn>
+                ) : (
+                  <HeartBtn
+                    onClick={() => {
+                      handleHeartCount();
+                    }}
+                    heartcolor={heartcolor}
+                  >
+                    {heartcount}
+                  </HeartBtn>
+                )}
                 <CommentBtn>{postItemInfo.commentCount}</CommentBtn>
               </div>
             </PostFooterContainer>
@@ -163,7 +184,9 @@ const CreateDate = styled.p`
   color: #767676;
 `;
 
-const HeartBtn = styled.button`
+const HeartBtn = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'heartcolor',
+})`
   padding-left: 2.6rem;
   padding-right: 1.6rem;
   height: 2rem;

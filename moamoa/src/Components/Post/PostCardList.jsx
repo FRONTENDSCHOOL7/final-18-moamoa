@@ -9,11 +9,10 @@ import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
 import HeartCountDownAPI from '../../API/Post/HeartCountDownAPI';
 import HeartCountUpAPI from '../../API/Post/HeartCountUpAPI';
-import accountNameAtom from '../../Recoil/accountNameAtom'; 
+import accountNameAtom from '../../Recoil/accountNameAtom';
 import { useRecoilValue } from 'recoil';
 
 export default function PostCardList(post) {
-
   const accountAtom = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(false);
   const postItem = post.post;
@@ -27,17 +26,17 @@ export default function PostCardList(post) {
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postItem.heartCount);
 
-  const heartPost = HeartCountUpAPI(postId)
+  const heartPost = HeartCountUpAPI(postId);
 
   const hearted = async () => {
-      await heartPost();
-  }
+    await heartPost();
+  };
 
-  const ununheartPost = HeartCountDownAPI(postId)
+  const ununheartPost = HeartCountDownAPI(postId);
 
   const unhearted = async () => {
-      await ununheartPost();
-  }
+    await ununheartPost();
+  };
 
   const handleHeartCount = () => {
     setHeartColor(heartBgFill);
@@ -141,7 +140,7 @@ const PostDesc = styled.p`
   font-size: 1.4rem;
   margin: 1.2rem 0 0;
   line-height: 2rem;
-  overflow:hidden;  
+  overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
@@ -162,7 +161,9 @@ const CreateDate = styled.p`
   color: #767676;
 `;
 
-const HeartBtn = styled.button`
+const HeartBtn = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'heartcolor',
+})`
   padding-left: 2.6rem;
   padding-right: 1.6rem;
   height: 2rem;
