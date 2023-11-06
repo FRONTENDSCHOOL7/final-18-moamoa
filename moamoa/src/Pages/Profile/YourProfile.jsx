@@ -119,7 +119,7 @@ function YourProfile() {
                 <button
                   type='button'
                   onClick={() => {
-                    navigate(`/chat/${cleanedChatUserName}`);
+                    navigate(`/chat/${userName}`);
                   }}
                 >
                   <img src={MsgIcon} alt='' />
