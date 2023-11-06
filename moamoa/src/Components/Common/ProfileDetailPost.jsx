@@ -117,7 +117,9 @@ const PostListBox = styled.div`
   background-color: #fff;
 `;
 
-const BtnIcons = styled.div`
+const BtnIcons = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'view',
+})`
   border-bottom: 1px solid #dbdbdb;
   display: flex;
   justify-content: end;
