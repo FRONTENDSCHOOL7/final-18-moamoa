@@ -11,7 +11,8 @@ RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      {/* eslint-disable-next-line */}
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <GlobalStyle />
         {/* <Profile /> */}
 
