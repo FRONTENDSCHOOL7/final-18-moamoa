@@ -156,9 +156,8 @@ export default function AddPost() {
       </HeaderContainer>
       <UploadPostBox>
         <section>
-          <HiddenH1>
-            <h1>게시글 등록</h1>
-          </HiddenH1>
+          <HiddenH1>게시글 등록</HiddenH1>
+
           <form onSubmit={handleFormSubmit}>
             <ProfileImg>
               {/* 사용자 프로필 */}
