@@ -10,12 +10,10 @@ import Datacalc from '../Common/datecalc';
 
 import HeartCountDownAPI from '../../API/Post/HeartCountDownAPI';
 import HeartCountUpAPI from '../../API/Post/HeartCountUpAPI';
-import accountNameAtom from '../../Recoil/accountNameAtom'; 
+import accountNameAtom from '../../Recoil/accountNameAtom';
 import { useRecoilValue } from 'recoil';
 
-
 export default function HomePostCardList(post) {
-  
   const accountAtom = useRecoilValue(accountNameAtom);
 
   const postInfo = post.post;
@@ -24,37 +22,36 @@ export default function HomePostCardList(post) {
   const postImgUrl = `${postInfo.image}`;
   const postId = post.post.id;
   const postDetailUrl = `/post/${postId}`;
-  
+
   const [heartValue, setHeartValue] = useState(postInfo.hearted);
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postInfo.heartCount);
 
-  const heartPost = HeartCountUpAPI(postId)
+  const heartPost = HeartCountUpAPI(postId);
 
   const hearted = async () => {
-      await heartPost();
-  }
+    await heartPost();
+  };
 
-  const ununheartPost = HeartCountDownAPI(postId)
+  const ununheartPost = HeartCountDownAPI(postId);
 
   const unhearted = async () => {
-      await ununheartPost();
-  }
+    await ununheartPost();
+  };
 
-  
   const handleHeartCount = () => {
-      setHeartColor(heartBgFill);
-      setHeartCount((prev)=>prev + 1);
-      setHeartValue((prev)=>!prev)
-      hearted();
+    setHeartColor(heartBgFill);
+    setHeartCount((prev) => prev + 1);
+    setHeartValue((prev) => !prev);
+    hearted();
   };
 
   const handleUnheartCount = () => {
-    setHeartCount((prev)=>prev -1)
-    setHeartValue((prev)=>!prev)
-    unhearted()
+    setHeartCount((prev) => prev - 1);
+    setHeartValue((prev) => !prev);
+    unhearted();
     setHeartColor(heartBg);
-  }
+  };
 
   return (
     <>
@@ -68,7 +65,7 @@ export default function HomePostCardList(post) {
                 accountname={postAuthorInfo.accountname}
                 loginAccountName={accountAtom}
               />
-              <HomePostMoreBtn postid={postId}/>
+              <HomePostMoreBtn postid={postId} />
             </Frofile>
             <Link to={postDetailUrl}>
               {postInfo.content!==""?<PostDesc>{postInfo.content}</PostDesc>:null}
@@ -78,21 +75,25 @@ export default function HomePostCardList(post) {
             <PostFooterContainer>
               <CreateDate>{Datacalc(postInfo.createdAt)}</CreateDate>
               <div>
-
-                { heartValue ? <HeartBtn
-                  onClick={() => { handleUnheartCount(); }}
-                  heartcolor={heartBgFill}
-                >
-                  {heartcount}
-                </HeartBtn>:<HeartBtn
-                  onClick={() => {
-
-                    handleHeartCount();
-                  }}
-                  heartcolor={heartcolor}
-                >
-                  {heartcount}
-                </HeartBtn>}
+                {heartValue ? (
+                  <HeartBtn
+                    onClick={() => {
+                      handleUnheartCount();
+                    }}
+                    heartcolor={heartBgFill}
+                  >
+                    {heartcount}
+                  </HeartBtn>
+                ) : (
+                  <HeartBtn
+                    onClick={() => {
+                      handleHeartCount();
+                    }}
+                    heartcolor={heartcolor}
+                  >
+                    {heartcount}
+                  </HeartBtn>
+                )}
 
                 <Link to={postDetailUrl}>
                   <CommentBtn>{postInfo.commentCount}</CommentBtn>
@@ -137,7 +138,7 @@ const PostDesc = styled.p`
   font-size: 1.4rem;
   margin: 1.2rem 0 0;
   line-height: 2rem;
-  overflow:hidden;  
+  overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
@@ -158,7 +159,9 @@ const CreateDate = styled.p`
   color: #767676;
 `;
 
-const HeartBtn = styled.button`
+const HeartBtn = styled.button.withConfig({
+  shouldForwardProp: (prop) => prop !== 'heartcolor',
+})`
   padding-left: 2.6rem;
 
   padding-right: 1.6rem;

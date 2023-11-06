@@ -175,9 +175,7 @@ export default function EditPost() {
       </HeaderContainer>
       <UploadPostBox>
         <section>
-          <HiddenH1>
-            <h1>게시글 수정</h1>
-          </HiddenH1>
+          <HiddenH1>게시글 수정</HiddenH1>
           <form onSubmit={handleFormSubmit}>
             <ProfileImg>
               {/* 사용자 프로필 */}
