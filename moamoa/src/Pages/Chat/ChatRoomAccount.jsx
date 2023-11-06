@@ -59,6 +59,7 @@ export default function ChatRoomKim() {
   };
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       handleSendClick();
     }
   };
