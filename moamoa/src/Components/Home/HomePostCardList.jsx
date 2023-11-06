@@ -61,14 +61,15 @@ export default function HomePostCardList(post) {
             <Frofile>
               <PostCardUser
                 url={profileImgUrl}
-                username={postAuthorInfo.username.slice(3)}
+                username={postAuthorInfo.username}
                 accountname={postAuthorInfo.accountname}
                 loginAccountName={accountAtom}
               />
               <HomePostMoreBtn postid={postId} />
             </Frofile>
             <Link to={postDetailUrl}>
-              <PostDesc>{postInfo.content}</PostDesc>
+              {postInfo.content!==""?<PostDesc>{postInfo.content}</PostDesc>:null}
+              
               {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
             </Link>
             <PostFooterContainer>
@@ -125,7 +126,7 @@ const Frofile = styled.div`
 const PostImg = styled.img`
   width: 35.8rem;
   height: 22.8rem;
-  margin: 0 auto;
+  margin: 1.2rem auto 0;
   aspect-ratio: 358/228;
   object-fit: cover;
   border-radius: 1rem;
@@ -135,7 +136,7 @@ const PostImg = styled.img`
 `;
 const PostDesc = styled.p`
   font-size: 1.4rem;
-  margin: 1.2rem 0;
+  margin: 1.2rem 0 0;
   line-height: 2rem;
   overflow: hidden;
   display: -webkit-box;

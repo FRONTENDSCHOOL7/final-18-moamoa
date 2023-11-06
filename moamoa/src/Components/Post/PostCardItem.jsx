@@ -65,9 +65,19 @@ export default function PostCardDetail({ post }) {
         <PostList>
           <PostArticle>
             <Frofile>
-              <PostCardUser
-                url={postAuthorInfo.image}
-                username={postAuthorInfo.username.slice(3)}
+              <PostCardUser url={postAuthorInfo.image}
+                username={postAuthorInfo.username}
+                accountname={accountName} loginAccountName={accountAtom}
+              />
+              {accountAtom === accountName ? <MyPostMoreBtn
+                accountname={accountName} postid={postId}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowModal(true);
+                  console.log(showModal);
+                }}
+              /> : <YourPostMoreBtn
+
                 accountname={accountName}
                 loginAccountName={accountAtom}
               />
@@ -155,7 +165,7 @@ const PostImg = styled.img`
 `;
 const PostDesc = styled.p`
   font-size: 1.4rem;
-  margin: 1.2rem 0 1.6rem;
+  margin: 1.2rem 0;
   word-break: break-all;
   &:hover {
     cursor: default;
