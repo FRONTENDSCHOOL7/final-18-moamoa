@@ -16,6 +16,7 @@ export default function MoreBtn({accountname,commentid}) {
 
   const accountName = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(true);
+  
   return (
     <>
       <CommentMoreBtn onClick={()=> setShowModal(false)}><MoreImg src={more} alt="더보기" /></CommentMoreBtn>
