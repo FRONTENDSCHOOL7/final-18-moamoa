@@ -27,17 +27,17 @@ const ConfirmDelModal = ({ delProduct, closeModal, showNoticeModal }) => {
         <DelBtn onClick={delProduct}>삭제</DelBtn>
         <CancelBtn onClick={closeModal}>취소</CancelBtn>
       </BtnWrap>
-      { !showNoticeModal && <NoticeModal/>}
+      {!showNoticeModal && <NoticeModal />}
     </ConfirmModal>
   );
 };
 ConfirmDelModal.propTypes = {
   delProduct: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  showNoticeModal: PropTypes.bool.isRequired
+  showNoticeModal: PropTypes.bool.isRequired,
 };
 
-function MyProductClick({ productId, closeModal }) {
+function MyProductClick({ productId, closeModal, fetchData }) {
   const navigate = useNavigate();
   const token = useRecoilValue(userToken);
 
@@ -55,12 +55,12 @@ function MyProductClick({ productId, closeModal }) {
     const json = await res.json();
     console.log(json);
     closeModal();
-    window.location.reload();
-    // 추후 삭제 알림 모달 활성화 되도록 수정할 것 
-    setShowNoticeModal(false)
-    await setTimeout(() => {  
-    }, 1000);
-
+    // window.location.reload();
+    // 추후 삭제 알림 모달 활성화 되도록 수정할 것
+    setShowNoticeModal(false);
+    // await setTimeout(() => {
+    // }, 1000);
+    fetchData();
   };
 
   const openConfirmDelModal = () => {
@@ -81,7 +81,7 @@ function MyProductClick({ productId, closeModal }) {
             <img src={CloseIcon} alt='닫기' />
           </Btn>
           <BtnDel type='button' onClick={openConfirmDelModal}>
-          삭제
+            삭제
           </BtnDel>
           <BtnModify
             type='button'
@@ -89,7 +89,7 @@ function MyProductClick({ productId, closeModal }) {
               navigate('/product/edit', { state: productID });
             }}
           >
-          수정
+            수정
           </BtnModify>
           <BtnProductDesc
             type='button'
@@ -102,7 +102,11 @@ function MyProductClick({ productId, closeModal }) {
         </section>
       </Modal>
       {showConfirmDelModal && (
-        <ConfirmDelModal delProduct={delProduct} closeModal={closeConfirmDelModal} showNoticeModal={showNoticeModal} />
+        <ConfirmDelModal
+          delProduct={delProduct}
+          closeModal={closeConfirmDelModal}
+          showNoticeModal={showNoticeModal}
+        />
       )}
     </ModalCont>
   );
@@ -111,6 +115,7 @@ function MyProductClick({ productId, closeModal }) {
 MyProductClick.propTypes = {
   productId: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
+  fetchData: PropTypes.func.isRequired,
 };
 
 export default function ProfileDetailProduct() {
@@ -146,13 +151,12 @@ export default function ProfileDetailProduct() {
     const json = await res.json();
     setEventList(json.product);
   };
+  const fetchData = async () => {
+    const accountName = await getMyAcnt();
+    getEventList(accountName);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const accountName = await getMyAcnt();
-      getEventList(accountName);
-    };
-
     fetchData();
   }, []);
 
@@ -204,7 +208,11 @@ export default function ProfileDetailProduct() {
 
               <ProfileProduct ref={profileProductRef}>
                 {showMyProductOptions && (
-                  <MyProductClick productId={productId} closeModal={closeModal} />
+                  <MyProductClick
+                    productId={productId}
+                    closeModal={closeModal}
+                    fetchData={fetchData}
+                  />
                 )}
 
                 <ProductListBox>
