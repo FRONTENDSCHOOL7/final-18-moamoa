@@ -85,7 +85,7 @@ const CommentList = styled.ul`
   margin: auto;
   background-color: #ffffff;
   box-sizing: border-box;
-  padding: 1.8rem 1.6rem 54rem;  
+  padding: 1.8rem 1.6rem 60rem;  
   &::-webkit-scrollbar {
     display: none;
   }
