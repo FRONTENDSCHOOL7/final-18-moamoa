@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
 PostCardUser.propTypes = {
   url: PropTypes.string,
@@ -22,7 +23,10 @@ export default function PostCardUser({url, username, accountname, loginAccountNa
             <UserInfo>
               <FrofileImg src={url} alt="사용자프로필"/>        
               <InfoText>
-                <UserName>{username}</UserName>
+                {username.slice(0,3) !== '[o]'?                
+                <UserName>{username.slice(3)}</UserName> :
+                <OrCont><UserName>{username.slice(3)}<UserCheck src={UserTypeCheck} alt=''/></UserName></OrCont>
+                }
                 <AccountName>@{accountname}</AccountName>
               </InfoText>
             </UserInfo>
@@ -62,3 +66,14 @@ const AccountName = styled.p`
   line-height: 1.4rem;
   color: #767676;
 ` ;
+
+const OrCont = styled.div`
+  display: flex;
+  align-items: center;
+  vertical-align: top;
+`;
+
+const UserCheck = styled.img`
+  padding-left: 0.3rem;
+  width: 1.2rem
+`;

@@ -64,7 +64,7 @@ export default function HomePostCardList(post) {
             <Frofile>
               <PostCardUser
                 url={profileImgUrl}
-                username={postAuthorInfo.username.slice(3)}
+                username={postAuthorInfo.username}
                 accountname={postAuthorInfo.accountname}
                 loginAccountName={accountAtom}
               />

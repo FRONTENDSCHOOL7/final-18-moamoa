@@ -21,7 +21,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     const getProductData = async () => {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/product`;
+      const reqUrl = `https://api.mandarin.weniv.co.kr/product/?limit=400&skip=0`;
 
       try {
         const res = await fetch(reqUrl, {
