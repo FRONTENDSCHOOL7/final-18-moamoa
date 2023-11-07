@@ -105,21 +105,17 @@ PW: likefesta
 
 <br />
 
-![스플래쉬](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/66439cef-b9ab-4601-bb37-35d25c778743)
-![로그인](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/870e0a23-9984-44b1-9fd4-4c075b4a054a)
-![이메일로 회원가입](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/e8ed2baf-162f-47f0-90a5-fef8801ff107)
-![프로필설정](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/fd76d08b-de6d-4f7c-8d59-3f61f22c779a)
-
-
 
 ## 4. 각 페이지 기능
 |                                                스플래쉬                                                 |                                                이메일로 회원가입                                                 |                                                초기 프로필 설정                                                |
 | :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
-| ![스플래쉬](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/66439cef-b9ab-4601-bb37-35d25c778743) | ![이메일로 회원가입](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/e8ed2baf-162f-47f0-90a5-fef8801ff107) | ![프로필설정](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/fd76d08b-de6d-4f7c-8d59-3f61f22c779a) |
+| ![스플래쉬](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/66439cef-b9ab-4601-bb37-35d25c778743) | ![이메일로 회원가입](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/e8ed2baf-162f-47f0-90a5-fef8801ff107) | ![프로필설정](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/79749e0c-cb19-4017-bde1-21be4d52159d) |
 
-|                                                스플래쉬                                                 |                                                이메일로 회원가입                                                 |                                                초기 프로필 설정                                                |
+|                                                로그인                                                 |                                                홈 화면(팔로우 하는 유저 없는 경우) 및 검색                                                |                                                홈 화면(팔로우 하는 유저 있는 경우)                                                |
 | :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
-| ![스플래쉬](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/66439cef-b9ab-4601-bb37-35d25c778743) | ![이메일로 회원가입](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/e8ed2baf-162f-47f0-90a5-fef8801ff107) | ![프로필설정](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/fd76d08b-de6d-4f7c-8d59-3f61f22c779a) |
+| ![스플래쉬](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/66439cef-b9ab-4601-bb37-35d25c778743) | ![홈화면 및 검색](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/b81d5331-24b9-4b47-9e4a-1c7e6634057d) | ![홈피드 팔로워 있음](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/d28d73c5-693d-44c0-8665-5f68b4aba3ef) |
+
+
 
 
 <br />
