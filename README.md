@@ -19,7 +19,7 @@ PW: 13231323
 
 테스트 계정 (사용자 ID)
 ID: likefesta@test.com
-PW: likefesta
+PW: 123123
 ```   
 
 <br/>
