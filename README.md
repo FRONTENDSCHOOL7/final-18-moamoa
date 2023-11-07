@@ -1,14 +1,12 @@
 # 🎉 MOAMOA 🎉
 
 ## 1. MOAMOA 소개
-
-![MOAMOA](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/5a2c9574-18bf-4ada-a325-cf91a0ac88aa)
-
+![완성탕탕](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/f32dac69-9733-4675-9920-96372ef8950e)
 
 MOAMOA는 <b>전국의 숨겨진 축제와 독특한 체험</b>을 발견할 수 있는 소셜 네트워크 서비스입니다. 이 플랫폼은 사용자들이 각지에서 열리는 문화 행사와 축제 정보를 쉽게 탐색하고, 직접 참여한 체험을 공유할 수 있는 공간을 제공합니다. MOAMOA는 사람들이 개인적인 경험을 사진, 리뷰를 통해 공유하며, 다른 이용자들과 소통할 수 있도록 도와줍니다. <br/>
+
 MOAMOA 사용자들은 축제 또는 체험을 홍보할 수 있습니다. 회원 가입 단계에서 기업 및 기관을 선택하여 가입하면 상품 등록 권한이 생깁니다. <b>행사 운영진</b>은 직접 행사 정보를 게시할 수 있으며, <b>일반 회원</b>은 다양한 축제 소식과 참여 방법을 쉽게 접할 수 있습니다.
 
-<br/>
 
 > **내 손 안에 축제와 체험 모아모아 💖**   
 
@@ -90,13 +88,8 @@ PW: likefesta
 
 ## 3. 기술 스택
 
- <img  src="https://img.shields.io/badge/react-2D333B?style=for-the-badge&logo=react&logoColor=61DAFB">
-<img  src="https://img.shields.io/badge/Recoil-2D333B?style=for-the-badge&logo=react&logoColor=3578E5">
-<img  src="https://img.shields.io/badge/Styled component-2D333B?style=for-the-badge&logo=styledcomponents&logoColor=#DB7093">
-<img  src="https://img.shields.io/badge/prettier-2D333B?style=for-the-badge&logo=prettier&logoColor=#F7B93E">
-<img  src="https://img.shields.io/badge/Eslint-2D333B?style=for-the-badge&logo=Eslint&logoColor=#4B32C3"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-  <img  src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=#5A29E4">
-
+ <img  src="https://img.shields.io/badge/react-2D333B?style=for-the-badge&logo=react&logoColor=61DAFB"> <img  src="https://img.shields.io/badge/Recoil-2D333B?style=for-the-badge&logo=react&logoColor=3578E5"> <img  src="https://img.shields.io/badge/Styled component-2D333B?style=for-the-badge&logo=styledcomponents&logoColor=#DB7093"> <img  src="https://img.shields.io/badge/prettier-2D333B?style=for-the-badge&logo=prettier&logoColor=#F7B93E">
+<img  src="https://img.shields.io/badge/Eslint-2D333B?style=for-the-badge&logo=Eslint&logoColor=#4B32C3"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img  src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=#5A29E4">
 
 <br/>
 
@@ -112,7 +105,21 @@ PW: likefesta
 
 <br />
 
+![스플래쉬](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/66439cef-b9ab-4601-bb37-35d25c778743)
+![로그인](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/870e0a23-9984-44b1-9fd4-4c075b4a054a)
+![이메일로 회원가입](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/e8ed2baf-162f-47f0-90a5-fef8801ff107)
+![프로필설정](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/fd76d08b-de6d-4f7c-8d59-3f61f22c779a)
+
+
+
 ## 4. 각 페이지 기능
+|                                                스플래쉬                                                 |                                                이메일로 회원가입                                                 |                                                초기 프로필 설정                                                |
+| :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| ![스플래쉬](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/66439cef-b9ab-4601-bb37-35d25c778743) | ![이메일로 회원가입](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/e8ed2baf-162f-47f0-90a5-fef8801ff107) | ![프로필설정](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/fd76d08b-de6d-4f7c-8d59-3f61f22c779a) |
+
+|                                                스플래쉬                                                 |                                                이메일로 회원가입                                                 |                                                초기 프로필 설정                                                |
+| :-----------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------: |
+| ![스플래쉬](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/66439cef-b9ab-4601-bb37-35d25c778743) | ![이메일로 회원가입](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/e8ed2baf-162f-47f0-90a5-fef8801ff107) | ![프로필설정](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/fd76d08b-de6d-4f7c-8d59-3f61f22c779a) |
 
 
 <br />
@@ -194,330 +201,7 @@ PW: likefesta
     };
     ```
     
-- 원본
-    
-    ```jsx
-    import { useState } from 'react';
-    import { useNavigate } from 'react-router-dom';
-    import JoinAPI from '../../API/Auth/JoinAPI';
-    import EmailValidAPI from '../../API/Valid/EmailValidAPI';
-    
-    const useJoin = () => {
-      const navigate = useNavigate();
-      const [emailError, setEmailError] = useState('');
-      const [passwordError, setPasswordError] = useState('');
-      const [imgSrc, setImgSrc] = useState();
-      const [errorMessage, setErrorMessage] = useState('');
-      const [accountInfoMsg, setAccountInfoMsg] = useState('');
-      const [introInfoMsg, setIntroInfoMsg] = useState('');
-      const [pageTransition, setPageTransition] = useState(false);
-      const [userType, setUserType] = useState('');
-      const [userInfo, setUserInfo] = useState({
-        user: {
-          username: '',
-          email: '',
-          password: '',
-          accountname: '',
-          intro: '',
-          image: 'https://api.mandarin.weniv.co.kr/1698856499022.png',
-        },
-      });
-    
-      const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setUserInfo((prevState) => ({
-          ...prevState,
-          user: {
-            ...prevState.user,
-            [name]: value,
-          },
-        }));
-        setErrorMessage('');
-      };
-    
-      const handleUserType = (e) => {
-        const { name } = e.target;
-        setUserType(name);
-      };
-    
-      const handleEmailValid = async () => {
-        const res = await EmailValidAPI({ user: { email: userInfo.user.email } });
-        if (res) {
-          setEmailError(`*` + res.message);
-        }
-      };
-    
-      const handleEmailOnBlur = async () => {
-        await handleEmailValid();
-      };
-    
-      const handlePasswordValid = () => {
-        if (userInfo.user.password.length < 6) {
-          setPasswordError('*비밀번호는 6자 이상이어야 합니다.');
-        } else {
-          setPasswordError('');
-        }
-      };
-    
-      const handleAccountNameValid = () => {
-        setAccountInfoMsg('2~15자 이내여야 합니다.');
-        if (userInfo.user.accountname.length > 1 || errorMessage) {
-          setAccountInfoMsg('');
-        }
-      };
-    
-      const handleIntroValid = () => {
-        setIntroInfoMsg('2~50자 이내여야 합니다.');
-        if (userInfo.user.intro.length > 1 || errorMessage) {
-          setIntroInfoMsg('');
-        }
-      };
-    
-      const goNext = (e) => {
-        e.preventDefault();
-        if (userInfo.user.email && userInfo.user.password && !passwordError) {
-          if (emailError === '*사용 가능한 이메일 입니다.') {
-            setPageTransition(true);
-          }
-        }
-      };
-    
-      const handleJoin = async () => {
-        const res = await JoinAPI(userInfo, userType);
-        if (res) {
-          setErrorMessage(`*` + res.message);
-          if (res.message === '회원가입 성공') {
-            navigate('/user/login');
-          }
-        }
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        await handleJoin();
-      };
-    
-      return {
-        pageTransition,
-        imgSrc,
-        setImgSrc,
-        userType,
-        userInfo,
-        setUserInfo,
-        accountInfoMsg,
-        introInfoMsg,
-        emailError,
-        passwordError,
-        errorMessage,
-        goNext,
-        handleInputChange,
-        handleUserType,
-        handlePasswordValid,
-        handleEmailOnBlur,
-        handleAccountNameValid,
-        handleIntroValid,
-        handleSubmit,
-      };
-    };
-    
-    export default useJoin;
-    ```
-    
-    ```jsx
-    import React from 'react';
-    import useJoin from '../../Hooks/Sign/useJoin.jsx';
-    import { uploadImage } from '../../API/Img/UploadImageAPI';
-    import UploadFile from '../../Assets/images/upload-file.png';
-    import DefaultProfile from '../../Assets/images/profile-img.svg';
-    import styled from 'styled-components';
-    import {
-      LoginAndJoinContainer,
-      Form,
-      CommonInput,
-      StyledErrorMsg,
-      CommonBtn,
-    } from '../../Components/Common/FormLoginAndJoin';
-    
-    const Join = () => {
-      const {
-        pageTransition,
-        imgSrc,
-        setImgSrc,
-        userType,
-        userInfo,
-        setUserInfo,
-        accountInfoMsg,
-        introInfoMsg,
-        emailError,
-        passwordError,
-        errorMessage,
-        goNext,
-        handleInputChange,
-        handleUserType,
-        handlePasswordValid,
-        handleEmailOnBlur,
-        handleAccountNameValid,
-        handleIntroValid,
-        handleSubmit,
-      } = useJoin();
-    
-      const handleChangeImage = async (e) => {
-        const imageFile = e.target.files[0];
-        const response = await uploadImage(imageFile);
-        setUserInfo({
-          ...userInfo,
-          user: {
-            ...userInfo.user,
-            image: `https://api.mandarin.weniv.co.kr/${response.data.filename}`,
-          },
-        });
-        setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
-      };
-    
-      return (
-        <>
-          <h1 className='a11y-hidden'>이메일로 회원가입 및 프로필 설정</h1>
-          {pageTransition ? (
-            <LoginAndJoinContainer>
-              <h2>프로필 설정</h2>
-              <ProfileInfo>나중에 언제든지 변경할 수 있습니다.</ProfileInfo>
-              <ProfileForm onSubmit={handleSubmit}>
-                <ImgContainer>
-                  <ImgLabel htmlFor='profileImg'>
-                    <ProfileImg src={imgSrc ? imgSrc : DefaultProfile} alt='' srcSet='' id='imagePre' />
-                  </ImgLabel>
-                  <input
-                    type='file'
-                    id='profileImg'
-                    name='image'
-                    accept='image/*'
-                    className='a11y-hidden'
-                    onChange={handleChangeImage}
-                  />
-                </ImgContainer>
-                <TextContainer>
-                  <TextLabel htmlFor='userNameInput'>사용자 이름</TextLabel>
-                  <TextInput
-                    value={userInfo.user.username}
-                    onChange={handleInputChange}
-                    type='text'
-                    id='userNameInput'
-                    name='username'
-                    placeholder='2~10자 이내여야 합니다.'
-                    minLength={2}
-                    maxLength={10}
-                  />
-                  <TextLabel htmlFor='userIdInput'>계정 ID</TextLabel>
-                  <TextInput
-                    value={userInfo.user.accountname}
-                    onChange={handleInputChange}
-                    type='text'
-                    id='userIdInput'
-                    name='accountname'
-                    placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
-                    minLength={2}
-                    maxLength={15}
-                    onBlur={handleAccountNameValid}
-                  />
-                  <StyledErrorMsg>{accountInfoMsg}</StyledErrorMsg>
-                  {(errorMessage === '*영문, 숫자, 밑줄, 마침표만 사용할 수 있습니다.' ||
-                    errorMessage === '*이미 사용중인 계정 ID입니다.') && (
-                    <StyledErrorMsg>{errorMessage}</StyledErrorMsg>
-                  )}
-                  <TextLabel htmlFor='userIntroInput'>소개</TextLabel>
-                  <TextInput
-                    value={userInfo.user.intro}
-                    onChange={handleInputChange}
-                    type='text'
-                    id='userIntroInput'
-                    name='intro'
-                    placeholder={
-                      userType === 'organization'
-                        ? '자신과 홍보할 행사에 대해 소개해 주세요!'
-                        : '자신에 대해 소개해 주세요!'
-                    }
-                    minLength={2}
-                    maxLength={50}
-                    onBlur={handleIntroValid}
-                  />
-                  <StyledErrorMsg>{introInfoMsg}</StyledErrorMsg>
-                </TextContainer>
-                <ProfileButton
-                  type='submit'
-                  disabled={
-                    userInfo.user.username.length < 2 ||
-                    !userInfo.user.accountname ||
-                    !userInfo.user.intro
-                  }
-                >
-                  모아모아 시작하기
-                </ProfileButton>
-              </ProfileForm>
-            </LoginAndJoinContainer>
-          ) : (
-            <LoginAndJoinContainer>
-              <h2>이메일로 회원가입</h2>
-              <Form onSubmit={goNext}>
-                <SelectUserType>
-                  <h3>회원분류선택</h3>
-                  <SelectUserBtnContainer>
-                    <SelectUserBtn
-                      type='button'
-                      name='individual'
-                      onClick={handleUserType}
-                      selected={userType === 'individual'}
-                    >
-                      일반 회원
-                    </SelectUserBtn>
-                    <SelectUserBtn
-                      type='button'
-                      name='organization'
-                      onClick={handleUserType}
-                      selected={userType === 'organization'}
-                    >
-                      기업 및 기관
-                    </SelectUserBtn>
-                  </SelectUserBtnContainer>
-                </SelectUserType>
-                <CommonInput
-                  value={userInfo.user.email}
-                  onChange={handleInputChange}
-                  onBlur={handleEmailOnBlur}
-                  type='email'
-                  name='email'
-                  placeholder='이메일을 설정해 주세요.'
-                  required
-                />
-                <StyledErrorMsg>{emailError}</StyledErrorMsg>
-                <CommonInput
-                  value={userInfo.user.password}
-                  onChange={handleInputChange}
-                  onBlur={handlePasswordValid}
-                  type='password'
-                  name='password'
-                  placeholder='비밀번호를 설정해 주세요.'
-                  required
-                />
-                <StyledErrorMsg>{passwordError}</StyledErrorMsg>
-                <JoinBtn
-                  disabled={
-                    !userType ||
-                    !userInfo.user.email ||
-                    !userInfo.user.password ||
-                    emailError !== '*사용 가능한 이메일 입니다.' ||
-                    passwordError
-                  }
-                >
-                  다음
-                </JoinBtn>
-              </Form>
-            </LoginAndJoinContainer>
-          )}
-        </>
-      );
-    };
-    export default Join;
-    ```
+
     
 - 회원 유형에 따른 프로필 페이지 구성
     - 회원 가입 시에 선택한 회원 유형(type)은 부모코드에서 프롭스로 받아왔습니다. 여기서 userType은 'organization’과 'Individual'로 구분됩니다.
