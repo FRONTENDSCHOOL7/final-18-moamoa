@@ -133,281 +133,338 @@ PW: likefesta
 
 ## 6. 핵심 코드
 
+### 회원 가입 시 회원 유형 구분
 
+- 서비스 특성에 따라 회원 가입 시 회원 유형(일반 회원 / 기업 및 기관) 선택이 가능합니다.
+- 사용자가 선택한 버튼에 따라 변수 userType에 individual 혹은 organization이 저장됩니다.
 
-- 일반 회원/기업 및 기관 회원 구분
-    - 행사 운영진이 있는 서비스 특성에 따라 회원 가입 시 일반회원과 기업 및 기관중 회원 타입을 필수적으로 선택하도록 구성했습니다. Input 태그 name 속성, selected 속성의 값으로 일반 회원은 individual, 기업 및 기관 회원은 organization을 넣었습니다.
-    
-    ```jsx
-    const [userType, setUserType] = useState('');
-    
-    <SelectUserType>
-      <h3>회원분류선택</h3>
-      <SelectUserBtnContainer>
-        <SelectUserBtn
-          type='button'
-          name='individual'
-          onClick={handleUserType}
-          selected={userType === 'individual'}
-        >
-          일반 회원
-        </SelectUserBtn>
-        <SelectUserBtn
-          type='button'
-          name='organization'
-          onClick={handleUserType}
-          selected={userType === 'organization'}
-        >
-          기업 및 기관
-        </SelectUserBtn>
-      </SelectUserBtnContainer>
-    </SelectUserType>
-    ```
-    
-    - 회원가입 POST 요청 시 일반 회원은 사용자 이름 앞에 ‘[i]’, 기관 및 기업 회원은 사용자 이름 앞에 ‘[o]’를 붙여 회원 분류가 가능하도록 서버에 저장했습니다.
-    
-    ```jsx
-    const JoinAPI = async (userInfo, userType) => {
-      const reqUrl = 'https://api.mandarin.weniv.co.kr/user';
-    
-      try {
-        const response = await fetch(`${reqUrl}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+```jsx
+const [userType, setUserType] = useState('');
+
+const handleUserType = (e) => {
+    const { name } = e.target;
+    setUserType(name);
+  };
+  
+return 
+	<h3>회원분류선택</h3>
+  <SelectUserBtnContainer>
+    <SelectUserBtn
+      type='button'
+      name='individual'
+      onClick={handleUserType}
+    >
+      일반 회원
+    </SelectUserBtn>
+    <SelectUserBtn
+      type='button'
+      name='organization'
+      onClick={handleUserType}
+    >
+      기업 및 기관
+    </SelectUserBtn>
+  </SelectUserBtnContainer>
+```
+
+- 회원가입 POST 요청 시 props로 받은 userType이 ‘individual’이라면 사용자 명 앞에 구분자 [i], 기관이라면 사용자 명 앞에 구분자 [o]를 붙여 회원 분류 처리가 가능하도록 서버에 저장했습니다.
+
+```jsx
+const JoinAPI = async (userInfo, userType) => {
+  const reqUrl = 'https://api.mandarin.weniv.co.kr/user';
+
+  try {
+    const response = await fetch(`${reqUrl}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...userInfo,
+        user: {
+          ...userInfo.user,
+          username:
+            userType === 'individual'
+              ? `[i]${userInfo.user.username}`
+              : `[o]${userInfo.user.username}`,
+        },
+      }),
+    });
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (error) {
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status === 422 || status === 404) {
+        console.log(data.message);
+      }
+    }
+  }
+};
+```
+
+### 회원 유형에 따른 프로필 페이지 구성
+
+- 회원 가입 시에 선택한 회원 유형(type)은 부모코드에서 프롭스로 받아왔습니다. 여기서 userType은 'organization’과 'Individual'로 구분됩니다.
+
+```jsx
+// YourProfile.jsx, MyProfile.jsx
+
+const userInfoData = {
+    profileImg,
+    profileUsername,
+    profileAccountname,
+    profileIntro,
+    profileFollowerCount,
+    profileFollowingCount,
+    userType, // 회원 유형 : 'organization' | 'Individual'
+    isFollow,
+  };
+
+return (
+	<Container>
+			{/* ... */}
+          <section>
+            <ProfileDetail userInfoData={userInfoData} token={token} />
+            <Btns>
+              {/* ... */}
+              {/* 일반 계정일 경우 행사 등록 버튼 제거 */}
+              {userType === 'organization' ? (
+                <button
+                  type='button'
+                  onClick={() => {
+                    navigate('/product');
+                  }}
+                >
+                  행사 등록
+                </button>
+              ) : null}
+            </Btns>
+          </section>
+				{/* ... */}
+				{/* 일반 계정일 경우 행사 리스트 UI 제거 */}
+        {userType === 'organization' ? <ProfileDetailProduct /> : null}
+      {/* ... */}
+  </Container>
+)
+```
+
+- 프롭스 정보를 사용해 조건부 렌더링으로 프로필 페이지를 구성했습니다.
+
+```jsx
+// ProfileDetail.jsx
+
+export default function ProfileDetail({ userInfoData, token }) {
+
+  return (
+    <ProfileDetailBox>
+			{/* ... */}
+        <ProfileInfo>
+          <div>
+						{/* 행사 리스트 출력  */}
+            <p>
+              {userInfoData.userType === 'organization'
+                ? userInfoData.profileUsername.replace('[o]', '')
+                : userInfoData.profileUsername.replace('[i]', '')}
+              {userInfoData.userType === 'organization' ? <img src={UserTypeCheck} alt='' /> : ''}
+            </p>
+            {/* ... */}
+        </ProfileInfo>
+
+        <CountWrap>
+					{/* 회원 유형에 따른 게시글 수 차이*/}
+          {userInfoData.profileAccountname &&
+            userInfoData.profileImg &&
+            userInfoData.profileUsername && (
+              <PostCnt
+                src={userInfoData.profileAccountname}
+                token={token}
+                userType={userInfoData.userType}
+              />
+            )}
+          {/* ... */}
+        </CountWrap>
+      {/* ... */}
+    </ProfileDetailBox>
+  );
+}
+```
+
+- 이때, 회원 유형에 따른 게시글 수의 차이를 주었습니다.
+
+```jsx
+// 게시글 수
+function PostCnt({ src, token, userType }) {
+  const [postCount, setPostCount] = useState(0);
+  const [productCount, setProductCount] = useState(0);
+	
+  // 유저별 게시글 목록을 가져오는 API를 이용하여 게시글 수 계산...
+
+	// 상품 리스트 정보를 가져오는 API를 이용하여 행사 수 계산
+  const fetchProductCount = async () => {
+    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${src}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+    });
+    const json = await res.json();
+    setProductCount(json.product.length);
+    //판매자 계정이 아닐경우 행사 길이가 0
+    userType === 'organization' ? setProductCount(json.product.length) : setProductCount(0);
+  };
+
+	// ...
+
+  return (
+    <PostCountWrap>
+      <p>{postCount + productCount}</p>
+      <p>게시글 수</p>
+    </PostCountWrap>
+  );
+}
+```
+
+### 행사 등록 시 행사 유형 구분 & API 요청 시 가격을 기간으로 변경 사용
+
+#### 1. 행사 등록 시 행사 유형 구분
+- 기업 및 기관은 행사 등록 시 행사 유형 (축제/체험) 선택이 가능합니다.
+- 기업 및 기관이 선택한 버튼에 따라 변수 eventType에 festival 혹은 experience가 저장됩니다.
+
+```jsx
+const [eventType, setEventType] = useState('');
+
+return <SelectedButton
+                id='category'
+                type='button'
+                onClick={() => setEventType('festival')}
+                selected={eventType === 'festival'}
+              >
+                축제
+              </SelectedButton>
+              <SelectedButton
+                id='category'
+                type='button'
+                onClick={() => setEventType('experience')}
+                selected={eventType === 'experience'}
+              >
+                체험
+              </SelectedButton>
+```
+
+- 상품 등록 POST 요청 시 props로 받은 eventType이 ‘festival’이라면 상품명 앞에 구분자 [f], 체험이라면 상품명 앞에 구분자 [e]를 붙여 행사 분류 처리가 가능하도록 서버에 저장했습니다.
+
+```jsx
+const ProductUploadAPI = (inputValue) => {
+  const reqURL = 'https://api.mandarin.weniv.co.kr/product';
+  const token = useRecoilValue(userTokenAtom);
+  const { eventName, eventPeriod, eventDetail, imgSrc, eventType } = inputValue;
+
+  const uploadProduct = async () => {
+    try {
+      await axios({
+        method: 'post',
+        url: reqURL,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          product: {
+            itemName: eventType === 'festival' ? `[f]${eventName}` : `[e]${eventName}`,
+            price: eventPeriod,
+            link: eventDetail,
+            itemImage: imgSrc,
           },
-          body: JSON.stringify({
-            ...userInfo,
-            user: {
-              ...userInfo.user,
-              username:
-                userType === 'individual'
-                  ? `[i]${userInfo.user.username}`
-                  : `[o]${userInfo.user.username}`,
-            },
-          }),
-        });
-        const result = await response.json();
-        console.log(result);
-        return result;
-      } catch (error) {
-        if (error.response) {
-          const { status, data } = error.response;
-          if (status === 422 || status === 404) {
-            console.log(data.message);
-          }
+        },
+      }).then((res) => {
+        console.log(res.data);
+      });
+    } catch (error) {
+      if (error.response) {
+        const { status, data } = error.response;
+        if (status === 422 || status === 404) {
+          console.log(data.message);
         }
       }
-    };
-    ```
-    
-
-    
-- 회원 유형에 따른 프로필 페이지 구성
-    - 회원 가입 시에 선택한 회원 유형(type)은 부모코드에서 프롭스로 받아왔습니다. 여기서 userType은 'organization’과 'Individual'로 구분됩니다.
-    
-    ```jsx
-    // YourProfile.jsx, MyProfile.jsx
-    
-    const userInfoData = {
-        profileImg,
-        profileUsername,
-        profileAccountname,
-        profileIntro,
-        profileFollowerCount,
-        profileFollowingCount,
-        userType, // 회원 유형 : 'organization' | 'Individual'
-        isFollow,
-      };
-    
-    return (
-    	<Container>
-    			{/* ... */}
-              <section>
-                <ProfileDetail userInfoData={userInfoData} token={token} />
-                <Btns>
-                  {/* ... */}
-                  {/* 일반 계정일 경우 행사 등록 버튼 제거 */}
-                  {userType === 'organization' ? (
-                    <button
-                      type='button'
-                      onClick={() => {
-                        navigate('/product');
-                      }}
-                    >
-                      행사 등록
-                    </button>
-                  ) : null}
-                </Btns>
-              </section>
-    				{/* ... */}
-    				{/* 일반 계정일 경우 행사 리스트 UI 제거 */}
-            {userType === 'organization' ? <ProfileDetailProduct /> : null}
-          {/* ... */}
-      </Container>
-    )
-    ```
-    
-    - 프롭스 정보를 사용해 조건부 렌더링으로 프로필 페이지를 구성했습니다.
-    
-    ```jsx
-    // ProfileDetail.jsx
-    
-    export default function ProfileDetail({ userInfoData, token }) {
-    
-      return (
-        <ProfileDetailBox>
-    			{/* ... */}
-            <ProfileInfo>
-              <div>
-    						{/* 행사 리스트 출력  */}
-                <p>
-                  {userInfoData.userType === 'organization'
-                    ? userInfoData.profileUsername.replace('[o]', '')
-                    : userInfoData.profileUsername.replace('[i]', '')}
-                  {userInfoData.userType === 'organization' ? <img src={UserTypeCheck} alt='' /> : ''}
-                </p>
-                {/* ... */}
-            </ProfileInfo>
-    
-            <CountWrap>
-    					{/* 회원 유형에 따른 게시글 수 차이*/}
-              {userInfoData.profileAccountname &&
-                userInfoData.profileImg &&
-                userInfoData.profileUsername && (
-                  <PostCnt
-                    src={userInfoData.profileAccountname}
-                    token={token}
-                    userType={userInfoData.userType}
-                  />
-                )}
-              {/* ... */}
-            </CountWrap>
-          {/* ... */}
-        </ProfileDetailBox>
-      );
     }
-    ```
-    
-    - 이때, 회원 유형에 따른 게시글 수의 차이를 주었습니다.
-    
-    ```jsx
-    // 게시글 수
-    function PostCnt({ src, token, userType }) {
-      const [postCount, setPostCount] = useState(0);
-      const [productCount, setProductCount] = useState(0);
-    	
-      // 유저별 게시글 목록을 가져오는 API를 이용하여 게시글 수 계산...
-    
-    	// 상품 리스트 정보를 가져오는 API를 이용하여 행사 수 계산
-      const fetchProductCount = async () => {
-        const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${src}`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        });
-        const json = await res.json();
-        setProductCount(json.product.length);
-        //판매자 계정이 아닐경우 행사 길이가 0
-        userType === 'organization' ? setProductCount(json.product.length) : setProductCount(0);
-      };
-    
-    	// ...
-    
-      return (
-        <PostCountWrap>
-          <p>{postCount + productCount}</p>
-          <p>게시글 수</p>
-        </PostCountWrap>
-      );
-    }
-    ```
-    
+  };
+  return uploadProduct;
+};
+```
 
-- 행사 등록 시 축제와 체험 구분 및 가격을 기간으로 변경
-    - 행사 등록 시 축제와 체험 구분
-    
-    ```jsx
-    const [eventType, setEventType] = useState('');
-    
-    const uploadEvent = ProductUploadAPI({ eventName, eventPeriod, eventDetail, imgSrc, eventType });
-    
-    ```
-    
-    - 상품 등록 api 요청 시 “price”를 “행사 진행 기간”으로 사용하기 위해 2개의 string 값들을 1개의 number 값으로 변환하는 작업을 해주었습니다.
-    
-    ```jsx
-    상품등록 Req
-    {
-    		"product":{
-    				"itemName": String,
-    				"price": Number,//1원 이상
-    				"link": String,
-    				"itemImage": String
-    		}
-    }
-    ```
-    
-    - 2개의 Input (type=’date’)에서 사용자가 행사 시작일와 행사 종료일을 선택하면 변수 eventStartDate, eventEndDate에 각각 string 타입의 날짜가 저장됩니다. (ex. “2023-11-08”, “2023-11-09”)
-    
-    ```jsx
-    <PeriodInput
-    	type='date' id='event-period' 
-    	onChange={(e) => setEventStartDate(e.target.value)} value={eventStartDate}
-      pattern='yyyy-MM-dd' max='9999-12-31'>
-    </PeriodInput>
-    <PeriodInput 
-    	type='date' id='event-period'
-      onChange={(e) => setEventEndDate(e.target.value)} value={eventEndDate}
-      pattern='yyyy-MM-dd' max='9999-12-31'>
-    </PeriodInput>
-    ```
-    
-    - 함수 checkTwoDates를 사용하여 행사 시작일이 행사 종료일보다 늦지 않은지 체크합니다. 만약 시작일이 종료일보다 더 늦다면 안내 메세지를 출력합니다.
-    
-    ```jsx
-    const checkTwoDates = () => {
-        if (eventStartDate && eventEndDate && eventStartDate > eventEndDate) {
-          setPeriodInfoMsg('행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
-        } else {
-          setPeriodInfoMsg('');
-        }
-      };
-    ```
-    
-    - 행사 등록 폼 제출은 HeaderButton을 클릭하여 가능합니다. 시작일이 종료일보다 늦다면 버튼은 활성화 되지 않습니다.
-    
-    ```jsx
-    <HeaderButton onClick={submitProduct}
-                disabled={
-                  !imgSrc || eventName.length < 2 || !eventStartDate || !eventEndDate ||
-                  !eventDetail || !eventType || eventStartDate > eventEndDate
-                }> 저장
-    </HeaderButton>
-    ```
-    
-    - 함수 twoDatesIntoOneString을 사용하여 2개의 string 타입 날짜들을 1개의 number 타입 날짜로 변환 시켰습니다. 사용자가 시작 날짜 또는 종료 날짜를 선택하면 datesArr 배열에 담습니다. 그 후 map, parseInt, replaceAll을 사용하여 2개의 날짜에서 ‘-’를 빼고 숫자로 변환합니다. 마지막으로 join을 사용하여 2개의 날짜를 합쳐서 변수 eventPeriod에 담아 상품 등록 api 요청을 보냅니다. ex. 2023110820231109
-    
-    ```jsx
-     const twoDatesIntoOneString = () => {
-        const datesArr = [];
-        if (eventStartDate) {
-          datesArr.push(eventStartDate);
-        }
-        if (eventEndDate) {
-          datesArr.push(eventEndDate);
-        }
-    
-        const putDatesIntoArray = datesArr.map((date) => parseInt(date.replaceAll('-', '')));
-        // .sort((firstDate, lastDate) => firstDate - lastDate);
-        setEventPeriod(parseInt(putDatesIntoArray.join('')));
-      };
-    ```
-    
+#### 2. API 요청 시 가격을 기간으로 변경 사용
+- 상품 등록 api 요청 시 “price”를 “행사 진행 기간”으로 사용하기 위해 2개의 string 값들을 1개의 number 값으로 변환하는 작업을 해주었습니다.
 
-- 행사 리스트 렌더링
+```jsx
+상품등록 Req
+{
+		"product":{
+				"itemName": String,
+				"price": Number,//1원 이상
+				"link": String,
+				"itemImage": String
+		}
+}
+```
+
+- 2개의 Input (type=’date’)에서 사용자가 행사 시작일와 행사 종료일을 선택하면 변수 eventStartDate, eventEndDate에 각각 string 타입의 날짜가 저장됩니다. (ex. “2023-11-08”, “2023-11-09”)
+
+```jsx
+<PeriodInput
+	type='date' id='event-period' 
+	onChange={(e) => setEventStartDate(e.target.value)} value={eventStartDate}
+  pattern='yyyy-MM-dd' max='9999-12-31'>
+</PeriodInput>
+<PeriodInput 
+	type='date' id='event-period'
+  onChange={(e) => setEventEndDate(e.target.value)} value={eventEndDate}
+  pattern='yyyy-MM-dd' max='9999-12-31'>
+</PeriodInput>
+```
+
+- 함수 checkTwoDates를 사용하여 행사 시작일이 행사 종료일보다 늦지 않은지 체크합니다. 만약 시작일이 종료일보다 더 늦다면 안내 메세지를 출력합니다.
+
+```jsx
+const checkTwoDates = () => {
+    if (eventStartDate && eventEndDate && eventStartDate > eventEndDate) {
+      setPeriodInfoMsg('행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
+    } else {
+      setPeriodInfoMsg('');
+    }
+  };
+```
+
+- 행사 등록 폼 제출은 HeaderButton을 클릭하여 가능합니다. 시작일이 종료일보다 늦다면 버튼은 활성화 되지 않습니다.
+
+```jsx
+<HeaderButton onClick={submitProduct}
+            disabled={
+              !imgSrc || eventName.length < 2 || !eventStartDate || !eventEndDate ||
+              !eventDetail || !eventType || eventStartDate > eventEndDate
+            }> 저장
+</HeaderButton>
+```
+
+- 함수 twoDatesIntoOneString을 사용하여 2개의 string 타입 날짜들을 1개의 number 타입 날짜로 변환 시켰습니다. 사용자가 시작 날짜 또는 종료 날짜를 선택하면 datesArr 배열에 담습니다. 그 후 map, parseInt, replaceAll을 사용하여 2개의 날짜에서 ‘-’를 빼고 숫자로 변환합니다. 마지막으로 join을 사용하여 2개의 날짜를 합쳐서 변수 eventPeriod에 담아 상품 등록 api 요청을 보냅니다. ex. 2023110820231109
+
+```jsx
+ const twoDatesIntoOneString = () => {
+    const datesArr = [];
+    if (eventStartDate) {
+      datesArr.push(eventStartDate);
+    }
+    if (eventEndDate) {
+      datesArr.push(eventEndDate);
+    }
+
+    const putDatesIntoArray = datesArr.map((date) => parseInt(date.replaceAll('-', '')));
+    // .sort((firstDate, lastDate) => firstDate - lastDate);
+    setEventPeriod(parseInt(putDatesIntoArray.join('')));
+  };
+```
+
+### 행사 리스트 렌더링
 
 상품 등록에서 구분한 축제와 체험을 filter를 이용하여 구분했습니다.
 
@@ -440,6 +497,8 @@ PW: likefesta
                     return false;
                   }
 ```
+
+
 
 <br />
 
