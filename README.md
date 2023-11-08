@@ -281,8 +281,8 @@ return (
               ) : null}
             </Btns>
           </section>
-				{/* ... */}
-				{/* 일반 계정일 경우 행사 리스트 UI 제거 */}
+        {/* ... */}
+        {/* 일반 계정일 경우 행사 리스트 UI 제거 */}
         {userType === 'organization' ? <ProfileDetailProduct /> : null}
       {/* ... */}
   </Container>
