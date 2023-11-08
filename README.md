@@ -243,7 +243,9 @@ const JoinAPI = async (userInfo, userType) => {
 
 ### 회원 유형에 따른 프로필 페이지 구성
 
-- 회원 가입 시에 선택한 회원 유형(type)은 부모코드에서 프롭스로 받아왔습니다. 여기서 userType은 'organization’과 'Individual'로 구분됩니다.
+- 회원 가입 시에 선택한 회원 유형(type)은 부모코드에서 사용자의 데이터를 받아 프로필 페이지를 구성하는 컴포넌트의 프롭스로 전달했습니다.
+- 여기서 컴포넌트에게 프롭스로 전달할 사용자 정보를 담은 object는 userInfoDate이며 ProfileDetail 컴포넌트에게 그 값을 전달합니다.
+- userType은 'organization’과 'Individual'로 구분됩니다.
 
 ```jsx
 // YourProfile.jsx, MyProfile.jsx
@@ -287,7 +289,8 @@ return (
 )
 ```
 
-- 프롭스 정보를 사용해 조건부 렌더링으로 프로필 페이지를 구성했습니다.
+- ProfileDetail 컴포넌트에서는 프롭스 정보를 사용해 조건부 렌더링으로 프로필 페이지를 구성했습니다.
+- 프롭스 정보에서 profileUsername에 구분자 [i]나 [o]가 있다면 그 값을 지우며, 만약 userType이 organization이라면 화면에 출력되는 username 뒷쪽에 공식 인증 마크를 추가합니다.
 
 ```jsx
 // ProfileDetail.jsx
@@ -296,10 +299,10 @@ export default function ProfileDetail({ userInfoData, token }) {
 
   return (
     <ProfileDetailBox>
-			{/* ... */}
+        {/* ... */}
         <ProfileInfo>
           <div>
-						{/* 행사 리스트 출력  */}
+            {/* 행사 리스트 출력  */}
             <p>
               {userInfoData.userType === 'organization'
                 ? userInfoData.profileUsername.replace('[o]', '')
@@ -310,7 +313,7 @@ export default function ProfileDetail({ userInfoData, token }) {
         </ProfileInfo>
 
         <CountWrap>
-					{/* 회원 유형에 따른 게시글 수 차이*/}
+	{/* 회원 유형에 따른 게시글 수 차이*/}
           {userInfoData.profileAccountname &&
             userInfoData.profileImg &&
             userInfoData.profileUsername && (
@@ -328,7 +331,9 @@ export default function ProfileDetail({ userInfoData, token }) {
 }
 ```
 
-- 이때, 회원 유형에 따른 게시글 수의 차이를 주었습니다.
+- 그리고 회원 유형에 따른 게시글 수의 차이를 주었습니다.
+- 먼저 유저별 게시글 목록을 가져오는 API와 상품 리스트 정보를 가져오는 API를 이용하여 각각의 길이를 계산하였습니다. 그리고 그들의 합은 게시글 수의 값이 됩니다.
+- 이때, 판매자 계정이 아닐경우 상품 리스트 정보, 즉 행사 길이를 0으로 지정하였습니다.
 
 ```jsx
 // 게시글 수
@@ -338,7 +343,7 @@ function PostCnt({ src, token, userType }) {
 	
   // 유저별 게시글 목록을 가져오는 API를 이용하여 게시글 수 계산...
 
-	// 상품 리스트 정보를 가져오는 API를 이용하여 행사 수 계산
+  // 상품 리스트 정보를 가져오는 API를 이용하여 행사 수 계산
   const fetchProductCount = async () => {
     const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${src}`, {
       method: 'GET',
@@ -353,7 +358,7 @@ function PostCnt({ src, token, userType }) {
     userType === 'organization' ? setProductCount(json.product.length) : setProductCount(0);
   };
 
-	// ...
+  // ...
 
   return (
     <PostCountWrap>
