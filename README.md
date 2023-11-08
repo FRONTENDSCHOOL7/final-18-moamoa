@@ -645,7 +645,6 @@ const checkTwoDates = () => {
     ├─ .DS_Store
     ├─ .github
     │  ├─ ISSUE_TEMPLATE
-    │  │  ├─ 기능구현-재웅.md
     │  │  └─ 이슈-생성-템플릿.md
     │  └─ pull_request_template.md
     └─ moamoa
@@ -685,8 +684,7 @@ const checkTwoDates = () => {
           ├─ GlobalStyle.jsx
           ├─ Hooks
           │  ├─ Search
-          │  └─ Sign
-          │    
+          │  └─ Sign  
           ├─ Pages
           │  ├─ Chat
           │  ├─ Follow
