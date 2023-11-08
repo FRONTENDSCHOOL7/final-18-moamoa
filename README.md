@@ -163,8 +163,7 @@ PW: 123123
 <br />
 
 ## 5. 역할 분담
-
-<img width="100%" alt="역할분담" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/4e381503-faed-47d8-8a00-2e611661dd47">
+<img width="6710" alt="역할분담" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/118328426/743f233f-fc4d-49e5-8dbe-b88ea08b2ab4">
 
 
 <br />
