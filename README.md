@@ -544,31 +544,55 @@ const checkTwoDates = () => {
 
 ## 7. 협업 방법
 
+
 ### **Notion**
 
 ![노션](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c3ff20eb-caa5-48e2-b254-8e066d8f66f4) |![노션2](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/33d9467f-1662-4a6e-9da8-7b6018b7c210)
 --- | --- | 
 - 회의 전 회의록을 작성하여 계획과 일정을 미리 공유했습니다. 
 - 중요 사항들을 잊지 않도록 회의록에 기록했습니다. 
+- 우리가 사용하는 기술을 왜 사용하는지 명확하게 이해하기 위하여 서로 공부한 자료들을 공유하였습니다.
+- 오류나 어려움을 겪은 부분은 트러블 슈팅 페이지에 기록하여 조원들과 공유하였습니다.
 
-
-
+<br/>
 
 ### Discord
 
+![discord](https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/26a72e1c-18f7-4817-9597-fc06c1092c43)
+- 매일 아침 디스코드를 통해 데일리 스크럼을 진행했습니다.
+- 작업을 진행하다가 도움이 필요한 상황, 혹은 확인이 필요한 상황이 발생하면 즉각적으로 디스코드 회의실 내 채팅방을 이용하여 문제를 겪는 부분을 실시간으로 공유하며 작업하였습니다.
 
+<br/>
 
 ### Figma
+![figma](https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/5fd7271f-3ff1-4b88-ac8f-2eb231c4ea48)
+- 피그마를 이용하여 디자인 작업을 하였고, API 명세와 비교를 하였습니다.
+- 초반 작업은 전체적인 흐름의 이해를 위하여 작업 순서도를 그렸습니다.
+- 프로젝트를 진행하면서 변수로 작용할 부분은 어디가 될지 생각하며 디자인 수정을 거쳤습니다.
 
-
+<br/>
 
 ### **GitHub**
 
-- GitHub issue template
+#### GitHub Project
+![project](https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/27fec750-2cd3-4cc5-831d-84b9fa1bf24b)
+
+#### GitHub issue template
 
 
-- GitHub PR template
+<img width="778" alt="fsdfsd" src="https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/ee259aab-8202-48e0-808e-3f96e43b0d98"> |<img width="1036" alt="issue" src="https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/b5633eed-100f-454c-8d95-6820f4fbd4db">
+--- | --- | 
 
+
+
+
+#### GitHub PR template
+
+<img src='https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/e422d4b3-e977-40dd-8f3f-b4d99b18e8bd'> | <img src='https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/d1a789ee-1ef1-47ce-a703-4f4d5243ad6a'>
+--- | --- | 
+
+
+- 효율적인 협업과 작업 품질 향상을 위하여 깃헙 Project, Issue template, PR template을 사용하였습니다.
 
 <br />
 
