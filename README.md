@@ -640,7 +640,7 @@ const checkTwoDates = () => {
 <details>
 <summary>📁 MOAMOA</summary>
 <div markdown="1">
- ```
+ 
     📦
     ├─ .DS_Store
     ├─ .github
@@ -873,7 +873,6 @@ const checkTwoDates = () => {
           ├─ index.css
           └─ index.js
     
-    ```
 </div>
 </details>
 
