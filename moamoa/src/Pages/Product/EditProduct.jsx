@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { uploadImage } from '../../API/Img/UploadImageAPI';
 import ProductDetailAPI from '../../API/Product/ProductDetailAPI';
 import ProductEditAPI from '../../API/Product/ProductEditAPI';
@@ -34,9 +34,10 @@ const EditProduct = () => {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const productId = location.state;
-  const productParam = productId.product_id;
+  // const location = useLocation();
+  // const productId = location.state;
+  const params = useParams();
+  const productParam = params.product_id;
   const [isModified, setIsModified] = useState(false);
   const productDetail = ProductDetailAPI(productParam);
   const [eventStartDate, setEventStartDate] = useState('');

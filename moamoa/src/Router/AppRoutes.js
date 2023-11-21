@@ -73,7 +73,7 @@ export default function AppRoutes() {
         <Route path='/product' element={<AddProduct />} />
 
         {/* 상품 수정 */}
-        <Route path='/product/edit' element={<EditProduct />} />
+        <Route path='/product/edit/:product_id' element={<EditProduct />} />
 
         {/* 상품 리스트 */}
         <Route path='/product/list' element={<ProductList />} />
