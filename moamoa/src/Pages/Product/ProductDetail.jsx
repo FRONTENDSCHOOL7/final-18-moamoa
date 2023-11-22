@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import userToken from '../../Recoil/userTokenAtom';
 import styled from 'styled-components';
 import Header from '../../Components/Common/HeaderBasic';
@@ -9,19 +9,15 @@ import PostCardUser from '../../Components/Post/PostCardUser';
 import Footer from '../../Components/Common/Footer';
 
 export default function ProductDetail() {
-  const productState = atom({
-    key: 'productData',
-    default: null,
-  });
   const token = useRecoilValue(userToken);
-
-  const [productData, setProductData] = useRecoilState(productState);
-  const [productId, setProductId] = useState([]);
-  const [pageIndex, setPageIndex] = useState(null);
+  const params = useParams();
+  const productId = params.product_id
+  const [productInfo, setProductInfo] = useState();
+  const [productAuthorInfo, setProductAuthorInfo] = useState();
 
   useEffect(() => {
     const getProductData = async () => {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/product/?limit=400&skip=0`;
+      const reqUrl = `https://api.mandarin.weniv.co.kr/product/detail/${productId}`;
 
       try {
         const res = await fetch(reqUrl, {
@@ -33,10 +29,9 @@ export default function ProductDetail() {
         });
 
         if (res.status === 200) {
-          const product = await res.json();
-          setProductData(product);
-          const idList = product.product.map((item) => item._id);
-          setProductId(idList);
+          const productData = await res.json();
+          setProductInfo(productData.product);
+          setProductAuthorInfo(productData.product.author);
         } else {
           console.error('상세페이지를 불러오는데 실패했습니다.');
         }
@@ -48,17 +43,8 @@ export default function ProductDetail() {
     getProductData();
   }, []);
 
-  const params = useParams();
-  const pageIdx = params.product_id ? productId.indexOf(params.product_id) : -1;
-
-  useEffect(() => {
-    if (pageIdx !== -1) {
-      setPageIndex(pageIdx);
-    }
-  }, [pageIdx]);
-
-  const resdate = (pageIndex) => {
-    const date = productData.product[pageIndex].price.toString();
+  const productPeriod = () => {
+    const date = productInfo.price.toString();
     const start = date.slice(0, 8);
     const end = date.slice(8);
     const result = `${start.slice(0, 4)}.${start.slice(4, 6)}.${start.slice(6)} ~ ${end.slice(
@@ -70,7 +56,7 @@ export default function ProductDetail() {
 
   return (
     <>
-      {productData && pageIndex !== null && pageIndex !== -1 && (
+      { productInfo && (
         <>
           <Container>
             <FestivalContainer>
@@ -78,29 +64,29 @@ export default function ProductDetail() {
               <FestivalWrap>
                 <Frofile>
                   <PostCardUser
-                    url={productData.product[pageIndex].author.image}
-                    username={productData.product[pageIndex].author.username.slice(3)}
-                    accountname={productData.product[pageIndex].author.accountname}
+                    url={productAuthorInfo.image}
+                    username={productAuthorInfo.username.slice(3)}
+                    accountname={productAuthorInfo.accountname}
                   />
                   <AskBtn
-                    accountname={productData.product[pageIndex].author.accountname}
-                    userName={productData.product[pageIndex].author.username.slice(3)}
+                    accountname={productAuthorInfo.accountname}
+                    userName={productAuthorInfo.username.slice(3)}
                   />
                 </Frofile>
-                <FestivalImg src={productData.product[pageIndex]?.itemImage || ''} alt='행사' />
+                <FestivalImg src={productInfo.itemImage || ''} alt='행사' />
                 <InfoContainer>
                   <FestivalTitle>
-                    {productData.product[pageIndex]?.itemName.slice(3) ||
+                    {productInfo.itemName.slice(3) ||
                       '행사명을 조회할 수 없습니다.'}
                   </FestivalTitle>
                   <FestivalInfo>행사 소개</FestivalInfo>
                   <FestivalDesc>
-                    {productData.product[pageIndex]?.link || '행사 상세 설명을 조회할 수 없습니다.'}
+                    {productInfo?.link || '행사 상세 설명을 조회할 수 없습니다.'}
                   </FestivalDesc>
                   <FestivalInfo>행사 기간</FestivalInfo>
                   <FestivalDesc>
-                    {productData.product[pageIndex]
-                      ? resdate(pageIndex)
+                    {productInfo
+                      ? productPeriod()
                       : '행사 기간을 조회할 수 없습니다.'}
                   </FestivalDesc>
                 </InfoContainer>
