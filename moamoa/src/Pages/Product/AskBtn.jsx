@@ -19,9 +19,10 @@ export default function AskBtn({accountname, userName}) {
 
   const navigate = useNavigate();
   const params = useParams();
+  const productId = params.product_id
 
   const handleBtnClick = () => {
-    navigate('/product/edit', { state: params });
+    navigate(`/product/edit/${productId}`);
   };
   const handleChatRoom = () => {
     navigate(`/chat/${userName}`);
@@ -35,7 +36,7 @@ export default function AskBtn({accountname, userName}) {
       ) : (
         <>
           <Eidt onClick={handleBtnClick}>상품수정</Eidt>
-          <Eidt onClick={() => setShowModal(false)}>상품삭제</Eidt>
+          <Del onClick={() => setShowModal(false)}>상품삭제</Del>
           {!showModal && <DelCont><DeleteModal /></DelCont>}
         </>
       )}
@@ -72,6 +73,8 @@ const Eidt = styled.button`
   }
   margin-left: 1rem;
 `;
+
+const Del = styled(Eidt)``;
 
 const DelCont = styled.div`
   width: 100%;
