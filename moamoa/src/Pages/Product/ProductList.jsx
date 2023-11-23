@@ -44,7 +44,7 @@ export default function ProductList() {
 
     fetchData();
   }, [token, setProduct]);
-
+  console.log(product);
   //   리턴
   return (
     <ContainerPercent>
@@ -68,12 +68,6 @@ export default function ProductList() {
               ? product
 
                   .filter((item) => {
-                    if (item.price.toString().length >= 16) {
-                      return true;
-                    }
-                    return false;
-                  })
-                  .filter((item) => {
                     return item.itemName.includes('[f]');
                   })
                   .map((item, index) => (
@@ -95,16 +89,9 @@ export default function ProductList() {
                     </ProductBox>
                   ))
               : null}
-            {/* {console.log('콘솔로그는 뭘까:', product)} */}
-            {/* {console.log('아이디찾기:', product[0]._id)} */}
             {isExperienceActive
               ? product
-                  .filter((item) => {
-                    if (item.price.toString().length >= 16) {
-                      return true;
-                    }
-                    return false;
-                  })
+
                   .filter((item) => {
                     return item.itemName.includes('[e]');
                   })

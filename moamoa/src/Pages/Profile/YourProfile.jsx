@@ -79,12 +79,9 @@ function YourProfile() {
     isFollow,
   };
 
-
-
   const userName = userInfoData.profileUsername
     .slice(3, userInfoData.profileUsername.length)
     .replace(/ /g, '-');
-
 
   console.log(userType);
   // 현제 페이지 주소 복사
@@ -99,7 +96,7 @@ function YourProfile() {
         console.error('주소 복사 실패!: ', err);
       });
   }
-  
+
   return (
     <Container>
       <section>
@@ -119,7 +116,7 @@ function YourProfile() {
                 <button
                   type='button'
                   onClick={() => {
-                    navigate(`/chat/${cleanedChatUserName}`);
+                    navigate(`/chat/${userName}`);
                   }}
                 >
                   <img src={MsgIcon} alt='' />
