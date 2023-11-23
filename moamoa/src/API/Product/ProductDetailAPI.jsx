@@ -1,34 +1,25 @@
-import { useRecoilValue } from 'recoil';
-import { useCallback } from 'react';
-import userTokenAtom from '../../Recoil/userTokenAtom';
+export default function ProductDetailAPI(token, productId, getProductData) {
+  const getProductInfo = async () => {
+    const reqUrl = `https://api.mandarin.weniv.co.kr/product/detail/${productId}`;
 
-const ProductDetailAPI = (productId) => {
-  const reqURL = 'https://api.mandarin.weniv.co.kr';
-  const token = useRecoilValue(userTokenAtom);
-
-  const getProductDetail = useCallback(async () => {
     try {
-      const response = await fetch(reqURL + `/product/detail/${productId}`, {
+      const res = await fetch(reqUrl, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-type': 'application/json',
         },
       });
-      const data = await response.json();
 
-      return data;
-    } catch (error) {
-      if (error.response) {
-        const { status, data } = error.response;
-        if (status === 422 || status === 404) {
-          console.log(data.message);
-        }
+      if (res.status === 200) {
+        const data = await res.json();
+        await getProductData({ ...data });
+      } else {
+        console.error('페이지를 불러오는데 실패했습니다.');
       }
+    } catch (error) {
+      console.error('서버와 통신을 실패했습니다.', error);
     }
-  }, [productId, token]);
-
-  return getProductDetail;
-};
-
-export default ProductDetailAPI;
+  };
+  return getProductInfo();
+}
