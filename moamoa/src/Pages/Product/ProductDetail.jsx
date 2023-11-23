@@ -7,6 +7,7 @@ import Header from '../../Components/Common/HeaderBasic';
 import AskBtn from './AskBtn';
 import PostCardUser from '../../Components/Post/PostCardUser';
 import Footer from '../../Components/Common/Footer';
+import ProductDetailAPI from '../../API/Product/ProductDetailAPI'
 
 export default function ProductDetail() {
   const token = useRecoilValue(userToken);
@@ -15,33 +16,20 @@ export default function ProductDetail() {
   const [productInfo, setProductInfo] = useState();
   const [productAuthorInfo, setProductAuthorInfo] = useState();
 
-  useEffect(() => {
-    const getProductData = async () => {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/product/detail/${productId}`;
+  const getProductData = (data) => {
+    setProductInfo(data.product);
+    setProductAuthorInfo(data.product.author);
 
-      try {
-        const res = await fetch(reqUrl, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        });
+  }
 
-        if (res.status === 200) {
-          const productData = await res.json();
-          setProductInfo(productData.product);
-          setProductAuthorInfo(productData.product.author);
-        } else {
-          console.error('상세페이지를 불러오는데 실패했습니다.');
-        }
-      } catch (error) {
-        console.error('서버와 통신을 실패했습니다.', error);
-      }
-    };
+  const getProductInfo = () => ProductDetailAPI(token, productId, getProductData);
 
-    getProductData();
-  }, []);
+  useEffect(()=>{
+    const getData = async () => {
+      await getProductInfo();
+    }
+  getData();
+  },[])
 
   const productPeriod = () => {
     const date = productInfo.price.toString();
@@ -61,7 +49,7 @@ export default function ProductDetail() {
           <Container>
             <FestivalContainer>
               <Header />
-              <FestivalWrap>
+              <FestivalArticle>
                 <Frofile>
                   <PostCardUser
                     url={productAuthorInfo.image}
@@ -90,7 +78,7 @@ export default function ProductDetail() {
                       : '행사 기간을 조회할 수 없습니다.'}
                   </FestivalDesc>
                 </InfoContainer>
-              </FestivalWrap>
+              </FestivalArticle>
               <Footer />
             </FestivalContainer>
           </Container>
@@ -102,7 +90,7 @@ export default function ProductDetail() {
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #fff9e4;
 `;
 const FestivalContainer = styled.div`
@@ -114,8 +102,9 @@ const FestivalContainer = styled.div`
   background-color: #ffffff;
   overflow: hidden;
 `;
-const FestivalWrap = styled.div`
-  margin-top: 48px;
+const FestivalArticle = styled.article`
+  margin-top: 4.8rem;
+  margin-bottom: 7rem;
 `;
 const Frofile = styled.div`
   height: 4.2rem;
@@ -134,7 +123,7 @@ const FestivalImg = styled.img`
 const InfoContainer = styled.div`
   padding: 0 1.6rem;
 `;
-const FestivalTitle = styled.p`
+const FestivalTitle = styled.h3`
   font-size: 1.8rem;
   font-weight: bold;
   padding: 1.6rem 1.8rem;
