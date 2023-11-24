@@ -84,12 +84,9 @@ const useJoin = () => {
   };
 
   const handleJoin = async () => {
-    const res = await JoinAPI(userInfo, userType);
+    const res = await JoinAPI(userInfo, userType, setErrorMessage);
     if (res) {
-      setErrorMessage(`*` + res.message);
-      if (res.message === '회원가입 성공') {
-        navigate('/user/login');
-      }
+      res.message === '회원가입 성공' && navigate('/user/login');
     }
   };
 
