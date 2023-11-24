@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import userToken from '../../Recoil/userTokenAtom';
 import { uploadImage } from '../../API/Img/UploadImageAPI';
 import ProductDetailAPI from '../../API/Product/ProductDetailAPI';
 import ProductEditAPI from '../../API/Product/ProductEditAPI';
@@ -34,47 +36,51 @@ const EditProduct = () => {
   });
 
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const productId = location.state;
+  const token = useRecoilValue(userToken);
   const params = useParams();
-  const productParam = params.product_id;
+  const productId = params.product_id;
   const [isModified, setIsModified] = useState(false);
-  const productDetail = ProductDetailAPI(productParam);
   const [eventStartDate, setEventStartDate] = useState('');
   const [eventEndDate, setEventEndDate] = useState('');
   const [eventPeriod, setEventPeriod] = useState(1);
   const [periodInfoMsg, setPeriodInfoMsg] = useState('');
-  const { handleProductEdit } = ProductEditAPI(productParam, productInputs, eventType, eventPeriod);
+  const { handleProductEdit } = ProductEditAPI(
+    productId,
+    productInputs,
+    eventType,
+    eventPeriod,
+    token,
+  );
 
   const handleItemName = (item) => {
     item.includes('[f]') ? setEventType('festival') : setEventType('experience');
     return item.slice(3);
   };
 
+  const getProductData = (data) => {
+    setProductInputs((prev) => ({
+      product: {
+        ...prev.productInput,
+        itemName: handleItemName(data.product.itemName),
+        price: data.product.price,
+        link: data.product.link,
+        itemImage: data.product.itemImage,
+      },
+    }));
+
+    const date = data.product.price.toString();
+    setEventStartDate(`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`);
+    setEventEndDate(`${date.slice(8, 12)}-${date.slice(12, 14)}-${date.slice(14, 16)}`);
+  };
+
+  const getProductInfo = () => ProductDetailAPI(token, productId, getProductData);
+
   useEffect(() => {
-    const getProductDetailData = async () => {
-      const detailData = await productDetail();
-
-      if (detailData && Object.keys(detailData).length > 0) {
-        setProductInputs((prev) => ({
-          product: {
-            ...prev.productInput,
-            itemName: handleItemName(detailData.product.itemName),
-            price: detailData.product.price,
-            link: detailData.product.link,
-            itemImage: detailData.product.itemImage,
-          },
-        }));
-        const date = detailData.product.price.toString();
-        setEventStartDate(`${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`);
-        setEventEndDate(`${date.slice(8, 12)}-${date.slice(12, 14)}-${date.slice(14, 16)}`);
-      }
+    const getData = async () => {
+      await getProductInfo();
     };
-
-    getProductDetailData();
-  }, [productDetail]);
-
-  console.log(productInputs);
+    getData();
+  }, []);
 
   const handleChangeImage = async (e) => {
     const imageFile = e.target.files[0];
@@ -98,15 +104,12 @@ const EditProduct = () => {
     }));
   };
 
-  const checkTwoDates = () => {
+  useEffect(() => {
     if (eventStartDate && eventEndDate && eventStartDate > eventEndDate) {
       setPeriodInfoMsg('행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
     } else {
       setPeriodInfoMsg('');
     }
-  };
-
-  const twoDatesIntoOneString = () => {
     const datesArr = [];
     if (eventStartDate) {
       datesArr.push(eventStartDate);
@@ -116,13 +119,7 @@ const EditProduct = () => {
     }
 
     const putDatesIntoArray = datesArr.map((date) => parseInt(date.replaceAll('-', '')));
-    // .sort((firstDate, lastDate) => firstDate - lastDate);
     setEventPeriod(parseInt(putDatesIntoArray.join('')));
-  };
-
-  useEffect(() => {
-    checkTwoDates();
-    twoDatesIntoOneString();
   }, [eventStartDate, eventEndDate]);
 
   const editProduct = async (e) => {

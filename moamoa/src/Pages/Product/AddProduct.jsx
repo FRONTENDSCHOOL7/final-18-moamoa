@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import userTokenAtom from '../../Recoil/userTokenAtom';
 import { uploadImage } from '../../API/Img/UploadImageAPI';
 import ProductUploadAPI from '../../API/Product/ProductUploadAPI';
 import { Container } from '../../Components/Common/Container';
@@ -31,8 +33,16 @@ const AddProduct = () => {
   const [imgSrc, setImgSrc] = useState(DefaultImg);
   const [eventDetail, setEventDetail] = useState('');
   const [eventType, setEventType] = useState('');
+  const token = useRecoilValue(userTokenAtom);
 
-  const uploadEvent = ProductUploadAPI({ eventName, eventPeriod, eventDetail, imgSrc, eventType });
+  const uploadEvent = ProductUploadAPI({
+    token,
+    eventName,
+    eventPeriod,
+    eventDetail,
+    imgSrc,
+    eventType,
+  });
 
   const submitProduct = async (e) => {
     e.preventDefault();
@@ -46,15 +56,13 @@ const AddProduct = () => {
     setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
   };
 
-  const checkTwoDates = () => {
+  useEffect(() => {
     if (eventStartDate && eventEndDate && eventStartDate > eventEndDate) {
       setPeriodInfoMsg('행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
     } else {
       setPeriodInfoMsg('');
     }
-  };
 
-  const twoDatesIntoOneString = () => {
     const datesArr = [];
     if (eventStartDate) {
       datesArr.push(eventStartDate);
@@ -62,15 +70,9 @@ const AddProduct = () => {
     if (eventEndDate) {
       datesArr.push(eventEndDate);
     }
-
     const putDatesIntoArray = datesArr.map((date) => parseInt(date.replaceAll('-', '')));
-    // .sort((firstDate, lastDate) => firstDate - lastDate);
-    setEventPeriod(parseInt(putDatesIntoArray.join('')));
-  };
-
-  useEffect(() => {
-    checkTwoDates();
-    twoDatesIntoOneString();
+    const convertedEventPeriod = parseInt(putDatesIntoArray.join(''));
+    setEventPeriod(convertedEventPeriod);
   }, [eventStartDate, eventEndDate]);
 
   return (
