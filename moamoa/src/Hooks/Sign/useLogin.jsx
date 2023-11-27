@@ -62,6 +62,7 @@ const useLogin = () => {
 
     if (res && Object.prototype.hasOwnProperty.call(res, 'user')) {
       setUserToken(res.user.token);
+      localStorage.setItem('token', res.user.token);
       setIsLoginState(true);
       setAccountName(res.user.accountname);
       setUserName(res.user.username);
