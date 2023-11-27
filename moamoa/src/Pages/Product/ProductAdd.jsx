@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { uploadImage } from '../../API/Img/UploadImageAPI';
 import ProductUploadAPI from '../../API/Product/ProductUploadAPI';
+import useProgressPeriodEffect from '../../Hooks/Product/useProgressPeriodEffect';
+// Styled-Component 수정 예정
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
 import DefaultImg from '../../Assets/images/img-product-default.png';
@@ -23,32 +25,17 @@ import {
   StyledErrorMsg,
 } from '../../Components/Common/ProductSharedStyle';
 
-const AddProduct = () => {
+const ProductAdd = () => {
   const navigate = useNavigate();
-  const [eventName, setEventName] = useState('');
-  const [eventStartDate, setEventStartDate] = useState('');
-  const [eventEndDate, setEventEndDate] = useState('');
-  const [eventPeriod, setEventPeriod] = useState(1);
-  const [periodInfoMsg, setPeriodInfoMsg] = useState('');
-  const [imgSrc, setImgSrc] = useState(DefaultImg);
-  const [eventDetail, setEventDetail] = useState('');
-  const [eventType, setEventType] = useState('');
   const token = useRecoilValue(userTokenAtom);
 
-  const uploadEvent = ProductUploadAPI({
-    token,
-    eventName,
-    eventPeriod,
-    eventDetail,
-    imgSrc,
-    eventType,
-  });
-
-  const submitProduct = async (e) => {
-    e.preventDefault();
-    await uploadEvent();
-    navigate('/product/list');
-  };
+  const [imgSrc, setImgSrc] = useState(DefaultImg);
+  const [productType, setProductType] = useState('');
+  const [productName, setProductName] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const { progressPeriod, dateSelectionErrorMsg } = useProgressPeriodEffect(startDate, endDate);
+  const [description, setDescription] = useState('');
 
   const handleChangeImage = async (e) => {
     const imageFile = e.target.files[0];
@@ -56,42 +43,36 @@ const AddProduct = () => {
     setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
   };
 
-  useEffect(() => {
-    if (eventStartDate && eventEndDate && eventStartDate > eventEndDate) {
-      setPeriodInfoMsg('행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
-    } else {
-      setPeriodInfoMsg('');
-    }
+  const uploadProduct = ProductUploadAPI({
+    token,
+    imgSrc,
+    productType,
+    productName,
+    progressPeriod,
+    description,
+  });
 
-    const datesArr = [];
-    if (eventStartDate) {
-      datesArr.push(eventStartDate);
-    }
-    if (eventEndDate) {
-      datesArr.push(eventEndDate);
-    }
-    const putDatesIntoArray = datesArr.map((date) => parseInt(date.replaceAll('-', '')));
-    const convertedEventPeriod = parseInt(putDatesIntoArray.join(''));
-    setEventPeriod(convertedEventPeriod);
-  }, [eventStartDate, eventEndDate]);
+  const submitProduct = async (e) => {
+    e.preventDefault();
+    await uploadProduct();
+    navigate('/product/list');
+  };
+
+  const isDisabled =
+    !imgSrc ||
+    productName.length < 2 ||
+    !startDate ||
+    !endDate ||
+    !description ||
+    !productType ||
+    startDate > endDate;
 
   return (
     <>
       <Container>
         <Header>
           <Gobackbtn />
-          <HeaderButton
-            onClick={submitProduct}
-            disabled={
-              !imgSrc ||
-              eventName.length < 2 ||
-              !eventStartDate ||
-              !eventEndDate ||
-              !eventDetail ||
-              !eventType ||
-              eventStartDate > eventEndDate
-            }
-          >
+          <HeaderButton onClick={submitProduct} disabled={isDisabled}>
             저장
           </HeaderButton>
         </Header>
@@ -100,7 +81,7 @@ const AddProduct = () => {
           <ImgLayoutContainer>
             <h2>이미지 등록</h2>
             <ImageLabel htmlFor='upload-file'>
-              <Image src={imgSrc ? imgSrc : DefaultImg} alt={eventName} />
+              <Image src={imgSrc ? imgSrc : DefaultImg} alt={productName} />
             </ImageLabel>
             <input
               className='a11y-hidden'
@@ -112,21 +93,19 @@ const AddProduct = () => {
             <p>* 행사 관련 이미지를 등록해주세요.</p>
           </ImgLayoutContainer>
           <LayoutContainer>
-            <label htmlFor='category'>카테고리</label>
+            <h2>카테고리</h2>
             <div>
               <SelectedButton
-                id='category'
                 type='button'
-                onClick={() => setEventType('festival')}
-                selected={eventType === 'festival'}
+                onClick={() => setProductType('festival')}
+                selected={productType === 'festival'}
               >
                 축제
               </SelectedButton>
               <SelectedButton
-                id='category'
                 type='button'
-                onClick={() => setEventType('experience')}
-                selected={eventType === 'experience'}
+                onClick={() => setProductType('experience')}
+                selected={productType === 'experience'}
               >
                 체험
               </SelectedButton>
@@ -138,10 +117,8 @@ const AddProduct = () => {
               id='event-name'
               type='text'
               placeholder='2~22자 이내여야 합니다.'
-              pattern='.{2,22}'
-              title='2~22자 이내여야 합니다.'
-              onChange={(e) => setEventName(e.target.value)}
-              value={eventName}
+              onChange={(e) => setProductName(e.target.value)}
+              value={productName}
               minLength={2}
               maxLength={22}
             ></EventNameInput>
@@ -152,29 +129,29 @@ const AddProduct = () => {
               <PeriodInput
                 type='date'
                 id='event-period'
-                onChange={(e) => setEventStartDate(e.target.value)}
-                value={eventStartDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                value={startDate}
                 pattern='yyyy-MM-dd'
                 max='9999-12-31'
               ></PeriodInput>
               <PeriodInput
                 type='date'
                 id='event-period'
-                onChange={(e) => setEventEndDate(e.target.value)}
-                value={eventEndDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                value={endDate}
                 pattern='yyyy-MM-dd'
                 max='9999-12-31'
               ></PeriodInput>
             </PeriodInputContainer>
-            <StyledErrorMsg>{periodInfoMsg}</StyledErrorMsg>
+            <StyledErrorMsg>{dateSelectionErrorMsg}</StyledErrorMsg>
           </LayoutContainer>
           <LayoutContainer>
             <label htmlFor='event-detail'>상세 설명</label>
             <Textarea
               id='event-detail'
               placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
-              onChange={(e) => setEventDetail(e.target.value)}
-              value={eventDetail}
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
             ></Textarea>
           </LayoutContainer>
         </Form>
@@ -183,4 +160,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default ProductAdd;
