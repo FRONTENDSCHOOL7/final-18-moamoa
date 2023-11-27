@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const ProductUploadAPI = (inputValue) => {
   const reqURL = 'https://api.mandarin.weniv.co.kr/product';
-  const { token, eventName, eventPeriod, eventDetail, imgSrc, eventType } = inputValue;
+  const { token, imgSrc, productType, productName, progressPeriod, description } = inputValue;
 
   const uploadProduct = async () => {
     try {
@@ -10,9 +10,9 @@ const ProductUploadAPI = (inputValue) => {
         reqURL,
         {
           product: {
-            itemName: eventType === 'festival' ? `[f]${eventName}` : `[e]${eventName}`,
-            price: eventPeriod,
-            link: eventDetail,
+            itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
+            price: progressPeriod,
+            link: description,
             itemImage: imgSrc,
           },
         },

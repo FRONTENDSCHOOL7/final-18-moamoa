@@ -9,6 +9,12 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 18px;
   background-color: #fff;
+
+  h2,
+  label {
+    color: #767676;
+    margin-bottom: 9px;
+  }
 `;
 
 export const Header = styled.header`
@@ -31,11 +37,6 @@ export const HeaderButton = styled.button`
 
 export const ImgLayoutContainer = styled.div`
   position: relative;
-
-  h2 {
-    color: #767676;
-    margin-bottom: 18px;
-  }
 
   p {
     color: #979797;
@@ -72,11 +73,6 @@ export const Image = styled.img`
 export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  label {
-    color: #767676;
-    margin-bottom: 9px;
-  }
 `;
 
 export const SelectedButton = styled.button`

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ProductEditAPI = (productId, productInputs, eventType, eventPeriod, token) => {
+const ProductEditAPI = (token, productId, productInputs, productType, progressPeriod) => {
   const reqURL = 'https://api.mandarin.weniv.co.kr/product';
 
   const handleProductEdit = async () => {
@@ -11,10 +11,10 @@ const ProductEditAPI = (productId, productInputs, eventType, eventPeriod, token)
           product: {
             ...productInputs.product,
             itemName:
-              eventType === 'festival'
+              productType === 'festival'
                 ? `[f]${productInputs.product.itemName}`
                 : `[e]${productInputs.product.itemName}`,
-            price: eventPeriod,
+            price: progressPeriod,
           },
         },
         {
