@@ -92,3 +92,26 @@ export const unheartPost = async (postId) => {
     console.error('API 응답에 실패하였습니다.', error);
   }
 };
+
+// 홈 피드 게시글 목록
+export const homePostList = async () => {
+  try {
+    const res = await authInstance.get('/post/feed');
+    if (res.status === 200) {
+      const result = await res.data;
+      return result;
+    } else {
+      console.error('페이지를 불러오는데 실패했습니다.');
+    }
+  } catch (error) {
+    console.error('서버와 통신을 실패했습니다.', error);
+  }
+};
+
+
+// 마이페이지 나의 게시글 목록
+export const postList = async (accountName) => {
+  const res = await authInstance.get(`https://api.mandarin.weniv.co.kr/post/${accountName}/userpost`);
+  const data = await res.data();
+  return data;
+};

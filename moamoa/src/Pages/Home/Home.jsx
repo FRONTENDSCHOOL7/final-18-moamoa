@@ -1,43 +1,22 @@
-import React, { useEffect } from 'react';
-import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
-import { useRecoilValue, useRecoilState } from 'recoil';
+import React, { useEffect, useState } from 'react';
 import HomePostCardList from '../../Components/Home/HomePostCardList';
-import followPostAtom from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
 import styled from 'styled-components';
 import HomeFeed from './HomeFeed';
 import Header from '../../Components/Common/HeaderBasic';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
+import { homePostList } from '../../API/Post/PostAPI';
 
 export default function Home() {
-  const [posts, setPosts] = useRecoilState(followPostAtom);
-  const token = useRecoilValue(userToken);
+
+  const [posts, setPosts] = useState();
 
   useEffect(() => {
-    const getPostInfo = async () => {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/post/feed`;
-
-      try {
-        const res = await fetch(reqUrl, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        });
-
-        if (res.status === 200) {
-          const result = await res.json();
-          setPosts(result.posts);
-        } else {
-          console.error('페이지를 불러오는데 실패했습니다.');
-        }
-      } catch (error) {
-        console.error('서버와 통신을 실패했습니다.', error);
-      }
-    };
-
-    getPostInfo();
+    const getHomePostList = async () => {
+      const postListData = () => homePostList();
+      setPosts(postListData.posts);
+    } 
+    getHomePostList();
   }, []);
 
   return (
