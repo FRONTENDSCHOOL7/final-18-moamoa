@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     const getHomePostList = async () => {
-      const postListData = () => homePostList();
+      const postListData = await homePostList();
       setPosts(postListData.posts);
     } 
     getHomePostList();
