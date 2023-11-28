@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { Container } from '../../Components/Common/Container';
+import { Container } from '../Common/Container';
 
 const spin = keyframes`
   0% { opacity: 1 }
@@ -90,7 +90,7 @@ const SpinnerDiv = styled.div`
   }
 `;
 
-const LoaderProductList = () => {
+const ProductListLoading = () => {
   return (
     <Container>
       <Spinner>
@@ -102,4 +102,4 @@ const LoaderProductList = () => {
   );
 };
 
-export default LoaderProductList;
+export default ProductListLoading;
