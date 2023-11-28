@@ -4,19 +4,19 @@ import more from '../../Assets/icons/s-icon-more-vertical.svg'
 import FooterModal from '../Modal/FooterModal';
 import PropTypes from 'prop-types';
 
-MyPostMoreBtn.propTypes = {
+PostMoreBtn.propTypes = {
   postid: PropTypes.string,
   accountname: PropTypes.string
 }
 
-export default function MyPostMoreBtn({accountname, postid}) {
+export default function PostMoreBtn({accountname, postid}) {
   const [showModal, setShowModal] = useState(true);
   const openModal = () => {
     setShowModal((prev)=>!prev)    
   }
   return (
     <>
-      <PostMoreBtn onClick={openModal}><MoreImg src={more} alt="더보기" /></PostMoreBtn>
+      <MoreBtn onClick={openModal}><MoreImg src={more} alt="더보기" /></MoreBtn>
       { !showModal ? <FooterModal postid={postid} accountname={accountname} closeFooter={showModal} setCloseFooter={setShowModal}/>:null}
     </>
   )
@@ -24,7 +24,7 @@ export default function MyPostMoreBtn({accountname, postid}) {
   
 }
 
-const PostMoreBtn = styled.button`
+const MoreBtn = styled.button`
   width: 6rem;
   height: 1.8rem;
   cursor: pointer;

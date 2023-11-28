@@ -3,6 +3,8 @@
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
   마지막 수정 날까: 2023.11.02
+
+  수정자: 장수연 (2023.11.28)
 */
 
 import React, { useState, useEffect } from 'react';
@@ -12,8 +14,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import HomePostCardList from '../Home/HomePostCardList';
-import PostCardList from '../Post/PostCardList';
+import PostList from '../Post/PostList';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
+import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 
 import Hamburger from '../../Assets/icons/icon-post-list-on.svg';
 import Bento from '../../Assets/icons/icon-post-album-on.svg';
@@ -21,27 +24,15 @@ import Bento from '../../Assets/icons/icon-post-album-on.svg';
 export default function ProfileDetailPost() {
   const location = useLocation();
   const token = useRecoilValue(userToken);
-  const userAccountname = location.pathname.replace('/profile/', '');
+  const lastPath = location.pathname.replace('/profile/', '');
   const navigate = useNavigate();
 
   const [myPostList, setMyPostList] = useState([]);
   const [view, setView] = useState('PostList');
 
-  const getMyAcnt = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/user/myinfo`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    return json.user['accountname'];
-  };
-
   const postList = async (accountName) => {
-    const acnt = userAccountname === 'myInfo' ? accountName : userAccountname;
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/post/${acnt}/userpost`, {
+    const path = lastPath === 'myInfo' ? accountName : lastPath;
+    const res = await fetch(`https://api.mandarin.weniv.co.kr/post/${path}/userpost`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -54,12 +45,12 @@ export default function ProfileDetailPost() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const accountName = await getMyAcnt();
+    const getData = async () => {
+      const myProfileInfo = await getMyProfileData();
+      const accountName = myProfileInfo.user['accountname']; 
       postList(accountName);
     };
-
-    fetchData();
+    getData();
   }, []);
 
   const handlePostClick = (postId) => {
@@ -85,8 +76,8 @@ export default function ProfileDetailPost() {
               <ul>
                 {myPostList.map((item) => {
                   // 여기서 myInfo 조건을 확인하여 다른 컴포넌트 렌더링
-                  return userAccountname === 'myInfo' ? (
-                    <PostCardList key={item.id} post={item} />
+                  return lastPath === 'myInfo' ? (
+                    <PostList key={item.id} post={item} />
                   ) : (
                     <HomePostCardList key={item.id} post={item} />
                   );

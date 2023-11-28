@@ -13,17 +13,17 @@ export default function Home() {
 
   useEffect(() => {
     const getHomePostList = async () => {
-      const postListData = () => homePostList();
+      const postListData = await homePostList();
       setPosts(postListData.posts);
     } 
-    getHomePostList();
+      getHomePostList();
   }, []);
 
   return (
     <Container>
       <Header />
       <HomeWrap>
-        {posts.length !== 0 ? (
+        {posts ? (
           <HomeContainer>
             <PostBg>
               <PostList>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import PostCardUser from './PostCardUser';
-import MyPostMoreBtn from '../Post/MyPostMoreBtn';
-import YourPostMoreBtn from '../Post/YourPostMoreBtn';
+import ArticleUserProfile from '../Common/ArticleUserProfile';
+import MyPostMoreBtn from './PostMoreBtn';
+import YourPostMoreBtn from './YourPostMoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
@@ -13,11 +13,11 @@ import accountNameAtom from '../../Recoil/accountNameAtom';
 import PropTypes from 'prop-types';
 import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
 
-PostCardDetail.propTypes = {
+PostItem.propTypes = {
   post: PropTypes.object,
 };
 
-export default function PostCardDetail({ post }) {
+export default function PostItem({ post }) {
   const postItemInfo = post;
   const postAuthorInfo = post.author;
 
@@ -64,7 +64,7 @@ export default function PostCardDetail({ post }) {
         <PostList>
           <PostArticle>
             <Frofile>
-              <PostCardUser
+              <ArticleUserProfile
                 url={postAuthorInfo.image}
                 username={postAuthorInfo.username}
                 accountname={accountName}
