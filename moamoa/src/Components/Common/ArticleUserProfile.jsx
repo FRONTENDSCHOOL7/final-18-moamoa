@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
-PostCardUser.propTypes = {
+ArticleUserProfile.propTypes = {
   url: PropTypes.string,
   username: PropTypes.string,
   accountname: PropTypes.string,
   loginAccountName: PropTypes.string
 }
 
-export default function PostCardUser({url, username, accountname, loginAccountName }) {
+export default function ArticleUserProfile({url, username, accountname, loginAccountName }) {
   return (
     <Container>
         <>

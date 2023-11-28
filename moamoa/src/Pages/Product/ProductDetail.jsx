@@ -5,7 +5,7 @@ import userToken from '../../Recoil/userTokenAtom';
 import styled from 'styled-components';
 import Header from '../../Components/Common/HeaderBasic';
 import AskBtn from './AskBtn';
-import PostCardUser from '../../Components/Post/PostCardUser';
+import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
 import Footer from '../../Components/Common/Footer';
 import ProductDetailAPI from '../../API/Product/ProductDetailAPI'
 
@@ -51,7 +51,7 @@ export default function ProductDetail() {
               <Header />
               <FestivalArticle>
                 <Frofile>
-                  <PostCardUser
+                  <ArticleUserProfile
                     url={productAuthorInfo.image}
                     username={productAuthorInfo.username.slice(3)}
                     accountname={productAuthorInfo.accountname}

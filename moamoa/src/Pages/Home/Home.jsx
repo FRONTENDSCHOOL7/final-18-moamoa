@@ -16,14 +16,14 @@ export default function Home() {
       const postListData = await homePostList();
       setPosts(postListData.posts);
     } 
-    getHomePostList();
+      getHomePostList();
   }, []);
 
   return (
     <Container>
       <Header />
       <HomeWrap>
-        {posts.length !== 0 ? (
+        {posts ? (
           <HomeContainer>
             <PostBg>
               <PostList>
