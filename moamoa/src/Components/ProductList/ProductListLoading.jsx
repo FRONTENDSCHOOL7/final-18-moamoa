@@ -30,7 +30,7 @@ const SpinnerDiv = styled.div`
 
   &:nth-child(1) {
     transform: rotate(0deg);
-    animation-delay: -0.9166666666666666s;
+    animation-delay: -0.9166666666666665s;
     background: #767676;
   }
   &:nth-child(2) {
