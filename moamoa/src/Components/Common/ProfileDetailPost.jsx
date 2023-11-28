@@ -8,22 +8,19 @@
 */
 
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import HomePostCardList from '../Home/HomePostCardList';
 import PostList from '../Post/PostList';
-import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
+import { userPostList } from '../../API/Post/PostAPI';
 
 import Hamburger from '../../Assets/icons/icon-post-list-on.svg';
 import Bento from '../../Assets/icons/icon-post-album-on.svg';
 
 export default function ProfileDetailPost() {
   const location = useLocation();
-  const token = useRecoilValue(userToken);
   const lastPath = location.pathname.replace('/profile/', '');
   const navigate = useNavigate();
 
@@ -31,17 +28,10 @@ export default function ProfileDetailPost() {
   const [view, setView] = useState('PostList');
 
   const postList = async (accountName) => {
-    const path = lastPath === 'myInfo' ? accountName : lastPath;
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/post/${path}/userpost`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    console.log(json);
-    setMyPostList(json.post);
+
+  const path = lastPath === 'myInfo' ? accountName : lastPath;
+    const res = await userPostList(path);
+    setMyPostList(res.post);
   };
 
   useEffect(() => {
@@ -75,12 +65,7 @@ export default function ProfileDetailPost() {
               {/* 햄버거 버튼 */}
               <ul>
                 {myPostList.map((item) => {
-                  // 여기서 myInfo 조건을 확인하여 다른 컴포넌트 렌더링
-                  return lastPath === 'myInfo' ? (
-                    <PostList key={item.id} post={item} />
-                  ) : (
-                    <HomePostCardList key={item.id} post={item} />
-                  );
+                  return <PostList key={item.id} post={item} />
                 })}
               </ul>
             </HamView>

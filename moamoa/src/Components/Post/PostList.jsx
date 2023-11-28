@@ -13,7 +13,7 @@ import accountNameAtom from '../../Recoil/accountNameAtom';
 import { useRecoilValue } from 'recoil';
 
 export default function PostList(post) {
-  const accountAtom = useRecoilValue(accountNameAtom);
+  const loginAccountName = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(false);
   const postItem = post.post;
   const postAuthorInfo = postItem.author;
@@ -62,16 +62,15 @@ export default function PostList(post) {
                 url={profileImgUrl}
                 username={postAuthorInfo.username}
                 accountname={postAuthorInfo.accountname}
-                loginAccountName={accountAtom}
+                loginAccountName={loginAccountName}
               />
-
               <PostMoreBtn
                 postid={postId}
                 accountname={postAuthorInfo.accountname}
                 onClick={() => {
                   setShowModal(true);
-                  console.log(showModal);
                 }}
+                showModalBool={showModal}
               />
             </Frofile>
             <Link to={postDetailUrl}>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ArticleUserProfile from '../Common/ArticleUserProfile';
-import MyPostMoreBtn from './PostMoreBtn';
-import YourPostMoreBtn from './YourPostMoreBtn';
+import PostMoreBtn from './PostMoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
@@ -21,7 +20,7 @@ export default function PostItem({ post }) {
   const postItemInfo = post;
   const postAuthorInfo = post.author;
 
-  const accountAtom = useRecoilValue(accountNameAtom);
+  const loginAccountName = useRecoilValue(accountNameAtom);
 
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postItemInfo.heartCount);
@@ -68,27 +67,16 @@ export default function PostItem({ post }) {
                 url={postAuthorInfo.image}
                 username={postAuthorInfo.username}
                 accountname={accountName}
-                loginAccountName={accountAtom}
+                loginAccountName={loginAccountName}
               />
-              {accountAtom === accountName ? (
-                <MyPostMoreBtn
-                  accountname={accountName}
-                  postid={postId}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowModal(true);
-                    console.log(showModal);
-                  }}
-                />
-              ) : (
-                <YourPostMoreBtn
-                  accountname={accountName}
-                  onClick={() => {
-                    setShowModal(true);
-                    console.log(showModal);
-                  }}
-                />
-              )}
+              <PostMoreBtn
+                postid={postId}
+                accountname={postAuthorInfo.accountname}
+                onClick={() => {
+                  setShowModal(true);
+                }}
+                showModalBool={showModal}
+              />
             </Frofile>
             <PostDesc>{postItemInfo.content}</PostDesc>
             {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
