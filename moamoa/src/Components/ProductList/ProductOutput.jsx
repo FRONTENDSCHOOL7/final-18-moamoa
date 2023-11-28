@@ -21,7 +21,6 @@ function formatEventDate(dateString) {
 
 export default function ProductBundle() {
   const [product] = useRecoilState(ProductAtom);
-
   const [festivalActive, experienceActive] = useRecoilState(
     festivalActiveState,
     experienceActiveState,
