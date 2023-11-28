@@ -7,9 +7,7 @@ import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
 import commentBg from '../../Assets/icons/message-circle.svg';
 import Datacalc from '../Common/datecalc';
-
-import HeartCountDownAPI from '../../API/Post/HeartCountDownAPI';
-import HeartCountUpAPI from '../../API/Post/HeartCountUpAPI';
+import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
 import accountNameAtom from '../../Recoil/accountNameAtom';
 import { useRecoilValue } from 'recoil';
 
@@ -27,16 +25,17 @@ export default function HomePostCardList(post) {
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postInfo.heartCount);
 
-  const heartPost = HeartCountUpAPI(postId);
+
+  const heartedPost = () => heartPost(postId);
 
   const hearted = async () => {
-    await heartPost();
+    await heartedPost();
   };
 
-  const ununheartPost = HeartCountDownAPI(postId);
+  const unheartedPost = () => unheartPost(postId);
 
   const unhearted = async () => {
-    await ununheartPost();
+    await unheartedPost();
   };
 
   const handleHeartCount = () => {

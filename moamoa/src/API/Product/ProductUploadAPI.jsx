@@ -1,31 +1,27 @@
-import { useRecoilValue } from 'recoil';
 import axios from 'axios';
-import userTokenAtom from '../../Recoil/userTokenAtom';
 
 const ProductUploadAPI = (inputValue) => {
   const reqURL = 'https://api.mandarin.weniv.co.kr/product';
-  const token = useRecoilValue(userTokenAtom);
-  const { eventName, eventPeriod, eventDetail, imgSrc, eventType } = inputValue;
+  const { token, imgSrc, productType, productName, progressPeriod, description } = inputValue;
 
   const uploadProduct = async () => {
     try {
-      await axios({
-        method: 'post',
-        url: reqURL,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
+      await axios.post(
+        reqURL,
+        {
           product: {
-            itemName: eventType === 'festival' ? `[f]${eventName}` : `[e]${eventName}`,
-            price: eventPeriod,
-            link: eventDetail,
+            itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
+            price: progressPeriod,
+            link: description,
             itemImage: imgSrc,
           },
         },
-      }).then((res) => {
-        console.log(res.data);
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
     } catch (error) {
       if (error.response) {
         const { status, data } = error.response;
@@ -35,6 +31,7 @@ const ProductUploadAPI = (inputValue) => {
       }
     }
   };
+
   return uploadProduct;
 };
 

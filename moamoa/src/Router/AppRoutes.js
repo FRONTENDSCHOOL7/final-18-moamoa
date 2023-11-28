@@ -15,8 +15,8 @@ import FollowerList from '../Pages/Follow/FollowerList';
 
 import ProductDetail from '../Pages/Product/ProductDetail';
 import ProductList from '../Pages/Product/ProductList';
-import AddProduct from '../Pages/Product/AddProduct';
-import EditProduct from '../Pages/Product/EditProduct';
+import ProductAdd from '../Pages/Product/ProductAdd';
+import ProductEdit from '../Pages/Product/ProductEdit';
 
 import UploadPost from '../Pages/Post/UploadPost';
 import EditPost from '../Pages/Post/EditPost';
@@ -70,10 +70,10 @@ export default function AppRoutes() {
         <Route path='profile/:accountname/following' element={<FollowingList />} />
 
         {/* 상품 등록 */}
-        <Route path='/product' element={<AddProduct />} />
+        <Route path='/product' element={<ProductAdd />} />
 
         {/* 상품 수정 */}
-        <Route path='/product/edit' element={<EditProduct />} />
+        <Route path='/product/edit/:product_id' element={<ProductEdit />} />
 
         {/* 상품 리스트 */}
         <Route path='/product/list' element={<ProductList />} />

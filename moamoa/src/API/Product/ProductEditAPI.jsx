@@ -1,29 +1,28 @@
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
+import axios from 'axios';
 
-const ProductEditAPI = (productParam, productInputs, eventType, eventPeriod) => {
+const ProductEditAPI = (token, productId, productInputs, productType, progressPeriod) => {
   const reqURL = 'https://api.mandarin.weniv.co.kr/product';
-  const token = useRecoilValue(userTokenAtom);
 
   const handleProductEdit = async () => {
     try {
-      await fetch(`${reqURL}/${productParam}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
+      await axios.put(
+        `${reqURL}/${productId}`,
+        {
           product: {
             ...productInputs.product,
             itemName:
-              eventType === 'festival'
+              productType === 'festival'
                 ? `[f]${productInputs.product.itemName}`
                 : `[e]${productInputs.product.itemName}`,
-            price: eventPeriod,
+            price: progressPeriod,
           },
-        }),
-      });
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
     } catch (error) {
       if (error.response) {
         const { status, data } = error.response;

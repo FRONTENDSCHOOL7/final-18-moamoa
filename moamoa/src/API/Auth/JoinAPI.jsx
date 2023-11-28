@@ -1,30 +1,26 @@
-const JoinAPI = async (userInfo, userType) => {
+import axios from 'axios';
+
+const JoinAPI = async (userInfo, userType, setErrorMessage) => {
   const reqUrl = 'https://api.mandarin.weniv.co.kr/user';
 
   try {
-    const response = await fetch(`${reqUrl}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await axios.post(reqUrl, {
+      ...userInfo,
+      user: {
+        ...userInfo.user,
+        username:
+          userType === 'individual'
+            ? `[i]${userInfo.user.username}`
+            : `[o]${userInfo.user.username}`,
       },
-      body: JSON.stringify({
-        ...userInfo,
-        user: {
-          ...userInfo.user,
-          username:
-            userType === 'individual'
-              ? `[i]${userInfo.user.username}`
-              : `[o]${userInfo.user.username}`,
-        },
-      }),
     });
-    const result = await response.json();
-    console.log(result);
-    return result;
+    return response.data;
   } catch (error) {
     if (error.response) {
       const { status, data } = error.response;
-      if (status === 422 || status === 404) {
+      if (status === 422) {
+        setErrorMessage(`*` + data.message);
+      } else {
         console.log(data.message);
       }
     }

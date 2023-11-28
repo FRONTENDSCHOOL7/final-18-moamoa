@@ -11,8 +11,7 @@ import { useRecoilValue } from 'recoil';
 import accountNameAtom from '../../Recoil/accountNameAtom';
 
 import PropTypes from 'prop-types';
-import HeartCountDownAPI from '../../API/Post/HeartCountDownAPI';
-import HeartCountUpAPI from '../../API/Post/HeartCountUpAPI';
+import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
 
 PostCardDetail.propTypes = {
   post: PropTypes.object,
@@ -33,16 +32,16 @@ export default function PostCardDetail({ post }) {
   const accountName = postAuthorInfo.accountname;
   const postId = postItemInfo.id;
 
-  const heartPost = HeartCountUpAPI(postId);
+  const heartedPost = () => heartPost(postId);
 
   const hearted = async () => {
-    await heartPost();
+    await heartedPost();
   };
 
-  const ununheartPost = HeartCountDownAPI(postId);
+  const unheartedPost = () => unheartPost(postId);
 
   const unhearted = async () => {
-    await ununheartPost();
+    await unheartedPost();
   };
 
   const handleHeartCount = () => {
@@ -71,19 +70,6 @@ export default function PostCardDetail({ post }) {
                 accountname={accountName}
                 loginAccountName={accountAtom}
               />
-              {accountAtom === accountName ? (
-                <MyPostMoreBtn
-                  accountname={accountName}
-                  postid={postId}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowModal(true);
-                    console.log(showModal);
-                  }}
-                />
-              ) : (
-                <YourPostMoreBtn accountname={accountName} loginAccountName={accountAtom} />
-              )}
               {accountAtom === accountName ? (
                 <MyPostMoreBtn
                   accountname={accountName}

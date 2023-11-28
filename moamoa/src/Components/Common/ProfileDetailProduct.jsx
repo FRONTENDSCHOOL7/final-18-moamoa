@@ -16,9 +16,10 @@ import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 import leftBtn from '../../Assets/images/left-vector.png';
 import rightBtn from '../../Assets/images/right-vector.png';
 import CloseIcon from '../../Assets/icons/x.png';
+import NoticeModal from '../Modal/NoticeModal';
 
 // 상품 수정 페이지 이동 테스트 필요
-const ConfirmDelModal = ({ delProduct, closeModal }) => {
+const ConfirmDelModal = ({ delProduct, closeModal, showNoticeModal }) => {
   return (
     <ConfirmModal>
       <Deltext>정말 삭제하시겠습니까?</Deltext>
@@ -26,19 +27,22 @@ const ConfirmDelModal = ({ delProduct, closeModal }) => {
         <DelBtn onClick={delProduct}>삭제</DelBtn>
         <CancelBtn onClick={closeModal}>취소</CancelBtn>
       </BtnWrap>
+      {!showNoticeModal && <NoticeModal />}
     </ConfirmModal>
   );
 };
 ConfirmDelModal.propTypes = {
   delProduct: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  showNoticeModal: PropTypes.bool.isRequired,
 };
 
-function MyProductClick({ productId, closeModal }) {
+function MyProductClick({ productId, closeModal, fetchData }) {
   const navigate = useNavigate();
   const token = useRecoilValue(userToken);
 
   const [showConfirmDelModal, setShowConfirmDelModal] = useState(false);
+  const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   const delProduct = async () => {
     const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${productId}`, {
@@ -51,7 +55,12 @@ function MyProductClick({ productId, closeModal }) {
     const json = await res.json();
     console.log(json);
     closeModal();
-    alert('행사가 삭제되었습니다.');
+    // window.location.reload();
+    // 추후 삭제 알림 모달 활성화 되도록 수정할 것
+    setShowNoticeModal(false);
+    // await setTimeout(() => {
+    // }, 1000);
+    fetchData();
   };
 
   const openConfirmDelModal = () => {
@@ -72,7 +81,7 @@ function MyProductClick({ productId, closeModal }) {
             <img src={CloseIcon} alt='닫기' />
           </Btn>
           <BtnDel type='button' onClick={openConfirmDelModal}>
-            상품삭제
+            삭제
           </BtnDel>
           <BtnModify
             type='button'
@@ -88,12 +97,16 @@ function MyProductClick({ productId, closeModal }) {
               navigate(`/product/detail/${productId}`);
             }}
           >
-            상품 상세 보기
+            상세 보기
           </BtnProductDesc>
         </section>
       </Modal>
       {showConfirmDelModal && (
-        <ConfirmDelModal delProduct={delProduct} closeModal={closeConfirmDelModal} />
+        <ConfirmDelModal
+          delProduct={delProduct}
+          closeModal={closeConfirmDelModal}
+          showNoticeModal={showNoticeModal}
+        />
       )}
     </ModalCont>
   );
@@ -102,6 +115,7 @@ function MyProductClick({ productId, closeModal }) {
 MyProductClick.propTypes = {
   productId: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
+  fetchData: PropTypes.func.isRequired,
 };
 
 export default function ProfileDetailProduct() {
@@ -137,13 +151,12 @@ export default function ProfileDetailProduct() {
     const json = await res.json();
     setEventList(json.product);
   };
+  const fetchData = async () => {
+    const accountName = await getMyAcnt();
+    getEventList(accountName);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const accountName = await getMyAcnt();
-      getEventList(accountName);
-    };
-
     fetchData();
   }, []);
 
@@ -195,7 +208,11 @@ export default function ProfileDetailProduct() {
 
               <ProfileProduct ref={profileProductRef}>
                 {showMyProductOptions && (
-                  <MyProductClick productId={productId} closeModal={closeModal} />
+                  <MyProductClick
+                    productId={productId}
+                    closeModal={closeModal}
+                    fetchData={fetchData}
+                  />
                 )}
 
                 <ProductListBox>

@@ -4,7 +4,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
-import PostDeleteAPI from '../../API/Post/PostDeleteAPI';
+import { deletePost } from '../../API/Post/PostAPI';
 import PropTypes from 'prop-types';
 import NoticeModal from './NoticeModal';
 
@@ -23,8 +23,8 @@ export default function DeleteModal({postid}) {
   const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   // 게시글 상세 페이지에서 게시글 삭제
-  const handlePostDelete = () => PostDeleteAPI(token, postId)
-  const deletePost = async () => {
+  const handlePostDelete = () => deletePost(postId)
+  const deletePostItem = async () => {
     await handlePostDelete();
     setShowNoticeModal(false);
     await setTimeout(() => {
@@ -58,7 +58,7 @@ export default function DeleteModal({postid}) {
       if(post === "prof"){
         delMyPostListItem();
       } else if(post === "post"){
-        deletePost();
+        deletePostItem();
       } else {
         deleteProduct();
       }      
