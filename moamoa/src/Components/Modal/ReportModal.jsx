@@ -6,6 +6,8 @@ import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
 import NoticeReportModal from './NoticeReportModal';
+import { reportPost } from '../../API/Post/PostAPI';
+
 
 
 ReportModal.propTypes = {
@@ -22,19 +24,12 @@ export default function ReportModal({closemodal, setclosemodal,postid}) {
   const [showAlert, setShowAlert] = useState(true);
 
   const report = async() => {
-    try {
-    await axios.post(`https://api.mandarin.weniv.co.kr/post/${path}/report`,null,{
-        headers:{          
-            Authorization: `Bearer ${token}`
-        }
-      });
-        setShowAlert(false)
-        setTimeout(()=>{
-          setShowAlert(true)
-          setclosemodal((prev)=>!prev)
-        },1000)
-      } catch(error){console.error('게시물 신고를 실패했습니다.',error);    
-    }
+    reportPost(path)
+    setShowAlert(false)
+    setTimeout(()=>{
+      setShowAlert(true)
+      setclosemodal((prev)=>!prev)
+    },1000)
   }
 
   const homereport = async() => {
