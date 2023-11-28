@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import PostCardItem from '../../Components/Post/PostCardItem';
+import PostItem from '../../Components/Post/PostItem';
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
 import HeaderKebab from '../../Components/Common/HeaderKebab';
@@ -25,9 +25,9 @@ export default function ProductDetail() {
       {post && (
         <PostContainer>
           <HeaderKebab />
-          <PostCardContainer>
-            <PostCardItem post={post} />
-          </PostCardContainer>
+          <PostItemContainer>
+            <PostItem post={post} />
+          </PostItemContainer>
           <Comment postId={post_id} />
         </PostContainer>
       )}
@@ -46,7 +46,7 @@ const PostContainer = styled.div`
     display: none;
   }
 `;
-const PostCardContainer = styled.div`
+const PostItemContainer = styled.div`
   padding: 0 1.6rem 1.5rem;
   padding-top: 64px;
   li {

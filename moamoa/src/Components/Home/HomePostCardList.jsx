@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PostCardUser from '../Post/PostCardUser';
+import PostCardUser from '../Common/ArticleUserProfile';
 import HomePostMoreBtn from './HomePostMoreBtn';
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';

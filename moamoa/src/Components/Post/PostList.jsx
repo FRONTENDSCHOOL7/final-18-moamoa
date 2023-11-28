@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PostCardUser from './PostCardUser';
-import MyPostMoreBtn from '../Post/MyPostMoreBtn';
+import ArticleUserProfile from '../Common/ArticleUserProfile';
+import PostMoreBtn from './PostMoreBtn';
+
 import styled from 'styled-components';
 import heartBg from '../../Assets/icons/heart.svg';
 import heartBgFill from '../../Assets/icons/heart-fill.svg';
@@ -11,7 +12,7 @@ import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
 import accountNameAtom from '../../Recoil/accountNameAtom';
 import { useRecoilValue } from 'recoil';
 
-export default function PostCardList(post) {
+export default function PostList(post) {
   const accountAtom = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(false);
   const postItem = post.post;
@@ -54,17 +55,17 @@ export default function PostCardList(post) {
   return (
     <>
       {post && (
-        <PostList>
+        <Posts>
           <PostArticle>
             <Frofile>
-              <PostCardUser
+              <ArticleUserProfile
                 url={profileImgUrl}
                 username={postAuthorInfo.username}
                 accountname={postAuthorInfo.accountname}
                 loginAccountName={accountAtom}
               />
 
-              <MyPostMoreBtn
+              <PostMoreBtn
                 postid={postId}
                 accountname={postAuthorInfo.accountname}
                 onClick={() => {
@@ -105,13 +106,13 @@ export default function PostCardList(post) {
               </div>
             </PostFooterContainer>
           </PostArticle>
-        </PostList>
+        </Posts>
       )}
     </>
   );
 }
 
-const PostList = styled.li`
+const Posts = styled.li`
   margin-bottom: 25px;
 `;
 

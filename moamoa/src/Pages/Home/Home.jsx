@@ -22,7 +22,7 @@ export default function Home() {
     <Container>
       <Header />
       <HomeWrap>
-        {posts.length !== 0 ? (
+        {posts ? (
           <HomeContainer>
             <PostBg>
               <PostList>
