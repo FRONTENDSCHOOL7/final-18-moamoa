@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import JoinAPI from '../../API/Auth/JoinAPI';
-import EmailValidAPI from '../../API/Valid/EmailValidAPI';
+import { join, verifyEmail } from '../../API/Sign/SignAPI';
 
 const useJoin = () => {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ const useJoin = () => {
   };
 
   const handleEmailValid = async () => {
-    const res = await EmailValidAPI({ user: { email: userInfo.user.email } });
+    const res = await verifyEmail({ user: { email: userInfo.user.email } });
     if (res) {
       setEmailError(`*` + res.message);
     }
@@ -84,7 +83,23 @@ const useJoin = () => {
   };
 
   const handleJoin = async () => {
-    const res = await JoinAPI(userInfo, userType, setErrorMessage);
+    const processUsername = (userType, username) => {
+      if (userType === 'individual') {
+        return `[i]${username}`;
+      } else {
+        return `[o]${username}`;
+      }
+    };
+
+    const joinData = {
+      ...userInfo,
+      user: {
+        ...userInfo.user,
+        username: processUsername(userType, userInfo.user.username),
+      },
+    };
+
+    const res = await join(joinData, setErrorMessage);
     if (res) {
       res.message === '회원가입 성공' && navigate('/user/login');
     }
