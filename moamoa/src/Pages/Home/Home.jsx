@@ -8,15 +8,14 @@ import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
 
 export default function Home() {
-
   const [posts, setPosts] = useState();
 
   useEffect(() => {
     const getHomePostList = async () => {
       const postListData = await homePostList();
       setPosts(postListData.posts);
-    } 
-      getHomePostList();
+    };
+    getHomePostList();
   }, []);
 
   return (
@@ -31,14 +30,13 @@ export default function Home() {
                   return <HomePostCardList key={item.id} post={item} />;
                 })}
               </PostList>
-            
-          </PostBg>
-        </HomeContainer>
-      ) : (
-        <HomeContainer>
+            </PostBg>
+          </HomeContainer>
+        ) : (
+          <HomeContainer>
             <HomeFeed />
-        </HomeContainer>
-      )}
+          </HomeContainer>
+        )}
       </HomeWrap>
       <Footer />
     </Container>
