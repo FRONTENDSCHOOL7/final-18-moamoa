@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import MoaBlue from '../../Assets/icons/character-blue.png'
 
-export default function NoticeModal() {
+export default function ReportAlert() {
   return (
     <Cont>
       <NoticeText>신고가 완료되었습니다!</NoticeText>

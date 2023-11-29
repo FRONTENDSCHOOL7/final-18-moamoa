@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userToken from '../../Recoil/userTokenAtom';
 import styled from 'styled-components';
 import Header from '../../Components/Common/HeaderBasic';
 import AskBtn from './AskBtn';
 import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
 import Footer from '../../Components/Common/Footer';
-import ProductDetailAPI from '../../API/Product/ProductDetailAPI'
+import { getProductDetail } from '../../API/Product/ProductAPI'
+import { productPeriod } from './period';
 
 export default function ProductDetail() {
-  const token = useRecoilValue(userToken);
   const params = useParams();
   const productId = params.product_id
-  const [productInfo, setProductInfo] = useState();
+  const [productData, setProductData] = useState();
   const [productAuthorInfo, setProductAuthorInfo] = useState();
 
   const getProductData = (data) => {
-    setProductInfo(data.product);
+    setProductData(data.product);
     setProductAuthorInfo(data.product.author);
-
   }
 
-  const getProductInfo = () => ProductDetailAPI(token, productId, getProductData);
+  const getProductInfo = () => getProductDetail(productId, getProductData);
 
   useEffect(()=>{
     const getData = async () => {
@@ -31,20 +28,9 @@ export default function ProductDetail() {
   getData();
   },[])
 
-  const productPeriod = () => {
-    const date = productInfo.price.toString();
-    const start = date.slice(0, 8);
-    const end = date.slice(8);
-    const result = `${start.slice(0, 4)}.${start.slice(4, 6)}.${start.slice(6)} ~ ${end.slice(
-      0,
-      4,
-    )}.${end.slice(4, 6)}.${end.slice(6)}`;
-    return result;
-  };
-
   return (
     <>
-      { productInfo && (
+      { productData && (
         <>
           <Container>
             <FestivalContainer>
@@ -61,20 +47,20 @@ export default function ProductDetail() {
                     userName={productAuthorInfo.username.slice(3)}
                   />
                 </Frofile>
-                <FestivalImg src={productInfo.itemImage || ''} alt='행사' />
+                <FestivalImg src={productData.itemImage || ''} alt='행사' />
                 <InfoContainer>
                   <FestivalTitle>
-                    {productInfo.itemName.slice(3) ||
+                    {productData.itemName.slice(3) ||
                       '행사명을 조회할 수 없습니다.'}
                   </FestivalTitle>
                   <FestivalInfo>행사 소개</FestivalInfo>
                   <FestivalDesc>
-                    {productInfo?.link || '행사 상세 설명을 조회할 수 없습니다.'}
+                    {productData?.link || '행사 상세 설명을 조회할 수 없습니다.'}
                   </FestivalDesc>
                   <FestivalInfo>행사 기간</FestivalInfo>
                   <FestivalDesc>
-                    {productInfo
-                      ? productPeriod()
+                    {productData
+                      ? productPeriod(productData)
                       : '행사 기간을 조회할 수 없습니다.'}
                   </FestivalDesc>
                 </InfoContainer>

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import MoaYellow from '../../Assets/icons/character-yellow.png'
 
-export default function NoticeModal() {
+export default function DeleteAlert() {
   return (
     <Cont>
       <NoticeText>삭제가 완료되었습니다!</NoticeText>

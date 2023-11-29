@@ -11,7 +11,7 @@ import Gobackbtn from '../../Components/Common/GoBackbtn';
 import more from '../../Assets/icons/icon-more.svg';
 import styled from 'styled-components';
 import LogoutModal from '../../Components/Modal/LogoutModal';
-import ConfirmLogoutModal from '../../Components/Modal/ConfirmLogoutModal';
+import LogoutConfirmModal from '../../Components/Modal/LogoutConfirmModal';
 
 export default function HeaderKebab() {
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ export default function HeaderKebab() {
           <LogoutModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
         )}
         {showConfirmLogoutModal && (
-          <ConfirmLogoutModal logout={logout} closeModal={closeConfirmLogoutModal} />
+          <LogoutConfirmModal logout={logout} closeModal={closeConfirmLogoutModal} />
         )}
       </HeaderContainer>
     </>

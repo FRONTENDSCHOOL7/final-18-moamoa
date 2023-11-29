@@ -4,20 +4,21 @@
   최초 작성 날짜: 2023.10.29
   마지막 수정 날까: 2023.11.02
 
-  수정자: 장수연 (2023.11.28)
+  수정자: 장수연 (2023.11.29)
 */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import PostList from '../Post/PostList';
-import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 import { userPostList } from '../../API/Post/PostAPI';
+import accountNameAtom from '../../Recoil/accountNameAtom';
 
 import Hamburger from '../../Assets/icons/icon-post-list-on.svg';
 import Bento from '../../Assets/icons/icon-post-album-on.svg';
+import { useRecoilValue } from 'recoil';
 
 export default function ProfileDetailPost() {
   const location = useLocation();
@@ -26,22 +27,20 @@ export default function ProfileDetailPost() {
 
   const [myPostList, setMyPostList] = useState([]);
   const [view, setView] = useState('PostList');
+  
+  const loginAccountName = useRecoilValue(accountNameAtom);
+  const path = lastPath === 'myInfo' ? loginAccountName : lastPath;
 
-  const postList = async (accountName) => {
+  const getUserPostList = userPostList(path);
 
-  const path = lastPath === 'myInfo' ? accountName : lastPath;
-    const res = await userPostList(path);
-    setMyPostList(res.post);
-  };
-
-  useEffect(() => {
-    const getData = async () => {
-      const myProfileInfo = await getMyProfileData();
-      const accountName = myProfileInfo.user['accountname']; 
-      postList(accountName);
+  useEffect(()=>{
+    const postList = async () => {
+      const res = await getUserPostList;
+      setMyPostList(res.post);
     };
-    getData();
-  }, []);
+    postList();
+  },[path])
+  
 
   const handlePostClick = (postId) => {
     navigate(`/post/${postId}`);
