@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import HomePostCardList from '../../Components/Home/HomePostCardList';
+import PostList from '../../Components/Post/PostList';
 import styled from 'styled-components';
-import HomeFeed from './HomeFeed';
+import HomeSearch from './HomeSearch';
 import Header from '../../Components/Common/HeaderBasic';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
@@ -22,21 +22,21 @@ export default function Home() {
     <Container>
       <Header />
       <HomeWrap>
-        {posts ? (
+        { posts && Object.keys(posts).length !== 0 ? (
           <HomeContainer>
             <PostBg>
-              <PostList>
+              <Posts>
                 {posts.map((item) => {
-                  return <HomePostCardList key={item.id} post={item} />;
+                  return <PostList key={item.id} post={item} />;
                 })}
-              </PostList>
-            </PostBg>
-          </HomeContainer>
-        ) : (
-          <HomeContainer>
-            <HomeFeed />
-          </HomeContainer>
-        )}
+              </Posts>
+          </PostBg>
+        </HomeContainer>
+      ) : (
+        <HomeContainer>
+            <HomeSearch />
+        </HomeContainer>
+      )}
       </HomeWrap>
       <Footer />
     </Container>
@@ -61,8 +61,8 @@ const PostBg = styled.div`
   margin: auto;
   background-color: #fff;
 `;
-const PostList = styled.ul`
+const Posts = styled.ul`
   box-sizing: border-box;
   background-color: #ffffff;
-  margin: 15px 1.6rem 8rem;
+  margin: 3rem 1.6rem 8rem;
 `;
