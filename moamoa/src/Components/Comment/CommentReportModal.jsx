@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
-import NoticeReportModal from '../Modal/NoticeReportModal';
+import ReportAlert from '../Modal/ReportAlert';
 
 
 CommentReportModal.propTypes = {
@@ -48,7 +48,7 @@ export default function CommentReportModal({commentid, showModal , setShowModal}
             <BtnCancel onClick={()=>setShowModal(true)}>취소</BtnCancel>
           </Btn>
         </Modal>
-        { !showAlert? <NoticeReportModal/>:null}
+        { !showAlert? <ReportAlert/>:null}
       </BgCont>
       }
     </>

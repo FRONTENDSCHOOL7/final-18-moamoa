@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
-import NoticeReportModal from './NoticeReportModal';
+import ReportAlert from './ReportAlert';
 import { reportPost } from '../../API/Post/PostAPI';
 
 
@@ -61,7 +61,7 @@ export default function ReportModal({closemodal, setclosemodal,postid}) {
             <BtnCancel onClick={()=>{setclosemodal((prev)=>!prev)}}>취소</BtnCancel>
           </Btn>
         </Modal>
-        { !showAlert? <NoticeReportModal/>:null}
+        { !showAlert? <ReportAlert/>:null}
       </BgCont> : null
       }
     </>

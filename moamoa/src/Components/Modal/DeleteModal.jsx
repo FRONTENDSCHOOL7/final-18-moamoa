@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
-import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
+import { deleteProduct } from '../../API/Product/ProductAPI';
 import { deletePost } from '../../API/Post/PostAPI';
 import PropTypes from 'prop-types';
-import NoticeModal from './NoticeModal';
+import NoticeModal from './DeleteAlert';
 
 DeleteModal.propTypes = {
   postid: PropTypes.string
 };
 
 export default function DeleteModal({postid}) {
-  const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const navigate = useNavigate();
   const [delMadoal, setDelModal] = useState(true);
@@ -45,8 +42,8 @@ export default function DeleteModal({postid}) {
   };
 
     // 상품 상세 페이지에서 상품 삭제
-    const handleProductDelete = () => ProductDeleteAPI(params, token);
-    const deleteProduct = async () => {
+    const handleProductDelete = () => deleteProduct(params.product_id);
+    const deleteProducData = async () => {
       await handleProductDelete();
       setShowNoticeModal(false);
       await setTimeout(() => {
@@ -60,7 +57,7 @@ export default function DeleteModal({postid}) {
       } else if(post === "post"){
         deletePostItem();
       } else {
-        deleteProduct();
+        deleteProducData();
       }      
     }
 

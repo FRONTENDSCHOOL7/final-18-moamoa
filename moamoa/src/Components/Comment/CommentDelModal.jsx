@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
-import NoticeModal from '../Modal/NoticeModal';
+import DeleteAlert from '../Modal/DeleteAlert';
 
 DeleteModal.propTypes = {
   commentid: PropTypes.string,
@@ -64,7 +64,7 @@ export default function DeleteModal({ commentid, setCloseFooter }) {
               </BtnCancel>
             </Btn>
           </Modal>
-          {!showNoticeModal && <NoticeModal />}
+          {!showNoticeModal && <DeleteAlert />}
         </BgCont>
       ) : null}
     </>

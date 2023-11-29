@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export default function ConfirmLogoutModal({ logout, closeModal }) {
+export default function LogoutConfirmModal({ logout, closeModal }) {
   return (
     <ModalCont>
       <ConfirmModal>
@@ -17,7 +17,7 @@ export default function ConfirmLogoutModal({ logout, closeModal }) {
   );
 }
 
-ConfirmLogoutModal.propTypes = {
+LogoutConfirmModal.propTypes = {
   logout: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
