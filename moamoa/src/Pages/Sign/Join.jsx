@@ -1,6 +1,6 @@
 import React from 'react';
 import useJoin from '../../Hooks/Sign/useJoin.jsx';
-import { uploadImage } from '../../API/Img/UploadImageAPI';
+import { uploadImage } from '../../API/Image/ImageAPI.jsx';
 import UploadFile from '../../Assets/images/upload-file.png';
 import DefaultProfile from '../../Assets/images/profile-img.svg';
 import styled from 'styled-components';

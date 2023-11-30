@@ -11,14 +11,8 @@ import {
 } from '../../Components/Common/FormLoginAndJoin';
 
 const LoginPage = () => {
-  const {
-    userInput,
-    handleError,
-    handleInputChange,
-    handleFormSubmit,
-    errorMsg,
-    userErrorMessage,
-  } = useLogin();
+  const { userData, handleError, handleInputChange, handleFormSubmit, errorMsg, userErrorMessage } =
+    useLogin();
 
   return (
     <LoginAndJoinContainer>
@@ -29,10 +23,10 @@ const LoginPage = () => {
           placeholder='이메일'
           name='email'
           onChange={handleInputChange}
-          value={userInput.user.email}
+          value={userData.user.email}
           required
         />
-        {!userInput.user.email && !userInput.user.password && (
+        {!userData.user.email && !userData.user.password && (
           <StyledErrorMsg>{errorMsg}</StyledErrorMsg>
         )}
         <CommonInput
@@ -40,19 +34,19 @@ const LoginPage = () => {
           placeholder='비밀번호'
           name='password'
           onChange={handleInputChange}
-          value={userInput.user.password}
+          value={userData.user.password}
           required
         />
-        {userInput.user.email && !userInput.user.password && (
+        {userData.user.email && !userData.user.password && (
           <StyledErrorMsg>{errorMsg}</StyledErrorMsg>
         )}
-        {userInput.user.email && userInput.user.password && (
+        {userData.user.email && userData.user.password && (
           <StyledErrorMsg>{userErrorMessage}</StyledErrorMsg>
         )}
         <LoginBtn
           type='submit'
           onClick={handleError}
-          disabled={!userInput.user.email || !userInput.user.password}
+          disabled={!userData.user.email || !userData.user.password}
         >
           로그인
         </LoginBtn>

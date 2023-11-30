@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
-import { uploadImage } from '../../API/Img/UploadImageAPI';
-import ProductDetailAPI from '../../API/Product/ProductDetailAPI';
-import ProductEditAPI from '../../API/Product/ProductEditAPI';
+import { uploadImage } from '../../API/Image/ImageAPI';
+import { getProductDetail, editProduct } from '../../API/Product/ProductAPI';
 import useProgressPeriodEffect from '../../Hooks/Product/useProgressPeriodEffect';
 // Styled-Component 수정 예정
 import { Container } from '../../Components/Common/Container';
@@ -28,7 +25,6 @@ import {
 
 const ProductEdit = () => {
   const navigate = useNavigate();
-  const token = useRecoilValue(userTokenAtom);
   const params = useParams();
   const productId = params.product_id;
 
@@ -66,11 +62,11 @@ const ProductEdit = () => {
     setEndDate(`${period.slice(8, 12)}-${period.slice(12, 14)}-${period.slice(14, 16)}`);
   };
 
-  const fetchProductInfo = async () => {
-    await ProductDetailAPI(token, productId, getProductData);
-  };
-
   useEffect(() => {
+    const fetchProductInfo = async () => {
+      await getProductDetail(productId, getProductData);
+    };
+
     fetchProductInfo();
   }, []);
 
@@ -96,17 +92,19 @@ const ProductEdit = () => {
     }));
   };
 
-  const { handleProductEdit } = ProductEditAPI(
-    token,
-    productId,
-    productInputs,
-    productType,
-    progressPeriod,
-  );
-
-  const editProduct = async (e) => {
+  const submitModifiedProduct = async (e) => {
     e.preventDefault();
-    await handleProductEdit();
+    const productData = {
+      product: {
+        ...productInputs.product,
+        itemName:
+          productType === 'festival'
+            ? `[f]${productInputs.product.itemName}`
+            : `[e]${productInputs.product.itemName}`,
+        price: progressPeriod,
+      },
+    };
+    await editProduct(productId, productData);
     navigate('/product/list');
   };
 
@@ -123,7 +121,7 @@ const ProductEdit = () => {
     <Container>
       <Header>
         <Gobackbtn />
-        <HeaderButton onClick={editProduct} disabled={isDisabled}>
+        <HeaderButton onClick={submitModifiedProduct} disabled={isDisabled}>
           수정
         </HeaderButton>
       </Header>
