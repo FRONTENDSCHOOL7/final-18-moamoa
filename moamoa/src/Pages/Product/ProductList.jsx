@@ -15,7 +15,7 @@ export const ProductAtom = atom({
 });
 
 export default function ProductList() {
-  const [product, setProduct] = useRecoilState(ProductAtom);
+  const [, setProduct] = useRecoilState(ProductAtom);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = useRecoilValue(userTokenAtom);
@@ -32,7 +32,6 @@ export default function ProductList() {
     }
     fetchData();
   }, [token, setProduct]);
-  console.log(product);
 
   return (
     <ContainerPercent>
