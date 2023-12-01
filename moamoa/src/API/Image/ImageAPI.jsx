@@ -1,17 +1,12 @@
-import axios from 'axios';
+import { imageInstance } from '../InstanceAPI';
 
+// 한 개의 이미지(프로필, 상품) 업로드
 export const uploadImage = async (imageFile) => {
-  const reqUrl = 'https://api.mandarin.weniv.co.kr/image/uploadfile';
-
   const form = new FormData();
   form.append('image', imageFile);
 
   try {
-    const res = await axios.post(reqUrl, form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const res = await imageInstance.post('/image/uploadfile', form);
     return res;
   } catch (error) {
     if (error.response) {

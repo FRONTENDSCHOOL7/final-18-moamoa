@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
-import { uploadImage } from '../../API/Img/UploadImageAPI';
-import ProductUploadAPI from '../../API/Product/ProductUploadAPI';
+import { uploadImage } from '../../API/Image/ImageAPI';
+import { uploadProduct } from '../../API/Product/ProductAPI';
 import useProgressPeriodEffect from '../../Hooks/Product/useProgressPeriodEffect';
 // Styled-Component 수정 예정
 import { Container } from '../../Components/Common/Container';
@@ -27,7 +25,6 @@ import {
 
 const ProductAdd = () => {
   const navigate = useNavigate();
-  const token = useRecoilValue(userTokenAtom);
 
   const [imgSrc, setImgSrc] = useState(DefaultImg);
   const [productType, setProductType] = useState('');
@@ -39,22 +36,22 @@ const ProductAdd = () => {
 
   const handleChangeImage = async (e) => {
     const imageFile = e.target.files[0];
+    console.log(imageFile);
     const response = await uploadImage(imageFile);
     setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
   };
 
-  const uploadProduct = ProductUploadAPI({
-    token,
-    imgSrc,
-    productType,
-    productName,
-    progressPeriod,
-    description,
-  });
-
   const submitProduct = async (e) => {
     e.preventDefault();
-    await uploadProduct();
+    const productData = {
+      product: {
+        itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
+        price: progressPeriod,
+        link: description,
+        itemImage: imgSrc,
+      },
+    };
+    await uploadProduct(productData);
     navigate('/product/list');
   };
 

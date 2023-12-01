@@ -1,5 +1,6 @@
-import { authInstance } from "../InstanceAPI";
+import { authInstance } from '../InstanceAPI';
 
+// 상품 상세
 export const getProductDetail = (productId, getProductData) => {
   const getProductInfo = async () => {
     try {
@@ -16,19 +17,47 @@ export const getProductDetail = (productId, getProductData) => {
     }
   };
   return getProductInfo();
-}
+};
 
-
+// 상품 삭제
 export const deleteProduct = async (productId) => {
-    try {
-      await authInstance.delete(`/product/${productId}`);
-    } catch (error) {
-      if (error.response) {
-        const { status, data } = error.response;
-        console.log('게시물 삭제에 실패했습니다.')
-        if (status === 422 || status === 404) {
-          console.log(data.message);
-        }
+  try {
+    await authInstance.delete(`/product/${productId}`);
+  } catch (error) {
+    if (error.response) {
+      const { status, data } = error.response;
+      console.log('게시물 삭제에 실패했습니다.');
+      if (status === 422 || status === 404) {
+        console.log(data.message);
       }
     }
-  };
+  }
+};
+
+// 상품 추가
+export const uploadProduct = async (productData) => {
+  try {
+    await authInstance.post(`/product`, productData);
+  } catch (error) {
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status === 422 || status === 404) {
+        console.log(data.message);
+      }
+    }
+  }
+};
+
+// 상품 수정
+export const editProduct = async (productId, productData) => {
+  try {
+    await authInstance.put(`/product/${productId}`, productData);
+  } catch (error) {
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status === 422 || status === 404) {
+        console.log(data.message);
+      }
+    }
+  }
+};
