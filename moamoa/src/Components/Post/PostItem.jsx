@@ -20,7 +20,7 @@ PostItem.propTypes = {
 
 export default function PostItem({ post, currnetPath }) {
   const postItemInfo = post;
-  const postAuthorInfo = post.author;
+  const postAuthorInfo = post?.author;
 
   const loginAccountName = useRecoilValue(accountNameAtom);
 
@@ -29,11 +29,11 @@ export default function PostItem({ post, currnetPath }) {
   const [showModal, setShowModal] = useState(false);
   const [heartValue, setHeartValue] = useState(postItemInfo.hearted);
 
-  const postImgUrl = `${postItemInfo.image}`;
-  const accountName = postAuthorInfo.accountname;
-  const userName = postAuthorInfo.username;
-  const profileImg = postAuthorInfo.image;
-  const postId = postItemInfo.id;
+  const postImgUrl = `${postItemInfo?.image}`;
+  const accountName = postAuthorInfo?.accountname;
+  const userName = postAuthorInfo?.username;
+  const profileImg = postAuthorInfo?.image;
+  const postId = postItemInfo?.id;
 
   const userProfileData = { profileImg, userName, accountName, loginAccountName }
   const contentsData = { postItemInfo, postImgUrl, currnetPath, postId }
@@ -55,19 +55,20 @@ export default function PostItem({ post, currnetPath }) {
     setHeartColor(heartBgFill);
     setHeartCount((prev) => prev + 1);
     setHeartValue((prev) => !prev);
-    hearted();
+    hearted(()=>{});
   };
 
   const handleUnheartCount = () => {
     setHeartCount((prev) => prev - 1);
     setHeartValue((prev) => !prev);
-    unhearted();
-    setHeartColor(heartBg);
+    unhearted(()=>{
+      setHeartColor(heartBg);
+    });
   };
-
+console.log(postId)
   return (
     <>
-      {post && (
+      {postItemInfo && postAuthorInfo && (
         <PostList>
           <PostArticle>
             <Frofile>
@@ -105,7 +106,7 @@ const PostList = styled.li`
 `;
 
 const PostArticle = styled.article`
-  margin-top: 3rem;
+  margin-bottom: 3rem;
 `;
 const Frofile = styled.div`
   margin: 0 auto;

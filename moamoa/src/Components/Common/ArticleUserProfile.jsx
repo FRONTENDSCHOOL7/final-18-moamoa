@@ -8,33 +8,41 @@ ArticleUserProfile.propTypes = {
   userProfileData: PropTypes.object
 }
 
-export default function ArticleUserProfile({userProfileData }) {
-  const { profileImg, userName, accountName, loginAccountName } = userProfileData
+export default function ArticleUserProfile({ userProfileData }) {
+
+
+  const profileImg = userProfileData?.profileImg;
+  const userName = userProfileData?.userName;
+  const accountName = userProfileData?.accountName;
+  const loginAccountName = userProfileData?.loginAccountName;
+  console.log(profileImg)
 
 
   return (
-    <Container>
-        <>
-          <Link to={ 
-            loginAccountName === accountName ? 
-            `/profile/myInfo`
-            : `/profile/${accountName}`
-          }>
-            <UserInfo>
-              <FrofileImg src={profileImg} alt="사용자프로필"/>        
-              <InfoText>
-                <OrCont>
-                  <UserName>{userName.slice(3)}</UserName>
-                  {userName.slice(0,3) === '[o]'?                
-                  <UserCheck src={UserTypeCheck} alt=''/> : null
-                  }
-                </OrCont>
-                <AccountName>@{accountName}</AccountName>
-              </InfoText>
-            </UserInfo>
-          </Link>
-        </>
-    </Container>
+    <>
+      {userProfileData && <Container>
+          <>
+            <Link to={ 
+              loginAccountName === accountName ? 
+              `/profile/myInfo`
+              : `/profile/${accountName}`
+            }>
+              <UserInfo>
+                <FrofileImg src={profileImg} alt="사용자프로필"/>        
+                <InfoText>
+                  <OrCont>
+                    <UserName>{userName.slice(3)}</UserName>
+                    {userName.slice(0,3) === '[o]'?                
+                    <UserCheck src={UserTypeCheck} alt=''/> : null
+                    }
+                  </OrCont>
+                  <AccountName>@{accountName}</AccountName>
+                </InfoText>
+              </UserInfo>
+            </Link>
+          </>
+      </Container>}
+    </>
   )
 }
 

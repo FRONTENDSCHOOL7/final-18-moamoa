@@ -3,7 +3,7 @@ import PostItem from './PostItem';
 import { useLocation } from 'react-router-dom';
 
 export default function PostList(post) {
-  const postItem = post.post;
+  const postItem = post?.post;
 
   const location = useLocation();
   const currnetPath = location.pathname.slice(1);

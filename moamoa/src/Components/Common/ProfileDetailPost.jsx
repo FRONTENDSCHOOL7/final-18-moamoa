@@ -132,10 +132,10 @@ const Views = styled.div`
 
 const HamView = styled.div`
   article {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
   }
   article:first-child {
-    margin: 0px;
+    /* margin: 0px; */
   }
 `;
 

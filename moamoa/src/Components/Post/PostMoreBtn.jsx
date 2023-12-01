@@ -12,7 +12,8 @@ PostMoreBtn.propTypes = {
 }
 
 export default function PostMoreBtn({btnData}) {
-  const {postId, accountName} = btnData
+  const postId = btnData?.postId;
+  const accountName = btnData?.accountName;
   const loginAccountName = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(true);
   const openModal = () => {
