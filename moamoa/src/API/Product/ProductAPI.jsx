@@ -5,8 +5,9 @@ export const getProductDetail = (productId, getProductData) => {
     try {
       const res = await authInstance.get(`/product/detail/${productId}`);
       if (res.status === 200) {
-        const data = res.data;
+        const data = await res.data;
         await getProductData({ ...data });
+        return data;
       } else {
         console.error('페이지를 불러오는데 실패했습니다.');
       }

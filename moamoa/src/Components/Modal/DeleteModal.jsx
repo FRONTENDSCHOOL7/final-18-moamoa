@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { deleteProduct } from '../../API/Product/ProductAPI';
@@ -37,12 +37,15 @@ export default function DeleteModal({postid}) {
     setShowNoticeModal(false);
     setDelModal(false);
     await setTimeout(() => {
-      window.location.reload();    
+      setDelModal(false);
+      setPostId(null);
+      window.location.reload();  
     }, 1000);
   };
 
     // 상품 상세 페이지에서 상품 삭제
     const handleProductDelete = () => deleteProduct(params.product_id);
+    
     const deleteProducData = async () => {
       await handleProductDelete();
       setShowNoticeModal(false);
@@ -55,9 +58,11 @@ export default function DeleteModal({postid}) {
       if(post === "prof"){
         delMyPostListItem();
       } else if(post === "post"){
-        deletePostItem();
+        useEffect(()=>{ 
+          deletePostItem();
+        },[postId])
       } else {
-        deleteProducData();
+          deleteProducData();
       }      
     }
 

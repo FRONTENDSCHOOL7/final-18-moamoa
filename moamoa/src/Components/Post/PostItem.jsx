@@ -11,12 +11,14 @@ import accountNameAtom from '../../Recoil/accountNameAtom';
 
 import PropTypes from 'prop-types';
 import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
+import PostContents from './PostContents';
 
 PostItem.propTypes = {
   post: PropTypes.object,
+  currnetPath: PropTypes.string
 };
 
-export default function PostItem({ post }) {
+export default function PostItem({ post, currnetPath }) {
   const postItemInfo = post;
   const postAuthorInfo = post.author;
 
@@ -29,7 +31,13 @@ export default function PostItem({ post }) {
 
   const postImgUrl = `${postItemInfo.image}`;
   const accountName = postAuthorInfo.accountname;
+  const userName = postAuthorInfo.username;
+  const profileImg = postAuthorInfo.image;
   const postId = postItemInfo.id;
+
+  const userProfileData = { profileImg, userName, accountName, loginAccountName }
+  const contentsData = { postItemInfo, postImgUrl, currnetPath, postId }
+  const btnData = {postId, accountName, showModal}
 
   const heartedPost = () => heartPost(postId);
 
@@ -63,42 +71,20 @@ export default function PostItem({ post }) {
         <PostList>
           <PostArticle>
             <Frofile>
-              <ArticleUserProfile
-                url={postAuthorInfo.image}
-                username={postAuthorInfo.username}
-                accountname={accountName}
-                loginAccountName={loginAccountName}
-              />
-              <PostMoreBtn
-                postid={postId}
-                accountname={postAuthorInfo.accountname}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-                showModalBool={showModal}
+              <ArticleUserProfile userProfileData={userProfileData} />
+              <PostMoreBtn btnData={btnData} onClick={() => setShowModal(true)}
               />
             </Frofile>
-            <PostDesc>{postItemInfo.content}</PostDesc>
-            {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
+            <PostContents contentsData={contentsData}/>
             <PostFooterContainer>
               <CreateDate>{Datacalc(postItemInfo.createdAt)}</CreateDate>
               <div>
                 {heartValue ? (
-                  <HeartBtn
-                    onClick={() => {
-                      handleUnheartCount();
-                    }}
-                    heartcolor={heartBgFill}
-                  >
+                  <HeartBtn onClick={() => handleUnheartCount()} heartcolor={heartBgFill} >
                     {heartcount}
                   </HeartBtn>
                 ) : (
-                  <HeartBtn
-                    onClick={() => {
-                      handleHeartCount();
-                    }}
-                    heartcolor={heartcolor}
-                  >
+                  <HeartBtn onClick={() => handleHeartCount()} heartcolor={heartcolor} >
                     {heartcount}
                   </HeartBtn>
                 )}
@@ -129,26 +115,7 @@ const Frofile = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const PostImg = styled.img`
-  width: 35.8rem;
-  height: 22.8rem;
-  margin: 0 auto;
-  aspect-ratio: 358/228;
-  object-fit: cover;
-  border-radius: 1rem;
-  &:hover {
-    cursor: default;
-  }
-`;
-const PostDesc = styled.p`
-  font-size: 1.4rem;
-  margin: 1.2rem 0;
-  word-break: break-all;
-  &:hover {
-    cursor: default;
-  }
-  line-height: 2rem;
-`;
+
 const PostFooterContainer = styled.div`
   margin: 1.5rem 0.8rem 0;
   display: flex;

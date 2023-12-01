@@ -5,31 +5,31 @@ import { Link } from 'react-router-dom';
 import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
 ArticleUserProfile.propTypes = {
-  url: PropTypes.string,
-  username: PropTypes.string,
-  accountname: PropTypes.string,
-  loginAccountName: PropTypes.string
+  userProfileData: PropTypes.object
 }
 
-export default function ArticleUserProfile({url, username, accountname, loginAccountName }) {
+export default function ArticleUserProfile({userProfileData }) {
+  const { profileImg, userName, accountName, loginAccountName } = userProfileData
+
+
   return (
     <Container>
         <>
           <Link to={ 
-            loginAccountName === accountname ? 
+            loginAccountName === accountName ? 
             `/profile/myInfo`
-            : `/profile/${accountname}`
+            : `/profile/${accountName}`
           }>
             <UserInfo>
-              <FrofileImg src={url} alt="사용자프로필"/>        
+              <FrofileImg src={profileImg} alt="사용자프로필"/>        
               <InfoText>
                 <OrCont>
-                  <UserName>{username.slice(3)}</UserName>
-                  {username.slice(0,3) === '[o]'?                
+                  <UserName>{userName.slice(3)}</UserName>
+                  {userName.slice(0,3) === '[o]'?                
                   <UserCheck src={UserTypeCheck} alt=''/> : null
                   }
                 </OrCont>
-                <AccountName>@{accountname}</AccountName>
+                <AccountName>@{accountName}</AccountName>
               </InfoText>
             </UserInfo>
           </Link>

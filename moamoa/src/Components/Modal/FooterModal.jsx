@@ -7,17 +7,14 @@ import CloseIcon from '../../Assets/icons/x.png';
 import PropTypes from 'prop-types';
 
 FooterModal.propTypes = {
-  accountname: PropTypes.string,
   postid: PropTypes.string,
   closeFooter: PropTypes.bool,
   setCloseFooter: PropTypes.func,
 };
 
-export default function FooterModal({ accountname, closeFooter, setCloseFooter, postid }) {
+export default function FooterModal({ closeFooter, setCloseFooter, postid }) {
   const [showModal, setShowModal] = useState(true);
-  console.log(accountname);
   console.log(postid);
-  // const params = useParams();
   const editUrl = `/post/edit/${postid}`;
 
   return (

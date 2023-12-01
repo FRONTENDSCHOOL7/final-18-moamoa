@@ -7,12 +7,12 @@ import DeleteModal from '../../Components/Modal/DeleteModal';
 import PropTypes from 'prop-types';
 
 AskBtn.propTypes = {
-  accountname: PropTypes.string,
-  userName: PropTypes.string
+  btnData: PropTypes.object
 }
 
+export default function AskBtn({btnData}) {
 
-export default function AskBtn({accountname, userName}) {
+  const {userName, accountName} = btnData;
 
   const loginAccountName = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(true);
@@ -29,7 +29,7 @@ export default function AskBtn({accountname, userName}) {
   };
   return (
     <>
-      {accountname !== loginAccountName ? (
+      {accountName !== loginAccountName ? (
         <Ask onClick={handleChatRoom}>
           문의하기
         </Ask>

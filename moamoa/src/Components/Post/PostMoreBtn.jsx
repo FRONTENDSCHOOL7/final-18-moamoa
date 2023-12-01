@@ -8,12 +8,11 @@ import { useRecoilValue } from 'recoil';
 import ReportModal from '../Modal/ReportModal';
 
 PostMoreBtn.propTypes = {
-  postid: PropTypes.string,
-  accountname: PropTypes.string,
-  showModalBool: PropTypes.bool
+  btnData: PropTypes.object
 }
 
-export default function PostMoreBtn({accountname, postid}) {
+export default function PostMoreBtn({btnData}) {
+  const {postId, accountName} = btnData
   const loginAccountName = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(true);
   const openModal = () => {
@@ -22,7 +21,7 @@ export default function PostMoreBtn({accountname, postid}) {
   return (
     <>
       <MoreBtn onClick={openModal}><MoreImg src={more} alt="더보기" /></MoreBtn>
-      { !showModal && (loginAccountName === accountname)? <FooterModal postid={postid} accountname={accountname} closeFooter={showModal} setCloseFooter={setShowModal}/> : <ReportModal closemodal={showModal} setclosemodal={setShowModal} postid={postid}/>}
+      { !showModal && (loginAccountName === accountName)? <FooterModal postid={postId} closeFooter={showModal} setCloseFooter={setShowModal}/> : <ReportModal closemodal={showModal} setclosemodal={setShowModal} postid={postId}/>}
     </>
   )
 
