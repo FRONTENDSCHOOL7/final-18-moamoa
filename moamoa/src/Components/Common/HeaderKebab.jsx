@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
+import { Link } from 'react-router-dom';
 
 import userToken from '../../Recoil/userTokenAtom';
 import isLoginAtom from '../../Recoil/isLoginAtom';
 import accountNameAtom from '../../Recoil/accountNameAtom';
 import userNameAtom from '../../Recoil/userNameAtom';
 
+import MOAMOA from '../../Assets/images/MOAMOA.png';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
 import more from '../../Assets/icons/icon-more.svg';
 import styled from 'styled-components';
@@ -57,8 +59,12 @@ export default function HeaderKebab() {
     <>
       <HeaderContainer>
         <Gobackbtn />
+        
+      <Link to='/home'>
+        <HomeBtn src={MOAMOA} alt="홈으로 이동" />
+      </Link>
         <button type='button' onClick={handleKebabClick}>
-          <img src={more} />
+          <MoreImg src={more} />
         </button>
         {showMyProfileOptions && (
           <LogoutModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
@@ -93,4 +99,12 @@ const HeaderContainer = styled.header`
   img {
     cursor: pointer;
   }
+`;
+
+const MoreImg = styled.img`
+  width: 2.2rem;
+`
+const HomeBtn = styled.img`
+  width: 13rem;
+  margin-top: 0.3rem;
 `;

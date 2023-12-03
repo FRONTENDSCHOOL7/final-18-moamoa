@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PostList from '../../Components/Post/PostList';
 import styled from 'styled-components';
 import HomeSearch from './HomeSearch';
-import Header from '../../Components/Common/HeaderBasic';
+import Header from '../../Components/Common/HeaderHome';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import iconGoBack from '../../Assets/icons/icon-arrow-left.svg';
 import styled from 'styled-components';
 
@@ -13,10 +14,8 @@ export default function Gobackbtn() {
     navigate(-1);
   };
   return (
-    <div>
-      <a onClick={handleGoBack}>
+      <Link onClick={handleGoBack}>
         <GoBackImage src={iconGoBack} />
-      </a>
-    </div>
+      </Link>
   );
 }
