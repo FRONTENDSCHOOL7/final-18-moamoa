@@ -14,7 +14,7 @@ export default function HeaderChat(props) {
   return (
     <HeaderChatRoom>
       <Gobackbtn />
-      <h2>{headerText}</h2>
+        <ChatUserName>{headerText}</ChatUserName>
       <ChatMoreBtn />
     </HeaderChatRoom>
   );
@@ -36,3 +36,8 @@ const HeaderChatRoom = styled.div`
   padding-right: 10px;
   box-sizing: border-box;
 `;
+
+const ChatUserName = styled.h2`
+  font-weight: 500;
+  font-size: 1.8rem;
+`

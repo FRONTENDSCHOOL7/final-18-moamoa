@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import iconSearch from '../../Assets/icons/icon-search.svg';
+import MOAMOA from '../../Assets/images/MOAMOA.png';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
     <HeaderContainer>
-      <h1>모아모아 피드</h1>
-      <img src={iconSearch}></img>
+      <Link to='/home'>
+        <HomeBtn src={MOAMOA} alt="홈으로 이동" />
+      </Link>
+      <Link to='/search'>
+        <SearchBtn src={iconSearch}></SearchBtn>
+      </Link>
     </HeaderContainer>
   );
 }
@@ -20,7 +26,7 @@ const HeaderContainer = styled.header`
   max-height: 48px;
   width: 390px;
   justify-content: space-between;
-  border-bottom: 2px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
   background-color: #fff;
   align-items: center;
   font-size: 24px;
@@ -32,4 +38,16 @@ const HeaderContainer = styled.header`
   img {
     cursor: pointer;
   }
+`;
+
+const SearchBtn = styled.img`
+  width: 2.2rem;
+`;
+
+const HomeBtn = styled.img`
+  width: 13rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
