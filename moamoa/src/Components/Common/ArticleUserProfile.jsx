@@ -5,36 +5,44 @@ import { Link } from 'react-router-dom';
 import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
 ArticleUserProfile.propTypes = {
-  url: PropTypes.string,
-  username: PropTypes.string,
-  accountname: PropTypes.string,
-  loginAccountName: PropTypes.string
+  userProfileData: PropTypes.object
 }
 
-export default function ArticleUserProfile({url, username, accountname, loginAccountName }) {
+export default function ArticleUserProfile({ userProfileData }) {
+
+
+  const profileImg = userProfileData?.profileImg;
+  const userName = userProfileData?.userName;
+  const accountName = userProfileData?.accountName;
+  const loginAccountName = userProfileData?.loginAccountName;
+  console.log(profileImg)
+
+
   return (
-    <Container>
-        <>
-          <Link to={ 
-            loginAccountName === accountname ? 
-            `/profile/myInfo`
-            : `/profile/${accountname}`
-          }>
-            <UserInfo>
-              <FrofileImg src={url} alt="사용자프로필"/>        
-              <InfoText>
-                <OrCont>
-                  <UserName>{username.slice(3)}</UserName>
-                  {username.slice(0,3) === '[o]'?                
-                  <UserCheck src={UserTypeCheck} alt=''/> : null
-                  }
-                </OrCont>
-                <AccountName>@{accountname}</AccountName>
-              </InfoText>
-            </UserInfo>
-          </Link>
-        </>
-    </Container>
+    <>
+      {userProfileData && <Container>
+          <>
+            <Link to={ 
+              loginAccountName === accountName ? 
+              `/profile/myInfo`
+              : `/profile/${accountName}`
+            }>
+              <UserInfo>
+                <FrofileImg src={profileImg} alt="사용자프로필"/>        
+                <InfoText>
+                  <OrCont>
+                    <UserName>{userName.slice(3)}</UserName>
+                    {userName.slice(0,3) === '[o]'?                
+                    <UserCheck src={UserTypeCheck} alt=''/> : null
+                    }
+                  </OrCont>
+                  <AccountName>@{accountName}</AccountName>
+                </InfoText>
+              </UserInfo>
+            </Link>
+          </>
+      </Container>}
+    </>
   )
 }
 

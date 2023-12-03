@@ -14,6 +14,13 @@ export default function ProductDetail() {
   const [productData, setProductData] = useState();
   const [productAuthorInfo, setProductAuthorInfo] = useState();
 
+  const profileImg = productAuthorInfo?.image;
+  const userName = productAuthorInfo?.username?.slice(3);
+  const accountName = productAuthorInfo?.accountname;
+
+  const userProfileData = { profileImg, userName, accountName}
+  const btnData = {userName, accountName}
+
   const getProductData = (data) => {
     setProductData(data.product);
     setProductAuthorInfo(data.product.author);
@@ -30,28 +37,19 @@ export default function ProductDetail() {
 
   return (
     <>
-      { productData && (
-        <>
+      { productData && productAuthorInfo && (
           <Container>
             <FestivalContainer>
               <Header />
               <FestivalArticle>
                 <Frofile>
-                  <ArticleUserProfile
-                    url={productAuthorInfo.image}
-                    username={productAuthorInfo.username.slice(3)}
-                    accountname={productAuthorInfo.accountname}
-                  />
-                  <AskBtn
-                    accountname={productAuthorInfo.accountname}
-                    userName={productAuthorInfo.username.slice(3)}
-                  />
+                  <ArticleUserProfile userProfileData={userProfileData} />
+                  <AskBtn btnData={btnData} />
                 </Frofile>
                 <FestivalImg src={productData.itemImage || ''} alt='행사' />
                 <InfoContainer>
                   <FestivalTitle>
-                    {productData.itemName.slice(3) ||
-                      '행사명을 조회할 수 없습니다.'}
+                    {productData.itemName.slice(3) || '행사명을 조회할 수 없습니다.'}
                   </FestivalTitle>
                   <FestivalInfo>행사 소개</FestivalInfo>
                   <FestivalDesc>
@@ -59,16 +57,13 @@ export default function ProductDetail() {
                   </FestivalDesc>
                   <FestivalInfo>행사 기간</FestivalInfo>
                   <FestivalDesc>
-                    {productData
-                      ? productPeriod(productData)
-                      : '행사 기간을 조회할 수 없습니다.'}
+                    {productData ? productPeriod(productData): '행사 기간을 조회할 수 없습니다.'}
                   </FestivalDesc>
                 </InfoContainer>
               </FestivalArticle>
               <Footer />
             </FestivalContainer>
           </Container>
-        </>
       )}
     </>
   );
@@ -124,7 +119,7 @@ const FestivalInfo = styled.h4`
 
 const FestivalDesc = styled.p`
   font-size: 1.4rem;
-  padding-left: 1.8rem;
+  padding: 0 1.8rem;
   margin-bottom: 1.6rem;
   line-height: 2rem;
   color: #767676;
