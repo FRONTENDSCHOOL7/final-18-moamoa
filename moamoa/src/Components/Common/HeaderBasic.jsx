@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 export default function Header() {
   return (
     <HeaderContainer>
-        <Gobackbtn />
+      <Gobackbtn />
       <Link to='/home'>
         <HomeBtn src={MOAMOA} alt="홈으로 이동" />
       </Link>

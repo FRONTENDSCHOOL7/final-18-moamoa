@@ -3,14 +3,18 @@ import Gobackbtn from './GoBackbtn';
 import styled from 'styled-components';
 import iconSearch from '../../Assets/icons/icon-search.svg';
 import { Link } from 'react-router-dom';
+import MOAMOA from '../../Assets/images/MOAMOA.png';
 
 export default function Header() {
   return (
     <HeaderContainer>
-      <Gobackbtn />
-      <h2>모아모아 축제목록</h2>
+      <H2>모아모아 축제목록</H2>
+      <Gobackbtn /> 
+      <Link to='/home'>
+        <HomeBtn src={MOAMOA} alt="홈으로 이동" />
+      </Link>
       <Link to='/search'>
-        <img src={iconSearch}></img>
+        <SearchBtn src={iconSearch} />
       </Link>
     </HeaderContainer>
   );
@@ -39,4 +43,23 @@ const HeaderContainer = styled.header`
     align-items: center;
     gap: 5px;
   }
+`;
+
+const H2 = styled.h2`
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+`
+const SearchBtn = styled.img`
+  width: 2.2rem;
+`;
+
+const HomeBtn = styled.img`
+  width: 13rem;
+  margin-top: 0.3rem;
 `;
