@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../../Components/Common/HeaderBasic';
+import Header from '../../Components/Common/Header';
 import AskBtn from './AskBtn';
 import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
 import Footer from '../../Components/Common/Footer';
+
 import { getProductDetail } from '../../API/Product/ProductAPI'
 import ProductContents from '../../Components/Product/ProductContents';
 
 export default function ProductDetail() {
   const params = useParams();
-  const productId = params.product_id
+  const productId = params.product_id;
   const [productData, setProductData] = useState();
   const [productAuthorInfo, setProductAuthorInfo] = useState();
 
@@ -18,39 +19,39 @@ export default function ProductDetail() {
   const userName = productAuthorInfo?.username?.slice(3);
   const accountName = productAuthorInfo?.accountname;
 
-  const userProfileData = { profileImg, userName, accountName}
-  const btnData = {userName, accountName}
+  const userProfileData = { profileImg, userName, accountName };
+  const btnData = { userName, accountName };
 
   const getProductData = (data) => {
     setProductData(data.product);
-    setProductAuthorInfo(data.product.author);
-  }
+    setProductAuthorInfo(data.product.author); 
+  };
 
   const getProductInfo = () => getProductDetail(productId, getProductData);
 
-  useEffect(()=>{
+  useEffect(() => {
     const getData = async () => {
       await getProductInfo();
-    }
-  getData();
-  },[])
+    };
+    getData();
+  }, []);
 
   return (
     <>
-      { productData && productAuthorInfo && (
-          <Container>
-            <FestivalContainer>
-              <Header />
-              <FestivalArticle>
-                <Frofile>
-                  <ArticleUserProfile userProfileData={userProfileData} />
-                  <AskBtn btnData={btnData} />
-                </Frofile>
-                <ProductContents productData={productData}/>
-              </FestivalArticle>
-              <Footer />
-            </FestivalContainer>
-          </Container>
+      {productData && productAuthorInfo && (
+        <Container>
+          <FestivalContainer>
+            <Header type='home' />
+            <FestivalArticle>
+              <Frofile>
+                <ArticleUserProfile userProfileData={userProfileData} />
+                <AskBtn btnData={btnData} />
+              </Frofile>
+              <ProductContents productData={productData}/>
+            </FestivalArticle>
+            <Footer />
+          </FestivalContainer>
+        </Container>
       )}
     </>
   );

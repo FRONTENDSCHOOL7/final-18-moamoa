@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
-import HeaderChat from '../../Components/Common/HeaderChat';
+import Header from '../../Components/Common/Header';
 
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
 import { useParams } from 'react-router-dom';
@@ -63,12 +63,11 @@ export default function ChatRoomKim() {
       handleSendClick();
     }
   };
-  const cleanedChatUserName = chatUserName.replace(/\[o\]|\[i\]/g, '');
 
   console.log(chatUserName);
   return (
     <Container>
-      <HeaderChat headerText={cleanedChatUserName}></HeaderChat>
+      <Header type='chatChangeUser'></Header>
       <ChatRoom>
         <ChatMessages ref={bottomRef}>
           {sendMsg.map((msg, index) => (

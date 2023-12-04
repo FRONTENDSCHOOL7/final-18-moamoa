@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import FollowUser from '../../Components/Common/FollowUser';
-import HeaderFollwerList from '../../Components/Common/HeaderFollwerList';
+import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { FollowerAPI } from '../../API/Follow/FollowerAPI';
@@ -32,7 +32,7 @@ export default function FollowerList() {
   return (
     <div>
       <Container>
-        <HeaderFollwerList />
+        <Header type='follow' />
         <FollowerWrap>
           {follower.map((item, index) => {
             const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');

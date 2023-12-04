@@ -1,10 +1,11 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
-import HeaderChat from '../../Components/Common/HeaderChat';
+import Header from '../../Components/Common/Header';
 import Photo from '../../Components/Common/ChatPhoto';
 import img from '../../Assets/images/followImg/fog.jpg';
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
+/* eslint-disable */
 export default function ChatRoomKim() {
   const [message, setMessage] = useState('');
   const [file, setFile] = useState(null);
@@ -60,9 +61,10 @@ export default function ChatRoomKim() {
       handleSendClick();
     }
   };
+  /* eslint-disable */
   return (
     <Container>
-      <HeaderChat headerText={'양떼목장 김사장'}></HeaderChat>
+      <Header type='chatFixedUser'></Header>
       <ChatRoom>
         <ChatMessages ref={bottomRef}>
           <div className='talkBox'>

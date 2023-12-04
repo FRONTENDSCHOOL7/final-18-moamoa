@@ -10,12 +10,13 @@ import img from '../../Assets/images/followImg/fog.jpg';
 import img2 from '../../Assets/images/followImg/human.jpg';
 import img3 from '../../Assets/images/followImg/woman2.jpg';
 import { Link } from 'react-router-dom';
-import HeaderKebab from '../../Components/Common/HeaderKebab';
+
+import Header from '../../Components/Common/Header';
 export default function ChatList() {
   return (
     <div>
       <Container>
-        <HeaderKebab />
+        <Header type='moreKebab' />
         <ChatListWrap>
           <SearchWrap>
             <SearchPhotoWrap>
