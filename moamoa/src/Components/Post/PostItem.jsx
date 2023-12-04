@@ -64,7 +64,7 @@ export default function PostItem({ post }) {
       setHeartColor(heartBg);
     });
   };
-console.log(postId)
+
   return (
     <>
       {postItemInfo && postAuthorInfo && (

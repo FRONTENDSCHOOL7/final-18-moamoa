@@ -5,8 +5,9 @@ import Header from '../../Components/Common/Header';
 import AskBtn from './AskBtn';
 import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
 import Footer from '../../Components/Common/Footer';
-import { getProductDetail } from '../../API/Product/ProductAPI';
-import ProductContents from '../../Components/ProductList/ProductContents';
+
+import { getProductDetail } from '../../API/Product/ProductAPI'
+import ProductContents from '../../Components/Product/ProductContents';
 
 export default function ProductDetail() {
   const params = useParams();
@@ -23,7 +24,7 @@ export default function ProductDetail() {
 
   const getProductData = (data) => {
     setProductData(data.product);
-    setProductAuthorInfo(data.product.author);
+    setProductAuthorInfo(data.product.author); 
   };
 
   const getProductInfo = () => getProductDetail(productId, getProductData);
@@ -46,20 +47,7 @@ export default function ProductDetail() {
                 <ArticleUserProfile userProfileData={userProfileData} />
                 <AskBtn btnData={btnData} />
               </Frofile>
-              <FestivalImg src={productData.itemImage || ''} alt='행사' />
-              <InfoContainer>
-                <FestivalTitle>
-                  {productData.itemName.slice(3) || '행사명을 조회할 수 없습니다.'}
-                </FestivalTitle>
-                <FestivalInfo>행사 소개</FestivalInfo>
-                <FestivalDesc>
-                  {productData?.link || '행사 상세 설명을 조회할 수 없습니다.'}
-                </FestivalDesc>
-                <FestivalInfo>행사 기간</FestivalInfo>
-                <FestivalDesc>
-                  {productData ? productPeriod(productData) : '행사 기간을 조회할 수 없습니다.'}
-                </FestivalDesc>
-              </InfoContainer>
+              <ProductContents productData={productData}/>
             </FestivalArticle>
             <Footer />
           </FestivalContainer>
