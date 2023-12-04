@@ -1,8 +1,7 @@
 import React from 'react';
-import useJoin from '../../Hooks/Sign/useJoin.jsx';
-import { uploadImage } from '../../API/Image/ImageAPI.jsx';
+import InputErrorMessagesReducer from '../../Hooks/Auth/InputErrorMessagesReducer.jsx';
+import useSignUp from '../../Hooks/Auth/useSignUp.jsx';
 import UploadFile from '../../Assets/images/upload-file.png';
-import DefaultProfile from '../../Assets/images/profile-img.svg';
 import styled from 'styled-components';
 import {
   LoginAndJoinContainer,
@@ -10,43 +9,31 @@ import {
   CommonInput,
   StyledErrorMsg,
   CommonBtn,
-} from '../../Components/Common/FormLoginAndJoin';
+} from '../../Components/Common/FormLoginAndJoin.jsx';
 
-const Join = () => {
+const SignUp = () => {
   const {
-    pageTransition,
-    imgSrc,
-    setImgSrc,
+    userData,
     userType,
-    userInfo,
-    setUserInfo,
-    accountInfoMsg,
-    introInfoMsg,
-    emailError,
-    passwordError,
-    errorMessage,
-    goNext,
-    handleInputChange,
-    handleUserType,
-    handlePasswordValid,
-    handleEmailOnBlur,
-    handleAccountNameValid,
-    handleIntroValid,
-    handleSubmit,
-  } = useJoin();
+    pageTransition,
+    userTypeErrorMessage,
+    signUpFailMessage,
+    imgSrc,
+    handleChangeImage,
+    updateUserData,
+    updateUserType,
+    clickNextButton,
+    submitSignUpForm,
+  } = useSignUp();
 
-  const handleChangeImage = async (e) => {
-    const imageFile = e.target.files[0];
-    const response = await uploadImage(imageFile);
-    setUserInfo({
-      ...userInfo,
-      user: {
-        ...userInfo.user,
-        image: `https://api.mandarin.weniv.co.kr/${response.data.filename}`,
-      },
-    });
-    setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
-  };
+  const {
+    errorMessages,
+    checkPasswordLength,
+    checkUserNameLength,
+    checkIntroductionLength,
+    validateEmailWithAPI,
+    validateAccountNameWithAPI,
+  } = InputErrorMessagesReducer();
 
   return (
     <>
@@ -55,10 +42,15 @@ const Join = () => {
         <LoginAndJoinContainer>
           <h2>프로필 설정</h2>
           <ProfileInfo>나중에 언제든지 변경할 수 있습니다.</ProfileInfo>
-          <ProfileForm onSubmit={handleSubmit}>
+          <ProfileForm onSubmit={submitSignUpForm}>
             <ImgContainer>
               <ImgLabel htmlFor='profileImg'>
-                <ProfileImg src={imgSrc ? imgSrc : DefaultProfile} alt='' srcSet='' id='imagePre' />
+                <ProfileImg
+                  src={imgSrc.profile.url}
+                  alt={imgSrc.profile.alt}
+                  srcSet=''
+                  id='imagePre'
+                />
               </ImgLabel>
               <input
                 type='file'
@@ -72,36 +64,36 @@ const Join = () => {
             <TextContainer>
               <TextLabel htmlFor='userNameInput'>사용자 이름</TextLabel>
               <TextInput
-                value={userInfo.user.username}
-                onChange={handleInputChange}
+                value={userData.user.username}
+                onChange={updateUserData}
                 type='text'
                 id='userNameInput'
                 name='username'
                 placeholder='2~10자 이내여야 합니다.'
                 minLength={2}
                 maxLength={10}
+                onBlur={checkUserNameLength}
+                required
               />
+              <StyledErrorMsg>{errorMessages.userNameError}</StyledErrorMsg>
               <TextLabel htmlFor='userIdInput'>계정 ID</TextLabel>
               <TextInput
-                value={userInfo.user.accountname}
-                onChange={handleInputChange}
+                value={userData.user.accountname}
+                onChange={updateUserData}
                 type='text'
                 id='userIdInput'
                 name='accountname'
                 placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
                 minLength={2}
                 maxLength={15}
-                onBlur={handleAccountNameValid}
+                onBlur={validateAccountNameWithAPI}
+                required
               />
-              <StyledErrorMsg>{accountInfoMsg}</StyledErrorMsg>
-              {(errorMessage === '*영문, 숫자, 밑줄, 마침표만 사용할 수 있습니다.' ||
-                errorMessage === '*이미 사용중인 계정 ID입니다.') && (
-                <StyledErrorMsg>{errorMessage}</StyledErrorMsg>
-              )}
+              <StyledErrorMsg>{errorMessages.accountNameError}</StyledErrorMsg>
               <TextLabel htmlFor='userIntroInput'>소개</TextLabel>
               <TextInput
-                value={userInfo.user.intro}
-                onChange={handleInputChange}
+                value={userData.user.intro}
+                onChange={updateUserData}
                 type='text'
                 id='userIntroInput'
                 name='intro'
@@ -112,33 +104,26 @@ const Join = () => {
                 }
                 minLength={2}
                 maxLength={50}
-                onBlur={handleIntroValid}
+                onBlur={checkIntroductionLength}
+                required
               />
-              <StyledErrorMsg>{introInfoMsg}</StyledErrorMsg>
+              <StyledErrorMsg>{errorMessages.introductionError}</StyledErrorMsg>
+              <StyledErrorMsg>{signUpFailMessage}</StyledErrorMsg>
             </TextContainer>
-            <ProfileButton
-              type='submit'
-              disabled={
-                userInfo.user.username.length < 2 ||
-                !userInfo.user.accountname ||
-                !userInfo.user.intro
-              }
-            >
-              모아모아 시작하기
-            </ProfileButton>
+            <ProfileButton type='submit'>모아모아 시작하기</ProfileButton>
           </ProfileForm>
         </LoginAndJoinContainer>
       ) : (
         <LoginAndJoinContainer>
           <h2>이메일로 회원가입</h2>
-          <Form onSubmit={goNext}>
+          <Form onSubmit={clickNextButton}>
             <SelectUserType>
               <h3>회원분류선택</h3>
               <SelectUserBtnContainer>
                 <SelectUserBtn
                   type='button'
                   name='individual'
-                  onClick={handleUserType}
+                  onClick={updateUserType}
                   selected={userType === 'individual'}
                 >
                   일반 회원
@@ -146,44 +131,35 @@ const Join = () => {
                 <SelectUserBtn
                   type='button'
                   name='organization'
-                  onClick={handleUserType}
+                  onClick={updateUserType}
                   selected={userType === 'organization'}
                 >
                   기업 및 기관
                 </SelectUserBtn>
               </SelectUserBtnContainer>
+              <StyledErrorMsg>{userTypeErrorMessage}</StyledErrorMsg>
             </SelectUserType>
             <CommonInput
-              value={userInfo.user.email}
-              onChange={handleInputChange}
-              onBlur={handleEmailOnBlur}
+              value={userData.user.email}
+              onChange={updateUserData}
+              onBlur={validateEmailWithAPI}
               type='email'
               name='email'
               placeholder='이메일을 설정해 주세요.'
               required
             />
-            <StyledErrorMsg>{emailError}</StyledErrorMsg>
+            <StyledErrorMsg>{errorMessages.emailError}</StyledErrorMsg>
             <CommonInput
-              value={userInfo.user.password}
-              onChange={handleInputChange}
-              onBlur={handlePasswordValid}
+              value={userData.user.password}
+              onChange={updateUserData}
+              onBlur={checkPasswordLength}
               type='password'
               name='password'
               placeholder='비밀번호를 설정해 주세요.'
               required
             />
-            <StyledErrorMsg>{passwordError}</StyledErrorMsg>
-            <JoinBtn
-              disabled={
-                !userType ||
-                !userInfo.user.email ||
-                !userInfo.user.password ||
-                emailError !== '*사용 가능한 이메일 입니다.' ||
-                passwordError
-              }
-            >
-              다음
-            </JoinBtn>
+            <StyledErrorMsg>{errorMessages.passwordError}</StyledErrorMsg>
+            <JoinBtn>다음</JoinBtn>
           </Form>
         </LoginAndJoinContainer>
       )}
@@ -293,4 +269,4 @@ const ProfileButton = styled(CommonBtn)`
   width: 100%;
 `;
 
-export default Join;
+export default SignUp;

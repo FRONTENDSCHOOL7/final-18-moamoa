@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 
 import Landing from '../Pages/Splash/Landing';
 import Home from '../Pages/Home/Home';
-import Login from '../Pages/Sign/Login';
-import Join from '../Pages/Sign/Join';
+import Login from '../Pages/Auth/Login';
+import SignUp from '../Pages/Auth/SignUp';
 
 import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';
@@ -45,7 +45,7 @@ export default function AppRoutes() {
       <Route path='/user/login' element={<Login />} />
 
       {/* 회원가입 */}
-      <Route path='/user/join' element={<Join />} />
+      <Route path='/user/signUp' element={<SignUp />} />
 
       {/* 404 페이지} */}
       <Route path='/*' element={<NotFound />} />
