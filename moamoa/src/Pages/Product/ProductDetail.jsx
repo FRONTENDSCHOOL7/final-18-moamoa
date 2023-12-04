@@ -6,7 +6,7 @@ import AskBtn from './AskBtn';
 import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
 import Footer from '../../Components/Common/Footer';
 import { getProductDetail } from '../../API/Product/ProductAPI'
-import ProductContents from '../../Components/ProductList/ProductContents';
+import ProductContents from '../../Components/Product/ProductContents';
 
 export default function ProductDetail() {
   const params = useParams();

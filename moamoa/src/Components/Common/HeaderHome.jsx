@@ -21,6 +21,7 @@ export default function Header() {
 const HeaderContainer = styled.header`
   display: flex;
   height: 48px;
+  z-index: 5;
 
   position: fixed;
   min-height: 48px;

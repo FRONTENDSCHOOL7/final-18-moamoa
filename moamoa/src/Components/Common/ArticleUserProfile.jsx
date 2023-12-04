@@ -10,13 +10,10 @@ ArticleUserProfile.propTypes = {
 
 export default function ArticleUserProfile({ userProfileData }) {
 
-
   const profileImg = userProfileData?.profileImg;
   const userName = userProfileData?.userName;
   const accountName = userProfileData?.accountName;
   const loginAccountName = userProfileData?.loginAccountName;
-  console.log(profileImg)
-
 
   return (
     <>

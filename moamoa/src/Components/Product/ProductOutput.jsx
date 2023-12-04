@@ -5,7 +5,7 @@ import { ProductAtom } from '../../Pages/Product/ProductList';
 import backgroundMoamoa from '../../Assets/images/backgroundMoamoa.png';
 import { Link } from 'react-router-dom';
 import ProductImgBox from '../../Components/Common/ProductImgBox';
-import TopNavigation from '../../Components/ProductList/TopNavigation';
+import TopNavigation from '../../Components/Product/TopNavigation';
 import { festivalActiveState, experienceActiveState } from '../../Recoil/ProductTypeStateAtom';
 
 function formatEventDate(dateString) {

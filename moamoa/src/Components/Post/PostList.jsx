@@ -6,11 +6,12 @@ export default function PostList(post) {
   const postItem = post?.post;
 
   return (
-    <Posts>
-      {postItem && (
+  <>
+    { postItem && 
+      <Posts>
         <li><PostItem post={postItem}/></li>
-      )}
-    </Posts>
+      </Posts> }
+  </>
   );
 }
 
