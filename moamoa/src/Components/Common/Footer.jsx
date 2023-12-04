@@ -60,7 +60,7 @@ export default function Footer() {
     <TabMenu>
       {tabs.map((tab) => (
         <TabButton key={tab.name} onClick={() => handleToggleSwitch(tab.name)}>
-          <TabBtnImg src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon} />
+          <TabBtnImg src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon} alt={`${tab.name}으로 이동`}/>
           <TabLabel $colors={toggleSwitch === tab.name ? +true : +false}>{tab.label}</TabLabel>
         </TabButton>
       ))}

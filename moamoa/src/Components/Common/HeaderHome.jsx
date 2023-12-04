@@ -8,10 +8,11 @@ export default function Header() {
   return (
     <HeaderContainer>
       <Link to='/home'>
+        <H1>모아모아</H1>
         <HomeBtn src={MOAMOA} alt="홈으로 이동" />
       </Link>
       <Link to='/search'>
-        <SearchBtn src={iconSearch}></SearchBtn>
+        <SearchBtn src={iconSearch} alt='검색하기'></SearchBtn>
       </Link>
     </HeaderContainer>
   );
@@ -39,6 +40,17 @@ const HeaderContainer = styled.header`
     cursor: pointer;
   }
 `;
+
+const H1 = styled.h1`
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+`
 
 const SearchBtn = styled.img`
   width: 2.2rem;

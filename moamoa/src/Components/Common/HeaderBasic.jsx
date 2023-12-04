@@ -13,7 +13,7 @@ export default function Header() {
         <HomeBtn src={MOAMOA} alt="홈으로 이동" />
       </Link>
       <Link to='/search'>
-        <SearchBtn src={iconSearch}></SearchBtn>
+        <SearchBtn src={iconSearch} alt='검색하기'></SearchBtn>
       </Link>
     </HeaderContainer>
   );

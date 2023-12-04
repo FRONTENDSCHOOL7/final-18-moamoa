@@ -58,13 +58,13 @@ export default function HeaderKebab() {
   return (
     <>
       <HeaderContainer>
-        <Gobackbtn />
-        
+      <Gobackbtn />
       <Link to='/home'>
+        <H1>모아모아</H1>
         <HomeBtn src={MOAMOA} alt="홈으로 이동" />
       </Link>
         <button type='button' onClick={handleKebabClick}>
-          <MoreImg src={more} />
+          <MoreImg src={more} alt='더 보기'/>
         </button>
         {showMyProfileOptions && (
           <LogoutModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
@@ -100,6 +100,17 @@ const HeaderContainer = styled.header`
     cursor: pointer;
   }
 `;
+
+const H1 = styled.h1`
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+`
 
 const MoreImg = styled.img`
   width: 2.2rem;

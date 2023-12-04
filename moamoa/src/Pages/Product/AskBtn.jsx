@@ -44,20 +44,22 @@ export default function AskBtn({btnData}) {
   );
 }
 
-const Ask = styled.button`
-  width: 10rem;
-  height: 2.8rem;
-  border-radius: 2rem;
-  background: #87b7e4;
-  color: white;
-  font-size: 1.2rem;
-  &:hover {
-    cursor: pointer;
-    background-color: #4f9ee9;
-  }
-  margin-left: 1rem;
-  padding: 0 1.8rem;
-`;
+// const Ask = styled.button`
+//   width: 10rem;
+//   height: 2.8rem;
+//   border-radius: 2rem;
+//   /* background: #6da6db; */
+//   border: 1px solid #767676;
+//   color: #767676;
+//   font-size: 1.2rem;
+//   &:hover {
+//     cursor: pointer;
+//     font-weight: bold;
+//     border: 1.5px solid #767676;
+//   }
+//   margin-left: 1rem;
+//   padding: 0 1.8rem;
+// `;
 
 const Eidt = styled.button`
   width: 10rem;
@@ -75,6 +77,10 @@ const Eidt = styled.button`
 `;
 
 const Del = styled(Eidt)``;
+
+const Ask = styled(Eidt)`
+  padding: 0 1.8rem;
+`;
 
 const DelCont = styled.div`
   width: 100%;
