@@ -14,11 +14,10 @@ import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
 import PostContents from './PostContents';
 
 PostItem.propTypes = {
-  post: PropTypes.object,
-  currnetPath: PropTypes.string
+  post: PropTypes.object
 };
 
-export default function PostItem({ post, currnetPath }) {
+export default function PostItem({ post }) {
   const postItemInfo = post;
   const postAuthorInfo = post?.author;
 
@@ -36,7 +35,7 @@ export default function PostItem({ post, currnetPath }) {
   const postId = postItemInfo?.id;
 
   const userProfileData = { profileImg, userName, accountName, loginAccountName }
-  const contentsData = { postItemInfo, postImgUrl, currnetPath, postId }
+  const contentsData = { postItemInfo, postImgUrl, postId }
   const btnData = {postId, accountName, showModal}
 
   const heartedPost = () => heartPost(postId);
@@ -69,44 +68,36 @@ console.log(postId)
   return (
     <>
       {postItemInfo && postAuthorInfo && (
-        <PostList>
-          <PostArticle>
-            <Frofile>
-              <ArticleUserProfile userProfileData={userProfileData} />
-              <PostMoreBtn btnData={btnData} onClick={() => setShowModal(true)}
-              />
-            </Frofile>
-            <PostContents contentsData={contentsData}/>
-            <PostFooterContainer>
-              <CreateDate>{Datacalc(postItemInfo.createdAt)}</CreateDate>
-              <div>
-                {heartValue ? (
-                  <HeartBtn onClick={() => handleUnheartCount()} heartcolor={heartBgFill} >
-                    {heartcount}
-                  </HeartBtn>
-                ) : (
-                  <HeartBtn onClick={() => handleHeartCount()} heartcolor={heartcolor} >
-                    {heartcount}
-                  </HeartBtn>
-                )}
-                <CommentBtn>{postItemInfo.commentCount}</CommentBtn>
-              </div>
-            </PostFooterContainer>
-          </PostArticle>
-        </PostList>
+        <PostArticle>
+          <Frofile>
+            <ArticleUserProfile userProfileData={userProfileData} />
+            <PostMoreBtn btnData={btnData} onClick={() => setShowModal(true)}
+            />
+          </Frofile>
+          <PostContents contentsData={contentsData}/>
+          <PostFooterContainer>
+            <CreateDate>{Datacalc(postItemInfo.createdAt)}</CreateDate>
+            <div>
+              {heartValue ? (
+                <HeartBtn onClick={() => handleUnheartCount()} heartcolor={heartBgFill} >
+                  {heartcount}
+                </HeartBtn>
+              ) : (
+                <HeartBtn onClick={() => handleHeartCount()} heartcolor={heartcolor} >
+                  {heartcount}
+                </HeartBtn>
+              )}
+              <CommentBtn>{postItemInfo.commentCount}</CommentBtn>
+            </div>
+          </PostFooterContainer>
+        </PostArticle>
       )}
     </>
   );
 }
 
-const PostList = styled.li`
-  &:first-child {
-    /* padding-top: 1rem; */
-  }
-`;
-
 const PostArticle = styled.article`
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
 `;
 const Frofile = styled.div`
   margin: 0 auto;

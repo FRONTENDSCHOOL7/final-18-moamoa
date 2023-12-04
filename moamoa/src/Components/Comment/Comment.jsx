@@ -113,7 +113,7 @@ const CommentContent = styled.input`
   width: 28rem;
   height: 5rem;
   font-size: 1.4rem;
-  &::placeholder{color: #C4C4C4;}
+  &::placeholder{color: #767676;}
   &:focus{
     outline:none;
   }

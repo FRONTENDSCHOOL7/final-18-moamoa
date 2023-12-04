@@ -19,7 +19,7 @@ const AddBtn = styled.button`
   height: 4rem;
   border-radius: 1rem;
   border: 1px solid #C4C4C4;
-  color: #C4C4C4;
+  color: #767676;
 
 `;
 

@@ -56,6 +56,8 @@ const Container = styled.div`
 const FrofileImg = styled.img`
   width: 4.2rem;
   height: 4.2rem;
+  aspect-ratio: 1/1;
+  object-fit: cover;
   border-radius: 100%;
   margin-right: 0.8rem;
 ` ;
