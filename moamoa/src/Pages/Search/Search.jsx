@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import UserSearch from '../../Components/Common/HeaderSearch';
+import Header from '../../Components/Common/Header';
 import { SearchAPI } from '../../API/Search/SearchAPI';
 import styled from 'styled-components';
 import Footer from '../../Components/Common/Footer';
@@ -62,7 +62,7 @@ export default function Search() {
 
   return (
     <Container>
-      <UserSearch setSearchText={setSearchText}></UserSearch>
+      <Header type='search' setSearchText={setSearchText}></Header>
       <SearchListWrap>
         {isLoading ? (
           <SearchResultSkeleton />

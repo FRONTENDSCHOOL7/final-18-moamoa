@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { Link } from 'react-router-dom';
-
 import userToken from '../../Recoil/userTokenAtom';
 import isLoginAtom from '../../Recoil/isLoginAtom';
 import accountNameAtom from '../../Recoil/accountNameAtom';
 import userNameAtom from '../../Recoil/userNameAtom';
 
-import MOAMOA from '../../Assets/images/MOAMOA.png';
-import Gobackbtn from '../../Components/Common/GoBackbtn';
+import HomeBtn from './HomeBtn';
+import Gobackbtn from './GoBackbtn';
 import more from '../../Assets/icons/icon-more.svg';
 import styled from 'styled-components';
-import LogoutModal from '../../Components/Modal/LogoutModal';
-import LogoutConfirmModal from '../../Components/Modal/LogoutConfirmModal';
+import LogoutModal from '../Modal/LogoutModal';
+import LogoutConfirmModal from '../Modal/LogoutConfirmModal';
 
 export default function HeaderKebab() {
   const navigate = useNavigate();
@@ -59,10 +57,7 @@ export default function HeaderKebab() {
     <>
       <HeaderContainer>
         <Gobackbtn />
-        
-      <Link to='/home'>
-        <HomeBtn src={MOAMOA} alt="홈으로 이동" />
-      </Link>
+        <HomeBtn />
         <button type='button' onClick={handleKebabClick}>
           <MoreImg src={more} />
         </button>
@@ -103,8 +98,4 @@ const HeaderContainer = styled.header`
 
 const MoreImg = styled.img`
   width: 2.2rem;
-`
-const HomeBtn = styled.img`
-  width: 13rem;
-  margin-top: 0.3rem;
 `;

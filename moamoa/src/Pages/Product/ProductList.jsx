@@ -6,7 +6,7 @@ import ProductListLoading from '../../Components/ProductList/ProductListLoading'
 import ProductOutput from '../../Components/ProductList/ProductOutput';
 import styled from 'styled-components';
 import { ContainerPercent } from '../../Components/Common/Container';
-import Header from '../../Components/Common/HeaderProductList';
+import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
 
 export const ProductAtom = atom({
@@ -35,7 +35,7 @@ export default function ProductList() {
 
   return (
     <ContainerPercent>
-      <Header />
+      <Header type='home' />
       <ProductListWrap>
         {loading ? (
           <ProductListLoading />

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../../Components/Common/HeaderBasic';
+import Header from '../../Components/Common/Header';
 import AskBtn from './AskBtn';
 import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
 import Footer from '../../Components/Common/Footer';
-import { getProductDetail } from '../../API/Product/ProductAPI'
+import { getProductDetail } from '../../API/Product/ProductAPI';
 import { productPeriod } from './period';
 
 export default function ProductDetail() {
   const params = useParams();
-  const productId = params.product_id
+  const productId = params.product_id;
   const [productData, setProductData] = useState();
   const [productAuthorInfo, setProductAuthorInfo] = useState();
 
@@ -18,52 +18,52 @@ export default function ProductDetail() {
   const userName = productAuthorInfo?.username?.slice(3);
   const accountName = productAuthorInfo?.accountname;
 
-  const userProfileData = { profileImg, userName, accountName}
-  const btnData = {userName, accountName}
+  const userProfileData = { profileImg, userName, accountName };
+  const btnData = { userName, accountName };
 
   const getProductData = (data) => {
     setProductData(data.product);
     setProductAuthorInfo(data.product.author);
-  }
+  };
 
   const getProductInfo = () => getProductDetail(productId, getProductData);
 
-  useEffect(()=>{
+  useEffect(() => {
     const getData = async () => {
       await getProductInfo();
-    }
-  getData();
-  },[])
+    };
+    getData();
+  }, []);
 
   return (
     <>
-      { productData && productAuthorInfo && (
-          <Container>
-            <FestivalContainer>
-              <Header />
-              <FestivalArticle>
-                <Frofile>
-                  <ArticleUserProfile userProfileData={userProfileData} />
-                  <AskBtn btnData={btnData} />
-                </Frofile>
-                <FestivalImg src={productData.itemImage || ''} alt='행사' />
-                <InfoContainer>
-                  <FestivalTitle>
-                    {productData.itemName.slice(3) || '행사명을 조회할 수 없습니다.'}
-                  </FestivalTitle>
-                  <FestivalInfo>행사 소개</FestivalInfo>
-                  <FestivalDesc>
-                    {productData?.link || '행사 상세 설명을 조회할 수 없습니다.'}
-                  </FestivalDesc>
-                  <FestivalInfo>행사 기간</FestivalInfo>
-                  <FestivalDesc>
-                    {productData ? productPeriod(productData): '행사 기간을 조회할 수 없습니다.'}
-                  </FestivalDesc>
-                </InfoContainer>
-              </FestivalArticle>
-              <Footer />
-            </FestivalContainer>
-          </Container>
+      {productData && productAuthorInfo && (
+        <Container>
+          <FestivalContainer>
+            <Header type='home' />
+            <FestivalArticle>
+              <Frofile>
+                <ArticleUserProfile userProfileData={userProfileData} />
+                <AskBtn btnData={btnData} />
+              </Frofile>
+              <FestivalImg src={productData.itemImage || ''} alt='행사' />
+              <InfoContainer>
+                <FestivalTitle>
+                  {productData.itemName.slice(3) || '행사명을 조회할 수 없습니다.'}
+                </FestivalTitle>
+                <FestivalInfo>행사 소개</FestivalInfo>
+                <FestivalDesc>
+                  {productData?.link || '행사 상세 설명을 조회할 수 없습니다.'}
+                </FestivalDesc>
+                <FestivalInfo>행사 기간</FestivalInfo>
+                <FestivalDesc>
+                  {productData ? productPeriod(productData) : '행사 기간을 조회할 수 없습니다.'}
+                </FestivalDesc>
+              </InfoContainer>
+            </FestivalArticle>
+            <Footer />
+          </FestivalContainer>
+        </Container>
       )}
     </>
   );
