@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PostList from '../../Components/Post/PostList';
 import styled from 'styled-components';
 import HomeSearch from './HomeSearch';
-import Header from '../../Components/Common/HeaderHome';
+import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
@@ -20,21 +20,21 @@ export default function Home() {
 
   return (
     <Container>
-      <Header />
+      <Header type='home' />
       <HomeWrap>
-        { posts && Object.keys(posts).length !== 0 ? (
+        {posts && Object.keys(posts).length !== 0 ? (
           <HomeContainer>
             <PostBg>
               {posts.map((item) => {
                 return <PostList key={item.id} post={item} />;
               })}
-          </PostBg>
-        </HomeContainer>
-      ) : (
-        <HomeContainer>
+            </PostBg>
+          </HomeContainer>
+        ) : (
+          <HomeContainer>
             <HomeSearch />
-        </HomeContainer>
-      )}
+          </HomeContainer>
+        )}
       </HomeWrap>
       <Footer />
     </Container>

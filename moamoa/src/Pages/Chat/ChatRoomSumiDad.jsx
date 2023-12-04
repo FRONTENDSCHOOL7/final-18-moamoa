@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
-import HeaderChat from '../../Components/Common/HeaderChat';
+import Header from '../../Components/Common/Header';
 import Photo from '../../Components/Common/ChatPhoto';
 import img from '../../Assets/images/followImg/human.jpg';
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
@@ -62,7 +62,7 @@ export default function ChatRoomKim() {
   };
   return (
     <Container>
-      <HeaderChat headerText={'텃밭체험 수미아빠'}></HeaderChat>
+      <Header type='chat'></Header>
       <ChatRoom>
         <ChatMessages ref={bottomRef}>
           <div className='talkBox'>

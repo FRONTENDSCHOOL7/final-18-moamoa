@@ -20,7 +20,7 @@ import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import Footer from '../../Components/Common/Footer';
 import styled from 'styled-components';
-import HeaderKebab from '../../Components/Common/HeaderKebab';
+import Header from '../../Components/Common/Header';
 
 import GetYourinfoAPI from '../../API/Profile/GetYourinfoAPI';
 
@@ -72,7 +72,7 @@ function MyProfile() {
 
   return (
     <Container>
-      <HeaderKebab />
+      <Header type='moreKebab' />
       <section>
         <HiddenH1>내 프로필</HiddenH1>
         <ProfileTop>

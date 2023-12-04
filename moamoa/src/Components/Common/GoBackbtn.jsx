@@ -9,13 +9,13 @@ const GoBackImage = styled.img`
 `;
 export default function Gobackbtn() {
   const navigate = useNavigate();
-  // console.log(navigate);
+
   const handleGoBack = () => {
     navigate(-1);
   };
   return (
-      <Link onClick={handleGoBack}>
-        <GoBackImage src={iconGoBack} alt='뒤로가기'/>
-      </Link>
+    <Link onClick={handleGoBack}>
+      <GoBackImage src={iconGoBack} alt='뒤로가기' />
+    </Link>
   );
 }

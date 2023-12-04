@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import HeaderFollowingList from '../../Components/Common/HeaderFollowingList';
+import Header from '../../Components/Common/Header';
 import FollowingUser from '../../Components/Common/FollowingUser';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { useRecoilValue } from 'recoil';
@@ -31,7 +31,7 @@ export default function FollowingList() {
   return (
     <div>
       <Container>
-        <HeaderFollowingList />
+        <Header type='follow' />
         <FollowingWrap>
           {following.map((item, index) => {
             const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
