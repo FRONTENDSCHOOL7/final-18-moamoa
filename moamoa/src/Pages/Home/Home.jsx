@@ -25,11 +25,9 @@ export default function Home() {
         {posts && Object.keys(posts).length !== 0 ? (
           <HomeContainer>
             <PostBg>
-              <Posts>
-                {posts.map((item) => {
-                  return <PostList key={item.id} post={item} />;
-                })}
-              </Posts>
+              {posts.map((item) => {
+                return <PostList key={item.id} post={item} />;
+              })}
             </PostBg>
           </HomeContainer>
         ) : (
@@ -60,9 +58,4 @@ const PostBg = styled.div`
   height: 100%;
   margin: auto;
   background-color: #fff;
-`;
-const Posts = styled.ul`
-  box-sizing: border-box;
-  background-color: #ffffff;
-  margin: 3rem 1.6rem 8rem;
 `;

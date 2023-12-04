@@ -17,7 +17,7 @@ export default function LoginModal() {
       <Modal visible={modalActive ? true : false}>
         <SplashLoginBtn></SplashLoginBtn>
         <p className='joinGuide'>아직 회원이 아니신가요?</p>
-        <Link to='/user/join'>이메일로 회원가입</Link>
+        <Link to='/user/signUp'>이메일로 회원가입</Link>
       </Modal>
     </div>
   );

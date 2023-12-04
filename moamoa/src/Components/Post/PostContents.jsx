@@ -8,27 +8,21 @@ PostContents.propTypes = {
 };
 
 export default function PostContents({contentsData}) {
-  const {postItemInfo, postImgUrl, currnetPath, postId} = contentsData
+  const {postItemInfo, postImgUrl, postId} = contentsData
 
   return (
-    <>
-      { currnetPath !== postId ?
-        <Link to={`/post/${postId}`}>
-            <ContentsBox>
-              <PostDesc>{postItemInfo.content}</PostDesc>
-              {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
-            </ContentsBox>
-        </Link> 
-        : <ContentsBox>
-            <PostDesc>{postItemInfo.content}</PostDesc>
-            {postImgUrl ? <PostImg src={postImgUrl} alt='게시글 사진' /> : null}
-          </ContentsBox>
-      }
-    </>
+    <Link to={`/post/${postId}`}>
+        <ContentsBox>
+          {postImgUrl ? <PostImg src={postImgUrl} alt='' /> : null}
+          <PostDesc>{postItemInfo.content}</PostDesc>
+        </ContentsBox>
+    </Link>
   )
 }
 
 const ContentsBox = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
 `;
 
 const PostImg = styled.img`
