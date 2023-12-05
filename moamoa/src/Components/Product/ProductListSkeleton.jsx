@@ -1,8 +1,7 @@
-/* eslint-disable */
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
-import { ProductContainer, ProductBox } from './ProductOutput';
+import { ProductContainer } from './ProductOutput';
 
 export default function ProductListSkeleton() {
   return (
