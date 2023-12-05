@@ -52,7 +52,7 @@ export default function ProductBundle() {
     </>
   );
 }
-const ProductContainer = styled.div`
+export const ProductContainer = styled.div`
   max-width: 100%;
   margin: 0 auto;
   display: grid;
@@ -66,7 +66,7 @@ const ProductContainer = styled.div`
   background-position: bottom 8rem right 0px;
   grid-template-rows: 160px;
 `;
-const ProductBox = styled.div`
+export const ProductBox = styled.div`
   max-width: 172px;
   margin: 0 auto;
 
