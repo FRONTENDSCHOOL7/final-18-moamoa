@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import { productPeriod } from '../../Pages/Product/period';
 import PropTypes from 'prop-types';
+import FestaMap from './FestaMap';
 
 ProductContents.propTypes = {
   productData: PropTypes.object
@@ -24,6 +25,8 @@ export default function ProductContents({productData}) {
         <FestivalDesc>
           {productData ? productPeriod(productData): '행사 기간을 조회할 수 없습니다.'}
         </FestivalDesc>
+        <FestivalInfo>행사 장소</FestivalInfo>
+        <FestaMap festaName={productData.itemName.slice(3)}/>
       </InfoContainer>
     </>
   )

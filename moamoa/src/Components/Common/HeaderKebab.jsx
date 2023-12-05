@@ -96,6 +96,10 @@ const HeaderContainer = styled.header`
   }
 `;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 262ab4cb2099115ea4460513ae73d7b2c2bd3af0
 const MoreImg = styled.img`
   width: 2.2rem;
 `;

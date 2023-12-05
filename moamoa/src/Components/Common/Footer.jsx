@@ -77,6 +77,7 @@ const TabMenu = styled.div`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 5;
 `;
 
 const TabButton = styled.button.withConfig({

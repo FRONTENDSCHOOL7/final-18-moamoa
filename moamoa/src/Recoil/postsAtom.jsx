@@ -2,11 +2,10 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
-
-const postModalDelAtom = atom({
-  key: 'postModalDelAtom',
-  default: false,
+const postsAtom = atom({
+  key: 'postsAtom',
+  default: {},
   effects_UNSTABLE: [persistAtom],
 });
 
-export default postModalDelAtom;
+export default postsAtom;

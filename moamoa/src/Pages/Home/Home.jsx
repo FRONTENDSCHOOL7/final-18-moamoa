@@ -8,12 +8,18 @@ import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
 
 export default function Home() {
-  const [posts, setPosts] = useState();
-
+  const [posts, setPosts] = useState({});
   useEffect(() => {
     const getHomePostList = async () => {
-      const postListData = await homePostList();
-      setPosts(postListData.posts);
+      try{
+        setPosts({});
+
+        const postListData = await homePostList();
+        setPosts(postListData.posts);
+
+      } catch(error){
+        console.error("페이지를 불러오는데 실패했습니다.");
+      }
     };
     getHomePostList();
   }, []);
@@ -22,7 +28,7 @@ export default function Home() {
     <Container>
       <Header type='home' />
       <HomeWrap>
-        {posts && Object.keys(posts).length !== 0 ? (
+        { posts && Object.keys(posts).length !== 0 ? (
           <HomeContainer>
             <PostBg>
               {posts.map((item) => {
