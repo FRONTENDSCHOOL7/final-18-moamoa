@@ -96,7 +96,6 @@ const HeaderContainer = styled.header`
   }
 `;
 
-
 const MoreImg = styled.img`
   width: 2.2rem;
 `;

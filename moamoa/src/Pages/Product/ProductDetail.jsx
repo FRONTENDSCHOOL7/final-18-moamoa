@@ -6,7 +6,7 @@ import AskBtn from './AskBtn';
 import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
 import Footer from '../../Components/Common/Footer';
 
-import { getProductDetail } from '../../API/Product/ProductAPI'
+import { getProductDetail } from '../../API/Product/ProductAPI';
 import ProductContents from '../../Components/Product/ProductContents';
 
 export default function ProductDetail() {
@@ -24,7 +24,7 @@ export default function ProductDetail() {
 
   const getProductData = (data) => {
     setProductData(data.product);
-    setProductAuthorInfo(data.product.author); 
+    setProductAuthorInfo(data.product.author);
   };
 
   const getProductInfo = () => getProductDetail(productId, getProductData);
@@ -47,7 +47,7 @@ export default function ProductDetail() {
                 <ArticleUserProfile userProfileData={userProfileData} />
                 <AskBtn btnData={btnData} />
               </Frofile>
-              <ProductContents productData={productData}/>
+              <ProductContents productData={productData} />
             </FestivalArticle>
             <Footer />
           </FestivalContainer>
