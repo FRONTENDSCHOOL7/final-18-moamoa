@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+// import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import ArticleUserProfile from '../Common/ArticleUserProfile';
 import PostMoreBtn from './PostMoreBtn';
 import styled from 'styled-components';
@@ -123,7 +125,7 @@ const CreateDate = styled.p`
 const HeartBtn = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'heartcolor',
 })`
-  padding-left: 2.6rem;``
+  padding-left: 2.6rem;
   padding-right: 1.6rem;
   height: 2rem;
   color: #767676;
