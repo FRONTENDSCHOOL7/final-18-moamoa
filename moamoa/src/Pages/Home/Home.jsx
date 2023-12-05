@@ -6,33 +6,29 @@ import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
-import userTokenAtom from '../../Recoil/userTokenAtom';
-import { useRecoilValue } from 'recoil';
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
-  const token = useRecoilValue(userTokenAtom);
-  const [currentToken, setCurrentToken] = useState();
-
+  const [posts, setPosts] = useState({});
   useEffect(() => {
     const getHomePostList = async () => {
       try{
+        setPosts({});
+
         const postListData = await homePostList();
-        console.log(postListData);
         setPosts(postListData.posts);
-        setCurrentToken(token)
+
       } catch(error){
         console.error("페이지를 불러오는데 실패했습니다.");
       }
     };
     getHomePostList();
-  }, [currentToken, token]);
+  }, []);
 
   return (
     <Container>
       <Header type='home' />
       <HomeWrap>
-        { currentToken && posts && Object.keys(posts).length !== 0 ? (
+        { posts && Object.keys(posts).length !== 0 ? (
           <HomeContainer>
             <PostBg>
               {posts.map((item) => {

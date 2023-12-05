@@ -98,6 +98,7 @@ export const homePostList = async () => {
     const res = await authInstance.get('/post/feed');
     if (res.status === 200) {
       const result = await res.data;
+      console.log(result);
       return result;
     } else {
       console.error('페이지를 불러오는데 실패했습니다.');
