@@ -13,11 +13,12 @@ const useLogin = () => {
 
   const [userData, setUserData] = useState({
     user: {
-      email: 'moa_festa@moamoa.com',
-      password: '13231323',
+      email: '',
+      password: '',
     },
   });
   const [loginFailMessage, setLoginFailMessage] = useState('');
+  const [isTestAccount, setIsTestAccount] = useState(false);
 
   const setUserToken = useSetRecoilState(userTokenAtom);
   const setIsLoginState = useSetRecoilState(isLoginAtom);
@@ -34,6 +35,24 @@ const useLogin = () => {
   const updateUserData = (e) => {
     updateInputState(e, setUserData, 'user');
   };
+
+  const loginWithTestAccount = () => {
+    setIsTestAccount(!isTestAccount);
+    console.log(isTestAccount);
+
+    setUserData((prevState) => ({
+      ...prevState,
+      user: {
+        ...prevState.user,
+        email: 'moa_festa@moamoa.com',
+        password: '13231323',
+      },
+    }));
+  };
+
+  useEffect(() => {
+    isTestAccount && performLogin();
+  }, [isTestAccount]);
 
   const performLogin = async () => {
     const [res, error] = await login(userData);
@@ -63,6 +82,8 @@ const useLogin = () => {
     updateUserData,
     submitLoginForm,
     loginFailMessage,
+    loginWithTestAccount,
+    isTestAccount,
   };
 };
 

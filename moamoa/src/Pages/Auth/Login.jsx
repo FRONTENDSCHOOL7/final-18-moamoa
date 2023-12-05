@@ -11,7 +11,14 @@ import {
 } from '../../Components/Common/FormLoginAndJoin';
 
 const Login = () => {
-  const { userData, updateUserData, submitLoginForm, loginFailMessage } = useLogin();
+  const {
+    userData,
+    updateUserData,
+    submitLoginForm,
+    loginFailMessage,
+    loginWithTestAccount,
+    // isTestAccount,
+  } = useLogin();
 
   return (
     <LoginAndJoinContainer>
@@ -32,17 +39,58 @@ const Login = () => {
           value={userData.user.password}
         />
         <StyledErrorMsg>{loginFailMessage}</StyledErrorMsg>
-        <LoginBtn type='submit'>로그인</LoginBtn>
+        <LoginBtn type='submit'>로그인하기</LoginBtn>
+        <CheckBoxContainer onClick={loginWithTestAccount}>
+          <CheckBox
+            type='checkbox'
+            id='testAccount'
+            name='testAccount'
+            onClick={loginWithTestAccount}
+          />
+          <label htmlFor='testAccount'>체험하기</label>
+        </CheckBoxContainer>
         <LinkContainer>
-          <Link to='/user/signUp'>이메일로 회원가입</Link>
+          <Link to='/user/signUp'>이메일로 회원가입하기</Link>
         </LinkContainer>
       </Form>
     </LoginAndJoinContainer>
   );
 };
 
+const CheckBoxContainer = styled.div`
+  margin: 9px 0 21px 0;
+  background-color: #cccccc;
+  border-radius: 44px;
+  font-weight: 700;
+  padding: 11px;
+  color: white;
+  letter-spacing: -1px;
+  cursor: pointer;
+
+  label,
+  input {
+    cursor: pointer;
+  }
+
+  &:hover {
+    background-color: #87b7e4;
+  }
+`;
+
+const CheckBox = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+`;
+
 const LoginBtn = styled(CommonBtn)`
-  margin: 26px 0 21px 0;
+  margin-top: 21px;
+  background-color: #cccccc;
+
+  &:hover {
+    background-color: #87b7e4;
+  }
 `;
 
 const LinkContainer = styled.div`
