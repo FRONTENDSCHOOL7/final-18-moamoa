@@ -67,6 +67,7 @@ const Nav = styled.div`
 `;
 
 const SkeletonContainer = styled(ProductContainer)`
+  gap: 20px;
   margin: 0 auto;
   margin-left: 10px;
   .itemImage {
