@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { uploadImage } from '../../API/Image/ImageAPI';
+import { handleUploadImage } from '../../Utils/handleUploadImage';
 import { getProductDetail, editProduct } from '../../API/Product/ProductAPI';
+import _ from 'lodash';
 import useProgressPeriodEffect from '../../Hooks/Product/useProgressPeriodEffect';
+import { updateInputState } from '../../Utils/updateInputState';
 // Styled-Component 수정 예정
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
@@ -71,39 +73,24 @@ const ProductEdit = () => {
   }, []);
 
   const handleChangeImage = async (e) => {
-    const imageFile = e.target.files[0];
-    const response = await uploadImage(imageFile);
-    setProductInputs({
-      ...productInputs,
-      product: {
-        ...productInputs.product,
-        itemImage: `https://api.mandarin.weniv.co.kr/${response.data.filename}`,
-      },
-    });
+    handleUploadImage(e, setProductInputs, 'product.itemImage');
   };
 
-  const handleChangeInput = (e) => {
-    const { name, value } = e.target;
-    setProductInputs((prevState) => ({
-      product: {
-        ...prevState.product,
-        [name]: value,
-      },
-    }));
+  const updateProductInputs = (e) => {
+    updateInputState(e, setProductInputs, 'product');
   };
 
   const submitModifiedProduct = async (e) => {
     e.preventDefault();
-    const productData = {
-      product: {
-        ...productInputs.product,
-        itemName:
-          productType === 'festival'
-            ? `[f]${productInputs.product.itemName}`
-            : `[e]${productInputs.product.itemName}`,
-        price: progressPeriod,
-      },
-    };
+
+    const prefix = productType === 'festival' ? '[f]' : '[e]';
+    const productData = _.set(
+      { ...productInputs },
+      'product.itemName',
+      prefix + productInputs.product.itemName,
+    );
+    productData.product.price = progressPeriod;
+
     await editProduct(productId, productData);
     navigate('/product/list');
   };
@@ -169,7 +156,7 @@ const ProductEdit = () => {
             id='event-name'
             type='text'
             placeholder='2~22자 이내여야 합니다.'
-            onChange={handleChangeInput}
+            onChange={updateProductInputs}
             name='itemName'
             value={productInputs.product.itemName}
             minLength={2}
@@ -204,7 +191,7 @@ const ProductEdit = () => {
             id='event-detail'
             name='link'
             placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
-            onChange={handleChangeInput}
+            onChange={updateProductInputs}
             value={productInputs.product.link}
           ></Textarea>
         </LayoutContainer>
