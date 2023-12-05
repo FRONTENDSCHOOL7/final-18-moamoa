@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { uploadImage } from '../../API/Image/ImageAPI';
+import { handleUploadImage } from '../../Utils/handleUploadImage';
 import { uploadProduct } from '../../API/Product/ProductAPI';
 import useProgressPeriodEffect from '../../Hooks/Product/useProgressPeriodEffect';
 // Styled-Component 수정 예정
@@ -26,7 +26,12 @@ import {
 const ProductAdd = () => {
   const navigate = useNavigate();
 
-  const [imgSrc, setImgSrc] = useState(DefaultImg);
+  const [imgSrc, setImgSrc] = useState({
+    product: {
+      url: DefaultImg,
+      alt: '',
+    },
+  });
   const [productType, setProductType] = useState('');
   const [productName, setProductName] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -35,10 +40,7 @@ const ProductAdd = () => {
   const [description, setDescription] = useState('');
 
   const handleChangeImage = async (e) => {
-    const imageFile = e.target.files[0];
-    console.log(imageFile);
-    const response = await uploadImage(imageFile);
-    setImgSrc(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
+    handleUploadImage(e, setImgSrc, 'product.url');
   };
 
   const submitProduct = async (e) => {
@@ -48,7 +50,7 @@ const ProductAdd = () => {
         itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
         price: progressPeriod,
         link: description,
-        itemImage: imgSrc,
+        itemImage: imgSrc.product.url,
       },
     };
     await uploadProduct(productData);
@@ -56,7 +58,7 @@ const ProductAdd = () => {
   };
 
   const isDisabled =
-    !imgSrc ||
+    !imgSrc.product.url ||
     productName.length < 2 ||
     !startDate ||
     !endDate ||
@@ -78,7 +80,7 @@ const ProductAdd = () => {
           <ImgLayoutContainer>
             <h2>이미지 등록</h2>
             <ImageLabel htmlFor='upload-file'>
-              <Image src={imgSrc ? imgSrc : DefaultImg} alt={productName} />
+              <Image src={imgSrc.product.url || DefaultImg} alt={imgSrc.product.alt} />
             </ImageLabel>
             <input
               className='a11y-hidden'
