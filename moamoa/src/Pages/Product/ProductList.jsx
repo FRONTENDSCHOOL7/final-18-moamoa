@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { ProductListAPI } from '../../API/Product/ProductListAPI';
-import ProductListLoading from '../../Components/Product/ProductListLoading';
+import 'react-loading-skeleton/dist/skeleton.css';
+import ProductListSkeleton from '../../Components/Product/ProductListSkeleton';
 import ProductOutput from '../../Components/Product/ProductOutput';
 import styled from 'styled-components';
 import { ContainerPercent } from '../../Components/Common/Container';
@@ -38,7 +39,7 @@ export default function ProductList() {
       <Header type='home' />
       <ProductListWrap>
         {loading ? (
-          <ProductListLoading />
+          <ProductListSkeleton />
         ) : error ? (
           <p>Error:{error.message}</p>
         ) : (
