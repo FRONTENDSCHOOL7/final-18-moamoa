@@ -1,17 +1,22 @@
 import React from 'react';
+import PostItemSkeleton from '../Skeleton/PostItemSkeleton';
 import PostItem from './PostItem';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-export default function PostList(post) {
-  const postItem = post?.post;
+PostList.propTypes = {
+  post: PropTypes.object,
+  isLoading: PropTypes.bool.isRequired
+}
+
+
+export default function PostList({post, isLoading}) {
 
   return (
-  <>
-    { postItem && 
       <Posts>
-        <li><PostItem post={postItem}/></li>
-      </Posts> }
-  </>
+        <li>{post && isLoading ? <PostItem post={post}/>
+        :<PostItemSkeleton />}</li>
+      </Posts>
   );
 }
 
