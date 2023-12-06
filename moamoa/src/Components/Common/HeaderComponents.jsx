@@ -117,6 +117,7 @@ const HeaderContainer = styled.header`
   padding-right: 10px;
   box-sizing: border-box;
   margin: 0 auto;
+  z-index: 5;
 
   img {
     cursor: pointer;

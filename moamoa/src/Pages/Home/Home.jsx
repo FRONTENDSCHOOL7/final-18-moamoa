@@ -9,6 +9,7 @@ import { homePostList } from '../../API/Post/PostAPI';
 
 export default function Home() {
   const [posts, setPosts] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getHomePostList = async () => {
@@ -16,13 +17,15 @@ export default function Home() {
       try{
         const postListData = await homePostList();
         setPosts(postListData.posts);
+        setTimeout(() => {
+          setIsLoading(true);
+        }, 1500);
       } catch(error){
         console.error("페이지를 불러오는데 실패했습니다.");
       }
     };
     getHomePostList();
   }, []);
-
   return (
     <Container>
       <Header type='home' />
@@ -31,7 +34,7 @@ export default function Home() {
           <HomeContainer>
             <PostBg>
               {posts.map((item) => {
-                return <PostList key={item.id} post={item} />;
+                return <PostList key={item.id} post={item} isLoading={isLoading}/>;
               })}
             </PostBg>
           </HomeContainer>
