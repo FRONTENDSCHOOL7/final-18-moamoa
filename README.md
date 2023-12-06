@@ -564,7 +564,7 @@ const checkTwoDates = () => {
 
 <br/>
 
-### [Figma](https://www.figma.com/file/C5Nhihukf9hNrpVaKVIBdU/%EB%AA%A8%EC%95%84%EB%AA%A8%EC%95%84%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C?type=design&node-id=0-1&mode=design&t=EdEEYvdQYyXLFYKf-0)
+### Figma [보러가기 👉]([https://www.figma.com/file/C5Nhihukf9hNrpVaKVIBdU/%EB%AA%A8%EC%95%84%EB%AA%A8%EC%95%84%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C?type=design&node-id=0-1&mode=design&t=EdEEYvdQYyXLFYKf-0](https://www.figma.com/file/C5Nhihukf9hNrpVaKVIBdU/%EB%AA%A8%EC%95%84%EB%AA%A8%EC%95%84%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C?type=design&node-id=0%3A1&mode=design&t=EdEEYvdQYyXLFYKf-1))
 ![figma](https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/5fd7271f-3ff1-4b88-ac8f-2eb231c4ea48)
 - 피그마를 이용하여 디자인 작업을 하였고, API 명세와 비교를 하였습니다.
 - 초반 작업은 전체적인 흐름의 이해를 위하여 작업 순서도를 그렸습니다.
