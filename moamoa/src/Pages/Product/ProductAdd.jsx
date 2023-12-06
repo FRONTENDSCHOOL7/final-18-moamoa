@@ -16,7 +16,7 @@ import {
   Image,
   LayoutContainer,
   SelectedButton,
-  EventNameInput,
+  TextInput,
   PeriodInputContainer,
   PeriodInput,
   Textarea,
@@ -38,6 +38,7 @@ const ProductAdd = () => {
   const [endDate, setEndDate] = useState('');
   const { progressPeriod, dateSelectionErrorMsg } = useProgressPeriodEffect(startDate, endDate);
   const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
 
   const handleChangeImage = async (e) => {
     handleUploadImage(e, setImgSrc, 'product.url');
@@ -49,7 +50,7 @@ const ProductAdd = () => {
       product: {
         itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
         price: progressPeriod,
-        link: description,
+        link: `${description}+${location}`,
         itemImage: imgSrc.product.url,
       },
     };
@@ -112,7 +113,7 @@ const ProductAdd = () => {
           </LayoutContainer>
           <LayoutContainer>
             <label htmlFor='event-name'>행사명</label>
-            <EventNameInput
+            <TextInput
               id='event-name'
               type='text'
               placeholder='2~22자 이내여야 합니다.'
@@ -120,7 +121,7 @@ const ProductAdd = () => {
               value={productName}
               minLength={2}
               maxLength={22}
-            ></EventNameInput>
+            ></TextInput>
           </LayoutContainer>
           <LayoutContainer>
             <label htmlFor='event-period'>행사 기간</label>
@@ -143,6 +144,17 @@ const ProductAdd = () => {
               ></PeriodInput>
             </PeriodInputContainer>
             <StyledErrorMsg>{dateSelectionErrorMsg}</StyledErrorMsg>
+          </LayoutContainer>
+          <LayoutContainer>
+            <label htmlFor='eventLocation'>행사 장소</label>
+            <TextInput
+              type='text'
+              id='eventLocation'
+              value={location}
+              onChange={(e) => {
+                setLocation(e.target.value);
+              }}
+            />
           </LayoutContainer>
           <LayoutContainer>
             <label htmlFor='event-detail'>상세 설명</label>
