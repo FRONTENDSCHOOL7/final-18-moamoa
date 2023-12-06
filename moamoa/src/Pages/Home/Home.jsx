@@ -9,14 +9,13 @@ import { homePostList } from '../../API/Post/PostAPI';
 
 export default function Home() {
   const [posts, setPosts] = useState({});
+
   useEffect(() => {
     const getHomePostList = async () => {
-      try{
-        setPosts({});
 
+      try{
         const postListData = await homePostList();
         setPosts(postListData.posts);
-
       } catch(error){
         console.error("페이지를 불러오는데 실패했습니다.");
       }

@@ -123,7 +123,7 @@ const CreateDate = styled.p`
 const HeartBtn = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'heartcolor',
 })`
-  padding-left: 2.6rem;``
+  padding-left: 2.6rem;
   padding-right: 1.6rem;
   height: 2rem;
   color: #767676;
