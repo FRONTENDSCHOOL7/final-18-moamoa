@@ -545,7 +545,7 @@ const checkTwoDates = () => {
 ## 7. 협업 방법
 
 
-### **Notion**
+### **Notion** [👉보러가기👈](https://www.notion.so/18-18-6c86a9d229d34412b3d9f75ed7a1315c)
 
 ![노션](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c3ff20eb-caa5-48e2-b254-8e066d8f66f4) |![노션2](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/33d9467f-1662-4a6e-9da8-7b6018b7c210)
 --- | --- | 
