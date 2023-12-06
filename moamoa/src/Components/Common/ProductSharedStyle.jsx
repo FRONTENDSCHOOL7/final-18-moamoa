@@ -90,7 +90,7 @@ export const SelectedButton = styled.button`
   }
 `;
 
-export const EventNameInput = styled.input`
+export const TextInput = styled.input`
   border: none;
   outline: none;
   border-bottom: 1.5px solid #dbdbdb;
