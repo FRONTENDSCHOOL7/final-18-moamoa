@@ -32,7 +32,7 @@ PW: 123123
 | :------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c1f2d0a1-47f5-46a6-8926-4fed264513f6"> | <img width="180" height="210" alt="jiwon" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/b2a28339-ef5d-4a55-a3e9-c5d0ae74deb2"> | <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c4cd07b4-d205-4ee3-85fc-c4b266b2eb1c">|  <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/f3f52131-b81d-4b74-90ed-f9559ff84dc5">|
 | [ GitHub ](https://github.com/AYFG) | [ GitHub ](https://github.com/timetam24) | [ GitHub ](https://github.com/LeeeeHaeji) | [ GitHub ](https://github.com/Sooooyeon)| 
-| 소통 리더 | 팀장 | 디자인 담당 <br/> 개발 리더 | 기획 담당 <br/> 기술 리더
+
 
 <br />
 
@@ -545,7 +545,7 @@ const checkTwoDates = () => {
 ## 7. 협업 방법
 
 
-### **Notion**
+### **Notion** [👉보러가기👈](https://www.notion.so/18-18-6c86a9d229d34412b3d9f75ed7a1315c)
 
 ![노션](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c3ff20eb-caa5-48e2-b254-8e066d8f66f4) |![노션2](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/33d9467f-1662-4a6e-9da8-7b6018b7c210)
 --- | --- | 
@@ -564,7 +564,7 @@ const checkTwoDates = () => {
 
 <br/>
 
-### Figma
+### Figma [👉보러가기👈](https://www.figma.com/file/C5Nhihukf9hNrpVaKVIBdU/%EB%AA%A8%EC%95%84%EB%AA%A8%EC%95%84%ED%8E%98%EC%8A%A4%ED%8B%B0%EB%B2%8C?type=design&node-id=0%3A1&mode=design&t=EdEEYvdQYyXLFYKf-1)
 ![figma](https://github.com/timetam24/Toys-that-can-be-broken/assets/135303974/5fd7271f-3ff1-4b88-ac8f-2eb231c4ea48)
 - 피그마를 이용하여 디자인 작업을 하였고, API 명세와 비교를 하였습니다.
 - 초반 작업은 전체적인 흐름의 이해를 위하여 작업 순서도를 그렸습니다.

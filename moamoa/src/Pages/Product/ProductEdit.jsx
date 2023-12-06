@@ -18,7 +18,7 @@ import {
   Image,
   LayoutContainer,
   SelectedButton,
-  EventNameInput,
+  TextInput,
   PeriodInputContainer,
   PeriodInput,
   Textarea,
@@ -152,7 +152,7 @@ const ProductEdit = () => {
         </LayoutContainer>
         <LayoutContainer>
           <label htmlFor='event-name'>행사명</label>
-          <EventNameInput
+          <TextInput
             id='event-name'
             type='text'
             placeholder='2~22자 이내여야 합니다.'
@@ -161,7 +161,7 @@ const ProductEdit = () => {
             value={productInputs.product.itemName}
             minLength={2}
             maxLength={22}
-          ></EventNameInput>
+          ></TextInput>
         </LayoutContainer>
         <LayoutContainer>
           <label htmlFor='event-period'>행사 기간 </label>
