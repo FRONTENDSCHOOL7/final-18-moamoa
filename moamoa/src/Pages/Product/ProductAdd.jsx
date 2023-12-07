@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleUploadImage } from '../../Utils/handleUploadImage';
 import { uploadProduct } from '../../API/Product/ProductAPI';
-import useProgressPeriodEffect from '../../Hooks/Product/useProgressPeriodEffect';
+import useDateValidation from '../../Hooks/Product/useDateValidation';
 // Styled-Component 수정 예정
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
@@ -10,7 +10,6 @@ import DefaultImg from '../../Assets/images/img-product-default.png';
 import {
   Form,
   Header,
-  HeaderButton,
   ImgLayoutContainer,
   ImageLabel,
   Image,
@@ -36,9 +35,11 @@ const ProductAdd = () => {
   const [productName, setProductName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const { progressPeriod, dateSelectionErrorMsg } = useProgressPeriodEffect(startDate, endDate);
-  const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
+  const [missingInputMessage, setMissingInputMessage] = useState('');
+
+  const { progressPeriod, dateSelectionErrorMsg } = useDateValidation(startDate, endDate);
 
   const handleChangeImage = async (e) => {
     handleUploadImage(e, setImgSrc, 'product.url');
@@ -46,6 +47,7 @@ const ProductAdd = () => {
 
   const submitProduct = async (e) => {
     e.preventDefault();
+
     const productData = {
       product: {
         itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
@@ -54,30 +56,34 @@ const ProductAdd = () => {
         itemImage: imgSrc.product.url,
       },
     };
-    await uploadProduct(productData);
-    navigate('/product/list');
-  };
 
-  const isDisabled =
-    !imgSrc.product.url ||
-    productName.length < 2 ||
-    !startDate ||
-    !endDate ||
-    !description ||
-    !productType ||
-    startDate > endDate;
+    if (
+      !imgSrc.product.url ||
+      productName.length < 2 ||
+      !startDate ||
+      !endDate ||
+      !location ||
+      !description ||
+      !productType ||
+      startDate > endDate
+    ) {
+      setMissingInputMessage('입력하지 않은 정보가 있습니다. 다시 확인해주세요.');
+    } else {
+      setMissingInputMessage('');
+      await uploadProduct(productData);
+      navigate('/product/list');
+    }
+  };
 
   return (
     <>
       <Container>
         <Header>
           <Gobackbtn />
-          <HeaderButton onClick={submitProduct} disabled={isDisabled}>
-            저장
-          </HeaderButton>
+          {/* <HeaderButton onClick={submitProduct}>저장</HeaderButton> */}
         </Header>
         <h1 className='a11y-hidden'>상품 등록 페이지</h1>
-        <Form>
+        <Form onSubmit={submitProduct}>
           <ImgLayoutContainer>
             <h2>이미지 등록</h2>
             <ImageLabel htmlFor='upload-file'>
@@ -165,6 +171,8 @@ const ProductAdd = () => {
               value={description}
             ></Textarea>
           </LayoutContainer>
+          <p> {missingInputMessage}</p>
+          <button type='submit'>저장</button>
         </Form>
       </Container>
     </>
