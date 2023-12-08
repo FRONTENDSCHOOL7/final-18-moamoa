@@ -6,20 +6,23 @@ import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
+import { useRecoilState } from 'recoil';
+import postsAtom from '../../Recoil/postsAtom';
 
 export default function Home() {
-  const [posts, setPosts] = useState({});
+
   const [isLoading, setIsLoading] = useState(false);
+  const [postData, setPostData] = useRecoilState(postsAtom);
 
   useEffect(() => {
     const getHomePostList = async () => {
-
+        setPostData({})
       try{
         const postListData = await homePostList();
-        setPosts(postListData.posts);
+        setPostData(postListData.posts)
         setTimeout(() => {
           setIsLoading(true);
-        }, 1500);
+        }, 1200);
       } catch(error){
         console.error("페이지를 불러오는데 실패했습니다.");
       }
@@ -30,10 +33,10 @@ export default function Home() {
     <Container>
       <Header type='home' />
       <HomeWrap>
-        { posts && Object.keys(posts).length !== 0 ? (
+        { postData && Object.keys(postData).length !== 0 ? (
           <HomeContainer>
             <PostBg>
-              {posts.map((item) => {
+              {postData.map((item) => {
                 return <PostList key={item.id} post={item} isLoading={isLoading}/>;
               })}
             </PostBg>
