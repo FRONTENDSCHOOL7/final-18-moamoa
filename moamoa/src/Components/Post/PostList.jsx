@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 PostList.propTypes = {
   post: PropTypes.object,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool
 }
 
 
