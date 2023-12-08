@@ -9,12 +9,12 @@ import PropTypes from 'prop-types';
 FooterModal.propTypes = {
   postid: PropTypes.string,
   closeFooter: PropTypes.bool,
+  setPostId: PropTypes.func,
   setCloseFooter: PropTypes.func,
 };
 
-export default function FooterModal({ closeFooter, setCloseFooter, postid }) {
+export default function FooterModal({ closeFooter, setCloseFooter, postid, setPostId }) {
   const [showModal, setShowModal] = useState(true);
-  console.log(postid);
   const editUrl = `/post/edit/${postid}`;
 
   return (
@@ -32,7 +32,7 @@ export default function FooterModal({ closeFooter, setCloseFooter, postid }) {
           </Modal>
           {!showModal ? (
             <DeleteModal
-              postid={postid}
+              postid={postid} setPostId={setPostId} setCloseFooter={setCloseFooter}
             />
           ) : null}
         </ModalCont>

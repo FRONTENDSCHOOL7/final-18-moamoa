@@ -52,7 +52,7 @@ const ProductAdd = () => {
       product: {
         itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
         price: progressPeriod,
-        link: `${description}+${location}`,
+        link: `${description}+[l]${location}`,
         itemImage: imgSrc.product.url,
       },
     };

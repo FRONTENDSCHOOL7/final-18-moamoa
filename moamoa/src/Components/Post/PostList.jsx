@@ -14,7 +14,7 @@ export default function PostList({post, isLoading}) {
 
   return (
       <Posts>
-        <li>{post && isLoading ? <PostItem post={post}/>
+        <li>{post && !isLoading ? <PostItem post={post}/>
         :<PostItemSkeleton />}</li>
       </Posts>
   );
