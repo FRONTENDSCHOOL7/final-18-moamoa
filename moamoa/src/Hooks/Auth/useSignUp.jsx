@@ -29,13 +29,30 @@ const useSignUp = () => {
   const [imgSrc, setImgSrc] = useState({
     profile: {
       url: DefaultProfileImage,
-      alt: '',
+      alt: '모아모아 기본 프로필 이미지',
     },
   });
 
   const handleChangeImage = async (e) => {
-    handleUploadImage(e, setUserData, 'user.image');
-    handleUploadImage(e, setImgSrc, 'profile.url');
+    const imageFile = e.target.files[0];
+    if (!imageFile) {
+      return;
+    }
+
+    const { imageUrl, imageAlt } = await handleUploadImage(imageFile);
+
+    setUserData((prevState) => {
+      const newState = _.cloneDeep(prevState);
+      _.set(newState, 'user.image', imageUrl);
+      return newState;
+    });
+
+    setImgSrc((prevState) => {
+      const newState = _.cloneDeep(prevState);
+      _.set(newState, 'profile.url', imageUrl);
+      _.set(newState, 'profile.alt', imageAlt);
+      return newState;
+    });
   };
 
   const { errorMessages } = InputErrorMessagesReducer();

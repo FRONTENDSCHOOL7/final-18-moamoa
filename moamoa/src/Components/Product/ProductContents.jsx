@@ -12,7 +12,6 @@ ProductContents.propTypes = {
 export default function ProductContents({productData}) {
 
   const placeIndex = productData?.link.indexOf("+[l]")
-  console.log(productData?.link.slice(placeIndex+4));
 
   return (
     <>
