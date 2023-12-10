@@ -102,6 +102,15 @@ export function HeaderSearch({ setSearchText }) {
   );
 }
 
+export function HeaderSubmitProduct() {
+  return (
+    <HeaderContainer>
+      <Gobackbtn />
+      <HomeBtn />
+    </HeaderContainer>
+  );
+}
+
 const HeaderContainer = styled.header`
   display: flex;
   height: 48px;
