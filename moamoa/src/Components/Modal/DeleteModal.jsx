@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { deleteProduct } from '../../API/Product/ProductAPI';
@@ -7,20 +7,21 @@ import PropTypes from 'prop-types';
 import NoticeModal from './DeleteAlert';
 
 DeleteModal.propTypes = {
-  postid: PropTypes.string
+  postid: PropTypes.string,
+  setPostId: PropTypes.func,
+  setCloseFooter: PropTypes.func.isRequired
 };
 
-export default function DeleteModal({postid}) {
+export default function DeleteModal({postid,setPostId, setCloseFooter}) {
   const params = useParams();
   const navigate = useNavigate();
   const [delMadoal, setDelModal] = useState(true);
-  const [postId, setPostId] =  useState(postid)
   const location = useLocation();
   const post = location.pathname.slice(1, 5);
   const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   // 게시글 상세 페이지에서 게시글 삭제
-  const handlePostDelete = () => deletePost(postId)
+  const handlePostDelete = () => deletePost(postid)
   const deletePostItem = async () => {
     await handlePostDelete();
     setShowNoticeModal(false);
@@ -28,7 +29,6 @@ export default function DeleteModal({postid}) {
       navigate(-1);
     }, 1000);
       setDelModal(false);
-      setPostId(null);
     };
 
   // myInfo 페이지에서 게시글 삭제
@@ -36,10 +36,10 @@ export default function DeleteModal({postid}) {
     await handlePostDelete();
     setShowNoticeModal(false);
     setDelModal(false);
+    setPostId(null);
     await setTimeout(() => {
       setDelModal(false);
-      setPostId(null);
-      window.location.reload();  
+      setCloseFooter(true)
     }, 1000);
   };
 
@@ -58,11 +58,9 @@ export default function DeleteModal({postid}) {
       if(post === "prof"){
         delMyPostListItem();
       } else if(post === "post"){
-        useEffect(()=>{ 
-          deletePostItem();
-        },[postId])
+        deletePostItem();
       } else {
-          deleteProducData();
+        deleteProducData();
       }      
     }
 

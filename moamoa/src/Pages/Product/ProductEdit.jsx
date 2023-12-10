@@ -46,7 +46,7 @@ const ProductEdit = () => {
     setMissingInputMessage,
   } = useProductData(initialState);
 
-  const { progressPeriod, dateSelectionErrorMsg } = useDateValidation(startDate, endDate);
+  const { progressPeriod, dateSelectionErrorMsg } = useDateValidation(startDate, endDate); 
 
   const getProductData = (data) => {
     const productType = data.product.itemName.slice(0, 3) === '[f]' ? 'festival' : 'experience';
