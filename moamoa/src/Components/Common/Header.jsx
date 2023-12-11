@@ -6,6 +6,7 @@ import {
   HeaderFollow,
   HeaderHome,
   HeaderSearch,
+  HeaderSubmitProduct,
 } from './HeaderComponents';
 import HeaderKebab from './HeaderKebab';
 
@@ -27,6 +28,8 @@ export default function Header({ type, setSearchText }) {
       return <HeaderChatRoomChange></HeaderChatRoomChange>;
     case 'search':
       return <HeaderSearch setSearchText={setSearchText}></HeaderSearch>;
+    case 'submitProduct':
+      return <HeaderSubmitProduct></HeaderSubmitProduct>;
     default:
       return <HeaderHome />;
   }

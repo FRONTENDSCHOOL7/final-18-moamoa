@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { handleUploadImage } from '../../Utils/handleUploadImage.jsx';
-
 import {
   Form,
   ImgLayoutContainer,
   ImageLabel,
   Image,
   LayoutContainer,
-  SelectedButton,
+  Button,
   TextInput,
-  PeriodInputContainer,
-  PeriodInput,
-  Textarea,
-  StyledErrorMsg,
-} from '../../Components/Common/ProductSharedStyle';
+  DateInput,
+  SubmitErrorMsg,
+  SubmitBtn,
+} from '../../Components/Common/ProductFormStyle';
 
 export function ProductForm({
   product,
@@ -38,97 +36,126 @@ export function ProductForm({
     setImgSrc(imageInfo.imageUrl);
   };
 
+  const isFilled =
+    product.imgSrc !== '' &&
+    product.productName !== '' &&
+    product.productType !== '' &&
+    product.startDate !== '' &&
+    product.endDate !== '' &&
+    product.location !== '' &&
+    product.description;
+
   return (
     <Form onSubmit={onSubmit}>
       <ImgLayoutContainer>
-        <h2>이미지 등록</h2>
-        <ImageLabel htmlFor='upload-file'>
+        <h2 id='imageUploadTitle'>이미지 등록</h2>
+
+        <ImageLabel htmlFor='uploadFile'>
           <Image src={product.imgSrc} alt={product.productName} />
         </ImageLabel>
+
         <input
-          className='a11y-hidden'
-          id='upload-file'
+          className='hidden-but-accessible'
+          id='uploadFile'
           type='file'
           accept='image/*'
           onChange={handleChangeImage}
-        ></input>
+          aria-labelledby='imageUploadTitle'
+        />
+
         <p>* 행사 관련 이미지를 등록해주세요.</p>
       </ImgLayoutContainer>
       <LayoutContainer>
-        <h2>카테고리</h2>
+        <h2 id='categoryTitle'>카테고리</h2>
         <div>
-          <SelectedButton
+          <Button
             type='button'
             onClick={() => setProductType('festival')}
-            selected={product.productType === 'festival'}
+            aria-pressed={product.productType === 'festival'}
+            aria-describedby='categoryTitle'
           >
             축제
-          </SelectedButton>
-          <SelectedButton
+          </Button>
+          <Button
             type='button'
             onClick={() => setProductType('experience')}
-            selected={product.productType === 'experience'}
+            aria-pressed={product.productType === 'experience'}
+            aria-describedby='categoryTitle'
           >
             체험
-          </SelectedButton>
+          </Button>
         </div>
       </LayoutContainer>
       <LayoutContainer>
-        <label htmlFor='event-name'>행사명</label>
+        <label htmlFor='eventName'>행사명</label>
         <TextInput
-          id='event-name'
+          id='eventName'
           type='text'
           placeholder='2~22자 이내여야 합니다.'
           onChange={(e) => setProductName(e.target.value)}
           value={product.productName}
           minLength={2}
           maxLength={22}
+          aria-describedby='eventName'
         ></TextInput>
       </LayoutContainer>
       <LayoutContainer>
-        <label htmlFor='event-period'>행사 기간</label>
-        <PeriodInputContainer>
-          <PeriodInput
+        <label id='eventPeriodLabel' htmlFor='eventPeriodStart'>
+          행사 기간
+        </label>
+        <div className='dateinput-container'>
+          <DateInput
             type='date'
-            id='event-period'
+            id='eventPeriodStart'
             onChange={(e) => setStartDate(e.target.value)}
             value={product.startDate}
             pattern='yyyy-MM-dd'
             max='9999-12-31'
-          ></PeriodInput>
-          <PeriodInput
+            aria-labelledby='eventPeriodLabel'
+          ></DateInput>
+          <DateInput
             type='date'
-            id='event-period'
+            id='eventPeriodEnd'
             onChange={(e) => setEndDate(e.target.value)}
             value={product.endDate}
             pattern='yyyy-MM-dd'
             max='9999-12-31'
-          ></PeriodInput>
-        </PeriodInputContainer>
-        <StyledErrorMsg>{dateSelectionErrorMsg}</StyledErrorMsg>
+            aria-labelledby='eventPeriodLabel'
+          ></DateInput>
+        </div>
+        <p role='alert' className='error-msg'>
+          {dateSelectionErrorMsg}
+        </p>
       </LayoutContainer>
       <LayoutContainer>
         <label htmlFor='eventLocation'>행사 장소</label>
         <TextInput
           type='text'
+          placeholder='도로명 주소를 입력해주세요.'
           id='eventLocation'
           value={product.location}
           onChange={(e) => {
             setLocation(e.target.value);
           }}
+          aria-describedby='eventLocation'
         />
       </LayoutContainer>
       <LayoutContainer>
-        <label htmlFor='event-detail'>상세 설명</label>
-        <Textarea
-          id='event-detail'
+        <label htmlFor='eventDetail'>상세 설명</label>
+        <textarea
+          id='eventDetail'
           placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
           onChange={(e) => setDescription(e.target.value)}
           value={product.description}
-        ></Textarea>
+          aria-describedby='eventDetail'
+        ></textarea>
       </LayoutContainer>
-      <p> {missingInputMessage}</p>
-      <button type='submit'>저장</button>
+      <SubmitErrorMsg role='alert' className='error-msg'>
+        {missingInputMessage}
+      </SubmitErrorMsg>
+      <SubmitBtn type='submit' $isfilled={isFilled}>
+        저장
+      </SubmitBtn>
     </Form>
   );
 }

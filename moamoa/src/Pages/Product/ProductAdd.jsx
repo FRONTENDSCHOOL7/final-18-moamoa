@@ -5,11 +5,9 @@ import { useProductData } from '../../Hooks/Product/useProductData';
 import { useSubmitProductForm } from '../../Hooks/Product/useSubmitProductForm';
 import { uploadProduct } from '../../API/Product/ProductAPI';
 import useDateValidation from '../../Hooks/Product/useDateValidation';
-// Styled-Component 수정 예정
 import { Container } from '../../Components/Common/Container';
-import Gobackbtn from '../../Components/Common/GoBackbtn';
+import { HeaderSubmitProduct } from '../../Components/Common/HeaderComponents';
 import DefaultImg from '../../Assets/images/img-product-default.png';
-import { Header } from '../../Components/Common/ProductSharedStyle';
 
 const ProductAdd = () => {
   const navigate = useNavigate();
@@ -84,9 +82,7 @@ const ProductAdd = () => {
   return (
     <>
       <Container>
-        <Header>
-          <Gobackbtn />
-        </Header>
+        <HeaderSubmitProduct />
         <h1 className='a11y-hidden'>상품 등록 페이지</h1>
         <ProductForm
           product={{ imgSrc, productName, productType, startDate, endDate, location, description }}

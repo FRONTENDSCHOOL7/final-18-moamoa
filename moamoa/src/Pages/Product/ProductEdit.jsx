@@ -5,11 +5,9 @@ import { useProductData } from '../../Hooks/Product/useProductData';
 import { useSubmitProductForm } from '../../Hooks/Product/useSubmitProductForm';
 import { getProductDetail, editProduct } from '../../API/Product/ProductAPI';
 import useDateValidation from '../../Hooks/Product/useDateValidation';
-// Styled-Component 수정 예정
 import { Container } from '../../Components/Common/Container';
-import Gobackbtn from '../../Components/Common/GoBackbtn';
 import DefaultImg from '../../Assets/images/img-product-default.png';
-import { Header } from '../../Components/Common/ProductSharedStyle';
+import { HeaderSubmitProduct } from '../../Components/Common/HeaderComponents';
 
 const ProductEdit = () => {
   const navigate = useNavigate();
@@ -46,23 +44,18 @@ const ProductEdit = () => {
     setMissingInputMessage,
   } = useProductData(initialState);
 
-  const { progressPeriod, dateSelectionErrorMsg } = useDateValidation(startDate, endDate); 
+  const { progressPeriod, dateSelectionErrorMsg } = useDateValidation(startDate, endDate);
 
   const getProductData = (data) => {
-    const productType = data.product.itemName.slice(0, 3) === '[f]' ? 'festival' : 'experience';
-    const productName = data.product.itemName.slice(3);
-    const [description, location] = data.product.link.split('+[l]');
     const period = data.product.price.toString();
-    const startDate = `${period.slice(0, 4)}-${period.slice(4, 6)}-${period.slice(6, 8)}`;
-    const endDate = `${period.slice(8, 12)}-${period.slice(12, 14)}-${period.slice(14, 16)}`;
 
-    setProductType(productType);
-    setProductName(productName);
+    setProductType(data.product.itemName.slice(0, 3) === '[f]' ? 'festival' : 'experience');
+    setProductName(data.product.itemName.slice(3));
     setImgSrc(data.product.itemImage);
-    setDescription(description);
-    setLocation(location);
-    setStartDate(startDate);
-    setEndDate(endDate);
+    setDescription(data.product.link.split('+[l]')[0]);
+    setLocation(data.product.link.split('+[l]')[1]);
+    setStartDate(`${period.slice(0, 4)}-${period.slice(4, 6)}-${period.slice(6, 8)}`);
+    setEndDate(`${period.slice(8, 12)}-${period.slice(12, 14)}-${period.slice(14, 16)}`);
   };
 
   useEffect(() => {
@@ -111,9 +104,7 @@ const ProductEdit = () => {
 
   return (
     <Container>
-      <Header>
-        <Gobackbtn />
-      </Header>
+      <HeaderSubmitProduct />
       <h1 className='a11y-hidden'>상품 수정 페이지</h1>
       <ProductForm
         product={{ imgSrc, productName, productType, startDate, endDate, location, description }}
