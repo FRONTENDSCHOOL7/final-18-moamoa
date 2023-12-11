@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 PostList.propTypes = {
-  post: PropTypes.object,
+  post: PropTypes.array,
   isLoading: PropTypes.bool
 }
 

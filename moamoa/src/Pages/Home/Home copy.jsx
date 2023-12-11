@@ -1,50 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { homePostList } from '../../API/Post/PostAPI';
 import PostList from '../../Components/Post/PostList';
 import styled from 'styled-components';
 import HomeSearch from './HomeSearch';
 import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
+import { homePostList } from '../../API/Post/PostAPI';
+import { useRecoilState } from 'recoil';
 import postsAtom from '../../Recoil/postsAtom';
+import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
-  const limit = 5;
+  const limit = 10;
   const [isLoading, setIsLoading] = useState(false);
+  const [postData, setPostData] = useRecoilState(postsAtom);
   const [ref, inView] = useInView();
   const [skip, setSkip] = useState(0);
-  const setPostData = useSetRecoilState(postsAtom);
 
-  // const getHomePostList = homePostList(limit, skip);
+
+  const getHomePostList = homePostList(limit, skip);
 
   useEffect(()=>{
     const getPostData = async () => {
-      try {
-        const res = await homePostList(limit, skip);
-        const postList = res.posts;
-        if(postList.length>0){
-          console.log(postList);
-          await setPostData((prev)=>([...prev, ...postList]));
-          console.log(postData)
-        }
-        setIsLoading(true);
-      } catch (error) {
+      const res = await getHomePostList;
+      setPostData(res.posts);
       // setTimeout(() => {
         setIsLoading(true);
     //   }, 1200);
-    }
-  }
+    };
     getPostData();
-},[skip])
-
-  const postData = useRecoilValue(postsAtom);
-    console.log(postData);
+  },[skip])
 
   useEffect(()=>{
     if(inView && isLoading){
-    console.log(postData);
       setSkip((prev) => prev + limit);
     }
   },[inView, isLoading]);

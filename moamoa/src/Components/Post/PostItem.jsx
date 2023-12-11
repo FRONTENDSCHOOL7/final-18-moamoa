@@ -14,7 +14,7 @@ import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
 import PostContents from './PostContents';
 
 PostItem.propTypes = {
-  post: PropTypes.object
+  post: PropTypes.array
 };
 
 export default function PostItem({ post }) {

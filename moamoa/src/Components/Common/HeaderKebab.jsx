@@ -12,6 +12,7 @@ import more from '../../Assets/icons/icon-more.svg';
 import styled from 'styled-components';
 import LogoutModal from '../Modal/LogoutModal';
 import LogoutConfirmModal from '../Modal/LogoutConfirmModal';
+import postsAtom from '../../Recoil/postsAtom';
 
 export default function HeaderKebab() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function HeaderKebab() {
   const setIsLoginState = useSetRecoilState(isLoginAtom);
   const setAccountName = useSetRecoilState(accountNameAtom);
   const setUserName = useSetRecoilState(userNameAtom);
+  const setPostsData = useSetRecoilState(postsAtom);
 
   const [showMyProfileOptions, setShowMyProfileOptions] = useState(false);
   const [showConfirmLogoutModal, setShowConfirmLogoutModal] = useState(false);
@@ -42,6 +44,7 @@ export default function HeaderKebab() {
     setIsLoginState(false);
     setAccountName('');
     setUserName('');
+    setPostsData(null);
     navigate('/user/login');
   };
 
