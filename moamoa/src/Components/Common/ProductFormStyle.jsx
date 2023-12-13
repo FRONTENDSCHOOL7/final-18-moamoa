@@ -35,7 +35,7 @@ const BtnHoverStyle = css`
 
 export const Form = styled.form`
   position: relative;
-  padding: 0 34px;
+
   margin-top: 80px;
   background-color: #fff;
   font-size: 13px;
@@ -47,7 +47,8 @@ export const Form = styled.form`
   }
 
   & > *:nth-child(7) {
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 100px;
   }
 
   h2,
@@ -97,6 +98,7 @@ export const Form = styled.form`
 
 export const ImgLayoutContainer = styled.div`
   position: relative;
+  padding: 0 34px;
 
   p {
     text-align: right;
@@ -127,7 +129,7 @@ export const ImageLabel = styled.label`
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    right: 7px;
+    right: 40px;
     bottom: 30px;
     background: url(${UploadFile}) 0 0 / cover;
   }
@@ -142,6 +144,7 @@ export const Image = styled.img`
 
 export const LayoutContainer = styled.div`
   ${FlexColumn}
+  padding: 0 34px;
 `;
 
 export const Button = styled.button`
@@ -191,7 +194,8 @@ export const DateInput = styled.input`
 `;
 
 export const SubmitErrorMsg = styled.p`
-  text-align: right;
+  text-align: center;
+  font-weight: 600;
 `;
 
 export const SubmitBtn = styled.button`
@@ -202,16 +206,11 @@ export const SubmitBtn = styled.button`
   color: white;
 
   ${BtnHoverStyle}
-
-  width: 100%;
-  height: 34px;
-  border-radius: 32px;
-
-  //------------------------------- 기존 위치 코드
-  // width: 90px;
-  // position: fixed;
-  // top: 24px;
-  // left: 53.5%;
-  // transform: translate(24px, -53.5%);
-  // z-index: 99999;
+  position: fixed;
+  width: 390px;
+  height: 60px;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
 `;
