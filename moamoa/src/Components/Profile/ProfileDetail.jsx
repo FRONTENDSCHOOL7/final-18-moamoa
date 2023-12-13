@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지 공통 UI
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.05
+  마지막 수정 날까: 2023.12.13
 */
 
 import React, { useState, useEffect } from 'react';
@@ -13,55 +13,8 @@ import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 import styled from 'styled-components';
 import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
-// 게시글 수
-function PostCnt({ src, token, userType }) {
-  const [postCount, setPostCount] = useState(0);
-  const [productCount, setProductCount] = useState(0);
+import PostCount from './PostCount';
 
-  const fetchPostCount = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/post/${src}/userpost`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    setPostCount(json.post.length);
-  };
-
-  const fetchProductCount = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${src}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    setProductCount(json.product.length);
-    //판매자 계정이 아닐경우 행사 길이가 0
-    userType === 'organization' ? setProductCount(json.product.length) : setProductCount(0);
-  };
-
-  useEffect(() => {
-    fetchPostCount();
-    fetchProductCount();
-  }, [src, token]);
-
-  return (
-    <PostCountWrap>
-      <p>{postCount + productCount}</p>
-      <p>게시글 수</p>
-    </PostCountWrap>
-  );
-}
-
-PostCnt.propTypes = {
-  src: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
-  userType: PropTypes.string.isRequired,
-};
 ProfileDetail.propTypes = {
   userInfoData: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
@@ -100,8 +53,8 @@ export default function ProfileDetail({ userInfoData, token }) {
           {userInfoData.profileAccountname &&
             userInfoData.profileImg &&
             userInfoData.profileUsername && (
-              <PostCnt
-                src={userInfoData.profileAccountname}
+              <PostCount
+                accountName={userInfoData.profileAccountname}
                 token={token}
                 userType={userInfoData.userType}
               />
@@ -194,35 +147,20 @@ const CountWrap = styled.div`
   }
 
   button {
-    display: flex; // button 내부를 flex 레이아웃으로 설정합니다.
-    flex-direction: column; // 세로 방향으로 아이템을 배치합니다.
-    gap: 5px; // p 태그 간의 간격을 5px로 설정합니다. 원하는 크기로 조절 가능합니다.
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     align-items: center;
     p: last-child {
-      font-size: 10px; // 버튼 내의 <p> 태그에 대한 텍스트 크기
+      font-size: 10px;
       color: #767676;
     }
   }
 
   span {
-    display: inline-block; // inline-block으로 설정해야 width와 height가 적용
+    display: inline-block;
     width: 0.5px;
     height: 22px;
     background-color: #e3e3e3;
-  }
-`;
-
-const PostCountWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-
-  p {
-    font-size: 18px; // 여기에서 텍스트 사이즈를 10px로 변경합니다.
-  }
-
-  p:last-child {
-    font-size: 10px; // 첫 번째 p 태그 (게시글 수 숫자)는 기존대로 유지합니다.
-    color: #767676;
   }
 `;

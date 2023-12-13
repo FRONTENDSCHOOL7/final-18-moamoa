@@ -2,7 +2,7 @@
   설명: 사용자 accountname의 프로필 페이지(내 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.05
+  마지막 수정 날까: 2023.12.08
 */
 
 import React, { useState, useEffect } from 'react';
@@ -10,9 +10,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import ProfileDetail from '../../Components/Common/ProfileDetail';
-import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
-import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
+import ProfileDetail from '../../Components/Profile/ProfileDetail';
+import ProfileDetailPost from '../../Components/Profile/ProfileDetailPost';
+import ProfileDetailProduct from '../../Components/Profile/ProfileDetailProduct';
 import { Container } from '../../Components/Common/Container';
 
 // import userNameAtom from '../../Recoil/userNameAtom';
@@ -68,8 +68,6 @@ function MyProfile() {
     userType,
   };
 
-  console.log(userInfoData);
-
   return (
     <Container>
       <Header type='moreKebab' />
@@ -101,7 +99,9 @@ function MyProfile() {
             </Btns>
           </section>
         </ProfileTop>
-        {userType === 'organization' ? <ProfileDetailProduct /> : null}
+        {userType === 'organization' ? (
+          <ProfileDetailProduct accountName={profileAccountname} />
+        ) : null}
         <ProfileDetailPost />
 
         <Footer />

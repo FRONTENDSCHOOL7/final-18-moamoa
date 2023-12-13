@@ -2,33 +2,37 @@
   설명: 프로필 상세 페이지 진행중인 행사목록
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.01
+  마지막 수정 날까: 2023.12.13
 */
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ProductImgBox from '../../Components/Common/ProductImgBox';
-import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
+import ProductImgBox from '../Common/ProductImgBox';
+
 import leftBtn from '../../Assets/images/left-vector.png';
 import rightBtn from '../../Assets/images/right-vector.png';
 import CloseIcon from '../../Assets/icons/x.png';
 import DeleteAlert from '../Modal/DeleteAlert';
 
+import { productList, deleteProduct } from '../../API/Product/ProductAPI';
+
 // 상품 수정 페이지 이동 테스트 필요
 const ConfirmDelModal = ({ delProduct, closeModal, showNoticeModal }) => {
   return (
-    <ConfirmModal>
-      <Deltext>정말 삭제하시겠습니까?</Deltext>
-      <BtnWrap>
-        <DelBtn onClick={delProduct}>삭제</DelBtn>
-        <CancelBtn onClick={closeModal}>취소</CancelBtn>
-      </BtnWrap>
+    <>
+      <ConfirmModal>
+        <Deltext>정말 삭제하시겠습니까?</Deltext>
+        <BtnWrap>
+          <DelBtn onClick={delProduct}>삭제</DelBtn>
+          <CancelBtn onClick={closeModal}>취소</CancelBtn>
+        </BtnWrap>
+      </ConfirmModal>
       {!showNoticeModal && <DeleteAlert />}
-    </ConfirmModal>
+    </>
   );
 };
 ConfirmDelModal.propTypes = {
@@ -37,30 +41,18 @@ ConfirmDelModal.propTypes = {
   showNoticeModal: PropTypes.bool.isRequired,
 };
 
-function MyProductClick({ productId, closeModal, fetchData }) {
+function MyProductClick({ productId, closeModal, fetchProduct }) {
   const navigate = useNavigate();
-  const token = useRecoilValue(userToken);
 
   const [showConfirmDelModal, setShowConfirmDelModal] = useState(false);
   const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   const delProduct = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${productId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    console.log(json);
+    await deleteProduct(productId);
+
     closeModal();
-    // window.location.reload();
-    // 추후 삭제 알림 모달 활성화 되도록 수정할 것
     setShowNoticeModal(false);
-    // await setTimeout(() => {
-    // }, 1000);
-    fetchData();
+    fetchProduct();
   };
 
   const openConfirmDelModal = () => {
@@ -86,7 +78,7 @@ function MyProductClick({ productId, closeModal, fetchData }) {
           <BtnModify
             type='button'
             onClick={() => {
-              navigate('/product/edit', { state: productID });
+              navigate(`/product/edit/${productId}`, { state: productID });
             }}
           >
             수정
@@ -94,7 +86,7 @@ function MyProductClick({ productId, closeModal, fetchData }) {
           <BtnProductDesc
             type='button'
             onClick={() => {
-              navigate(`/product/detail/${productId}`);
+              navigate(`/product/detail/${productId}`, { state: productID });
             }}
           >
             상세 보기
@@ -115,49 +107,31 @@ function MyProductClick({ productId, closeModal, fetchData }) {
 MyProductClick.propTypes = {
   productId: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
-  fetchData: PropTypes.func.isRequired,
+  fetchProduct: PropTypes.func.isRequired,
 };
 
-export default function ProfileDetailProduct() {
+ProfileDetailProduct.propTypes = {
+  accountName: PropTypes.string.isRequired,
+};
+
+export default function ProfileDetailProduct({ accountName }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [eventList, setEventList] = useState([]);
-  const token = useRecoilValue(userToken);
-  const userAccountname = location.pathname.replace('/profile/', ''); // 경로에서 사용자 accountname을 추출
+
+  const userAccountname = location.pathname.replace('/profile/', ''); // myInfo인지 확인
   const [showMyProductOptions, setShowMyProductOptions] = useState(false);
   const [productId, setProductId] = useState('');
 
-  const getMyAcnt = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/user/myinfo`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    return json.user['accountname'];
-  };
-
-  const getEventList = async (accountName) => {
-    const acnt = userAccountname === 'myInfo' ? accountName : userAccountname;
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${acnt}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    setEventList(json.product);
-  };
-  const fetchData = async () => {
-    const accountName = await getMyAcnt();
-    getEventList(accountName);
+  const fetchProduct = async () => {
+    const response = await productList(accountName);
+    setEventList(response.product);
+    console.log(response);
+    console.log(`eventList: ${eventList}`);
   };
 
   useEffect(() => {
-    fetchData();
+    fetchProduct();
   }, []);
 
   const handleProductClick = async (productId) => {
@@ -165,7 +139,6 @@ export default function ProfileDetailProduct() {
       setProductId(productId);
       setShowMyProductOptions(true);
     } else {
-      // 상품 상세 페이지 이동 테스트 필요
       navigate(`/product/detail/${productId}`);
     }
   };
@@ -211,7 +184,7 @@ export default function ProfileDetailProduct() {
                   <MyProductClick
                     productId={productId}
                     closeModal={closeModal}
-                    fetchData={fetchData}
+                    fetchProduct={fetchProduct}
                   />
                 )}
 

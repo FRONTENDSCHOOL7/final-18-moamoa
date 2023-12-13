@@ -11,10 +11,11 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import ProfileDetail from '../../Components/Common/ProfileDetail';
+import ProfileDetail from '../../Components/Profile/ProfileDetail';
+
 import FollowButton from '../../Components/Common/FollowButton';
-import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
-import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
+import ProfileDetailPost from '../../Components/Profile/ProfileDetailPost';
+import ProfileDetailProduct from '../../Components/Profile/ProfileDetailProduct';
 import styled from 'styled-components';
 
 import MsgIcon from '../../Assets/icons/message-btn.svg';

@@ -27,20 +27,23 @@ export default function ProfileDetailPost() {
 
   const [myPostList, setMyPostList] = useState([]);
   const [view, setView] = useState('PostList');
-  
+  const [isLoading, setIsLoading] = useState(false);
+
   const loginAccountName = useRecoilValue(accountNameAtom);
   const path = lastPath === 'myInfo' ? loginAccountName : lastPath;
 
   const getUserPostList = userPostList(path);
 
-  useEffect(()=>{
+  useEffect(() => {
     const postList = async () => {
       const res = await getUserPostList;
       setMyPostList(res.post);
+      setTimeout(() => {
+        setIsLoading(true);
+      }, 1500);
     };
     postList();
-  },[path])
-  
+  }, [path]);
 
   const handlePostClick = (postId) => {
     navigate(`/post/${postId}`);
@@ -64,7 +67,7 @@ export default function ProfileDetailPost() {
               {/* 햄버거 버튼 */}
               <ul>
                 {myPostList.map((item) => {
-                  return <PostList key={item.id} post={item} />
+                  return <PostList key={item.id} post={item} isLoading={isLoading} />;
                 })}
               </ul>
             </HamView>
@@ -88,8 +91,8 @@ export default function ProfileDetailPost() {
   );
 }
 const PostListBox = styled.div`
-  width: 100%;
   background-color: #fff;
+  padding: 0;
 `;
 
 const BtnIcons = styled.div.withConfig({
@@ -118,24 +121,30 @@ const BtnIcons = styled.div.withConfig({
 `;
 
 const Views = styled.div`
-  padding: 16px;
-  padding-bottom: 6rem;
-  ul {
-    li {
-      padding-top: 0px;
-    }
-  }
-  li {
-    width: 100%;
-  }
+  padding-bottom: 4.6rem;
 `;
 
 const HamView = styled.div`
-  article {
-    /* margin-bottom: 20px; */
+  ul {
+    margin-top: 0;
   }
-  article:first-child {
-    /* margin: 0px; */
+
+  article {
+    margin: 1.6rem 0;
+  }
+
+  div {
+    button {
+      width: 1.8rem;
+    }
+    div {
+      img:first-child {
+        width: 4.2rem;
+      }
+    }
+    img {
+      width: 100%;
+    }
   }
 `;
 
@@ -143,7 +152,9 @@ const BenView = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin: 1.6rem;
+  padding-bottom: 1.6rem;
+
   ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
