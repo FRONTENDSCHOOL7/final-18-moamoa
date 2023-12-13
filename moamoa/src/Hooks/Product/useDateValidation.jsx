@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 
-const useProgressPeriodEffect = (startDate, endDate) => {
-  const [progressPeriod, setProgressPeriod] = useState(1);
+const removeHyphen = (date) => {
+  return date ? date.replaceAll('-', '') : '';
+};
+
+const useDateValidation = (startDate, endDate) => {
   const [dateSelectionErrorMsg, setDateSelectionErrorMsg] = useState('');
 
   useEffect(() => {
@@ -11,19 +14,12 @@ const useProgressPeriodEffect = (startDate, endDate) => {
     } else {
       setDateSelectionErrorMsg('');
     }
-
-    const selectedDates = [];
-    if (startDate) {
-      selectedDates.push(startDate.replaceAll('-', ''));
-    }
-    if (endDate) {
-      selectedDates.push(endDate.replaceAll('-', ''));
-    }
-    const combineDates = parseInt(selectedDates.join(''));
-    setProgressPeriod(combineDates);
   }, [startDate, endDate]);
+
+  const selectedDates = [removeHyphen(startDate), removeHyphen(endDate)];
+  const progressPeriod = parseInt(selectedDates.join(''));
 
   return { progressPeriod, dateSelectionErrorMsg };
 };
 
-export default useProgressPeriodEffect;
+export default useDateValidation;

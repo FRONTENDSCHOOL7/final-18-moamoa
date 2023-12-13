@@ -12,7 +12,7 @@ PostMoreBtn.propTypes = {
 }
 
 export default function PostMoreBtn({btnData}) {
-  const postId = btnData?.postId;
+  const [postId,setPostId] = useState(btnData?.postId);
   const accountName = btnData?.accountName;
   const loginAccountName = useRecoilValue(accountNameAtom);
   const [showModal, setShowModal] = useState(true);
@@ -22,7 +22,7 @@ export default function PostMoreBtn({btnData}) {
   return (
     <>
       <MoreBtn onClick={openModal}><MoreImg src={more} alt="더보기" /></MoreBtn>
-      { !showModal && (loginAccountName === accountName)? <FooterModal postid={postId} closeFooter={showModal} setCloseFooter={setShowModal}/> : <ReportModal closemodal={showModal} setclosemodal={setShowModal} postid={postId}/>}
+      { !showModal && (loginAccountName === accountName)? <FooterModal postid={postId} closeFooter={showModal} setCloseFooter={setShowModal} setPostId={setPostId}/> : <ReportModal closemodal={showModal} setclosemodal={setShowModal} postid={postId}/>}
     </>
   )
 
