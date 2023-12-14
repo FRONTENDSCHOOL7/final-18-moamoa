@@ -38,22 +38,16 @@ export const Form = styled.form`
 
   margin-top: 80px;
   background-color: #fff;
-  font-size: 13px;
+
   color: ${COLORS.darkgray};
 
   ${FlexColumn}
-  & > *:not(:nth-child(6)) {
-    margin-bottom: 24px;
-  }
-
-  & > *:nth-child(7) {
-    margin-top: 20px;
-    margin-bottom: 100px;
-  }
 
   h2,
   label {
-    margin-bottom: 9px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
   }
 
   p {
@@ -66,22 +60,22 @@ export const Form = styled.form`
     padding: 5px;
     height: 145px;
     color: ${COLORS.darkgray};
-
-    // margin-bottom: 60px;
+    font-family: 'Pretendard';
+    font-size: 16px;
     border: ${borderline};
     border-radius: 5px;
-
     ${BorderStyle}
+    letter-spacing: 1.5px;
   }
 
   input[type='text']::-webkit-input-placeholder {
-    font-size: 13px;
+    font-size: 16px;
     color: ${COLORS.darkgray};
     font-family: 'Pretendard';
   }
 
   textarea::-webkit-input-placeholder {
-    font-size: 13px;
+    font-size: 16px;
     color: ${COLORS.darkgray};
     font-family: 'Pretendard';
   }
@@ -93,16 +87,21 @@ export const Form = styled.form`
 
   .error-msg {
     color: red;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
   }
 `;
 
 export const ImgLayoutContainer = styled.div`
   position: relative;
   padding: 0 34px;
+  margin-bottom: 30px;
 
   p {
     text-align: right;
-    font-size: 12px;
+    font-size: 14px;
+    letter-spacing: 0.3px;
   }
 
   .hidden-but-accessible {
@@ -129,8 +128,8 @@ export const ImageLabel = styled.label`
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    right: 40px;
-    bottom: 30px;
+    right: 42px;
+    bottom: 34px;
     background: url(${UploadFile}) 0 0 / cover;
   }
 `;
@@ -145,23 +144,35 @@ export const Image = styled.img`
 export const LayoutContainer = styled.div`
   ${FlexColumn}
   padding: 0 34px;
+
+  &:not(:last-of-type) {
+    margin-bottom: 35px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 100px;
+  }
+
+  .category-container {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export const Button = styled.button`
-  font-size: 14px;
+  font-size: 16px;
+
   font-weight: 500;
   color: ${(props) => (props['aria-pressed'] ? 'white' : `${COLORS.darkgray}`)};
   background-color: ${(props) => (props['aria-pressed'] ? `${COLORS.primary}` : 'transparent')};
   border: ${(props) =>
     props['aria-pressed'] ? `1.2px solid ${COLORS.primary}` : `1.2px solid ${COLORS.darkgray}`};
   transition: all 0.2s ease-in-out;
-  border-radius: 32px;
-  width: 90px;
-  height: 34px;
-
-  &:first-of-type {
-    margin-right: 6px;
-  }
+  border-radius: 44px;
+  padding: 8px;
+  width: 49%;
+  letter-spacing: 2px;
+  margin-top: 2px;
 
   ${BtnHoverStyle}
 `;
@@ -171,6 +182,9 @@ export const TextInput = styled.input`
   border: none;
   border-bottom: ${borderline};
   color: ${COLORS.darkgray};
+  font-family: 'Pretendard';
+  font-size: 16px;
+  letter-spacing: 1.5px;
 `;
 
 export const DateInput = styled.input`
@@ -179,7 +193,9 @@ export const DateInput = styled.input`
   padding: 2px;
   border-radius: 5px;
   border: ${borderline};
+  font-family: 'Pretendard';
   color: ${COLORS.darkgray};
+  font-size: 16px;
 
   &::-webkit-calendar-picker-indicator {
     color: rgba(0, 0, 0, 0);
@@ -193,23 +209,25 @@ export const DateInput = styled.input`
   }
 `;
 
-export const SubmitErrorMsg = styled.p`
-  text-align: center;
-  font-weight: 600;
-`;
+// export const SubmitErrorMsg = styled.p`
+//   text-align: center;
+//   font-weight: 600;
+// `;
 
 export const SubmitBtn = styled.button`
   background-color: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `${COLORS.darkgray}`)};
   border: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `${COLORS.darkgray}`)};
   font-weight: 600;
-  font-size: 15px;
+  font-size: 19px;
+
+  letter-spacing: 2px;
   color: white;
 
   ${BtnHoverStyle}
   position: fixed;
   width: 390px;
   height: 60px;
-  bottom: -25px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;

@@ -94,7 +94,7 @@ const SignUp = () => {
                 type='text'
                 id='userIdInput'
                 name='accountname'
-                placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
+                placeholder='영문, 숫자, (_), (,)만 사용 가능합니다.'
                 minLength={2}
                 maxLength={15}
                 onBlur={validateAccountNameWithAPI}
@@ -111,7 +111,7 @@ const SignUp = () => {
                 name='intro'
                 placeholder={
                   userType === 'organization'
-                    ? '자신과 홍보할 행사에 대해 소개해 주세요!'
+                    ? '홍보할 행사에 대해 소개해 주세요!'
                     : '자신에 대해 소개해 주세요!'
                 }
                 minLength={2}
@@ -210,10 +210,10 @@ const BtnHoverStyle = css`
 
 const SelectUserType = styled.div`
   text-align: left;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 
   h3 {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     margin-bottom: 12px;
   }
@@ -225,42 +225,51 @@ const SelectUserBtnContainer = styled.div`
 `;
 
 export const SelectUserBtn = styled.button`
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: ${(props) => (props['aria-pressed'] ? 'white' : `${COLORS.darkgray}`)};
   background-color: ${(props) => (props['aria-pressed'] ? `${COLORS.primary}` : 'transparent')};
   border: ${(props) =>
     props['aria-pressed'] ? `1.5px solid ${COLORS.primary}` : `1.5px solid ${COLORS.darkgray}`};
   transition: all 0.2s ease-in-out;
-  border-radius: 32px;
-  padding: 11px 43px;
+  border-radius: 44px;
+  padding: 13px;
+  width: 46%;
+  letter-spacing: 1.5px;
 
   ${BtnHoverStyle}
 `;
 
 const JoinBtn = styled(CommonBtn)`
-  margin: 26px 0 80px 0;
+  margin: 140px 0 40px 0;
 `;
 
 // 프로필 설정
 const ProfileInfo = styled.p`
   text-align: center;
   color: ${COLORS.darkgray};
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
-  margin: 12px 0 30px 0;
+  margin-top: 10px;
 `;
 
 const ProfileForm = styled.form`
   padding: 0 34px;
   background-color: #fff;
+  margin-top: 30px;
   margin-bottom: 60px;
+
+  input[type='text']::-webkit-input-placeholder {
+    font-size: 16px;
+    color: ${COLORS.darkgray};
+    font-family: 'Pretendard';
+  }
 `;
 
 const ImgContainer = styled.div`
   width: 110px;
   height: 110px;
-  margin: 0 auto 35px;
+  margin: 0 auto 30px;
   position: relative;
 `;
 
@@ -304,17 +313,17 @@ const TextInput = styled(CommonInput)`
 
 const TextLabel = styled.label`
   color: ${COLORS.darkgray};
-  margin-bottom: 4px;
-  font-size: 14px;
+  margin-bottom: 5px;
+  font-size: 15px;
 
   &:nth-of-type(2),
   &:nth-of-type(3) {
-    margin-top: 23px;
+    margin-top: 22px;
   }
 `;
 
 const ProfileButton = styled(CommonBtn)`
-  margin: 35px 0 80px 0;
+  margin: 35px 0 40px 0;
   width: 100%;
 `;
 

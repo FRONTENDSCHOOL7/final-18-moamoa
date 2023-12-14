@@ -73,11 +73,13 @@ const LoginBtn = styled(CommonBtn)`
 
 const LoginTestAccountBtn = styled(CommonBtn)`
   margin-top: 10px;
+  word-spacing: 2px;
 `;
 
 const LinkContainer = styled.div`
   margin: 40px 0;
-  font-size: 15px;
+  font-size: 16px;
+  word-spacing: 1.7px;
 
   .click-link {
     margin-left: 7px;

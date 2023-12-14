@@ -22,6 +22,8 @@ const HeadCss = css`
   font-weight: 400;
   font-size: 27px;
   margin-top: 30px;
+
+  letter-spacing: 1px;
 `;
 
 export const LoginAndJoinContainer = styled(Container)`
@@ -37,21 +39,21 @@ export const Form = styled.form`
   flex-direction: column;
   text-align: center;
   color: #767676;
-  margin: 45px 0 0 0;
+  margin-top: 60px;
   background-color: #fff;
 
   input[type='email']::-webkit-input-placeholder {
-    font-size: 14px;
+    font-size: 16px;
     color: ${COLORS.darkgray};
     font-family: 'Pretendard';
   }
   input[type='password']::-webkit-input-placeholder {
-    font-size: 14px;
+    font-size: 16px;
     color: ${COLORS.darkgray};
     font-family: 'Pretendard';
   }
   input[type='text']::-webkit-input-placeholder {
-    font-size: 14px;
+    font-size: 16px;
     color: ${COLORS.darkgray};
     font-family: 'Pretendard';
   }
@@ -61,6 +63,9 @@ export const CommonInput = styled.input`
   border: none;
   outline: none;
   border-bottom: 1.5px solid ${COLORS.darkgray};
+
+  font-size: 16px;
+  letter-spacing: 1.7px;
 
   background-image: url(${(props) => (props.type === 'email' ? Email : Lock)});
   background-repeat: no-repeat;
@@ -79,17 +84,21 @@ export const CommonBtn = styled.button`
   border: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `${COLORS.darkgray}`)};
 
   font-weight: 600;
-  font-size: 15px;
   color: white;
-  padding: 11px;
+  padding: 13px;
   border-radius: 44px;
+  font-size: 16px;
+  letter-spacing: 2px;
 
   ${BtnHoverStyle}
 `;
 
 export const StyledErrorMsg = styled.p`
   color: red;
-  text-align: right;
+  text-align: left;
   margin-top: 7px;
   font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
 `;
