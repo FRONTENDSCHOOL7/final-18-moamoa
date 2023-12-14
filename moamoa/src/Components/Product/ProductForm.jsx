@@ -10,7 +10,7 @@ import {
   Button,
   TextInput,
   DateInput,
-  SubmitErrorMsg,
+  // SubmitErrorMsg,
   SubmitBtn,
 } from '../../Components/Common/ProductFormStyle';
 
@@ -25,7 +25,7 @@ export function ProductForm({
   setLocation,
   setDescription,
   onSubmit,
-  missingInputMessage,
+  // missingInputMessage,
 }) {
   const handleChangeImage = async (e) => {
     const imageFile = e.target.files[0];
@@ -67,7 +67,7 @@ export function ProductForm({
       </ImgLayoutContainer>
       <LayoutContainer>
         <h2 id='categoryTitle'>카테고리</h2>
-        <div>
+        <div className='category-container'>
           <Button
             type='button'
             onClick={() => setProductType('festival')}
@@ -150,9 +150,9 @@ export function ProductForm({
           aria-describedby='eventDetail'
         ></textarea>
       </LayoutContainer>
-      <SubmitErrorMsg role='alert' className='error-msg'>
+      {/* <SubmitErrorMsg role='alert' className='error-msg'>
         {missingInputMessage}
-      </SubmitErrorMsg>
+      </SubmitErrorMsg> */}
       <SubmitBtn type='submit' $isfilled={isFilled}>
         저장
       </SubmitBtn>
@@ -171,5 +171,5 @@ ProductForm.propTypes = {
   dateSelectionErrorMsg: PropTypes.string,
   setLocation: PropTypes.func.isRequired,
   setDescription: PropTypes.func.isRequired,
-  missingInputMessage: PropTypes.string,
+  // missingInputMessage: PropTypes.string,
 };

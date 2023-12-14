@@ -9,7 +9,7 @@ const useDateValidation = (startDate, endDate) => {
 
   useEffect(() => {
     if (startDate && endDate && startDate > endDate) {
-      setDateSelectionErrorMsg('행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
+      setDateSelectionErrorMsg('*행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
       return;
     } else {
       setDateSelectionErrorMsg('');
