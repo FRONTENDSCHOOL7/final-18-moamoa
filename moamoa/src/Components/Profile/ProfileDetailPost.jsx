@@ -2,45 +2,48 @@
   설명: 프로필 상세 페이지 내 게시물 목록(기본형/앨범형)
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.02
+  마지막 수정 날까: 2023.12.15
 
   수정자: 장수연 (2023.11.29)
 */
 
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
 import PostList from '../Post/PostList';
 import { userPostList } from '../../API/Post/PostAPI';
-import accountNameAtom from '../../Recoil/accountNameAtom';
 
 import Hamburger from '../../Assets/icons/icon-post-list-on.svg';
 import Bento from '../../Assets/icons/icon-post-album-on.svg';
-import { useRecoilValue } from 'recoil';
 
-export default function ProfileDetailPost() {
-  const location = useLocation();
-  const lastPath = location.pathname.replace('/profile/', '');
+export default function ProfileDetailPost({ accountName }) {
   const navigate = useNavigate();
 
   const [myPostList, setMyPostList] = useState([]);
   const [view, setView] = useState('PostList');
-  
-  const loginAccountName = useRecoilValue(accountNameAtom);
-  const path = lastPath === 'myInfo' ? loginAccountName : lastPath;
+  const [isLoading, setIsLoading] = useState(false);
 
-  const getUserPostList = userPostList(path);
+  const userAccountname = accountName;
 
-  useEffect(()=>{
+  useEffect(() => {
     const postList = async () => {
-      const res = await getUserPostList;
-      setMyPostList(res.post);
+      try {
+        const res = await userPostList(userAccountname);
+        setMyPostList(res.post);
+        setTimeout(() => {
+          setIsLoading(true);
+        }, 1500);
+      } catch (error) {
+        console.error('게시글을 가져올 수 없습니다 :', error);
+      }
     };
-    postList();
-  },[path])
-  
+
+    if (userAccountname) {
+      postList();
+    }
+  }, [userAccountname]);
 
   const handlePostClick = (postId) => {
     navigate(`/post/${postId}`);
@@ -64,7 +67,7 @@ export default function ProfileDetailPost() {
               {/* 햄버거 버튼 */}
               <ul>
                 {myPostList.map((item) => {
-                  return <PostList key={item.id} post={item} />
+                  return <PostList key={item.id} post={item} isLoading={isLoading} />;
                 })}
               </ul>
             </HamView>
@@ -87,9 +90,14 @@ export default function ProfileDetailPost() {
     </PostListBox>
   );
 }
+
+ProfileDetailPost.propTypes = {
+  accountName: PropTypes.string.isRequired,
+};
+
 const PostListBox = styled.div`
-  width: 100%;
   background-color: #fff;
+  padding: 0;
 `;
 
 const BtnIcons = styled.div.withConfig({
@@ -118,24 +126,34 @@ const BtnIcons = styled.div.withConfig({
 `;
 
 const Views = styled.div`
-  padding: 16px;
-  padding-bottom: 6rem;
-  ul {
-    li {
-      padding-top: 0px;
-    }
-  }
-  li {
-    width: 100%;
-  }
+  padding-bottom: 4.6rem;
 `;
 
 const HamView = styled.div`
-  article {
-    /* margin-bottom: 20px; */
+  ul {
+    margin-top: 0;
   }
-  article:first-child {
-    /* margin: 0px; */
+
+  ul:last-child {
+    margin-bottom: 3.2rem;
+  }
+
+  article {
+    margin: 1.6rem 0;
+  }
+
+  div {
+    button {
+      width: 1.8rem;
+    }
+    div {
+      img:first-child {
+        width: 4.2rem;
+      }
+    }
+    img {
+      width: 100%;
+    }
   }
 `;
 
@@ -143,7 +161,9 @@ const BenView = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin: 1.6rem;
+  padding-bottom: 1.6rem;
+
   ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

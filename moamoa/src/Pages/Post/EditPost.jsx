@@ -2,15 +2,15 @@
   설명: 게시글 수정 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.30
-  마지막 수정 날까: 2023.11.03
+  마지막 수정 날까: 2023.12.07
 */
 
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+// import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import userToken from '../../Recoil/userTokenAtom';
+// import userToken from '../../Recoil/userTokenAtom';
 
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
@@ -18,6 +18,9 @@ import ButtonSubmit from '../../Components/Common/Button';
 
 import uploadFile from '../../Assets/images/upload-file.png';
 import xButton from '../../Assets/icons/x.svg';
+
+import { getPostDetail, editPost } from '../../API/Post/PostAPI';
+import { uploadImage } from '../../API/Image/ImageAPI';
 
 import {
   HeaderContainer,
@@ -32,96 +35,46 @@ import {
 
 export default function EditPost() {
   const location = useLocation();
-  const token = useRecoilValue(userToken);
   const navigate = useNavigate();
 
   const postId = location.pathname.replace('/post/edit/', ''); // 경로에서 사용자 accountname을 추출
 
-  // const postId = '6538602fb2cb205663861cdc';
-
   const [userImage, setUserImage] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [content, setContent] = useState('');
+  const [image, setImage] = useState('');
 
-  const getInitInfo = async () => {
-    const reqUrl = `https://api.mandarin.weniv.co.kr/post/${postId}`;
-    const res = await fetch(reqUrl, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    console.log(json);
-    if (json && json.post) {
-      setUserImage(json.post.author['image'] || '');
+  const getInitPostInfo = async () => {
+    const postInfo = await getPostDetail(postId);
 
-      const postContent = json.post['content'] || '';
+    if (postInfo && postInfo.post) {
+      setUserImage(postInfo.post.author['image'] || '');
+
+      const postContent = postInfo.post['content'] || '';
       setContent(postContent);
-      console.log(postContent);
 
       const textarea = document.getElementById('contentTextarea');
       if (textarea) {
         adjustTextareaHeight({ target: textarea });
       }
 
-      const postImage = json.post['image'] || '';
+      const postImage = postInfo.post['image'] || '';
       setImage(postImage);
-      console.log(postImage);
     }
   };
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행합니다.
-    getInitInfo();
+    getInitPostInfo();
   }, []);
 
-  const [content, setContent] = useState('');
-  const [image, setImage] = useState('');
-
-  // 게시글 수정 API
-  const edit = async (editData) => {
-    try {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/post/${postId}`;
-      const res = await fetch(reqUrl, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(editData),
-      });
-      const json = await res.json();
-      console.log(json);
-      navigate('/profile/myInfo');
-    } catch (error) {
-      alert('아이템 수정에 실패했습니다!');
-    }
-  };
-
-  const uploadImage = async (imageFile) => {
-    const baseUrl = 'https://api.mandarin.weniv.co.kr/';
-    const reqUrl = baseUrl + 'image/uploadfile';
-    // 폼데이터 만들기
-    const form = new FormData();
-    // 폼데이터에 값 추가하기
-    // 폼데이터.append("키","값")
-    form.append('image', imageFile);
-    // 폼바디에 넣어서 요청하기
-    const res = await fetch(reqUrl, {
-      method: 'POST',
-      body: form,
-    });
-    const json = await res.json();
-    console.log(baseUrl + json.filename);
-    const imageUrl = baseUrl + json.filename;
-    setImage(imageUrl);
-  };
-
-  const handleChangeImage = (e) => {
+  const handleChangeImage = async (e) => {
     // 파일 가져오기
     const imageFile = e.target.files[0];
-    uploadImage(imageFile);
+    const response = await uploadImage(imageFile);
+    const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
+
+    setImage(imageUrl);
   };
 
   //textarea 높이 설정
@@ -137,16 +90,17 @@ export default function EditPost() {
     setContent(e.target.value);
   };
 
-  const submitEdit = (e) => {
+  const submitEdit = async (e) => {
     e.preventDefault();
 
-    const editData = {
+    const postData = {
       post: {
         content: content,
         image: image,
       },
     };
-    edit(editData);
+    await editPost(postId, postData);
+    navigate('/profile/myInfo');
   };
 
   const closeImg = () => {

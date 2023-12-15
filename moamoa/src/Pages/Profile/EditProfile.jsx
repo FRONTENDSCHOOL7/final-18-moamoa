@@ -2,7 +2,7 @@
   설명: 내 프로필 수정 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.10.30
+  마지막 수정 날까: 2023.12.15
 */
 
 import React, { useState, useEffect } from 'react';
@@ -17,6 +17,8 @@ import styled from 'styled-components';
 
 import { HeaderContainer, HiddenH1 } from '../Post/UploadEditPostStyle';
 
+import { getMyProfileData } from '../../API/Profile/ProfileAPI';
+
 function EditProfile() {
   //기존 사용자의 정보를 가져오기
   const token = useRecoilValue(userToken);
@@ -26,6 +28,7 @@ function EditProfile() {
   const [accountname, setAccountname] = useState('');
   const [imgSrc, setImgSrc] = useState('');
   const [intro, setIntro] = useState('');
+
   const [errorMessage, setErrorMessage] = useState('');
   const [accountError, setAccountError] = useState('');
   const [accountLengthError, setAccountLengthError] = useState('');
@@ -33,37 +36,34 @@ function EditProfile() {
   const [duplicateIdError, setDuplicateIdError] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
   const [userType, setUserType] = useState('');
 
   // 내 정보 API
   const getInitInfo = async () => {
-    console.log(token);
-    const res = await fetch('https://api.mandarin.weniv.co.kr/user/myinfo', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const json = await res.json();
-    console.log(json);
+    try {
+      const res = await await await getMyProfileData();
 
-    if (json && json.user) {
-      setImgSrc(json.user['image'] || '');
+      if (res && res.user) {
+        setImgSrc(res.user['image'] || '');
 
-      setAccountname(json.user['accountname']);
+        setAccountname(res.user['accountname']);
 
-      setUserType(json.user['username'].slice(0, 3));
+        setUserType(res.user['username'].slice(0, 3));
 
-      setUsername(json.user['username'].slice(3, json.user['username'].length) || '');
+        setUsername(res.user['username'].slice(3, res.user['username'].length) || '');
 
-      setIntro(json.user['intro'] || '');
+        setIntro(res.user['intro'] || '');
+      }
+    } catch (error) {
+      console.log('기존 프로필 정보를 가져올 수 없습니다.');
     }
   };
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행합니다.
     getInitInfo();
   }, []);
+
   // 프로필 수정 API
   const edit = async (editData) => {
     // const token = localStorage.getItem('token');
@@ -304,6 +304,7 @@ function EditProfile() {
 export default EditProfile;
 
 const ProfileImg = styled.div`
+  margin-top: 48px;
   background: linear-gradient(to bottom, #ffc700 50%, #ffc700 calc(30% + 65px), transparent 50%);
   padding-top: 65px;
   padding-left: 20px;
