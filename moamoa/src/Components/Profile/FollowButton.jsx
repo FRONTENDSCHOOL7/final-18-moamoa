@@ -2,7 +2,7 @@
   설명: 팔로우/언팔로우 버튼 - 남의 프로필
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.05
+  마지막 수정 날까: 2023.12.15
 */
 
 import React, { useState, useEffect } from 'react';
@@ -10,17 +10,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 
-import FollowAPI from '../../API/Profile/FollowAPI';
-import UnFollowAPI from '../../API/Profile/UnFollowAPI';
+import { followAPI, unFollowAPI } from '../../API/Follow/FollowAPI';
 
 FollowButton.propTypes = {
   userAccount: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
   isFollow: PropTypes.bool.isRequired,
   reFetchInfo: PropTypes.func.isRequired,
 };
 
-export default function FollowButton({ userAccount, token, isFollow, reFetchInfo }) {
+export default function FollowButton({ userAccount, isFollow, reFetchInfo }) {
   const [isFollowed, setIsFollowed] = useState(isFollow);
 
   useEffect(() => {
@@ -29,11 +27,12 @@ export default function FollowButton({ userAccount, token, isFollow, reFetchInfo
 
   // 팔로우/언팔로우
   const handleFollow = async () => {
-    if (isFollowed === true) {
-      await UnFollowAPI(userAccount, token, reFetchInfo);
+    if (isFollowed) {
+      await unFollowAPI(userAccount);
     } else {
-      await FollowAPI(userAccount, token, reFetchInfo);
+      await followAPI(userAccount);
     }
+    reFetchInfo();
     setIsFollowed(!isFollowed);
   };
 

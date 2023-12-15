@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { userPostList } from '../../API/Post/PostAPI';
 import { productList } from '../../API/Product/ProductAPI';
 
-export default function PostCount({ accountName, token, userType }) {
+export default function PostCount({ accountName, userType }) {
   const [postCount, setPostCount] = useState(0);
   const [productCount, setProductCount] = useState(0);
 
@@ -22,7 +22,7 @@ export default function PostCount({ accountName, token, userType }) {
   useEffect(() => {
     fetchPostCount();
     fetchProductCount();
-  }, [accountName, token]);
+  }, [accountName]);
 
   return (
     <PostCountWrap>
@@ -34,7 +34,6 @@ export default function PostCount({ accountName, token, userType }) {
 
 PostCount.propTypes = {
   accountName: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired,
   userType: PropTypes.string.isRequired,
 };
 

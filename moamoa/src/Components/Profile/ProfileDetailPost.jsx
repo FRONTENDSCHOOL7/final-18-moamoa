@@ -2,48 +2,48 @@
   설명: 프로필 상세 페이지 내 게시물 목록(기본형/앨범형)
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.02
+  마지막 수정 날까: 2023.12.15
 
   수정자: 장수연 (2023.11.29)
 */
 
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import PropTypes from 'prop-types';
 import PostList from '../Post/PostList';
 import { userPostList } from '../../API/Post/PostAPI';
-import accountNameAtom from '../../Recoil/accountNameAtom';
 
 import Hamburger from '../../Assets/icons/icon-post-list-on.svg';
 import Bento from '../../Assets/icons/icon-post-album-on.svg';
-import { useRecoilValue } from 'recoil';
 
-export default function ProfileDetailPost() {
-  const location = useLocation();
-  const lastPath = location.pathname.replace('/profile/', '');
+export default function ProfileDetailPost({ accountName }) {
   const navigate = useNavigate();
 
   const [myPostList, setMyPostList] = useState([]);
   const [view, setView] = useState('PostList');
   const [isLoading, setIsLoading] = useState(false);
 
-  const loginAccountName = useRecoilValue(accountNameAtom);
-  const path = lastPath === 'myInfo' ? loginAccountName : lastPath;
-
-  const getUserPostList = userPostList(path);
+  const userAccountname = accountName;
 
   useEffect(() => {
     const postList = async () => {
-      const res = await getUserPostList;
-      setMyPostList(res.post);
-      setTimeout(() => {
-        setIsLoading(true);
-      }, 1500);
+      try {
+        const res = await userPostList(userAccountname);
+        setMyPostList(res.post);
+        setTimeout(() => {
+          setIsLoading(true);
+        }, 1500);
+      } catch (error) {
+        console.error('게시글을 가져올 수 없습니다 :', error);
+      }
     };
-    postList();
-  }, [path]);
+
+    if (userAccountname) {
+      postList();
+    }
+  }, [userAccountname]);
 
   const handlePostClick = (postId) => {
     navigate(`/post/${postId}`);
@@ -90,6 +90,11 @@ export default function ProfileDetailPost() {
     </PostListBox>
   );
 }
+
+ProfileDetailPost.propTypes = {
+  accountName: PropTypes.string.isRequired,
+};
+
 const PostListBox = styled.div`
   background-color: #fff;
   padding: 0;
@@ -127,6 +132,10 @@ const Views = styled.div`
 const HamView = styled.div`
   ul {
     margin-top: 0;
+  }
+
+  ul:last-child {
+    margin-bottom: 3.2rem;
   }
 
   article {

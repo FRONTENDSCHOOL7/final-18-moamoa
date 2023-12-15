@@ -17,10 +17,9 @@ import PostCount from './PostCount';
 
 ProfileDetail.propTypes = {
   userInfoData: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
 };
 
-export default function ProfileDetail({ userInfoData, token }) {
+export default function ProfileDetail({ userInfoData }) {
   const navigate = useNavigate();
   const [followerCount, setFollowerCount] = useState(userInfoData.profileFollowerCount);
 
@@ -55,7 +54,6 @@ export default function ProfileDetail({ userInfoData, token }) {
             userInfoData.profileUsername && (
               <PostCount
                 accountName={userInfoData.profileAccountname}
-                token={token}
                 userType={userInfoData.userType}
               />
             )}

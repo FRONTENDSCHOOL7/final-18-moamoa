@@ -2,14 +2,12 @@
   설명: 게시글 등록 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.10.31
+  마지막 수정 날까: 2023.12.15
 */
 
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import userToken from '../../Recoil/userTokenAtom'; ////파일 경로 변경 완료
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
 import ButtonSubmit from '../../Components/Common/Button';
@@ -19,7 +17,8 @@ import xButton from '../../Assets/icons/x.svg';
 
 import { uploadPost } from '../../API/Post/PostAPI';
 import { uploadImage } from '../../API/Image/ImageAPI';
-import GetYourinfoAPI from '../../API/Profile/GetYourinfoAPI';
+
+import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 
 import {
   HeaderContainer,
@@ -33,20 +32,16 @@ import {
 } from './UploadEditPostStyle';
 
 export default function AddPost() {
-  const token = useRecoilValue(userToken);
   const navigate = useNavigate();
 
   const [content, setContent] = useState('');
   const [image, setPostImage] = useState('');
-
   const [userImage, setUserImage] = useState('');
-
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const getUserImg = async () => {
     try {
-      const infoUrl = '/user/myinfo';
-      const response = await GetYourinfoAPI(infoUrl, token);
+      const response = await await getMyProfileData();
 
       if (response && response.user) {
         setUserImage(response.user['image'] || '');
@@ -54,23 +49,10 @@ export default function AddPost() {
     } catch (error) {
       console.log('유저 프로필 이미지를 찾을 수 없습니다.');
     }
-    // console.log(token);
-    // const res = await fetch('https://api.mandarin.weniv.co.kr/user/myinfo', {
-    //   method: 'GET',
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // });
-    // const json = await res.json();
-    // console.log(json);
-
-    // if (json && json.user) {
-    //   setUserImage(json.user['image'] || '');
-    // }
   };
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행합니다.
+    // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행
     getUserImg();
   }, []);
 

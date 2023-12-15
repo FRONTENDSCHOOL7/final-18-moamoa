@@ -15,14 +15,13 @@ import ProfileDetailPost from '../../Components/Profile/ProfileDetailPost';
 import ProfileDetailProduct from '../../Components/Profile/ProfileDetailProduct';
 import { Container } from '../../Components/Common/Container';
 
-// import userNameAtom from '../../Recoil/userNameAtom';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import Footer from '../../Components/Common/Footer';
 import styled from 'styled-components';
 import Header from '../../Components/Common/Header';
 
-import GetYourinfoAPI from '../../API/Profile/GetYourinfoAPI';
+import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 
 // 프로필보기
 function MyProfile() {
@@ -36,22 +35,22 @@ function MyProfile() {
   const [profileFollowerCount, setProfileFollowerCount] = useState(0);
   const [profileFollowingCount, setProfileFollowingCount] = useState(0);
 
-  useEffect(() => {
-    async function UserInfo() {
-      try {
-        const infoUrl = '/user/myinfo';
-        const res = await GetYourinfoAPI(infoUrl, token);
+  async function UserInfo() {
+    try {
+      const res = await getMyProfileData();
 
-        setProfileImg(res.user['image']);
-        setProfileAccountname(res.user['accountname']);
-        setProfileUsername(res.user['username']);
-        setProfileIntro(res.user['intro']);
-        setProfileFollowerCount(res.user['followerCount']);
-        setProfileFollowingCount(res.user['followingCount']);
-      } catch (error) {
-        console.error('An error occurred while fetching user info:', error);
-      }
+      setProfileImg(res.user['image']);
+      setProfileAccountname(res.user['accountname']);
+      setProfileUsername(res.user['username']);
+      setProfileIntro(res.user['intro']);
+      setProfileFollowerCount(res.user['followerCount']);
+      setProfileFollowingCount(res.user['followingCount']);
+    } catch (error) {
+      console.error('An error occurred while fetching user info:', error);
     }
+  }
+
+  useEffect(() => {
     UserInfo();
   }, [token]); // `token`이 변경될 때만 `fetchUserInfo`를 호출합니다.
 
@@ -71,41 +70,43 @@ function MyProfile() {
   return (
     <Container>
       <Header type='moreKebab' />
-      <section>
-        <HiddenH1>내 프로필</HiddenH1>
-        <ProfileTop>
-          <section>
-            <ProfileDetail userInfoData={userInfoData} token={token} />
-            <Btns>
-              <button
-                type='button'
-                onClick={() => {
-                  navigate('/profile/edit');
-                }}
-              >
-                프로필 수정
-              </button>
-              {/* 일반 계정일 경우 상품등록 버튼 제거 */}
-              {userType === 'organization' ? (
+      <ProfileWrap>
+        <section>
+          <HiddenH1>내 프로필</HiddenH1>
+          <ProfileTop>
+            <section>
+              <ProfileDetail userInfoData={userInfoData} />
+              <Btns>
                 <button
                   type='button'
                   onClick={() => {
-                    navigate('/product');
+                    navigate('/profile/edit');
                   }}
                 >
-                  행사 등록
+                  프로필 수정
                 </button>
-              ) : null}
-            </Btns>
-          </section>
-        </ProfileTop>
-        {userType === 'organization' ? (
-          <ProfileDetailProduct accountName={profileAccountname} />
-        ) : null}
-        <ProfileDetailPost />
+                {/* 일반 계정일 경우 상품등록 버튼 제거 */}
+                {userType === 'organization' ? (
+                  <button
+                    type='button'
+                    onClick={() => {
+                      navigate('/product');
+                    }}
+                  >
+                    행사 등록
+                  </button>
+                ) : null}
+              </Btns>
+            </section>
+          </ProfileTop>
+          {userType === 'organization' ? (
+            <ProfileDetailProduct userInfoData={userInfoData} reFetchInfo={UserInfo} />
+          ) : null}
+          <ProfileDetailPost accountName={profileAccountname} />
 
-        <Footer />
-      </section>
+          <Footer />
+        </section>
+      </ProfileWrap>
     </Container>
   );
 }
@@ -126,7 +127,9 @@ const a11yHidden = `
 const HiddenH1 = styled.h1`
   ${a11yHidden}
 `;
-
+const ProfileWrap = styled.div`
+  background-color: #fff;
+`;
 const ProfileTop = styled.div`
   position: relative;
   margin-top: 48px;
