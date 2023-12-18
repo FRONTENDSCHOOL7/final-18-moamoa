@@ -109,6 +109,7 @@ export default function ChatRoomKim() {
   );
 }
 const ChatRoom = styled.div`
+  margin-top:47px;  
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -129,17 +130,6 @@ const ChatMessages = styled.div`
   padding: 20px;
 `;
 
-// const Message = styled.div`
-//   width: 220px;
-//   font-size: 14px;
-//   background-color: #ffffff;
-//   border: 1px solid #ddd;
-//   border-radius: 0px 30px 30px 30px;
-//   margin: 0px 10px 10px;
-//   padding: 10px 12px 12px;
-//   line-height: normal;
-//   box-sizing: border-box;
-// `;
 
 const InputArea = styled.div`
   display: flex;
@@ -187,14 +177,7 @@ const FileInput = styled.input`
   overflow: hidden;
   border: 0;
 `;
-// const UserName = styled.h2`
-//   display: block;
-//   margin-left: 8px;
-//   margin-bottom: 5px;
-//   font-size: 12px;
-//   color: gray;
-//   font-weight: 500;
-// `;
+
 const MyTalk = styled.p`
   width: 220px;
   font-size: 14px;
