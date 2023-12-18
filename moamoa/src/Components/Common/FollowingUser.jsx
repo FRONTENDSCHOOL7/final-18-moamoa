@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Common/Button';
-import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
+import PropTypes from 'prop-types'; 
 import { useNavigate } from 'react-router-dom';
 
 FollowUser.propTypes = {

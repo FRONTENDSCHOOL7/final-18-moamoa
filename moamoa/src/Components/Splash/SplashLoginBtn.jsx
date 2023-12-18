@@ -47,7 +47,7 @@ export default function SplashLoginBtn() {
       navigate('/');
       setTimeout(() => {
         navigate('/home');
-      }, 1998);
+      }, 2998);
     } else {
       navigate('/');
     }

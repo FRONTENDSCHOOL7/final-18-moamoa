@@ -121,6 +121,7 @@ export default function ChatRoomKim() {
   );
 }
 const ChatRoom = styled.div`
+  margin-top:47px;
   height: 100vh;
   display: flex;
   flex-direction: column;

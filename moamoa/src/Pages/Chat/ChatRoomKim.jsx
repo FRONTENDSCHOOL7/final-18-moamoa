@@ -5,7 +5,7 @@ import Header from '../../Components/Common/Header';
 import Photo from '../../Components/Common/ChatPhoto';
 import img from '../../Assets/images/followImg/fog.jpg';
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
-/* eslint-disable */
+
 export default function ChatRoomKim() {
   const [message, setMessage] = useState('');
   const [file, setFile] = useState(null);
@@ -61,7 +61,7 @@ export default function ChatRoomKim() {
       handleSendClick();
     }
   };
-  /* eslint-disable */
+  
   return (
     <Container>
       <Header type='chatFixedUser'></Header>
@@ -123,6 +123,7 @@ export default function ChatRoomKim() {
   );
 }
 const ChatRoom = styled.div`
+  margin-top:47px;
   height: 100vh;
   display: flex;
   flex-direction: column;

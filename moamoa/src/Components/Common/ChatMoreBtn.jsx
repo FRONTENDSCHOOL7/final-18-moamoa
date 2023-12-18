@@ -17,7 +17,7 @@ export default function ChatModal() {
   return (
     <>
       <Quitbtn onClick={openModal}>
-        <MoreImage src={MoreImg} />
+        <MoreImage src={MoreImg} alt="더보기 버튼"/>
       </Quitbtn>
       {modal && (
         <BgCont>

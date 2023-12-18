@@ -8,7 +8,7 @@ export default function LoginModal() {
   useEffect(() => {
     const modalTimeout = setTimeout(() => {
       setModalActive(true);
-    }, 2000);
+    }, 3000);
     return () => clearTimeout(modalTimeout);
   }, []);
 
