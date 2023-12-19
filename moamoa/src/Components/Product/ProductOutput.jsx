@@ -6,35 +6,16 @@ import backgroundMoamoa from '../../Assets/images/backgroundMoamoa.png';
 import { Link } from 'react-router-dom';
 import ProductImgBox from '../../Components/Common/ProductImgBox';
 import TopNavigation from '../../Components/Product/TopNavigation';
-import { festivalActiveState, experienceActiveState } from '../../Recoil/ProductTypeStateAtom';
-
-function formatEventDate(dateString) {
-  const startYear = dateString.slice(2, 4);
-  const startMonth = dateString.slice(4, 6);
-  const startDay = dateString.slice(6, 8);
-  const endYear = dateString.slice(10, 12);
-  const endMonth = dateString.slice(12, 14);
-  const endDay = dateString.slice(14, 16);
-
-  return `행사기간: ${startYear}.${startMonth}.${startDay} ~ ${endYear}.${endMonth}.${endDay}`;
-}
+import { filterActive } from './filterActive';
+import { formatEventStartDate } from './formatEventDate';
+import { formatEventEndDate } from './formatEventDate';
+import { semanticStartDate } from './formatEventDate';
+import { semanticEventEndDate } from './formatEventDate';
 
 export default function ProductBundle() {
   const [product] = useRecoilState(ProductAtom);
-  const [festivalActive, experienceActive] = useRecoilState(
-    festivalActiveState,
-    experienceActiveState,
-  );
-  const filterActive = (item) => {
-    if (festivalActive && item.itemName.includes('[f]')) {
-      return true;
-    }
-    if (!festivalActive && experienceActive && item.itemName.includes('[e]')) {
-      return true;
-    }
-    return false;
-  };
   const filteredProducts = product.filter(filterActive);
+
   return (
     <>
       <TopNavigation />
@@ -44,8 +25,13 @@ export default function ProductBundle() {
             <Link to={`/product/detail/${item._id}`} key={index}>
               <ProductImgBox src={item.itemImage} />
             </Link>
-            <p className='itemName'>{item.itemName.replace('[f]', '').replace('[e]', '')}</p>
-            <p className='itemDate'>{formatEventDate(item.price.toString())}</p>
+            <h2 className='itemName'>{item.itemName.replace('[f]', '').replace('[e]', '')}</h2>
+            <time className='itemDate' dateTime={semanticStartDate(item.price.toString())}>
+              {formatEventStartDate(item.price.toString())}
+            </time>
+            <time className='itemDate' dateTime={semanticEventEndDate(item.price.toString())}>
+              {formatEventEndDate(item.price.toString())}
+            </time>
           </ProductBox>
         ))}
       </ProductContainer>
