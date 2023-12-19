@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import accountNameAtom from '../../Recoil/accountNameAtom';
-import DeleteModal from '../../Components/Modal/DeleteModal';
+import DeleteModal from '../Modal/DeleteModal';
 import PropTypes from 'prop-types';
 
 AskBtn.propTypes = {
@@ -37,29 +37,12 @@ export default function AskBtn({btnData}) {
         <>
           <Eidt onClick={handleBtnClick}>상품수정</Eidt>
           <Del onClick={() => setShowModal(false)}>상품삭제</Del>
-          {!showModal && <DelCont><DeleteModal /></DelCont>}
+          {!showModal && <DeleteModal />}
         </>
       )}
     </>
   );
 }
-
-// const Ask = styled.button`
-//   width: 10rem;
-//   height: 2.8rem;
-//   border-radius: 2rem;
-//   /* background: #6da6db; */
-//   border: 1px solid #767676;
-//   color: #767676;
-//   font-size: 1.2rem;
-//   &:hover {
-//     cursor: pointer;
-//     font-weight: bold;
-//     border: 1.5px solid #767676;
-//   }
-//   margin-left: 1rem;
-//   padding: 0 1.8rem;
-// `;
 
 const Eidt = styled.button`
   width: 10rem;
@@ -80,14 +63,4 @@ const Del = styled(Eidt)``;
 
 const Ask = styled(Eidt)`
   padding: 0 1.8rem;
-`;
-
-const DelCont = styled.div`
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 100;
 `;

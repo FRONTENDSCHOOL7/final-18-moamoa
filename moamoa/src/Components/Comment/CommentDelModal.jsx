@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
-import DeleteAlert from '../Modal/DeleteAlert';
+import AlertModal from '../Modal/AlertModal';
+import { deleteComment } from '../../API/Comment/CommnetAPI';
 
 DeleteModal.propTypes = {
   commentid: PropTypes.string,
@@ -13,27 +11,14 @@ DeleteModal.propTypes = {
 };
 
 export default function DeleteModal({ commentid, setCloseFooter }) {
-  const token = useRecoilValue(userTokenAtom);
   const params = useParams();
+  const postId = params.post_id;
   const [modal, setModal] = useState(true);
   const [delMadoal, setDelModal] = useState(true);
   const [showNoticeModal, setShowNoticeModal] = useState(true);
 
-  const delComment = () => {
-    const delReq = () => {
-      axios
-        .delete(`https://api.mandarin.weniv.co.kr/post/${params.post_id}/comments/${commentid}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        })
-        .then(() => {})
-        .catch(() => console.error('댓글 삭제를 실패했습니다.'));
-    };
+  const delComment = () => deleteComment(postId, commentid)
 
-    delReq();
-  };
 
   const handleCommemtDelete = async () => {
     await delComment();
@@ -64,7 +49,7 @@ export default function DeleteModal({ commentid, setCloseFooter }) {
               </BtnCancel>
             </Btn>
           </Modal>
-          {!showNoticeModal && <DeleteAlert />}
+          {!showNoticeModal && <AlertModal type={`delete`} />}
         </BgCont>
       ) : null}
     </>

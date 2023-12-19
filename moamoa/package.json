@@ -20,6 +20,7 @@
     "recoil-persist": "^5.1.0",
     "styled-components": "^6.1.0",
     "styled-reset": "^4.5.1",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

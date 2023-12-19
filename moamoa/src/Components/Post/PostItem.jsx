@@ -14,15 +14,14 @@ import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
 import PostContents from './PostContents';
 
 PostItem.propTypes = {
-  post: PropTypes.array
+  post: PropTypes.object
 };
 
 export default function PostItem({ post }) {
   const postItemInfo = post;
   const postAuthorInfo = post?.author;
-
   const loginAccountName = useRecoilValue(accountNameAtom);
-
+  
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postItemInfo.heartCount);
   const [showModal, setShowModal] = useState(false);

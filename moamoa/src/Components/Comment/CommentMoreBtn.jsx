@@ -20,7 +20,7 @@ export default function MoreBtn({accountname,commentid}) {
   return (
     <>
       <CommentMoreBtn onClick={()=> setShowModal(false)}><MoreImg src={more} alt="더보기" /></CommentMoreBtn>
-      { !showModal ? (accountname === accountName ? <CommentDelModal commentid={commentid} closeFooter={showModal} setCloseFooter={setShowModal}/> : <CommentReportModal commentid={commentid} showModal={showModal} setShowModal={setShowModal}/>):null}
+      { !showModal ? (accountname === accountName ? <CommentDelModal commentid={commentid} closeFooter={showModal} setCloseFooter={setShowModal}/> : <CommentReportModal postid={commentid} showModal={showModal} setShowModal={setShowModal}/>):null}
 
     </>
   )

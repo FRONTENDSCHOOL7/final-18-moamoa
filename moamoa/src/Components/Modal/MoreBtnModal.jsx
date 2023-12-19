@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import { useParams } from 'react-router-dom';
 import DeleteModal from './DeleteModal';
 import CloseIcon from '../../Assets/icons/x.png';
 import PropTypes from 'prop-types';
 
-FooterModal.propTypes = {
+MoreBtnModal.propTypes = {
   postid: PropTypes.string,
   closeFooter: PropTypes.bool,
   setPostId: PropTypes.func,
   setCloseFooter: PropTypes.func,
 };
 
-export default function FooterModal({ closeFooter, setCloseFooter, postid, setPostId }) {
+export default function MoreBtnModal({ closeFooter, setCloseFooter, postid, setPostId }) {
   const [showModal, setShowModal] = useState(true);
   const editUrl = `/post/edit/${postid}`;
 

@@ -16,7 +16,7 @@ import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 import leftBtn from '../../Assets/images/left-vector.png';
 import rightBtn from '../../Assets/images/right-vector.png';
 import CloseIcon from '../../Assets/icons/x.png';
-import DeleteAlert from '../Modal/DeleteAlert';
+import AlertModal from '../Modal/AlertModal';
 
 // 상품 수정 페이지 이동 테스트 필요
 const ConfirmDelModal = ({ delProduct, closeModal, showNoticeModal }) => {
@@ -27,7 +27,7 @@ const ConfirmDelModal = ({ delProduct, closeModal, showNoticeModal }) => {
         <DelBtn onClick={delProduct}>삭제</DelBtn>
         <CancelBtn onClick={closeModal}>취소</CancelBtn>
       </BtnWrap>
-      {!showNoticeModal && <DeleteAlert />}
+      {!showNoticeModal && <AlertModal type={`delete`} />}
     </ConfirmModal>
   );
 };

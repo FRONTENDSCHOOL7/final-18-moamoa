@@ -5,13 +5,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 PostList.propTypes = {
-  post: PropTypes.array,
+  post: PropTypes.object,
   isLoading: PropTypes.bool
 }
 
 
 export default function PostList({post, isLoading}) {
-
   return (
       <Posts>
         <li>{post && isLoading ? <PostItem post={post}/>

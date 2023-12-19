@@ -8,24 +8,26 @@ import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 export default function CommentItem(item) {
   const created = TimeCalc(item.item.createdAt)
   const comment = item.item
+  const commentAuthor = comment.author
+
   return (
     <li>
       <Comment>
         <CommentUser>
-          <Link to={`/profile/${comment.author.accountname}`}>
+          <Link to={`/profile/${commentAuthor.accountname}`}>
             <UserInfo>
-              <FrofilImg src={comment.author.image} alt="사용자 프로필" />
+              <FrofilImg src={commentAuthor.image} alt="사용자 프로필" />
 
-                <OrCont>
-              <UserName>{comment.author.username.slice(3)}</UserName>
-              {comment.author.username.slice(0,3) === '[o]'?                
+                <OfficialCont>
+              <UserName>{commentAuthor.username.slice(3)}</UserName>
+              {commentAuthor.username.slice(0,3) === '[o]'?                
                   <UserCheck src={UserTypeCheck} alt=''/> : null
                   }
-                </OrCont>
+                </OfficialCont>
               <Time>{created}</Time>
             </UserInfo>
           </Link>
-          <CommentMoreBtn accountname={comment.author.accountname} commentid={comment.id}/>
+          <CommentMoreBtn accountname={commentAuthor.accountname} commentid={comment.id}/>
         </CommentUser>
         <CommentDesc>{comment.content}</CommentDesc>
       </Comment>
@@ -73,7 +75,7 @@ const CommentDesc = styled.p`
   font-size: 1.4rem;
   color: #333;
 `;
-const OrCont = styled.div`
+const OfficialCont = styled.div`
   display: flex;
   align-items: center;
   vertical-align: top;

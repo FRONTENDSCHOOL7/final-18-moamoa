@@ -10,8 +10,8 @@ import HomeBtn from './HomeBtn';
 import Gobackbtn from './GoBackbtn';
 import more from '../../Assets/icons/icon-more.svg';
 import styled from 'styled-components';
+import HeaderMoreBtnModal from '../Modal/HeaderMoreBtnModal';
 import LogoutModal from '../Modal/LogoutModal';
-import LogoutConfirmModal from '../Modal/LogoutConfirmModal';
 import postsAtom from '../../Recoil/postsAtom';
 
 export default function HeaderKebab() {
@@ -65,10 +65,10 @@ export default function HeaderKebab() {
           <MoreImg src={more} alt='더 보기' />
         </button>
         {showMyProfileOptions && (
-          <LogoutModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
+          <HeaderMoreBtnModal closeModal={closeModal} openConfirmLogoutModal={openConfirmLogoutModal} />
         )}
         {showConfirmLogoutModal && (
-          <LogoutConfirmModal logout={logout} closeModal={closeConfirmLogoutModal} />
+          <LogoutModal logout={logout} closeModal={closeConfirmLogoutModal} />
         )}
       </HeaderContainer>
     </>

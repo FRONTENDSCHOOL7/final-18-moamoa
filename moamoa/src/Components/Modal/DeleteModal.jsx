@@ -4,7 +4,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { deleteProduct } from '../../API/Product/ProductAPI';
 import { deletePost } from '../../API/Post/PostAPI';
 import PropTypes from 'prop-types';
-import NoticeModal from './DeleteAlert';
+import AlertModal from './AlertModal';
 
 DeleteModal.propTypes = {
   postid: PropTypes.string,
@@ -17,7 +17,7 @@ export default function DeleteModal({postid,setPostId, setCloseFooter}) {
   const navigate = useNavigate();
   const [delMadoal, setDelModal] = useState(true);
   const location = useLocation();
-  const post = location.pathname.slice(1, 5);
+  const path = location.pathname.slice(1, 5);
   const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   // 게시글 상세 페이지에서 게시글 삭제
@@ -43,42 +43,60 @@ export default function DeleteModal({postid,setPostId, setCloseFooter}) {
     }, 1000);
   };
 
-    // 상품 상세 페이지에서 상품 삭제
-    const handleProductDelete = () => deleteProduct(params.product_id);
-    
-    const deleteProducData = async () => {
-      await handleProductDelete();
-      setShowNoticeModal(false);
-      await setTimeout(() => {
-        navigate('/product/list');
-      }, 1000);
-    };
+  // 상품 상세 페이지에서 상품 삭제
+  const handleProductDelete = () => deleteProduct(params.product_id);
+  
+  const deleteProducItem = async () => {
+    await handleProductDelete();
+    setShowNoticeModal(false);
+    await setTimeout(() => {
+      navigate('/product/list');
+    }, 1000);
+  };
   
     const deletefunc = () => {
-      if(post === "prof"){
-        delMyPostListItem();
-      } else if(post === "post"){
-        deletePostItem();
-      } else {
-        deleteProducData();
-      }      
+      switch(path){
+        case 'prof':
+          delMyPostListItem();
+          break;
+        case 'post':
+          deletePostItem();
+          break;
+        case 'prod':
+          deleteProducItem();
+          break;
+        default:
+          break;
+      }
     }
 
   return (
     <>
       { delMadoal ?       
-      <Modal>
-        <Deltext>정말 삭제하시겠습니까?</Deltext>
-        <Btn>
-          <BtnDel onClick={deletefunc}>삭제</BtnDel>
-          <BtnCancel onClick={()=>{setDelModal(false);}}>취소</BtnCancel>
-        </Btn>
-      </Modal> : null
+      <ModalBg>
+        <Modal>
+          <Deltext>정말 삭제하시겠습니까?</Deltext>
+          <Btn>
+            <BtnDel onClick={deletefunc}>삭제</BtnDel>
+            <BtnCancel onClick={()=>{setDelModal(false);}}>취소</BtnCancel>
+          </Btn>
+        </Modal>
+      </ModalBg> : null
       }
-      { !showNoticeModal && <NoticeModal/>}
+      { !showNoticeModal && <AlertModal type={`delete`}/>}
     </>
   );
 }
+
+const ModalBg = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100;
+`;
 
 const Modal = styled.div`
   width: 26rem;
