@@ -83,7 +83,6 @@ const HomeWrap = styled.div`
   margin-top: 35px;
   margin-bottom: 60px;
   flex: 1;
-  // height: 100%;
 `;
 const HomeContainer = styled.div`
   width: 100%;
