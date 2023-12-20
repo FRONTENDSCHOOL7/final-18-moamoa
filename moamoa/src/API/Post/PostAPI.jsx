@@ -27,7 +27,7 @@ export const uploadPost = async (addPostData) => {
       const data = await res.data;
       return data
     } catch (error) {
-      alert('아이템 등록에 실패했습니다!');
+      alert('게시글 등록에 실패했습니다!');
     }
   };
 

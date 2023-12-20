@@ -5,28 +5,24 @@ import PropTypes from 'prop-types';
 import AlertModal from '../Modal/AlertModal';
 import { deleteComment } from '../../API/Comment/CommnetAPI';
 
-DeleteModal.propTypes = {
+CommentDelModal.propTypes = {
   commentid: PropTypes.string,
   setCloseFooter: PropTypes.func,
 };
 
-export default function DeleteModal({ commentid, setCloseFooter }) {
+export default function CommentDelModal({ commentid, setCloseFooter }) {
   const params = useParams();
   const postId = params.post_id;
   const [modal, setModal] = useState(true);
   const [delMadoal, setDelModal] = useState(true);
   const [showNoticeModal, setShowNoticeModal] = useState(true);
 
-  const delComment = () => deleteComment(postId, commentid)
-
-
   const handleCommemtDelete = async () => {
-    await delComment();
+    await deleteComment(postId, commentid);
     setShowNoticeModal(false);
     setCloseFooter(true);
-    // 추후 수정 필요
     setTimeout(() => {
-      setShowNoticeModal(true);
+      setShowNoticeModal(false);
     }, 1000);
   };
 
@@ -76,8 +72,8 @@ const Modal = styled.div`
   border-radius: 1rem;
   position: fixed;
   left: 50%;
-  top: 30%;
-  transform: translate(-50%);
+  top: 50%;
+  transform: translate(-50%,-50%);
   padding: 3rem 0 0;
   box-sizing: border-box;
   z-index: 10;

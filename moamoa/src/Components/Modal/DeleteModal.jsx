@@ -21,11 +21,10 @@ export default function DeleteModal({postid,setPostId, setCloseFooter}) {
   const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   // 게시글 상세 페이지에서 게시글 삭제
-  const handlePostDelete = () => deletePost(postid)
-  const deletePostItem = async () => {
-    await handlePostDelete();
+  const handlePostDelete = async () => {
+    await deletePost(postid);
     setShowNoticeModal(false);
-    await setTimeout(() => {
+    setTimeout(() => {
       navigate(-1);
     }, 1000);
       setDelModal(false);
@@ -33,23 +32,21 @@ export default function DeleteModal({postid,setPostId, setCloseFooter}) {
 
   // myInfo 페이지에서 게시글 삭제
   const delMyPostListItem = async () => {
-    await handlePostDelete();
+    await deletePost(postid);
     setShowNoticeModal(false);
     setDelModal(false);
     setPostId(null);
-    await setTimeout(() => {
+    setTimeout(() => {
       setDelModal(false);
       setCloseFooter(true)
     }, 1000);
   };
 
   // 상품 상세 페이지에서 상품 삭제
-  const handleProductDelete = () => deleteProduct(params.product_id);
-  
-  const deleteProducItem = async () => {
-    await handleProductDelete();
+  const handleProductDelete = async () => {
+    await deleteProduct(params.product_id);
     setShowNoticeModal(false);
-    await setTimeout(() => {
+    setTimeout(() => {
       navigate('/product/list');
     }, 1000);
   };
@@ -60,10 +57,10 @@ export default function DeleteModal({postid,setPostId, setCloseFooter}) {
           delMyPostListItem();
           break;
         case 'post':
-          deletePostItem();
+          handlePostDelete();
           break;
         case 'prod':
-          deleteProducItem();
+          handleProductDelete();
           break;
         default:
           break;

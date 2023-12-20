@@ -13,7 +13,7 @@ export default function CommentItem(item) {
   return (
     <li>
       <Comment>
-        <CommentUser>
+        <CommentAuthorInfo>
           <Link to={`/profile/${commentAuthor.accountname}`}>
             <UserInfo>
               <FrofilImg src={commentAuthor.image} alt="사용자 프로필" />
@@ -28,7 +28,7 @@ export default function CommentItem(item) {
             </UserInfo>
           </Link>
           <CommentMoreBtn accountname={commentAuthor.accountname} commentid={comment.id}/>
-        </CommentUser>
+        </CommentAuthorInfo>
         <CommentDesc>{comment.content}</CommentDesc>
       </Comment>
     </li>
@@ -39,7 +39,7 @@ const Comment = styled.div`
   margin-bottom: 2rem;
 `
 
-const CommentUser = styled.div`
+const CommentAuthorInfo = styled.div`
   display: flex;
   margin-bottom: 0.4rem;
   justify-content: space-between;
