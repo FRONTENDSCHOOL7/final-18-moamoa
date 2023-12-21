@@ -40,10 +40,10 @@ export default function ProductBundle() {
 }
 export const ProductContainer = styled.div`
   max-width: 100%;
-  margin: 0 auto;
+  margin: 10px auto;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 30px;
+  gap: 20px;
   flex: 1;
 
   padding-bottom: 150px;

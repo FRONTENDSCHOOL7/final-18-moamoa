@@ -32,7 +32,7 @@ const ImgBox = styled.img.attrs({ alt: '축제포스터' })`
 `;
 
 const ProductListPoster = styled(ImgBox)`
-  width: 350px;
+  width: 370px;
   height: 140px;
   object-fit: fill;
 `;
