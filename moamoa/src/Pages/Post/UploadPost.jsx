@@ -2,20 +2,24 @@
   설명: 게시글 등록 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.10.31
+  마지막 수정 날까: 2023.12.15
 */
 
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
-import userToken from '../../Recoil/userTokenAtom'; ////파일 경로 변경 완료
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
 import ButtonSubmit from '../../Components/Common/Button';
 
 import uploadFile from '../../Assets/images/upload-file.png';
 import xButton from '../../Assets/icons/x.svg';
+
+import { uploadPost } from '../../API/Post/PostAPI';
+import { uploadImage } from '../../API/Image/ImageAPI';
+
+import { getMyProfileData } from '../../API/Profile/ProfileAPI';
+
 import {
   HeaderContainer,
   HiddenH1,
@@ -28,81 +32,40 @@ import {
 } from './UploadEditPostStyle';
 
 export default function AddPost() {
-  const token = useRecoilValue(userToken);
   const navigate = useNavigate();
 
   const [content, setContent] = useState('');
   const [image, setPostImage] = useState('');
-
   const [userImage, setUserImage] = useState('');
-
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const getUserImg = async () => {
-    console.log(token);
-    const res = await fetch('https://api.mandarin.weniv.co.kr/user/myinfo', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const json = await res.json();
-    console.log(json);
+    try {
+      const response = await await getMyProfileData();
 
-    if (json && json.user) {
-      setUserImage(json.user['image'] || '');
+      if (response && response.user) {
+        setUserImage(response.user['image'] || '');
+      }
+    } catch (error) {
+      console.log('유저 프로필 이미지를 찾을 수 없습니다.');
     }
   };
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행합니다.
+    // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행
     getUserImg();
   }, []);
-
-  const addPost = async (addPostData) => {
-    try {
-      const res = await fetch('https://api.mandarin.weniv.co.kr/post', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(addPostData),
-      });
-      const json = await res.json();
-      console.log(json);
-      navigate('/profile/myInfo');
-    } catch (error) {
-      alert('아이템 등록에 실패했습니다!');
-    }
-  };
 
   const inputContent = (e) => {
     setContent(e.target.value);
   };
 
-  const uploadImage = async (imageFile) => {
-    const baseUrl = 'https://api.mandarin.weniv.co.kr/';
-    const reqUrl = baseUrl + 'image/uploadfile';
-    // 폼데이터 만들기
-    const form = new FormData();
-    // 폼데이터에 값 추가하기
-    // 폼데이터.append("키","값")
-    form.append('image', imageFile);
-    // 폼바디에 넣어서 요청하기
-    const res = await fetch(reqUrl, {
-      method: 'POST',
-      body: form,
-    });
-    const json = await res.json();
-    const imageUrl = baseUrl + json.filename;
-    setPostImage(imageUrl);
-  };
-
-  const handleChangeImage = (e) => {
+  const handleChangeImage = async (e) => {
     // 파일 가져오기
     const imageFile = e.target.files[0];
-    uploadImage(imageFile);
+    const response = await uploadImage(imageFile);
+    const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
+    setPostImage(imageUrl);
   };
 
   //textarea 높이 설정
@@ -114,16 +77,17 @@ export default function AddPost() {
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
-  const submitAddPost = (e) => {
+  const submitPost = async (e) => {
     e.preventDefault();
-
-    const addPostData = {
+    const uploadPostData = {
       post: {
         content,
         image,
       },
     };
-    addPost(addPostData);
+
+    await uploadPost(uploadPostData);
+    navigate('/profile/myInfo');
   };
 
   const closeImg = () => {
@@ -141,18 +105,14 @@ export default function AddPost() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    submitAddPost(e);
+    submitPost(e);
   };
 
   return (
     <Container>
       <HeaderContainer>
         <Gobackbtn />
-        <ButtonSubmit
-          buttonText='업로드'
-          onClickHandler={submitAddPost}
-          disabled={isButtonDisabled}
-        />
+        <ButtonSubmit buttonText='업로드' onClickHandler={submitPost} disabled={isButtonDisabled} />
       </HeaderContainer>
       <UploadPostBox>
         <section>

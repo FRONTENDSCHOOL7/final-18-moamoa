@@ -6,7 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import ProductListSkeleton from '../../Components/Product/ProductListSkeleton';
 import ProductOutput from '../../Components/Product/ProductOutput';
 import styled from 'styled-components';
-import { ContainerPercent } from '../../Components/Common/Container';
+import { Container } from '../../Components/Common/Container';
 import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
 
@@ -35,22 +35,23 @@ export default function ProductList() {
   }, [token, setProduct]);
 
   return (
-    <ContainerPercent>
+    <Container>
       <Header type='home' />
       <ProductListWrap>
         {loading ? (
           <ProductListSkeleton />
-        ) : error ? (
+          ) : error ? (
           <p>Error:{error.message}</p>
-        ) : (
-          <ProductOutput />
-        )}
+          ) : (
+            <ProductOutput />
+            )}
       </ProductListWrap>
       <Footer></Footer>
-    </ContainerPercent>
+    </Container>
   );
 }
 
 const ProductListWrap = styled.div`
+  background-color:#fff;
   margin-top: 48px;
 `;

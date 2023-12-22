@@ -19,6 +19,21 @@ export const getProductDetail = (productId, getProductData) => {
   return getProductInfo();
 };
 
+// 상품 리스트
+export const productList = async (accountName) => {
+  try {
+    const res = await authInstance.get(`/product/${accountName}`);
+    if (res.status === 200) {
+      const result = await res.data;
+      return result;
+    } else {
+      console.error('페이지를 불러오는데 실패했습니다.');
+    }
+  } catch (error) {
+    console.error('서버와 통신을 실패했습니다.', error);
+  }
+};
+
 // 상품 삭제
 export const deleteProduct = async (productId) => {
   try {

@@ -18,7 +18,6 @@ const useLogin = () => {
     },
   });
   const [loginFailMessage, setLoginFailMessage] = useState('');
-  const [isTestAccount, setIsTestAccount] = useState(false);
 
   const setUserToken = useSetRecoilState(userTokenAtom);
   const setIsLoginState = useSetRecoilState(isLoginAtom);
@@ -36,26 +35,8 @@ const useLogin = () => {
     updateInputState(e, setUserData, 'user');
   };
 
-  const loginWithTestAccount = () => {
-    setIsTestAccount(!isTestAccount);
-    console.log(isTestAccount);
-
-    setUserData((prevState) => ({
-      ...prevState,
-      user: {
-        ...prevState.user,
-        email: 'moa_festa@moamoa.com',
-        password: '13231323',
-      },
-    }));
-  };
-
-  useEffect(() => {
-    isTestAccount && performLogin();
-  }, [isTestAccount]);
-
-  const performLogin = async () => {
-    const [res, error] = await login(userData);
+  const performLogin = async (userDataToUse = userData) => {
+    const [res, error] = await login(userDataToUse);
 
     if (res && res.user) {
       const { token, accountname, username } = res.user;
@@ -72,9 +53,20 @@ const useLogin = () => {
     }
   };
 
+  const loginWithTestAccount = async () => {
+    const testAccountData = {
+      user: {
+        email: 'moa_festa@moamoa.com',
+        password: '13231323',
+      },
+    };
+
+    await performLogin(testAccountData);
+  };
+
   const submitLoginForm = async (e) => {
     e.preventDefault();
-    await performLogin();
+    await performLogin(userData);
   };
 
   return {
@@ -83,7 +75,6 @@ const useLogin = () => {
     submitLoginForm,
     loginFailMessage,
     loginWithTestAccount,
-    isTestAccount,
   };
 };
 
