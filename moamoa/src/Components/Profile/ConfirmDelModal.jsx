@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import DeleteAlert from '../Modal/DeleteAlert';
+import AlertModal from '../Modal/AlertModal';
 
 export default function ConfirmDelModal({ delProduct, closeModal, showNoticeModal }) {
   return (
@@ -13,7 +13,7 @@ export default function ConfirmDelModal({ delProduct, closeModal, showNoticeModa
           <CancelBtn onClick={closeModal}>취소</CancelBtn>
         </BtnWrap>
       </ConfirmModal>
-      {!showNoticeModal && <DeleteAlert />}
+      {!showNoticeModal && <AlertModal />}
     </>
   );
 }
