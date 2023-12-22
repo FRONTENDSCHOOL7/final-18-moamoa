@@ -85,9 +85,9 @@ export const unheartPost = async (postId) => {
 };
 
 // 홈 피드 게시글 목록
-export const homePostList = async () => {
+export const homePostList = async (limit, skip) => {
   try {
-    const res = await authInstance.get('/post/feed');
+    const res = await authInstance.get(`/post/feed/?limit=${limit}&skip=${skip}`);
     if (res.status === 200) {
       const result = await res.data;
       return result;

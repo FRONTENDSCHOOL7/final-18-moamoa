@@ -20,9 +20,8 @@ PostItem.propTypes = {
 export default function PostItem({ post }) {
   const postItemInfo = post;
   const postAuthorInfo = post?.author;
-
   const loginAccountName = useRecoilValue(accountNameAtom);
-
+  
   const [heartcolor, setHeartColor] = useState(heartBg);
   const [heartcount, setHeartCount] = useState(postItemInfo.heartCount);
   const [showModal, setShowModal] = useState(false);

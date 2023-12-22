@@ -4,7 +4,7 @@ import { recoilPersist } from 'recoil-persist';
 const { persistAtom } = recoilPersist();
 const postsAtom = atom({
   key: 'postsAtom',
-  default: {},
+  default: [],
   effects_UNSTABLE: [persistAtom],
 });
 

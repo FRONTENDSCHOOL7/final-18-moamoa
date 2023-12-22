@@ -11,7 +11,6 @@ PostList.propTypes = {
 
 
 export default function PostList({post, isLoading}) {
-
   return (
       <Posts>
         <li>{post && isLoading ? <PostItem post={post}/>

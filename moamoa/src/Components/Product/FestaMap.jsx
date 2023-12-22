@@ -41,21 +41,17 @@ export default function FestaMap({festaName}) {
     // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
     const infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
-    // 장소 검색 객체를 생성합니다
-    const ps = new kakao.maps.services.Places(); 
+    // 주소-좌표간 변환 서비스 객체를 생성
+    const geocoder = new kakao.maps.services.Geocoder();
 
-    // 키워드로 장소를 검색합니다
-    ps.keywordSearch(festaName, placesSearchCB); 
-
-    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-    function placesSearchCB (data, status) {
-      if (status === kakao.maps.services.Status.OK) {
-          // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+    const callback = function(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
           // LatLngBounds 객체에 좌표를 추가합니다
           const bounds = new kakao.maps.LatLngBounds();
-          for (let i=0; i<data.length; i++) {
-              displayMarker(data[i]);    
-              bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          for (let i=0; i<result.length; i++) {
+              displayMarker(result[i]);    
+              bounds.extend(new kakao.maps.LatLng(result[i].y, result[i].x));
           }       
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
           map.setBounds(bounds);
@@ -64,6 +60,8 @@ export default function FestaMap({festaName}) {
         setShowMap(false);
       }
     }
+
+geocoder.addressSearch(festaName, callback);
 
     // 지도에 마커를 표시하는 함수입니다
     function displayMarker(place) {

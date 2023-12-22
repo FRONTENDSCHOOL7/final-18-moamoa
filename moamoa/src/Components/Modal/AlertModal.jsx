@@ -1,12 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 import MoaYellow from '../../Assets/icons/character-yellow.png'
+import MoaBlue from '../../Assets/icons/character-blue.png'
+import PropTypes from 'prop-types';
 
-export default function DeleteAlert() {
+AlertModal.propTypes = {
+  type: PropTypes.string
+}
+
+export default function AlertModal({type}) {
   return (
-    <Cont>
+    <>
+    { type === `delete` ?  
+    <Cont image={MoaYellow}>
       <NoticeText>삭제가 완료되었습니다!</NoticeText>
     </Cont>
+    :
+    <Cont image={MoaBlue}>
+      <NoticeText>신고가 완료되었습니다!</NoticeText>
+    </Cont>
+    }
+    </>
   )
 }
 
@@ -41,7 +55,7 @@ const Cont = styled.div`
     width: 3.8rem;
     height: 3.9rem;
     display: block;
-    background: url(${MoaYellow});
+    background-image: ${props => `url(${props.image})`};
     background-size: 3.8rem 3.9rem;
   }
 `;

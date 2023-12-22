@@ -8,18 +8,22 @@ import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
 import { useRecoilState } from 'recoil';
 import postsAtom from '../../Recoil/postsAtom';
+import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
-
+  const limit = 5;
   const [isLoading, setIsLoading] = useState(false);
   const [postData, setPostData] = useRecoilState(postsAtom);
+  const [ref, inView] = useInView();
+  const [skip, setSkip] = useState(0);
 
   useEffect(() => {
     const getHomePostList = async () => {
-        setPostData({})
       try{
-        const postListData = await homePostList();
+        const postListData = await homePostList(limit, skip);
+        console.log(postListData.posts)
         setPostData(postListData.posts)
+        // setPostData((prevData) => [...prevData, ...postListData.posts]);
         setTimeout(() => {
           setIsLoading(true);
         }, 1200);
@@ -29,6 +33,15 @@ export default function Home() {
     };
     getHomePostList();
   }, []);
+
+  useEffect(() => {
+    if (inView && !isLoading) {
+      setSkip((prevSkip) => prevSkip + limit);
+    }
+  }, [inView, isLoading]);
+
+
+
   return (
     <Container>
       <Header type='home' />
@@ -39,6 +52,19 @@ export default function Home() {
               {postData.map((item) => {
                 return <PostList key={item.id} post={item} isLoading={isLoading}/>;
               })}
+              {/* {postData.map((item, index) => {
+                const isLastPost = index === postData.length - 1;
+                return (
+                  <PostList
+                    key={item.id}
+                    post={item}
+                    isLoading={isLoading}
+                    ref={isLastPost ? ref : null}
+                  />
+                );
+              })} */}
+
+            <div ref={ref} />
             </PostBg>
           </HomeContainer>
         ) : (
@@ -57,7 +83,6 @@ const HomeWrap = styled.div`
   margin-top: 35px;
   margin-bottom: 60px;
   flex: 1;
-  // height: 100%;
 `;
 const HomeContainer = styled.div`
   width: 100%;
