@@ -11,16 +11,14 @@ export default function NotFound() {
 }
 const NotFoundContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 85%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-
+  justify-content: center;
   img {
     width: 120px;
-    margin-block: 60px 20px;
-    transform: translateX(-5%);
+    margin-bottom: 20px;
   }
   p {
     font-size: 20px;
