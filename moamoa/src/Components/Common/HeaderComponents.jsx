@@ -154,12 +154,11 @@ const ChatUserName = styled.h2`
 `;
 const HeaderSearchContainer = styled.header`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   height: 48px;
   min-height: 48px;
   max-height: 48px;
   width: 390px;
-
   position: fixed;
   background-color: #fff;
   border-bottom: 1px solid #dbdbdb;
@@ -169,15 +168,19 @@ const HeaderSearchContainer = styled.header`
 
   img {
     cursor: pointer;
-    padding-right: 14px;
+    padding-right: 8px;
     padding-bottom: 2px;
   }
   input {
     background-color: #f2f2f2;
-    width: 316px;
+    width: 340px;
     height: 32px;
     border-radius: 32px;
     padding-left: 20px;
     box-sizing: border-box;
+    &:focus {
+      outline: none;
+      border: 1px solid #797979;
+    }
   }
 `;
