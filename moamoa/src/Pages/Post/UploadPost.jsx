@@ -3,6 +3,10 @@
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
   마지막 수정 날까: 2023.12.15
+
+  추가 작성자: 유의진 
+  추가 내용: 이미지 크롭 기능
+  작성 날짜: 2023.12.26
 */
 
 import React, { useState, useEffect } from 'react';
@@ -16,9 +20,10 @@ import uploadFile from '../../Assets/images/upload-file.png';
 import xButton from '../../Assets/icons/x.svg';
 
 import { uploadPost } from '../../API/Post/PostAPI';
-import { uploadImage } from '../../API/Image/ImageAPI';
+// import { uploadImage } from '../../API/Image/ImageAPI';
 
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
+import ImageCropModal from '../../Components/Modal/ImageCropModal';
 
 import {
   HeaderContainer,
@@ -35,9 +40,17 @@ export default function AddPost() {
   const navigate = useNavigate();
 
   const [content, setContent] = useState('');
-  const [image, setPostImage] = useState('');
+  // const [image, setPostImage] = useState('');
   const [userImage, setUserImage] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  // 이미지 크롭 관련 상태 변수
+  const [isOpen, setIsOpen] = useState(false);
+  const [imgData, setImgData] = useState({
+    imageUrl: '',
+    croppedImageUrl: null,
+  });
+  const [prevImgData, setPrevImgData] = useState('');
 
   const getUserImg = async () => {
     try {
@@ -60,12 +73,45 @@ export default function AddPost() {
     setContent(e.target.value);
   };
 
-  const handleChangeImage = async (e) => {
-    // 파일 가져오기
-    const imageFile = e.target.files[0];
-    const response = await uploadImage(imageFile);
-    const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
-    setPostImage(imageUrl);
+  // const handleChangeImage = async (e) => {
+  //   // 파일 가져오기
+  //   const imageFile = e.target.files[0];
+  //   const response = await uploadImage(imageFile);
+  //   const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
+  //   setPostImage(imageUrl);
+  // };
+
+  const onSelectFile = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
+        setImgData((prevImage) => ({
+          ...prevImage,
+          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
+        }));
+      });
+      reader.readAsDataURL(e.target.files[0]);
+      // 이미지 크롭 모달 띄우기
+      setIsOpen(true);
+    }
+  };
+
+  // 모달에서 닫기창 클릭 시 처리
+  const onCancel = () => {
+    setImgData((prevImage) => ({
+      ...prevImage,
+      imageUrl: prevImgData, // 이전 이미지로 설정
+    }));
+    setIsOpen(false);
+  };
+
+  // 모달에서 크롭한 이미지 저장
+  const setCroppedImageFor = (crop, zoom, croppedImageUrl) => {
+    const newImage = { ...imgData, croppedImageUrl, crop, zoom };
+    setImgData(newImage);
+    setIsOpen(false);
   };
 
   //textarea 높이 설정
@@ -82,7 +128,8 @@ export default function AddPost() {
     const uploadPostData = {
       post: {
         content,
-        image,
+        // image,
+        image: imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl,
       },
     };
 
@@ -91,17 +138,28 @@ export default function AddPost() {
   };
 
   const closeImg = () => {
-    setPostImage('');
+    // setPostImage('');
+    setImgData({
+      imageUrl: '',
+      croppedImageUrl: null,
+    });
     document.getElementById('profileImg').value = ''; // 파일 인풋 초기화
   };
 
   useEffect(() => {
-    if (content.trim() === '' && !image) {
+    //   if (content.trim() === '' && !image) {
+    //     setIsButtonDisabled(true);
+    //   } else {
+    //     setIsButtonDisabled(false);
+    //   }
+    // }, [content, image]
+
+    if (content.trim() === '' && (!imgData.croppedImageUrl || !imgData.imageUrl)) {
       setIsButtonDisabled(true);
     } else {
       setIsButtonDisabled(false);
     }
-  }, [content, image]);
+  }, [content, imgData]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -114,6 +172,17 @@ export default function AddPost() {
         <Gobackbtn />
         <ButtonSubmit buttonText='업로드' onClickHandler={submitPost} disabled={isButtonDisabled} />
       </HeaderContainer>
+      {isOpen && (
+        <ImageCropModal
+          imageUrl={imgData.imageUrl}
+          cropInit={imgData.crop}
+          zoomInit={imgData.zoom}
+          onCancel={onCancel}
+          setCroppedImageFor={setCroppedImageFor}
+          cropShape='rect'
+          aspect={358 / 228}
+        />
+      )}
       <UploadPostBox>
         <section>
           <HiddenH1>게시글 등록</HiddenH1>
@@ -143,7 +212,23 @@ export default function AddPost() {
 
             <div>
               {/* 이미지 미리보기 */}
-              {image ? (
+
+              {(imgData.imageUrl || imgData.croppedImageUrl) && (
+                <ImgPre>
+                  <img
+                    src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
+                    alt=''
+                    id='imagePre'
+                  />
+                  <XButton>
+                    <button type='button' onClick={closeImg}>
+                      <img src={xButton} alt='' />
+                    </button>
+                  </XButton>
+                </ImgPre>
+              )}
+
+              {/* {image ? (
                 <ImgPre>
                   <img src={image} alt='' id='imagePre' />
                   <XButton>
@@ -152,7 +237,7 @@ export default function AddPost() {
                     </button>
                   </XButton>
                 </ImgPre>
-              ) : null}
+              ) : null} */}
 
               {/* 이미지 등록 버튼 */}
               <InputImgIcon>
@@ -161,7 +246,8 @@ export default function AddPost() {
                 </label>
                 <input
                   type='file'
-                  onChange={handleChangeImage}
+                  // onChange={handleChangeImage}
+                  onChange={onSelectFile}
                   id='profileImg'
                   name='image'
                   accept='image/*'

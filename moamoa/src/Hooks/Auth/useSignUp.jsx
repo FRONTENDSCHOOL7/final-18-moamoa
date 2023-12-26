@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { signUp } from '../../API/Auth/AuthAPI.jsx';
 import _ from 'lodash';
 import InputErrorMessagesReducer from './InputErrorMessagesReducer.jsx';
-import { handleUploadImage } from '../../Utils/handleUploadImage.jsx';
 import { updateInputState } from '../../Utils/updateInputState.jsx';
 import DefaultProfileImage from '../../Assets/images/profile-img.svg';
 
@@ -26,33 +25,41 @@ const useSignUp = () => {
     },
   });
 
-  const [imgSrc, setImgSrc] = useState({
-    profile: {
-      url: DefaultProfileImage,
-      alt: '모아모아 기본 프로필 이미지',
-    },
+  const [isOpen, setIsOpen] = useState(false);
+  const [imgData, setImgData] = useState({
+    imageUrl: DefaultProfileImage,
+    croppedImageUrl: null,
   });
+  const [prevImgData, setPrevImgData] = useState('');
 
-  const handleChangeImage = async (e) => {
-    const imageFile = e.target.files[0];
-    if (!imageFile) {
-      return;
+  const onSelectFile = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
+        setImgData((prevImage) => ({
+          ...prevImage,
+          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
+        }));
+      });
+      reader.readAsDataURL(e.target.files[0]);
+      setIsOpen(true);
     }
+  };
 
-    const { imageUrl, imageAlt } = await handleUploadImage(imageFile);
+  const onCancel = () => {
+    setImgData((prevImage) => ({
+      ...prevImage,
+      imageUrl: prevImgData, // 이전 이미지로 설정
+    }));
+    setIsOpen(false);
+  };
 
-    setUserData((prevState) => {
-      const newState = _.cloneDeep(prevState);
-      _.set(newState, 'user.image', imageUrl);
-      return newState;
-    });
-
-    setImgSrc((prevState) => {
-      const newState = _.cloneDeep(prevState);
-      _.set(newState, 'profile.url', imageUrl);
-      _.set(newState, 'profile.alt', imageAlt);
-      return newState;
-    });
+  const setCroppedImageFor = (crop, zoom, croppedImageUrl) => {
+    const newImage = { ...imgData, croppedImageUrl, crop, zoom };
+    setImgData(newImage);
+    setIsOpen(false);
   };
 
   const { errorMessages } = InputErrorMessagesReducer();
@@ -78,7 +85,13 @@ const useSignUp = () => {
 
   const performSignUp = async () => {
     const prefix = userType === 'individual' ? '[i]' : '[o]';
-    const userInfo = _.set({ ...userData }, 'user.username', prefix + userData.user.username);
+
+    const userInfo = _.chain({ ...userData })
+      .set('user.username', prefix + userData.user.username)
+      .set('user.image', imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl)
+      .value();
+
+    console.log(userInfo);
 
     const res = await signUp(userInfo);
     if (res && res.message === '회원가입 성공') {
@@ -105,12 +118,15 @@ const useSignUp = () => {
     pageTransition,
     userTypeErrorMessage,
     signUpFailMessage,
-    imgSrc,
-    handleChangeImage,
     updateUserData,
     updateUserType,
     clickNextButton,
     submitSignUpForm,
+    imgData,
+    onCancel,
+    onSelectFile,
+    setCroppedImageFor,
+    isOpen,
   };
 };
 

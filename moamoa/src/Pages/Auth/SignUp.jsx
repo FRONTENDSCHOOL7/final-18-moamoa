@@ -3,6 +3,7 @@ import InputErrorMessagesReducer from '../../Hooks/Auth/InputErrorMessagesReduce
 import useSignUp from '../../Hooks/Auth/useSignUp.jsx';
 import UploadFile from '../../Assets/images/upload-file.png';
 import styled, { css } from 'styled-components';
+
 import {
   LoginAndJoinContainer,
   Form,
@@ -11,6 +12,8 @@ import {
   CommonBtn,
 } from '../../Components/Common/AuthFormStyle.jsx';
 
+import ImageCropModal from '../../Components/Modal/ImageCropModal.jsx';
+
 const SignUp = () => {
   const {
     userData,
@@ -18,12 +21,15 @@ const SignUp = () => {
     pageTransition,
     userTypeErrorMessage,
     signUpFailMessage,
-    imgSrc,
-    handleChangeImage,
+    isOpen,
     updateUserData,
     updateUserType,
     clickNextButton,
     submitSignUpForm,
+    imgData,
+    onCancel,
+    onSelectFile,
+    setCroppedImageFor,
   } = useSignUp();
 
   const {
@@ -55,12 +61,28 @@ const SignUp = () => {
       <h1 className='a11y-hidden'>이메일로 회원가입 및 프로필 설정</h1>
       {pageTransition ? (
         <LoginAndJoinContainer>
+          {isOpen && (
+            <ImageCropModal
+              imageUrl={imgData.imageUrl}
+              cropInit={imgData.crop}
+              zoomInit={imgData.zoom}
+              onCancel={onCancel}
+              setCroppedImageFor={setCroppedImageFor}
+              cropShape='round'
+              aspect={1 / 1}
+            />
+          )}
+
           <h2 aria-live='polite'>프로필 설정</h2>
           <ProfileInfo>나중에 언제든지 변경할 수 있습니다.</ProfileInfo>
           <ProfileForm onSubmit={submitSignUpForm}>
             <ImgContainer>
               <ImgLabel htmlFor='profileImg'>
-                <ProfileImg src={imgSrc.profile.url} alt={imgSrc.profile.alt} id='imagePre' />
+                <ProfileImg
+                  src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
+                  alt={'프로필 이미지'}
+                  id='imagePre'
+                />
               </ImgLabel>
               <input
                 type='file'
@@ -68,7 +90,7 @@ const SignUp = () => {
                 name='image'
                 accept='image/*'
                 className='a11y-hidden'
-                onChange={handleChangeImage}
+                onChange={onSelectFile}
               />
             </ImgContainer>
             <TextContainer>
@@ -267,16 +289,16 @@ const ProfileForm = styled.form`
 `;
 
 const ImgContainer = styled.div`
-  width: 110px;
-  height: 110px;
+  width: 100%;
   margin: 0 auto 30px;
-  position: relative;
+  display: flex;
+  justify-content: center;
 `;
 
 const ImgLabel = styled.label`
   display: block;
-  width: 110px;
-  height: 110px;
+  width: 130px;
+  height: 130px;
   position: relative;
   border-radius: 50%;
   cursor: pointer;
@@ -288,7 +310,7 @@ const ImgLabel = styled.label`
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    right: -10px;
+    right: -5px;
     bottom: 0;
     background: url(${UploadFile}) 0 0 / cover;
   }

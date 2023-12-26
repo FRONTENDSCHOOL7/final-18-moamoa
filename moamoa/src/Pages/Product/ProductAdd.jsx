@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProductForm } from '../../Components/Product/ProductForm';
 import { useProductData } from '../../Hooks/Product/useProductData';
-import { useSubmitProductForm } from '../../Hooks/Product/useSubmitProductForm';
 import { uploadProduct } from '../../API/Product/ProductAPI';
 import useDateValidation from '../../Hooks/Product/useDateValidation';
 import { Container } from '../../Components/Common/Container';
@@ -13,7 +12,6 @@ const ProductAdd = () => {
   const navigate = useNavigate();
 
   const initialState = {
-    imgSrc: DefaultImg,
     productType: '',
     productName: '',
     startDate: '',
@@ -21,11 +19,13 @@ const ProductAdd = () => {
     location: '',
     description: '',
     missingInputMessage: '',
+    image: {
+      imageUrl: DefaultImg,
+      croppedImageUrl: null,
+    },
   };
 
   const {
-    imgSrc,
-    setImgSrc,
     productType,
     setProductType,
     productName,
@@ -40,7 +40,44 @@ const ProductAdd = () => {
     setDescription,
     missingInputMessage,
     setMissingInputMessage,
+    isOpen,
+    setIsOpen,
+    imgData,
+    setImgData,
+    prevImgData,
+    setPrevImgData,
   } = useProductData(initialState);
+
+  const onCancel = () => {
+    setImgData((prevImage) => ({
+      ...prevImage,
+      imageUrl: prevImgData, // 이전 이미지로 설정
+    }));
+    setIsOpen(false);
+  };
+
+  const setCroppedImageFor = (crop, zoom, croppedImageUrl) => {
+    const newImage = { ...imgData, croppedImageUrl, crop, zoom };
+
+    setImgData(newImage);
+    setIsOpen(false);
+  };
+
+  const onSelectFile = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
+        setImgData((prevImage) => ({
+          ...prevImage,
+          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
+        }));
+      });
+      reader.readAsDataURL(e.target.files[0]);
+      setIsOpen(true);
+    }
+  };
 
   const { progressPeriod, dateSelectionErrorMsg } = useDateValidation(startDate, endDate);
 
@@ -49,13 +86,12 @@ const ProductAdd = () => {
       itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
       price: progressPeriod,
       link: `${description}+[l]${location}`,
-      itemImage: imgSrc,
+      itemImage: imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl,
     },
   };
 
   const validationChecks = () => {
     if (
-      !imgSrc ||
       productName.length < 2 ||
       !startDate ||
       !endDate ||
@@ -72,12 +108,16 @@ const ProductAdd = () => {
     }
   };
 
-  const submitProductForm = useSubmitProductForm(
-    uploadProduct,
-    navigate,
-    productData,
-    validationChecks,
-  );
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validationChecks()) {
+      return;
+    }
+
+    await uploadProduct(productData);
+    navigate('/product/list');
+  };
 
   return (
     <>
@@ -85,8 +125,7 @@ const ProductAdd = () => {
         <HeaderSubmitProduct />
         <h1 className='a11y-hidden'>상품 등록 페이지</h1>
         <ProductForm
-          product={{ imgSrc, productName, productType, startDate, endDate, location, description }}
-          setImgSrc={setImgSrc}
+          product={{ productName, productType, startDate, endDate, location, description }}
           setProductType={setProductType}
           setProductName={setProductName}
           setStartDate={setStartDate}
@@ -94,8 +133,13 @@ const ProductAdd = () => {
           dateSelectionErrorMsg={dateSelectionErrorMsg}
           setLocation={setLocation}
           setDescription={setDescription}
-          onSubmit={submitProductForm}
+          onSubmit={onSubmit}
           missingInputMessage={missingInputMessage}
+          imgData={imgData}
+          onCancel={onCancel}
+          onSelectFile={onSelectFile}
+          setCroppedImageFor={setCroppedImageFor}
+          isOpen={isOpen}
         />
       </Container>
     </>

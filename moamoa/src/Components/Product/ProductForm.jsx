@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { handleUploadImage } from '../../Utils/handleUploadImage.jsx';
+
 import {
   Form,
   ImgLayoutContainer,
@@ -13,10 +13,10 @@ import {
   // SubmitErrorMsg,
   SubmitBtn,
 } from '../../Components/Common/ProductFormStyle';
+import ImageCropModal from '../Modal/ImageCropModal';
 
 export function ProductForm({
   product,
-  setImgSrc,
   setProductType,
   setProductName,
   setStartDate,
@@ -26,18 +26,13 @@ export function ProductForm({
   setDescription,
   onSubmit,
   // missingInputMessage,
+  imgData,
+  onCancel,
+  onSelectFile,
+  setCroppedImageFor,
+  isOpen,
 }) {
-  const handleChangeImage = async (e) => {
-    const imageFile = e.target.files[0];
-    if (!imageFile) {
-      return;
-    }
-    const imageInfo = await handleUploadImage(imageFile);
-    setImgSrc(imageInfo.imageUrl);
-  };
-
   const isFilled =
-    product.imgSrc !== '' &&
     product.productName !== '' &&
     product.productType !== '' &&
     product.startDate !== '' &&
@@ -47,19 +42,34 @@ export function ProductForm({
 
   return (
     <Form onSubmit={onSubmit}>
+      {isOpen && (
+        <ImageCropModal
+          imageUrl={imgData.imageUrl}
+          cropInit={imgData.crop}
+          zoomInit={imgData.zoom}
+          onCancel={onCancel}
+          setCroppedImageFor={setCroppedImageFor}
+          cropShape='rect'
+          aspect={358 / 228}
+        />
+      )}
+
       <ImgLayoutContainer>
         <h2 id='imageUploadTitle'>이미지 등록</h2>
 
-        <ImageLabel htmlFor='uploadFile'>
-          <Image src={product.imgSrc} alt={product.productName} />
+        <ImageLabel htmlFor='productImg'>
+          <Image
+            src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
+            alt={'상품 이미지'}
+          />
         </ImageLabel>
 
         <input
           className='hidden-but-accessible'
-          id='uploadFile'
+          id='productImg'
           type='file'
           accept='image/*'
-          onChange={handleChangeImage}
+          onChange={onSelectFile}
           aria-labelledby='imageUploadTitle'
         />
 
@@ -163,7 +173,6 @@ export function ProductForm({
 ProductForm.propTypes = {
   product: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  setImgSrc: PropTypes.func.isRequired,
   setProductType: PropTypes.func.isRequired,
   setProductName: PropTypes.func.isRequired,
   setStartDate: PropTypes.func.isRequired,
@@ -172,4 +181,10 @@ ProductForm.propTypes = {
   setLocation: PropTypes.func.isRequired,
   setDescription: PropTypes.func.isRequired,
   // missingInputMessage: PropTypes.string,
+  imgData: PropTypes.any.isRequired,
+  selectedImage: PropTypes.any,
+  onCancel: PropTypes.any.isRequired,
+  onSelectFile: PropTypes.any.isRequired,
+  setCroppedImageFor: PropTypes.any.isRequired,
+  isOpen: PropTypes.bool,
 };

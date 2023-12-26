@@ -136,7 +136,7 @@ export const ImageLabel = styled.label`
 
 export const Image = styled.img`
   width: 100%;
-  aspect-ratio: 322/204;
+  aspect-ratio: 358/228;
   object-fit: cover;
   border-radius: 10px;
 `;

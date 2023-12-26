@@ -3,12 +3,16 @@
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
   마지막 수정 날까: 2023.12.15
+
+  추가 작성자: 유의진 
+  추가 내용: 이미지 크롭 기능
+  작성 날짜: 2023.12.26
 */
 
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경완료
+import userToken from '../../Recoil/userTokenAtom';
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
 import ButtonSubmit from '../../Components/Common/Button';
@@ -19,6 +23,8 @@ import { HeaderContainer, HiddenH1 } from '../Post/UploadEditPostStyle';
 
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 
+import ImageCropModal from '../../Components/Modal/ImageCropModal';
+
 function EditProfile() {
   //기존 사용자의 정보를 가져오기
   const token = useRecoilValue(userToken);
@@ -26,10 +32,18 @@ function EditProfile() {
 
   const [username, setUsername] = useState('');
   const [accountname, setAccountname] = useState('');
-  const [imgSrc, setImgSrc] = useState('');
+  // const [imgSrc, setImgSrc] = useState('');
   const [intro, setIntro] = useState('');
 
-  const [errorMessage, setErrorMessage] = useState('');
+  // 이미지 크롭 관련 상태 변수
+  const [isOpen, setIsOpen] = useState(false);
+  const [imgData, setImgData] = useState({
+    imageUrl: '',
+    croppedImageUrl: null,
+  });
+  const [prevImgData, setPrevImgData] = useState('');
+
+  // const [errorMessage, setErrorMessage] = useState('');
   const [accountError, setAccountError] = useState('');
   const [accountLengthError, setAccountLengthError] = useState('');
   const [introError, setIntroError] = useState('');
@@ -45,7 +59,11 @@ function EditProfile() {
       const res = await await await getMyProfileData();
 
       if (res && res.user) {
-        setImgSrc(res.user['image'] || '');
+        // setImgSrc(res.user['image'] || '');
+        setImgData((prevImage) => ({
+          ...prevImage,
+          imageUrl: res.user['image'],
+        }));
 
         setAccountname(res.user['accountname']);
 
@@ -131,39 +149,72 @@ function EditProfile() {
     validateIntroLength(e.target.value);
   };
 
-  const uploadImage = async (imageFile) => {
-    const baseUrl = 'https://api.mandarin.weniv.co.kr/';
-    const reqUrl = baseUrl + 'image/uploadfile';
-    // 폼데이터 만들기
-    const form = new FormData();
-    // 폼데이터에 값 추가하기
-    // 폼데이터.append("키","값")
-    form.append('image', imageFile);
-    // 폼바디에 넣어서 요청하기
-    const res = await fetch(reqUrl, {
-      method: 'POST',
-      body: form,
-    });
-    const json = await res.json();
-    console.log(baseUrl + json.filename);
-    const imageUrl = baseUrl + json.filename;
-    setImgSrc(imageUrl);
+  // const uploadImage = async (imageFile) => {
+  //   const baseUrl = 'https://api.mandarin.weniv.co.kr/';
+  //   const reqUrl = baseUrl + 'image/uploadfile';
+  //   // 폼데이터 만들기
+  //   const form = new FormData();
+  //   // 폼데이터에 값 추가하기
+  //   // 폼데이터.append("키","값")
+  //   form.append('image', imageFile);
+  //   // 폼바디에 넣어서 요청하기
+  //   const res = await fetch(reqUrl, {
+  //     method: 'POST',
+  //     body: form,
+  //   });
+  //   const json = await res.json();
+  //   console.log(baseUrl + json.filename);
+  //   const imageUrl = baseUrl + json.filename;
+  //   setImgSrc(imageUrl);
+  // };
+
+  // const handleChangeImage = (e) => {
+  //   // 파일 가져오기
+  //   const imageFile = e.target.files[0];
+
+  //   // 파일이 선택되지 않았을 경우 오류 메시지 설정
+  //   if (!imageFile) {
+  //     setErrorMessage('파일을 선택해주세요.');
+  //     return;
+  //   }
+
+  //   // 오류 메시지 초기화
+  //   setErrorMessage('');
+
+  //   uploadImage(imageFile);
+  // };
+
+  const onSelectFile = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
+        setImgData((prevImage) => ({
+          ...prevImage,
+          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
+        }));
+      });
+      reader.readAsDataURL(e.target.files[0]);
+      // 이미지 크롭 모달 띄우기
+      setIsOpen(true);
+    }
   };
 
-  const handleChangeImage = (e) => {
-    // 파일 가져오기
-    const imageFile = e.target.files[0];
+  // 모달에서 닫기창 클릭 시 처리
+  const onCancel = () => {
+    setImgData((prevImage) => ({
+      ...prevImage,
+      imageUrl: prevImgData, // 이전 이미지로 설정
+    }));
+    setIsOpen(false);
+  };
 
-    // 파일이 선택되지 않았을 경우 오류 메시지 설정
-    if (!imageFile) {
-      setErrorMessage('파일을 선택해주세요.');
-      return;
-    }
-
-    // 오류 메시지 초기화
-    setErrorMessage('');
-
-    uploadImage(imageFile);
+  // 모달에서 크롭한 이미지 저장
+  const setCroppedImageFor = (crop, zoom, croppedImageUrl) => {
+    const newImage = { ...imgData, croppedImageUrl, crop, zoom };
+    setImgData(newImage);
+    setIsOpen(false);
   };
 
   const submitEdit = (e) => {
@@ -176,7 +227,8 @@ function EditProfile() {
         username: fullUsername,
         accountname: accountname,
         intro: intro,
-        image: imgSrc,
+        // image: imgSrc,
+        image: imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl,
       },
     };
     edit(editData);
@@ -192,7 +244,7 @@ function EditProfile() {
       !duplicateIdError &&
       username &&
       accountname &&
-      imgSrc &&
+      // imgSrc &&
       intro;
 
     // 상태 변수 업데이트
@@ -205,7 +257,7 @@ function EditProfile() {
     duplicateIdError,
     username,
     accountname,
-    imgSrc,
+    // imgSrc,
     intro,
   ]);
 
@@ -220,26 +272,42 @@ function EditProfile() {
         <Gobackbtn />
         <ButtonSubmit buttonText='저장' onClickHandler={submitEdit} disabled={isButtonDisabled} />
       </HeaderContainer>
-
+      {isOpen && (
+        <ImageCropModal
+          imageUrl={imgData.imageUrl}
+          cropInit={imgData.crop}
+          zoomInit={imgData.zoom}
+          onCancel={onCancel}
+          setCroppedImageFor={setCroppedImageFor}
+          cropShape='round'
+          aspect={1 / 1}
+        />
+      )}
       <section>
         <HiddenH1>내 프로필 수정</HiddenH1>
         <form onSubmit={handleFormSubmit}>
           {/* 프로필 이미지 */}
           <ProfileImg>
             <label htmlFor='profileImg'>
-              <img src={imgSrc} alt='Profile' id='imagePre' />
+              <img
+                src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
+                alt={'프로필 이미지'}
+                id='imagePre'
+              />
+              {/* <img src={imgSrc} alt='Profile' id='imagePre' /> */}
               <img src={uploadFile} alt='' />
             </label>
             <input
               type='file'
-              onChange={handleChangeImage}
+              onChange={onSelectFile}
+              // onChange={handleChangeImage}
               id='profileImg'
               name='image'
               accept='image/*'
               style={{ display: 'none' }}
               required
             />
-            <EorrorMsg style={{ color: 'red' }}>{errorMessage}</EorrorMsg>
+            {/* <EorrorMsg style={{ color: 'red' }}>{errorMessage}</EorrorMsg> */}
           </ProfileImg>
           <EditProfileBox>
             <div>
