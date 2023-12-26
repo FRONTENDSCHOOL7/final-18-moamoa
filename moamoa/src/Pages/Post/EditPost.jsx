@@ -3,6 +3,10 @@
   작성자: 이해지
   최초 작성 날짜: 2023.10.30
   마지막 수정 날까: 2023.12.07
+  
+  추가 작성자: 유의진 
+  추가 내용: 이미지 크롭 기능
+  작성 날짜: 2023.12.26
 */
 
 import React, { useState, useEffect } from 'react';
@@ -20,7 +24,8 @@ import uploadFile from '../../Assets/images/upload-file.png';
 import xButton from '../../Assets/icons/x.svg';
 
 import { getPostDetail, editPost } from '../../API/Post/PostAPI';
-import { uploadImage } from '../../API/Image/ImageAPI';
+// import { uploadImage } from '../../API/Image/ImageAPI';
+import ImageCropModal from '../../Components/Modal/ImageCropModal';
 
 import {
   HeaderContainer,
@@ -42,7 +47,15 @@ export default function EditPost() {
   const [userImage, setUserImage] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [content, setContent] = useState('');
-  const [image, setImage] = useState('');
+  // const [image, setImage] = useState('');
+
+  // 이미지 크롭 관련 상태 변수
+  const [isOpen, setIsOpen] = useState(false);
+  const [imgData, setImgData] = useState({
+    imageUrl: '',
+    croppedImageUrl: null,
+  });
+  const [prevImgData, setPrevImgData] = useState('');
 
   const getInitPostInfo = async () => {
     const postInfo = await getPostDetail(postId);
@@ -59,7 +72,11 @@ export default function EditPost() {
       }
 
       const postImage = postInfo.post['image'] || '';
-      setImage(postImage);
+      // setImage(postImage);
+      setImgData((prevImage) => ({
+        ...prevImage,
+        imageUrl: postImage,
+      }));
     }
   };
 
@@ -68,13 +85,46 @@ export default function EditPost() {
     getInitPostInfo();
   }, []);
 
-  const handleChangeImage = async (e) => {
-    // 파일 가져오기
-    const imageFile = e.target.files[0];
-    const response = await uploadImage(imageFile);
-    const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
+  // const handleChangeImage = async (e) => {
+  //   // 파일 가져오기
+  //   const imageFile = e.target.files[0];
+  //   const response = await uploadImage(imageFile);
+  //   const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
 
-    setImage(imageUrl);
+  //   setImage(imageUrl);
+  // };
+
+  const onSelectFile = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
+        setImgData((prevImage) => ({
+          ...prevImage,
+          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
+        }));
+      });
+      reader.readAsDataURL(e.target.files[0]);
+      // 이미지 크롭 모달 띄우기
+      setIsOpen(true);
+    }
+  };
+
+  // 모달에서 닫기창 클릭 시 처리
+  const onCancel = () => {
+    setImgData((prevImage) => ({
+      ...prevImage,
+      imageUrl: prevImgData, // 이전 이미지로 설정
+    }));
+    setIsOpen(false);
+  };
+
+  // 모달에서 크롭한 이미지 저장
+  const setCroppedImageFor = (crop, zoom, croppedImageUrl) => {
+    const newImage = { ...imgData, croppedImageUrl, crop, zoom };
+    setImgData(newImage);
+    setIsOpen(false);
   };
 
   //textarea 높이 설정
@@ -96,7 +146,8 @@ export default function EditPost() {
     const postData = {
       post: {
         content: content,
-        image: image,
+        // image: image,
+        image: imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl,
       },
     };
     await editPost(postId, postData);
@@ -104,17 +155,28 @@ export default function EditPost() {
   };
 
   const closeImg = () => {
-    setImage('');
+    // setImage('');
+    setImgData({
+      imageUrl: '',
+      croppedImageUrl: null,
+    });
     document.getElementById('profileImg').value = ''; // 파일 인풋 초기화
   };
 
   useEffect(() => {
-    if (content.trim() === '' && !image) {
+    //   if (content.trim() === '' && !image) {
+    //     setIsButtonDisabled(true);
+    //   } else {
+    //     setIsButtonDisabled(false);
+    //   }
+    // }, [content, image]
+
+    if (content.trim() === '' && (!imgData.croppedImageUrl || !imgData.imageUrl)) {
       setIsButtonDisabled(true);
     } else {
       setIsButtonDisabled(false);
     }
-  }, [content, image]);
+  }, [content, imgData]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -127,6 +189,17 @@ export default function EditPost() {
         <Gobackbtn />
         <ButtonSubmit buttonText='저장' onClickHandler={submitEdit} disabled={isButtonDisabled} />
       </HeaderContainer>
+      {isOpen && (
+        <ImageCropModal
+          imageUrl={imgData.imageUrl}
+          cropInit={imgData.crop}
+          zoomInit={imgData.zoom}
+          onCancel={onCancel}
+          setCroppedImageFor={setCroppedImageFor}
+          cropShape='rect'
+          aspect={358 / 228}
+        />
+      )}
       <UploadPostBox>
         <section>
           <HiddenH1>게시글 수정</HiddenH1>
@@ -155,7 +228,21 @@ export default function EditPost() {
 
             <div>
               {/* 이미지 미리보기 */}
-              {image ? (
+              {(imgData.imageUrl || imgData.croppedImageUrl) && (
+                <ImgPre>
+                  <img
+                    src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
+                    alt=''
+                    id='imagePre'
+                  />
+                  <XButton>
+                    <button type='button' onClick={closeImg}>
+                      <img src={xButton} alt='' />
+                    </button>
+                  </XButton>
+                </ImgPre>
+              )}
+              {/* {image ? (
                 <ImgPre>
                   <img src={image} alt='' id='imagePre' />
                   <XButton>
@@ -164,7 +251,7 @@ export default function EditPost() {
                     </button>
                   </XButton>
                 </ImgPre>
-              ) : null}
+              ) : null} */}
               {/* 이미지 등록 버튼 */}
               <InputImgIcon>
                 <label htmlFor='profileImg'>
@@ -172,7 +259,8 @@ export default function EditPost() {
                 </label>
                 <input
                   type='file'
-                  onChange={handleChangeImage}
+                  // onChange={handleChangeImage}
+                  onChange={onSelectFile}
                   id='profileImg'
                   name='image'
                   accept='image/*'
