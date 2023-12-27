@@ -40,11 +40,11 @@ export default function ProductList() {
       <ProductListWrap>
         {loading ? (
           <ProductListSkeleton />
-          ) : error ? (
+        ) : error ? (
           <p>Error:{error.message}</p>
-          ) : (
-            <ProductOutput />
-            )}
+        ) : (
+          <ProductOutput />
+        )}
       </ProductListWrap>
       <Footer></Footer>
     </Container>
@@ -52,6 +52,6 @@ export default function ProductList() {
 }
 
 const ProductListWrap = styled.div`
-  background-color:#fff;
+  background-color: #fff;
   margin-top: 48px;
 `;

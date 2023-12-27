@@ -68,21 +68,23 @@ const Nav = styled.div`
 
 const SkeletonContainer = styled(ProductContainer)`
   gap: 20px;
-  margin: 0 auto;
+  margin: 10px auto;
   margin-left: 10px;
   .itemImage {
     border-radius: 10px;
-    width: 172px;
-    height: 110px;
+    width: 370px;
+    height: 140px;
+    margin-bottom: 5px;
   }
 
   .itemName {
     margin: 0 auto;
-    margin: 12px 0 6px 4px;
-    width: 160px;
+    margin: 13px 0 6px 4px;
+    width: 150px;
+    height: 15px;
   }
   .itemDate {
     margin-left: 4px;
-    width: 160px;
+    width: 140px;
   }
 `;
