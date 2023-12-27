@@ -5,7 +5,7 @@
   마지막 수정 날까: 2023.12.15
 */
 import { authInstance } from '../InstanceAPI';
-// import HeaderFollow from '../../Components/Common/HeaderComponents';
+
 // 팔로우
 export const followAPI = async (account) => {
   try {
