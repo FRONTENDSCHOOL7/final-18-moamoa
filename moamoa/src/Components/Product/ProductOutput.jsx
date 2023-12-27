@@ -53,7 +53,6 @@ export const ProductContainer = styled.div`
   background-position: bottom 8rem right 0px;
 `;
 export const ProductBox = styled.div`
-  /* max-width: 190px; */
   margin: 0 auto;
 
   .itemName {
