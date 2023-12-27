@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
-import { ProductListAPI } from '../../API/Product/ProductListAPI';
+import { ProductListAPI } from '../../API/Product/ProductAPI';
 import 'react-loading-skeleton/dist/skeleton.css';
 import ProductListSkeleton from '../../Components/Product/ProductListSkeleton';
 import ProductOutput from '../../Components/Product/ProductOutput';
