@@ -30,6 +30,6 @@ export async function FollowerPageAPI(token, accountname) {
   return response.data;
 }
 export async function FollowingPageAPI(token, accountname) {
-  const response = await authInstance.get(`profile/${accountname}/following`, {});
+  const response = await authInstance.get(`profile/${accountname}/following`);
   return response.data;
 }
