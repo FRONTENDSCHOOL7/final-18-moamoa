@@ -4,7 +4,7 @@ import FollowUser from '../../Components/Common/FollowUser';
 import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
 import userTokenAtom from '../../Recoil/userTokenAtom';
-import { FollowerAPI } from '../../API/Follow/FollowerAPI';
+import { FollowerPageAPI } from '../../API/Follow/FollowAPI';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,7 +19,7 @@ export default function FollowerList() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const followerList = await FollowerAPI(token, accountname);
+        const followerList = await FollowerPageAPI(token, accountname);
         setfollower(followerList);
       } catch (error) {
         setError(error);
@@ -27,7 +27,6 @@ export default function FollowerList() {
     }
     fetchData();
   }, [token, setfollower]);
-  console.log(follower);
 
   return (
     <div>
