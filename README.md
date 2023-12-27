@@ -27,11 +27,12 @@ PW: 123123
 ## 2. 낭랑 18조 👶
 
 ### 1) 팀원 소개
-
 |**송재웅**|**유의진**|**이해지**|**장수연**|
 | :------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c1f2d0a1-47f5-46a6-8926-4fed264513f6"> | <img width="180" height="210" alt="jiwon" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/b2a28339-ef5d-4a55-a3e9-c5d0ae74deb2"> | <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c4cd07b4-d205-4ee3-85fc-c4b266b2eb1c">|  <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/f3f52131-b81d-4b74-90ed-f9559ff84dc5">|
 | [ GitHub ](https://github.com/AYFG) | [ GitHub ](https://github.com/timetam24) | [ GitHub ](https://github.com/LeeeeHaeji) | [ GitHub ](https://github.com/Sooooyeon)| 
+|<img  src="https://img.shields.io/badge/Communication leader-FE5F50?style=for-the-badge&logo=leader&logoColor=#FE5F50">|<img  src="https://img.shields.io/badge/Project leader-40AEF0?style=for-the-badge&logo=leader&logoColor=#40AEF0">|<img  src="https://img.shields.io/badge/QA leader-83B81A?style=for-the-badge&logo=leader&logoColor=#83B81A">|<img  src="https://img.shields.io/badge/Development leader-EF2D5E?style=for-the-badge&logo=leader&logoColor=#EF2D5E">|
+
 
 
 <br />
