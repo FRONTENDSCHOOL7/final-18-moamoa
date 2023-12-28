@@ -13,6 +13,7 @@ export const useProductData = (initialState) => {
   const [prevImgData, setPrevImgData] = useState('');
 
   const [showModal, setShowModal] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   return {
     productType,
@@ -35,5 +36,7 @@ export const useProductData = (initialState) => {
     setPrevImgData,
     showModal,
     setShowModal,
+    editMode,
+    setEditMode,
   };
 };
