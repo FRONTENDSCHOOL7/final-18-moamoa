@@ -1,16 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { ProductForm } from '../../Components/Product/ProductForm';
 import { useProductData } from '../../Hooks/Product/useProductData';
-import { uploadProduct } from '../../API/Product/ProductAPI';
-import useDateValidation from '../../Hooks/Product/useDateValidation';
 import { Container } from '../../Components/Common/Container';
 import { HeaderSubmitProduct } from '../../Components/Common/HeaderComponents';
 import DefaultImg from '../../Assets/images/img-product-default.png';
 
 const ProductAdd = () => {
-  const navigate = useNavigate();
-
   const initialState = {
     productType: '',
     productName: '',
@@ -18,7 +13,6 @@ const ProductAdd = () => {
     endDate: '',
     location: '',
     description: '',
-    missingInputMessage: '',
     image: {
       imageUrl: DefaultImg,
       croppedImageUrl: null,
@@ -38,15 +32,21 @@ const ProductAdd = () => {
     setLocation,
     description,
     setDescription,
-    missingInputMessage,
-    setMissingInputMessage,
     isOpen,
     setIsOpen,
     imgData,
     setImgData,
     prevImgData,
     setPrevImgData,
+    showModal,
+    setShowModal,
+    editMode,
+    setEditMode,
   } = useProductData(initialState);
+
+  useEffect(() => {
+    setEditMode(false);
+  }, []);
 
   const onCancel = () => {
     setImgData((prevImage) => ({
@@ -79,46 +79,6 @@ const ProductAdd = () => {
     }
   };
 
-  const { progressPeriod, dateSelectionErrorMsg } = useDateValidation(startDate, endDate);
-
-  const productData = {
-    product: {
-      itemName: productType === 'festival' ? `[f]${productName}` : `[e]${productName}`,
-      price: progressPeriod,
-      link: `${description}+[l]${location}`,
-      itemImage: imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl,
-    },
-  };
-
-  const validationChecks = () => {
-    if (
-      productName.length < 2 ||
-      !startDate ||
-      !endDate ||
-      !location ||
-      !description ||
-      !productType ||
-      startDate > endDate
-    ) {
-      setMissingInputMessage('입력하지 않은 정보가 있습니다. 다시 확인해주세요.');
-      return false;
-    } else {
-      setMissingInputMessage('');
-      return true;
-    }
-  };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validationChecks()) {
-      return;
-    }
-
-    await uploadProduct(productData);
-    navigate('/product/list');
-  };
-
   return (
     <>
       <Container>
@@ -130,16 +90,16 @@ const ProductAdd = () => {
           setProductName={setProductName}
           setStartDate={setStartDate}
           setEndDate={setEndDate}
-          dateSelectionErrorMsg={dateSelectionErrorMsg}
           setLocation={setLocation}
           setDescription={setDescription}
-          onSubmit={onSubmit}
-          missingInputMessage={missingInputMessage}
+          showModal={showModal}
+          setShowModal={setShowModal}
           imgData={imgData}
           onCancel={onCancel}
           onSelectFile={onSelectFile}
           setCroppedImageFor={setCroppedImageFor}
           isOpen={isOpen}
+          editMode={editMode}
         />
       </Container>
     </>

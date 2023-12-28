@@ -1,5 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useDateValidation from '../../Hooks/Product/useDateValidation';
+import { uploadProduct } from '../../API/Product/ProductAPI';
+import { editProduct } from '../../API/Product/ProductAPI';
 
 import {
   Form,
@@ -10,10 +14,10 @@ import {
   Button,
   TextInput,
   DateInput,
-  // SubmitErrorMsg,
   SubmitBtn,
 } from '../../Components/Common/ProductFormStyle';
 import ImageCropModal from '../Modal/ImageCropModal';
+import RequiredInputModal from '../Modal/RequiredInputModal';
 
 export function ProductForm({
   product,
@@ -21,17 +25,73 @@ export function ProductForm({
   setProductName,
   setStartDate,
   setEndDate,
-  dateSelectionErrorMsg,
   setLocation,
   setDescription,
-  onSubmit,
-  // missingInputMessage,
+  showModal,
+  setShowModal,
   imgData,
   onCancel,
   onSelectFile,
   setCroppedImageFor,
   isOpen,
+  editMode,
+  productId,
 }) {
+  const navigate = useNavigate();
+
+  const { progressPeriod, dateSelectionErrorMsg } = useDateValidation(
+    product.startDate,
+    product.endDate,
+  );
+
+  const productData = {
+    product: {
+      itemName:
+        product.productType === 'festival'
+          ? `[f]${product.productName}`
+          : `[e]${product.productName}`,
+      price: progressPeriod,
+      link: `${product.description}+[l]${product.location}`,
+      itemImage: imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl,
+    },
+  };
+
+  const validationChecks = () => {
+    if (
+      product.productName.length < 2 ||
+      !product.startDate ||
+      !product.endDate ||
+      !product.location ||
+      !product.description ||
+      !product.productType ||
+      product.startDate > product.endDate
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validationChecks()) {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
+      return;
+    }
+
+    if (!editMode) {
+      await uploadProduct(productData);
+    } else if (editMode) {
+      await editProduct(productId, productData);
+    }
+
+    navigate('/product/list');
+  };
+
   const isFilled =
     product.productName !== '' &&
     product.productType !== '' &&
@@ -160,31 +220,30 @@ export function ProductForm({
           aria-describedby='eventDetail'
         ></textarea>
       </LayoutContainer>
-      {/* <SubmitErrorMsg role='alert' className='error-msg'>
-        {missingInputMessage}
-      </SubmitErrorMsg> */}
       <SubmitBtn type='submit' $isfilled={isFilled}>
         저장
       </SubmitBtn>
+      {showModal && <RequiredInputModal />}
     </Form>
   );
 }
 
 ProductForm.propTypes = {
   product: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   setProductType: PropTypes.func.isRequired,
   setProductName: PropTypes.func.isRequired,
   setStartDate: PropTypes.func.isRequired,
   setEndDate: PropTypes.func.isRequired,
-  dateSelectionErrorMsg: PropTypes.string,
   setLocation: PropTypes.func.isRequired,
   setDescription: PropTypes.func.isRequired,
-  // missingInputMessage: PropTypes.string,
+  showModal: PropTypes.bool,
+  setShowModal: PropTypes.func,
   imgData: PropTypes.any.isRequired,
   selectedImage: PropTypes.any,
   onCancel: PropTypes.any.isRequired,
   onSelectFile: PropTypes.any.isRequired,
   setCroppedImageFor: PropTypes.any.isRequired,
   isOpen: PropTypes.bool,
+  editMode: PropTypes.bool,
+  productId: PropTypes.string,
 };
