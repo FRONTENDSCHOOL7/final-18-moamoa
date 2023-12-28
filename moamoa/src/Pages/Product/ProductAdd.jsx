@@ -18,7 +18,6 @@ const ProductAdd = () => {
     endDate: '',
     location: '',
     description: '',
-    missingInputMessage: '',
     image: {
       imageUrl: DefaultImg,
       croppedImageUrl: null,
@@ -38,14 +37,14 @@ const ProductAdd = () => {
     setLocation,
     description,
     setDescription,
-    missingInputMessage,
-    setMissingInputMessage,
     isOpen,
     setIsOpen,
     imgData,
     setImgData,
     prevImgData,
     setPrevImgData,
+    showModal,
+    setShowModal,
   } = useProductData(initialState);
 
   const onCancel = () => {
@@ -100,10 +99,8 @@ const ProductAdd = () => {
       !productType ||
       startDate > endDate
     ) {
-      setMissingInputMessage('입력하지 않은 정보가 있습니다. 다시 확인해주세요.');
       return false;
     } else {
-      setMissingInputMessage('');
       return true;
     }
   };
@@ -112,6 +109,10 @@ const ProductAdd = () => {
     e.preventDefault();
 
     if (!validationChecks()) {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
       return;
     }
 
@@ -134,7 +135,7 @@ const ProductAdd = () => {
           setLocation={setLocation}
           setDescription={setDescription}
           onSubmit={onSubmit}
-          missingInputMessage={missingInputMessage}
+          showModal={showModal}
           imgData={imgData}
           onCancel={onCancel}
           onSelectFile={onSelectFile}

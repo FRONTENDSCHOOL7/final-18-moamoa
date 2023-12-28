@@ -7,11 +7,12 @@ export const useProductData = (initialState) => {
   const [endDate, setEndDate] = useState(initialState.endDate);
   const [location, setLocation] = useState(initialState.location);
   const [description, setDescription] = useState(initialState.description);
-  const [missingInputMessage, setMissingInputMessage] = useState(initialState.missingInputMessage);
 
   const [isOpen, setIsOpen] = useState(false);
   const [imgData, setImgData] = useState(initialState.image);
   const [prevImgData, setPrevImgData] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
 
   return {
     productType,
@@ -26,13 +27,13 @@ export const useProductData = (initialState) => {
     setLocation,
     description,
     setDescription,
-    missingInputMessage,
-    setMissingInputMessage,
     isOpen,
     setIsOpen,
     imgData,
     setImgData,
     prevImgData,
     setPrevImgData,
+    showModal,
+    setShowModal,
   };
 };

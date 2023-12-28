@@ -20,7 +20,6 @@ const ProductEdit = () => {
     endDate: '',
     location: '',
     description: '',
-    missingInputMessage: '',
     image: {
       imageUrl: DefaultImg,
       croppedImageUrl: null,
@@ -40,14 +39,14 @@ const ProductEdit = () => {
     setLocation,
     description,
     setDescription,
-    missingInputMessage,
-    setMissingInputMessage,
     isOpen,
     setIsOpen,
     imgData,
     setImgData,
     prevImgData,
     setPrevImgData,
+    showModal,
+    setShowModal,
   } = useProductData(initialState);
 
   const onCancel = () => {
@@ -87,8 +86,6 @@ const ProductEdit = () => {
   const getProductData = (data) => {
     const period = data.product.price.toString();
 
-    console.log(data);
-
     setProductType(data.product.itemName.slice(0, 3) === '[f]' ? 'festival' : 'experience');
     setProductName(data.product.itemName.slice(3));
     setImgData((prevImg) => ({ ...prevImg, imageUrl: data.product.itemImage }));
@@ -125,10 +122,8 @@ const ProductEdit = () => {
       !productType ||
       startDate > endDate
     ) {
-      setMissingInputMessage('입력하지 않은 정보가 있습니다. 다시 확인해주세요.');
       return false;
     } else {
-      setMissingInputMessage('');
       return true;
     }
   };
@@ -137,6 +132,10 @@ const ProductEdit = () => {
     e.preventDefault();
 
     if (!validationChecks()) {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
       return;
     }
 
@@ -158,7 +157,7 @@ const ProductEdit = () => {
         setLocation={setLocation}
         setDescription={setDescription}
         onSubmit={onSubmit}
-        missingInputMessage={missingInputMessage}
+        showModal={showModal}
         imgData={imgData}
         onCancel={onCancel}
         onSelectFile={onSelectFile}

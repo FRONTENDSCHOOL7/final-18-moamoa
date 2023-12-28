@@ -66,6 +66,7 @@ export const Form = styled.form`
     border-radius: 5px;
     ${BorderStyle}
     letter-spacing: 1.5px;
+    margin-bottom: 100px;
   }
 
   input[type='text']::-webkit-input-placeholder {
@@ -149,10 +150,6 @@ export const LayoutContainer = styled.div`
     margin-bottom: 35px;
   }
 
-  &:last-of-type {
-    margin-bottom: 100px;
-  }
-
   .category-container {
     display: flex;
     justify-content: space-between;
@@ -208,11 +205,6 @@ export const DateInput = styled.input`
     border-width: thin;
   }
 `;
-
-// export const SubmitErrorMsg = styled.p`
-//   text-align: center;
-//   font-weight: 600;
-// `;
 
 export const SubmitBtn = styled.button`
   background-color: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `${COLORS.darkgray}`)};

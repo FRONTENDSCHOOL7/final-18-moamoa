@@ -10,10 +10,10 @@ import {
   Button,
   TextInput,
   DateInput,
-  // SubmitErrorMsg,
   SubmitBtn,
 } from '../../Components/Common/ProductFormStyle';
 import ImageCropModal from '../Modal/ImageCropModal';
+import RequiredInputModal from '../Modal/RequiredInputModal';
 
 export function ProductForm({
   product,
@@ -25,7 +25,7 @@ export function ProductForm({
   setLocation,
   setDescription,
   onSubmit,
-  // missingInputMessage,
+  showModal,
   imgData,
   onCancel,
   onSelectFile,
@@ -160,12 +160,10 @@ export function ProductForm({
           aria-describedby='eventDetail'
         ></textarea>
       </LayoutContainer>
-      {/* <SubmitErrorMsg role='alert' className='error-msg'>
-        {missingInputMessage}
-      </SubmitErrorMsg> */}
       <SubmitBtn type='submit' $isfilled={isFilled}>
         저장
       </SubmitBtn>
+      {showModal && <RequiredInputModal />}
     </Form>
   );
 }
@@ -180,7 +178,7 @@ ProductForm.propTypes = {
   dateSelectionErrorMsg: PropTypes.string,
   setLocation: PropTypes.func.isRequired,
   setDescription: PropTypes.func.isRequired,
-  // missingInputMessage: PropTypes.string,
+  showModal: PropTypes.bool,
   imgData: PropTypes.any.isRequired,
   selectedImage: PropTypes.any,
   onCancel: PropTypes.any.isRequired,
