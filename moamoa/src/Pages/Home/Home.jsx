@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PostList from '../../Components/Post/PostList';
-import styled from 'styled-components';
 import HomeSearch from './HomeSearch';
 import Header from '../../Components/Common/Header';
 import Footer from '../../Components/Common/Footer';
@@ -9,6 +8,7 @@ import { homePostList } from '../../API/Post/PostAPI';
 import { useRecoilState } from 'recoil';
 import postsAtom from '../../Recoil/postsAtom';
 import { useInView } from 'react-intersection-observer';
+import { HomeWrap, HomeContainer, PostBg } from './HomeStyle';
 
 export default function Home() {
   const limit = 5;
@@ -77,21 +77,3 @@ export default function Home() {
     </Container>
   );
 }
-
-const HomeWrap = styled.div`
-  background-color: #fff;
-  margin-top: 35px;
-  margin-bottom: 60px;
-  flex: 1;
-`;
-const HomeContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: #fff9e4;
-`;
-const PostBg = styled.div`
-  max-width: 39rem;
-  height: 100%;
-  margin: auto;
-  background-color: #fff;
-`;
