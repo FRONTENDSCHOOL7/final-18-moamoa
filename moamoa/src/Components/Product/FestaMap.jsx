@@ -21,7 +21,7 @@ export default function FestaMap({festaName}) {
     const options = { //지도를 생성할 때 필요한 기본 옵션
       center: new kakao.maps.LatLng(33.450701, 126.570667), 
       //지도의 중심좌표.
-      level: 4 //지도의 레벨(확대, 축소 정도)
+      level: 3 //지도의 레벨(확대, 축소 정도)
     };
   
     // 지도를 생성합니다    
