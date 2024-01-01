@@ -1,10 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Gobackbtn from '../GoBackbtn';
 import HomeBtn from '../HomeBtn';
 import SearchBtn from '../SearchBtn';
+import {
+  HeaderContainer,
+  HeaderFollowContainer,
+  ChatUserName,
+  HeaderSearchContainer,
+} from './HeaderStyle';
 
 export function HeaderHome() {
   return (
@@ -110,77 +115,3 @@ export function HeaderSubmitProduct() {
     </HeaderContainer>
   );
 }
-
-const HeaderContainer = styled.header`
-  display: flex;
-  height: 48px;
-  width: 390px;
-  justify-content: space-between;
-  position: fixed;
-  border-bottom: 1px solid #dbdbdb;
-  background-color: #fff;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  padding-left: 10px;
-  padding-right: 10px;
-  box-sizing: border-box;
-  margin: 0 auto;
-  z-index: 5;
-
-  img {
-    cursor: pointer;
-  }
-`;
-const HeaderFollowContainer = styled.div`
-  display: flex;
-  height: 48px;
-  position: fixed;
-  min-height: 48px;
-  max-height: 48px;
-  width: 390px;
-  gap: 8px;
-  border-bottom: 1px solid #dbdbdb;
-  background-color: #fff;
-  align-items: center;
-  font-size: 16px;
-  padding-left: 16px;
-  box-sizing: border-box;
-  margin-bottom: 8px;
-`;
-const ChatUserName = styled.h2`
-  font-weight: 500;
-  font-size: 1.8rem;
-`;
-const HeaderSearchContainer = styled.header`
-  display: flex;
-  justify-content: center;
-  height: 48px;
-  min-height: 48px;
-  max-height: 48px;
-  width: 390px;
-  position: fixed;
-  background-color: #fff;
-  border-bottom: 1px solid #dbdbdb;
-  align-items: center;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-
-  img {
-    cursor: pointer;
-    padding-right: 8px;
-    padding-bottom: 2px;
-  }
-  input {
-    background-color: #f2f2f2;
-    width: 340px;
-    height: 32px;
-    border-radius: 32px;
-    padding-left: 20px;
-    box-sizing: border-box;
-    &:focus {
-      outline: none;
-      border: 1px solid #797979;
-    }
-  }
-`;

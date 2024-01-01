@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import iconSearchNotFound from '../../Assets/icons/icon-searchNotFound.svg';
+import { NotFoundContainer } from './SearchStyle';
 export default function NotFound() {
   return (
     <NotFoundContainer>
@@ -9,20 +9,3 @@ export default function NotFound() {
     </NotFoundContainer>
   );
 }
-const NotFoundContainer = styled.div`
-  width: 100%;
-  height: 85%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 120px;
-    margin-bottom: 20px;
-  }
-  p {
-    font-size: 20px;
-    transform: translateX(5%);
-    color: #919191;
-  }
-`;

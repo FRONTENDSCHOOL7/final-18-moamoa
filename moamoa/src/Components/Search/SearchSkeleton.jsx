@@ -1,6 +1,6 @@
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
+import { SkeletonContainer } from './SearchStyle';
 
 export default function SearchResultSkeleton() {
   return (
@@ -48,33 +48,3 @@ export default function SearchResultSkeleton() {
     </SkeletonContainer>
   );
 }
-
-const SkeletonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  .block {
-    display: flex;
-    align-items: center;
-  }
-  .userInfoSkeleton {
-    display: flex;
-    flex-direction: column;
-    margin-left: 12px;
-    gap: 6px;
-  }
-  .photoSkeleton {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-  }
-
-  .idSkeleton {
-    width: 120px;
-    height: 12px;
-  }
-  .introSkeleton {
-    width: 150px;
-    height: 12px;
-  }
-`;

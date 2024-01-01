@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { FollowingPageAPI } from '../../API/Follow/FollowAPI';
 import Footer from '../../Components/Common/Footer';
-import styled from 'styled-components';
+import { FollowingWrap } from './FollowStyle';
 
 export default function FollowingList() {
   const token = useRecoilValue(userTokenAtom);
@@ -50,7 +50,3 @@ export default function FollowingList() {
     </div>
   );
 }
-
-const FollowingWrap = styled.div`
-  margin-top: 48px;
-`;
