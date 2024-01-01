@@ -75,7 +75,7 @@ const useSignUp = () => {
   const clickNextButton = (e) => {
     e.preventDefault();
 
-    let userTypeError = !userType ? '회원타입을 설정해 주세요.' : '';
+    let userTypeError = !userType ? '*회원타입을 설정해 주세요.' : '';
     setUserTypeErrorMessage(userTypeError);
 
     if (userType && !userTypeError && !errorMessages.emailError && !errorMessages.passwordError) {
