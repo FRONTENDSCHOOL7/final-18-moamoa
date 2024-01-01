@@ -19,7 +19,7 @@ import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import Footer from '../../Components/Common/Footer';
 import styled from 'styled-components';
-import Header from '../../Components/Common/Header';
+import Header from '../../Components/Common/Header/Header';
 
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 

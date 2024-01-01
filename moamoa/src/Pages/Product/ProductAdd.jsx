@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ProductForm } from '../../Components/Product/ProductForm';
 import { useProductData } from '../../Hooks/Product/useProductData';
 import { Container } from '../../Components/Common/Container';
-import { HeaderSubmitProduct } from '../../Components/Common/HeaderComponents';
+import { HeaderSubmitProduct } from '../../Components/Common/Header/HeaderComponents';
 import DefaultImg from '../../Assets/images/img-product-default.png';
 
 const ProductAdd = () => {

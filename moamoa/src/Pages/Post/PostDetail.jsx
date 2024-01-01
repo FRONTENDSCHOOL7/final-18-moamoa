@@ -3,23 +3,22 @@ import { useParams } from 'react-router-dom';
 import PostItem from '../../Components/Post/PostItem';
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
-import HeaderKebab from '../../Components/Common/HeaderKebab';
+import HeaderKebab from '../../Components/Common/Header/HeaderKebab';
 import { getPostDetail } from '../../API/Post/PostAPI';
 
 export default function ProductDetail() {
   const [post, setPost] = useState();
-  const {post_id} = useParams();
+  const { post_id } = useParams();
 
-  
   const getPostInfo = () => getPostDetail(post_id);
 
-  useEffect(()=>{
+  useEffect(() => {
     const getPostData = async () => {
-      const postData = await getPostInfo();  
+      const postData = await getPostInfo();
       setPost(postData.post);
-    }
+    };
     getPostData();
-  },[])
+  }, []);
   return (
     <>
       {post && (

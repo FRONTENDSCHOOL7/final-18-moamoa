@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import Gobackbtn from './GoBackbtn';
-import HomeBtn from './HomeBtn';
-import SearchBtn from './SearchBtn';
+import Gobackbtn from '../GoBackbtn';
+import HomeBtn from '../HomeBtn';
+import SearchBtn from '../SearchBtn';
 
 export function HeaderHome() {
   return (

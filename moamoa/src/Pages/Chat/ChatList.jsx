@@ -2,16 +2,12 @@ import React from 'react';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
-
-// import Gobackbtn from '../../Components/Common/GoBackbtn';
-// import MoreBtn from '../../Components/Common/MoreBtn';
-
 import img from '../../Assets/images/followImg/fog.jpg';
 import img2 from '../../Assets/images/followImg/human.jpg';
 import img3 from '../../Assets/images/followImg/woman2.jpg';
 import { Link } from 'react-router-dom';
+import Header from '../../Components/Common/Header/Header';
 
-import Header from '../../Components/Common/Header';
 export default function ChatList() {
   return (
     <div>

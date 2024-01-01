@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import FollowUser from '../../Components/Common/FollowUser';
-import Header from '../../Components/Common/Header';
+import Header from '../../Components/Common/Header/Header';
 import Footer from '../../Components/Common/Footer';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { FollowerPageAPI } from '../../API/Follow/FollowAPI';

@@ -5,7 +5,7 @@ import { useProductData } from '../../Hooks/Product/useProductData';
 import { getProductDetail } from '../../API/Product/ProductAPI';
 import { Container } from '../../Components/Common/Container';
 import DefaultImg from '../../Assets/images/img-product-default.png';
-import { HeaderSubmitProduct } from '../../Components/Common/HeaderComponents';
+import { HeaderSubmitProduct } from '../../Components/Common/Header/HeaderComponents';
 
 const ProductEdit = () => {
   const params = useParams();
