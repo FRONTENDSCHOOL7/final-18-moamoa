@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import Header from '../../Components/Common/Header/Header';
 import { SearchAPI } from '../../API/Search/SearchAPI';
-import styled from 'styled-components';
 import Footer from '../../Components/Common/Footer';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
@@ -13,6 +12,7 @@ import NotFound from '../../Components/Search/NotFound';
 import SearchResultBox from '../../Components/Search/SearchResultBox';
 
 import 'react-loading-skeleton/dist/skeleton.css';
+import { SearchListWrap } from './SearchStyle';
 
 export default function Search() {
   const [, setError] = useState(null);
@@ -80,13 +80,3 @@ export default function Search() {
     </Container>
   );
 }
-
-const SearchListWrap = styled.div`
-  height: 100%;
-  margin-top: 48px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  position: relative;
-`;

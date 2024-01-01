@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { atom, useRecoilState, useRecoilValue } from 'recoil';
 import 'react-loading-skeleton/dist/skeleton.css';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { ProductListAPI } from '../../API/Product/ProductAPI';
 import ProductListSkeleton from '../../Components/Product/ProductListSkeleton';
 import ProductOutput from '../../Components/Product/ProductOutput';
-import styled from 'styled-components';
 import { Container } from '../../Components/Common/Container';
 import Header from '../../Components/Common/Header/Header';
 import Footer from '../../Components/Common/Footer';
+import { ProductListWrap } from './ProductStyle';
 
 export const ProductAtom = atom({
   key: 'ProductState',
@@ -51,8 +50,3 @@ export default function ProductList() {
     </Container>
   );
 }
-
-const ProductListWrap = styled.div`
-  background-color: #fff;
-  margin-top: 48px;
-`;
