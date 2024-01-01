@@ -6,7 +6,7 @@ import { getProductDetail, editProduct } from '../../API/Product/ProductAPI';
 import useDateValidation from '../../Hooks/Product/useDateValidation';
 import { Container } from '../../Components/Common/Container';
 import DefaultImg from '../../Assets/images/img-product-default.png';
-import { HeaderSubmitProduct } from '../../Components/Common/HeaderComponents';
+import { HeaderSubmitProduct } from '../../Components/Common/Header/HeaderComponents';
 
 const ProductEdit = () => {
   const navigate = useNavigate();

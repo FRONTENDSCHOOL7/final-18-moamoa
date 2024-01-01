@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import Header from '../../Components/Common/Header';
+import Header from '../../Components/Common/Header/Header';
 import FollowingUser from '../../Components/Common/FollowingUser';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { useRecoilValue } from 'recoil';

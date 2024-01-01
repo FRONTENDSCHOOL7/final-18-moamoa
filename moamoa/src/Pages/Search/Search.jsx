@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import Header from '../../Components/Common/Header';
+import Header from '../../Components/Common/Header/Header';
 import { SearchAPI } from '../../API/Search/SearchAPI';
 import styled from 'styled-components';
 import Footer from '../../Components/Common/Footer';

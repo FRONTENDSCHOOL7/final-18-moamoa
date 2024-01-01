@@ -5,7 +5,7 @@ import { useProductData } from '../../Hooks/Product/useProductData';
 import { uploadProduct } from '../../API/Product/ProductAPI';
 import useDateValidation from '../../Hooks/Product/useDateValidation';
 import { Container } from '../../Components/Common/Container';
-import { HeaderSubmitProduct } from '../../Components/Common/HeaderComponents';
+import { HeaderSubmitProduct } from '../../Components/Common/Header/HeaderComponents';
 import DefaultImg from '../../Assets/images/img-product-default.png';
 
 const ProductAdd = () => {

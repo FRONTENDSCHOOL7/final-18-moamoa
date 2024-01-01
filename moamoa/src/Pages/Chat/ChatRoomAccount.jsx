@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import styled from 'styled-components';
-import Header from '../../Components/Common/Header';
+import Header from '../../Components/Common/Header/Header';
 
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
 import { useParams } from 'react-router-dom';
@@ -109,7 +109,7 @@ export default function ChatRoomKim() {
   );
 }
 const ChatRoom = styled.div`
-  margin-top:47px;  
+  margin-top: 47px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -129,7 +129,6 @@ const ChatMessages = styled.div`
   overflow-y: auto;
   padding: 20px;
 `;
-
 
 const InputArea = styled.div`
   display: flex;

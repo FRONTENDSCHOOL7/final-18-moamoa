@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PostList from '../../Components/Post/PostList';
 import styled from 'styled-components';
 import HomeSearch from './HomeSearch';
-import Header from '../../Components/Common/Header';
+import Header from '../../Components/Common/Header/Header';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
@@ -19,16 +19,16 @@ export default function Home() {
 
   useEffect(() => {
     const getHomePostList = async () => {
-      try{
+      try {
         const postListData = await homePostList(limit, skip);
-        console.log(postListData.posts)
-        setPostData(postListData.posts)
+        console.log(postListData.posts);
+        setPostData(postListData.posts);
         // setPostData((prevData) => [...prevData, ...postListData.posts]);
         setTimeout(() => {
           setIsLoading(true);
         }, 1200);
-      } catch(error){
-        console.error("페이지를 불러오는데 실패했습니다.");
+      } catch (error) {
+        console.error('페이지를 불러오는데 실패했습니다.');
       }
     };
     getHomePostList();
@@ -40,17 +40,15 @@ export default function Home() {
     }
   }, [inView, isLoading]);
 
-
-
   return (
     <Container>
       <Header type='home' />
       <HomeWrap>
-        { postData && Object.keys(postData).length !== 0 ? (
+        {postData && Object.keys(postData).length !== 0 ? (
           <HomeContainer>
             <PostBg>
               {postData.map((item) => {
-                return <PostList key={item.id} post={item} isLoading={isLoading}/>;
+                return <PostList key={item.id} post={item} isLoading={isLoading} />;
               })}
               {/* {postData.map((item, index) => {
                 const isLastPost = index === postData.length - 1;
@@ -64,7 +62,7 @@ export default function Home() {
                 );
               })} */}
 
-            <div ref={ref} />
+              <div ref={ref} />
             </PostBg>
           </HomeContainer>
         ) : (
