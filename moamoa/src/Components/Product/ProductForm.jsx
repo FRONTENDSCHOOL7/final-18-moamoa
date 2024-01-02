@@ -7,15 +7,16 @@ import { editProduct } from '../../API/Product/ProductAPI';
 
 import {
   Form,
-  ImgLayoutContainer,
-  ImageLabel,
-  Image,
-  LayoutContainer,
-  Button,
-  TextInput,
-  DateInput,
-  SubmitBtn,
-} from '../../Components/Common/ProductFormStyle';
+  ImgLabel,
+  Img,
+  Container,
+  TitleH2,
+  TitleLabel,
+  SubContainer,
+  Paragraph,
+  ButtonTypeBtn,
+  SubmitTypeBtn,
+} from '../Product/ProductFormStyle';
 import ImageCropModal from '../Modal/ImageCropModal';
 import RequiredInputModal from '../Modal/RequiredInputModal';
 
@@ -113,52 +114,48 @@ export function ProductForm({
           aspect={358 / 228}
         />
       )}
-
-      <ImgLayoutContainer>
-        <h2 id='imageUploadTitle'>이미지 등록</h2>
-
-        <ImageLabel htmlFor='productImg'>
-          <Image
+      <Container>
+        <TitleH2 id='imageUploadTitle'>이미지 등록</TitleH2>
+        <ImgLabel htmlFor='productImg'>
+          <Img
             src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
             alt={'상품 이미지'}
           />
-        </ImageLabel>
-
+        </ImgLabel>
         <input
-          className='hidden-but-accessible'
+          className='a11y-hidden'
           id='productImg'
           type='file'
           accept='image/*'
           onChange={onSelectFile}
           aria-labelledby='imageUploadTitle'
         />
-
-        <p>* 행사 관련 이미지를 등록해주세요.</p>
-      </ImgLayoutContainer>
-      <LayoutContainer>
-        <h2 id='categoryTitle'>카테고리</h2>
-        <div className='category-container'>
-          <Button
+        <Paragraph>* 행사 관련 이미지를 등록해주세요.</Paragraph>
+      </Container>
+      <Container>
+        <TitleH2 id='categoryTitle'>카테고리</TitleH2>
+        <SubContainer>
+          <ButtonTypeBtn
             type='button'
             onClick={() => setProductType('festival')}
             aria-pressed={product.productType === 'festival'}
             aria-describedby='categoryTitle'
           >
             축제
-          </Button>
-          <Button
+          </ButtonTypeBtn>
+          <ButtonTypeBtn
             type='button'
             onClick={() => setProductType('experience')}
             aria-pressed={product.productType === 'experience'}
             aria-describedby='categoryTitle'
           >
             체험
-          </Button>
-        </div>
-      </LayoutContainer>
-      <LayoutContainer>
-        <label htmlFor='eventName'>행사명</label>
-        <TextInput
+          </ButtonTypeBtn>
+        </SubContainer>
+      </Container>
+      <Container>
+        <TitleLabel htmlFor='eventName'>행사명</TitleLabel>
+        <input
           id='eventName'
           type='text'
           placeholder='2~22자 이내여야 합니다.'
@@ -167,14 +164,14 @@ export function ProductForm({
           minLength={2}
           maxLength={22}
           aria-describedby='eventName'
-        ></TextInput>
-      </LayoutContainer>
-      <LayoutContainer>
-        <label id='eventPeriodLabel' htmlFor='eventPeriodStart'>
+        ></input>
+      </Container>
+      <Container>
+        <TitleLabel id='eventPeriodLabel' htmlFor='eventPeriodStart'>
           행사 기간
-        </label>
-        <div className='dateinput-container'>
-          <DateInput
+        </TitleLabel>
+        <SubContainer>
+          <input
             type='date'
             id='eventPeriodStart'
             onChange={(e) => setStartDate(e.target.value)}
@@ -182,8 +179,8 @@ export function ProductForm({
             pattern='yyyy-MM-dd'
             max='9999-12-31'
             aria-labelledby='eventPeriodLabel'
-          ></DateInput>
-          <DateInput
+          ></input>
+          <input
             type='date'
             id='eventPeriodEnd'
             onChange={(e) => setEndDate(e.target.value)}
@@ -191,15 +188,13 @@ export function ProductForm({
             pattern='yyyy-MM-dd'
             max='9999-12-31'
             aria-labelledby='eventPeriodLabel'
-          ></DateInput>
-        </div>
-        <p role='alert' className='error-msg'>
-          {dateSelectionErrorMsg}
-        </p>
-      </LayoutContainer>
-      <LayoutContainer>
-        <label htmlFor='eventLocation'>행사 장소</label>
-        <TextInput
+          ></input>
+        </SubContainer>
+        <Paragraph role='alert'>{dateSelectionErrorMsg}</Paragraph>
+      </Container>
+      <Container>
+        <TitleLabel htmlFor='eventLocation'>행사 장소</TitleLabel>
+        <input
           type='text'
           placeholder='도로명 주소를 입력해주세요.'
           id='eventLocation'
@@ -209,9 +204,9 @@ export function ProductForm({
           }}
           aria-describedby='eventLocation'
         />
-      </LayoutContainer>
-      <LayoutContainer>
-        <label htmlFor='eventDetail'>상세 설명</label>
+      </Container>
+      <Container>
+        <TitleLabel htmlFor='eventDetail'>상세 설명</TitleLabel>
         <textarea
           id='eventDetail'
           placeholder='행사 관련 정보를 자유롭게 기재해주세요.'
@@ -219,10 +214,10 @@ export function ProductForm({
           value={product.description}
           aria-describedby='eventDetail'
         ></textarea>
-      </LayoutContainer>
-      <SubmitBtn type='submit' $isfilled={isFilled}>
+      </Container>
+      <SubmitTypeBtn type='submit' $isfilled={isFilled}>
         저장
-      </SubmitBtn>
+      </SubmitTypeBtn>
       {showModal && <RequiredInputModal />}
     </Form>
   );

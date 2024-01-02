@@ -1,17 +1,23 @@
 import React from 'react';
 import InputErrorMessagesReducer from '../../Hooks/Auth/InputErrorMessagesReducer.jsx';
 import useSignUp from '../../Hooks/Auth/useSignUp.jsx';
-import UploadFile from '../../Assets/images/upload-file.png';
-import styled, { css } from 'styled-components';
-
+import { Container } from '../../Components/Common/Container.jsx';
 import {
-  LoginAndJoinContainer,
+  TitleH2,
   Form,
-  CommonInput,
-  StyledErrorMsg,
-  CommonBtn,
-} from '../../Components/Common/AuthFormStyle.jsx';
-
+  Input,
+  AlertParagraph,
+  UserTypeContainer,
+  UserTypeBtnsContainer,
+  UserTypeBtn,
+  NextBtn,
+  Paragraph,
+  ProfileForm,
+  ProfileFormSubContainer,
+  ImgLabel,
+  TitleLabel,
+  SignUpBtn,
+} from '../Auth/AuthStyle.jsx';
 import ImageCropModal from '../../Components/Modal/ImageCropModal.jsx';
 
 const SignUp = () => {
@@ -60,7 +66,7 @@ const SignUp = () => {
     <>
       <h1 className='a11y-hidden'>이메일로 회원가입 및 프로필 설정</h1>
       {pageTransition ? (
-        <LoginAndJoinContainer>
+        <Container>
           {isOpen && (
             <ImageCropModal
               imageUrl={imgData.imageUrl}
@@ -72,13 +78,12 @@ const SignUp = () => {
               aspect={1 / 1}
             />
           )}
-
-          <h2 aria-live='polite'>프로필 설정</h2>
-          <ProfileInfo>나중에 언제든지 변경할 수 있습니다.</ProfileInfo>
+          <TitleH2 aria-live='polite'>프로필 설정</TitleH2>
+          <Paragraph>나중에 언제든지 변경할 수 있습니다.</Paragraph>
           <ProfileForm onSubmit={submitSignUpForm}>
-            <ImgContainer>
+            <ProfileFormSubContainer>
               <ImgLabel htmlFor='profileImg'>
-                <ProfileImg
+                <img
                   src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
                   alt={'프로필 이미지'}
                   id='imagePre'
@@ -92,10 +97,10 @@ const SignUp = () => {
                 className='a11y-hidden'
                 onChange={onSelectFile}
               />
-            </ImgContainer>
-            <TextContainer>
-              <TextLabel htmlFor='userNameInput'>사용자 이름</TextLabel>
-              <TextInput
+            </ProfileFormSubContainer>
+            <ProfileFormSubContainer>
+              <TitleLabel htmlFor='userNameInput'>사용자 이름</TitleLabel>
+              <Input
                 value={userData.user.username}
                 onChange={updateUserData}
                 type='text'
@@ -108,9 +113,11 @@ const SignUp = () => {
                 required
                 aria-required='true'
               />
-              <StyledErrorMsg role='alert'>{errorMessages.userNameError}</StyledErrorMsg>
-              <TextLabel htmlFor='userIdInput'>계정 ID</TextLabel>
-              <TextInput
+              <AlertParagraph role='alert'>{errorMessages.userNameError}</AlertParagraph>
+            </ProfileFormSubContainer>
+            <ProfileFormSubContainer>
+              <TitleLabel htmlFor='userIdInput'>계정 ID</TitleLabel>
+              <Input
                 value={userData.user.accountname}
                 onChange={updateUserData}
                 type='text'
@@ -123,9 +130,11 @@ const SignUp = () => {
                 required
                 aria-required='true'
               />
-              <StyledErrorMsg role='alert'>{errorMessages.accountNameError}</StyledErrorMsg>
-              <TextLabel htmlFor='userIntroInput'>소개</TextLabel>
-              <TextInput
+              <AlertParagraph role='alert'>{errorMessages.accountNameError}</AlertParagraph>
+            </ProfileFormSubContainer>
+            <ProfileFormSubContainer>
+              <TitleLabel htmlFor='userIntroInput'>소개</TitleLabel>
+              <Input
                 value={userData.user.intro}
                 onChange={updateUserData}
                 type='text'
@@ -142,22 +151,22 @@ const SignUp = () => {
                 required
                 aria-required='true'
               />
-              <StyledErrorMsg role='alert'>{errorMessages.introductionError}</StyledErrorMsg>
-              <StyledErrorMsg role='alert'>{signUpFailMessage}</StyledErrorMsg>
-            </TextContainer>
-            <ProfileButton $isfilled={isFilledSubmit} type='submit'>
+              <AlertParagraph role='alert'>{errorMessages.introductionError}</AlertParagraph>
+              <AlertParagraph role='alert'>{signUpFailMessage}</AlertParagraph>
+            </ProfileFormSubContainer>
+            <SignUpBtn $isfilled={isFilledSubmit} type='submit'>
               모아모아 시작하기
-            </ProfileButton>
+            </SignUpBtn>
           </ProfileForm>
-        </LoginAndJoinContainer>
+        </Container>
       ) : (
-        <LoginAndJoinContainer>
-          <h2 aria-live='polite'>이메일로 회원가입</h2>
+        <Container>
+          <TitleH2 aria-live='polite'>이메일로 회원가입</TitleH2>
           <Form onSubmit={clickNextButton}>
-            <SelectUserType>
+            <UserTypeContainer>
               <h3 id='userTypeTitle'>회원분류선택</h3>
-              <SelectUserBtnContainer>
-                <SelectUserBtn
+              <UserTypeBtnsContainer>
+                <UserTypeBtn
                   type='button'
                   name='individual'
                   onClick={updateUserType}
@@ -165,8 +174,8 @@ const SignUp = () => {
                   aria-describedby='userTypeTitle'
                 >
                   일반 회원
-                </SelectUserBtn>
-                <SelectUserBtn
+                </UserTypeBtn>
+                <UserTypeBtn
                   type='button'
                   name='organization'
                   onClick={updateUserType}
@@ -174,14 +183,14 @@ const SignUp = () => {
                   aria-describedby='userTypeTitle'
                 >
                   기업 및 기관
-                </SelectUserBtn>
-              </SelectUserBtnContainer>
-              <StyledErrorMsg role='alert'>{userTypeErrorMessage}</StyledErrorMsg>
-            </SelectUserType>
+                </UserTypeBtn>
+              </UserTypeBtnsContainer>
+              <AlertParagraph role='alert'>{userTypeErrorMessage}</AlertParagraph>
+            </UserTypeContainer>
             <label htmlFor='email' className='a11y-hidden'>
               이메일
             </label>
-            <CommonInput
+            <Input
               value={userData.user.email}
               onChange={updateUserData}
               onBlur={validateEmailWithAPI}
@@ -192,11 +201,11 @@ const SignUp = () => {
               required
               aria-required='true'
             />
-            <StyledErrorMsg role='alert'>{errorMessages.emailError}</StyledErrorMsg>
+            <AlertParagraph role='alert'>{errorMessages.emailError}</AlertParagraph>
             <label htmlFor='password' className='a11y-hidden'>
               비밀번호
             </label>
-            <CommonInput
+            <Input
               value={userData.user.password}
               onChange={updateUserData}
               onBlur={checkPasswordLength}
@@ -207,146 +216,13 @@ const SignUp = () => {
               required
               aria-required='true'
             />
-            <StyledErrorMsg role='alert'>{errorMessages.passwordError}</StyledErrorMsg>
-            <JoinBtn $isfilled={isFilledNext}>다음</JoinBtn>
+            <AlertParagraph role='alert'>{errorMessages.passwordError}</AlertParagraph>
+            <NextBtn $isfilled={isFilledNext}>다음</NextBtn>
           </Form>
-        </LoginAndJoinContainer>
+        </Container>
       )}
     </>
   );
 };
-
-const COLORS = {
-  primary: '#87b7e4',
-  darkgray: '#767676',
-  // lightgray: '#dbdbdb', //명암비: 1.38 // https://sitero.co.kr/contrast
-};
-
-const BtnHoverStyle = css`
-  &:hover {
-    background-color: ${COLORS.primary};
-    color: white;
-    border-color: ${COLORS.primary};
-  }
-`;
-
-const SelectUserType = styled.div`
-  text-align: left;
-  margin-bottom: 30px;
-
-  h3 {
-    font-size: 15px;
-    font-weight: 400;
-    margin-bottom: 12px;
-  }
-`;
-
-const SelectUserBtnContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const SelectUserBtn = styled.button`
-  font-size: 16px;
-  font-weight: 600;
-  color: ${(props) => (props['aria-pressed'] ? 'white' : `${COLORS.darkgray}`)};
-  background-color: ${(props) => (props['aria-pressed'] ? `${COLORS.primary}` : 'transparent')};
-  border: ${(props) =>
-    props['aria-pressed'] ? `1.5px solid ${COLORS.primary}` : `1.5px solid ${COLORS.darkgray}`};
-  transition: all 0.2s ease-in-out;
-  border-radius: 44px;
-  padding: 13px;
-  width: 46%;
-  letter-spacing: 1.5px;
-
-  ${BtnHoverStyle}
-`;
-
-const JoinBtn = styled(CommonBtn)`
-  margin: 140px 0 40px 0;
-`;
-
-// 프로필 설정
-const ProfileInfo = styled.p`
-  text-align: center;
-  color: ${COLORS.darkgray};
-  font-size: 15px;
-  font-weight: 400;
-  margin-top: 10px;
-`;
-
-const ProfileForm = styled.form`
-  padding: 0 34px;
-  background-color: #fff;
-  margin-top: 30px;
-  margin-bottom: 60px;
-
-  input[type='text']::-webkit-input-placeholder {
-    font-size: 16px;
-    color: ${COLORS.darkgray};
-    font-family: 'Pretendard';
-  }
-`;
-
-const ImgContainer = styled.div`
-  width: 100%;
-  margin: 0 auto 30px;
-  display: flex;
-  justify-content: center;
-`;
-
-const ImgLabel = styled.label`
-  display: block;
-  width: 130px;
-  height: 130px;
-  position: relative;
-  border-radius: 50%;
-  cursor: pointer;
-
-  &:after {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    right: -5px;
-    bottom: 0;
-    background: url(${UploadFile}) 0 0 / cover;
-  }
-`;
-
-const ProfileImg = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
-const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const TextInput = styled(CommonInput)`
-  background-image: none;
-  padding: 5px 0;
-`;
-
-const TextLabel = styled.label`
-  color: ${COLORS.darkgray};
-  margin-bottom: 5px;
-  font-size: 15px;
-
-  &:nth-of-type(2),
-  &:nth-of-type(3) {
-    margin-top: 22px;
-  }
-`;
-
-const ProfileButton = styled(CommonBtn)`
-  margin: 35px 0 40px 0;
-  width: 100%;
-`;
 
 export default SignUp;
