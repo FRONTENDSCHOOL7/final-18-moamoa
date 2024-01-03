@@ -53,9 +53,13 @@ export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  color: var(--buttonDisable);
+`;
+export const UserId = styled.h2`
+  font-size: 15px;
 `;
 export const UserIntro = styled.span`
-  color: #767676;
+  color: var(--buttonDisable);
   font-size: 12px;
   width: 150px;
   white-space: nowrap;
@@ -76,11 +80,8 @@ export const NotFoundContainer = styled.div`
   p {
     font-size: 20px;
     transform: translateX(5%);
-    color: #919191;
+    color: var(--buttonDisable);
   }
-`;
-export const UserId = styled.h2`
-  font-size: 14px;
 `;
 export const BlueCheck = styled.img`
   padding-left: 0.3rem;

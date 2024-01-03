@@ -24,7 +24,7 @@ export const Message = styled.div`
   width: 220px;
   font-size: 14px;
   background-color: #ffffff;
-  border: 1px solid #ddd;
+  border: 1px solid var(--buttonDisable);
   border-radius: 0px 30px 30px 30px;
   margin: 0px 10px 10px;
   padding: 10px 12px 12px;
@@ -36,20 +36,18 @@ export const InputArea = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-
   background-color: #ffffff;
 `;
 export const MessageInput = styled.input`
   width: 60%;
-
   border-radius: 5px;
   padding: 10px;
   font-size: 14px;
 `;
 export const SendButton = styled.button`
-  background-color: ${(props) => (props.disabled ? '#fff' : '#87B7E4')};
-  color: ${(props) => (props.disabled ? '#c4c4c4' : '#fff')};
-  border: 1px solid ${(props) => (props.disabled ? '#c4c4c4' : '#fff')};
+  background-color: ${(props) => (props.disabled ? '#fff' : 'var(--buttonActive)')};
+  color: ${(props) => (props.disabled ? 'var(--buttonDisable)' : '#fff')};
+  border: 1px solid ${(props) => (props.disabled ? 'var(--buttonDisable)' : '#fff')};
   border-radius: 10px;
   margin-left: 3px;
   width: 46px;
@@ -80,7 +78,7 @@ export const UserName = styled.h2`
   margin-left: 8px;
   margin-bottom: 5px;
   font-size: 12px;
-  color: gray;
+  color: var(--buttonDisable);
   font-weight: 500;
 `;
 export const MyTalk = styled.p`
@@ -161,7 +159,7 @@ export const UserId = styled.h2`
   font-size: 14px;
 `;
 export const UserText = styled.span`
-  color: #767676;
+  color: var(--buttonDisable);
   font-size: 12px;
   width: 150px;
   white-space: nowrap;
@@ -169,7 +167,7 @@ export const UserText = styled.span`
   text-overflow: ellipsis;
 `;
 export const ChatDate = styled.span`
-  color: #dbdbdb;
+  color: var(--buttonDisable);
   font-size: 10px;
 `;
 export const ChatDateBox = styled.div`

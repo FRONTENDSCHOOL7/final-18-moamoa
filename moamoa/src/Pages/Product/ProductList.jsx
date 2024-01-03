@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
 import 'react-loading-skeleton/dist/skeleton.css';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { ProductListAPI } from '../../API/Product/ProductAPI';
@@ -9,14 +9,10 @@ import { Container } from '../../Components/Common/Container';
 import Header from '../../Components/Common/Header/Header';
 import Footer from '../../Components/Common/Footer';
 import { ProductListWrap } from './ProductStyle';
-
-export const ProductAtom = atom({
-  key: 'ProductState',
-  default: [],
-});
+import { ProductAtom } from '../../Recoil/ProductAtom';
 
 export default function ProductList() {
-  const [, setProduct] = useRecoilState(ProductAtom);
+  const setProduct = useSetRecoilState(ProductAtom);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = useRecoilValue(userTokenAtom);

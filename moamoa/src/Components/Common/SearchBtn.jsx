@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export default function SearchBtn() {
   return (
     <Link to='/search'>
-      <SearchButton src={iconSearch}></SearchButton>
+      <SearchButton src={iconSearch} alt='유저 검색 이동'></SearchButton>
     </Link>
   );
 }
