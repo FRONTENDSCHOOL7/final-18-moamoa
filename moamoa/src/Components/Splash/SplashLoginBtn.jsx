@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Bluemoa from '../../Assets/images/Bluemoa.png';
 import kakao from '../../Assets/images/kakao.png';
@@ -8,26 +7,11 @@ import naver from '../../Assets/images/naver.png';
 import { Link, useNavigate } from 'react-router-dom';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { useRecoilValue } from 'recoil';
-function TempLoginButton({ className, children }) {
+import { StyledButton } from './SplashStyle';
+export function TempLoginButton({ className, children }) {
   return <button className={className}>{children}</button>;
 }
 
-const StyledButton = styled(TempLoginButton)`
-  margin: 0 auto;
-  width: 322px;
-  height: 44px;
-  border-radius: 44px;
-  background-color: #fff;
-  color: #767676;
-  background-repeat: no-repeat;
-  font-size: 10px;
-  margin: 0 0 10px 34px;
-  border: ${({ borderColor }) => `1px solid ${borderColor}`};
-  background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
-  background-size: ${({ backgroundSize }) => backgroundSize};
-  background-position: ${({ backgroundPosition }) => backgroundPosition};
-  opacity: ${({ opacity }) => opacity};
-`;
 TempLoginButton.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,

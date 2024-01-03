@@ -11,7 +11,7 @@ export default function SplashLogo() {
           <img src={Festival} className='blinkFestival' alt='' />
           <img src={fireworks} className='blinkfireworks' alt='' />
         </div>
-        <img src={Logo} />
+        <img src={Logo} alt='모아모아 로고' />
         <p className='logotext'>내 손 안의 안의 모든 축제!</p>
       </SVGgroup>
       <AnimationFireworks>

@@ -1,4 +1,22 @@
 import styled from 'styled-components';
+import { TempLoginButton } from './SplashLoginBtn';
+
+export const StyledButton = styled(TempLoginButton)`
+  margin: 0 auto;
+  width: 322px;
+  height: 44px;
+  border-radius: 44px;
+  background-color: #fff;
+  color: var(--buttonDisable);
+  background-repeat: no-repeat;
+  font-size: 10px;
+  margin: 0 0 10px 34px;
+  border: ${({ borderColor }) => `1px solid ${borderColor}`};
+  background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
+  background-size: ${({ backgroundSize }) => backgroundSize};
+  background-position: ${({ backgroundPosition }) => backgroundPosition};
+  opacity: ${({ opacity }) => opacity};
+`;
 
 export const Modal = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== 'visible',
@@ -21,7 +39,7 @@ export const Modal = styled.div.withConfig({
   .joinGuide {
     margin: 0 auto;
     padding-top: 15px;
-    color: #767676;
+    color: var(--buttonDisable);
     font-size: 12px;
   }
   a:hover {

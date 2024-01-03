@@ -1,6 +1,7 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import { ProductAtom } from '../../Pages/Product/ProductList';
+import { useRecoilValue } from 'recoil';
+import { ProductAtom } from '../../Recoil/ProductAtom';
+
 import { Link } from 'react-router-dom';
 import { ProductListImgBox } from '../../Components/Common/ProductImgBox';
 import TopNavigation from '../../Components/Product/TopNavigation';
@@ -12,7 +13,7 @@ import { semanticEventEndDate } from './formatEventDate';
 import { ProductContainer, ProductBox } from './ProductStyle';
 
 export default function ProductBundle() {
-  const [product] = useRecoilState(ProductAtom);
+  const product = useRecoilValue(ProductAtom);
   const filteredProducts = product.filter(filterActive);
 
   return (

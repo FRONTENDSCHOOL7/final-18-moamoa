@@ -2,9 +2,11 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
-
 ${reset};
 :root{
+	--buttonActive:#2E2C39;
+	--buttonDisable: #767676;
+
 }
 html{ 
 	font-size: 62.5%;

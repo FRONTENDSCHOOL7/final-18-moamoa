@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const HighLightColor = styled.span`
-  color: royalblue;
+  color: var(--buttonActive);
+  font-weight: bold;
 `;
 
 export default function highlightText(originalText, highlightedText) {

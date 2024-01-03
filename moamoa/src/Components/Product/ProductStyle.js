@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Button = styled.button`
   width: 80px;
   height: 36px;
-  border: 1px solid #dadada;
+  border: 1px solid var(--buttonDisable);
   border-radius: 10px;
   font-weight: bold;
   font-size: 14px;
@@ -12,14 +12,16 @@ const Button = styled.button`
 export const FestivalBtn = styled(Button).withConfig({
   shouldForwardProp: (prop) => !['onActive'].includes(prop),
 })`
-  background-color: ${({ onActive }) => (onActive ? '#87b7e4' : '#ffffff')};
-  color: ${({ onActive }) => (onActive ? '#ffffff' : '#dadada')};
+  background-color: ${({ onActive }) => (onActive ? 'var(--buttonActive)' : '#ffffff')};
+  color: ${({ onActive }) => (onActive ? '#ffffff' : 'var(--buttonDisable)')};
+  border: ${({ onActive }) => (onActive ? 'none' : '1px solid var(--buttonDisable)')};
 `;
 export const ExperienceBtn = styled(Button).withConfig({
   shouldForwardProp: (prop) => !['onActive', 'onActive'].includes(prop),
 })`
-  background-color: ${({ onActive }) => (onActive ? '#87b7e4' : '#ffffff')};
-  color: ${({ onActive }) => (onActive ? '#ffffff' : '#dadada')};
+  background-color: ${({ onActive }) => (onActive ? 'var(--buttonActive)' : '#ffffff')};
+  color: ${({ onActive }) => (onActive ? '#ffffff' : 'var(--buttonDisable)')};
+  border: ${({ onActive }) => (onActive ? 'none' : '1px solid var(--buttonDisable)')};
 `;
 import backgroundMoamoa from '../../Assets/images/backgroundMoamoa.png';
 
@@ -48,7 +50,7 @@ export const ProductBox = styled.div`
   }
   .itemDate {
     margin-left: 4px;
-    color: #797979;
+    color: var(--buttonDisable);
     font-size: 11px;
     font-weight: 400;
   }
