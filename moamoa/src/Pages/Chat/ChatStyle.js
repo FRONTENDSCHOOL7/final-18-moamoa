@@ -85,7 +85,7 @@ export const MyTalk = styled.p`
   width: 220px;
   font-size: 14px;
   background-color: #ffffff;
-  border: 1px solid #ddd;
+  border: 1px solid var(--buttonDisable);
   border-radius: 30px 0px 30px 30px;
   margin: 0px 80px 10px;
   box-sizing: border-box;
