@@ -4,6 +4,7 @@ import { useProductData } from '../../Hooks/Product/useProductData';
 import { Container } from '../../Components/Common/Container';
 import { HeaderSubmitProduct } from '../../Components/Common/Header/HeaderComponents';
 import DefaultImg from '../../Assets/images/img-product-default.png';
+import { useImage } from '../../Hooks/Common/useImage';
 
 const ProductAdd = () => {
   const initialState = {
@@ -13,10 +14,6 @@ const ProductAdd = () => {
     endDate: '',
     location: '',
     description: '',
-    image: {
-      imageUrl: DefaultImg,
-      croppedImageUrl: null,
-    },
   };
 
   const {
@@ -32,12 +29,6 @@ const ProductAdd = () => {
     setLocation,
     description,
     setDescription,
-    isOpen,
-    setIsOpen,
-    imgData,
-    setImgData,
-    prevImgData,
-    setPrevImgData,
     showModal,
     setShowModal,
     editMode,
@@ -48,36 +39,8 @@ const ProductAdd = () => {
     setEditMode(false);
   }, []);
 
-  const onCancel = () => {
-    setImgData((prevImage) => ({
-      ...prevImage,
-      imageUrl: prevImgData, // 이전 이미지로 설정
-    }));
-    setIsOpen(false);
-  };
-
-  const setCroppedImageFor = (crop, zoom, croppedImageUrl) => {
-    const newImage = { ...imgData, croppedImageUrl, crop, zoom };
-
-    setImgData(newImage);
-    setIsOpen(false);
-  };
-
-  const onSelectFile = (e) => {
-    e.preventDefault();
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
-        setImgData((prevImage) => ({
-          ...prevImage,
-          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
-        }));
-      });
-      reader.readAsDataURL(e.target.files[0]);
-      setIsOpen(true);
-    }
-  };
+  const { imgData, showImgModal, onSelectFile, onCancel, setCroppedImageFor } =
+    useImage(DefaultImg);
 
   return (
     <>
@@ -98,7 +61,7 @@ const ProductAdd = () => {
           onCancel={onCancel}
           onSelectFile={onSelectFile}
           setCroppedImageFor={setCroppedImageFor}
-          isOpen={isOpen}
+          showImgModal={showImgModal}
           editMode={editMode}
         />
       </Container>

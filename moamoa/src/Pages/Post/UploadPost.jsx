@@ -23,6 +23,7 @@ import { uploadPost } from '../../API/Post/PostAPI';
 // import { uploadImage } from '../../API/Image/ImageAPI';
 
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
+import { useImage } from '../../Hooks/Common/useImage';
 import ImageCropModal from '../../Components/Modal/ImageCropModal';
 
 import {
@@ -44,13 +45,8 @@ export default function AddPost() {
   const [userImage, setUserImage] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  // 이미지 크롭 관련 상태 변수
-  const [isOpen, setIsOpen] = useState(false);
-  const [imgData, setImgData] = useState({
-    imageUrl: '',
-    croppedImageUrl: null,
-  });
-  const [prevImgData, setPrevImgData] = useState('');
+  const { imgData, setImgData, showImgModal, onSelectFile, onCancel, setCroppedImageFor } =
+    useImage(null);
 
   const getUserImg = async () => {
     try {
@@ -80,39 +76,6 @@ export default function AddPost() {
   //   const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
   //   setPostImage(imageUrl);
   // };
-
-  const onSelectFile = (e) => {
-    e.preventDefault();
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
-        setImgData((prevImage) => ({
-          ...prevImage,
-          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
-        }));
-      });
-      reader.readAsDataURL(e.target.files[0]);
-      // 이미지 크롭 모달 띄우기
-      setIsOpen(true);
-    }
-  };
-
-  // 모달에서 닫기창 클릭 시 처리
-  const onCancel = () => {
-    setImgData((prevImage) => ({
-      ...prevImage,
-      imageUrl: prevImgData, // 이전 이미지로 설정
-    }));
-    setIsOpen(false);
-  };
-
-  // 모달에서 크롭한 이미지 저장
-  const setCroppedImageFor = (crop, zoom, croppedImageUrl) => {
-    const newImage = { ...imgData, croppedImageUrl, crop, zoom };
-    setImgData(newImage);
-    setIsOpen(false);
-  };
 
   //textarea 높이 설정
   const adjustTextareaHeight = (event) => {
@@ -172,7 +135,7 @@ export default function AddPost() {
         <Gobackbtn />
         <ButtonSubmit buttonText='업로드' onClickHandler={submitPost} disabled={isButtonDisabled} />
       </HeaderContainer>
-      {isOpen && (
+      {showImgModal && (
         <ImageCropModal
           imageUrl={imgData.imageUrl}
           cropInit={imgData.crop}

@@ -5,6 +5,7 @@ import _ from 'lodash';
 import InputErrorMessagesReducer from './InputErrorMessagesReducer.jsx';
 import { updateInputState } from '../../Utils/updateInputState.jsx';
 import DefaultProfileImage from '../../Assets/images/profile-img.svg';
+import { useImage } from '../Common/useImage.jsx';
 
 const useSignUp = () => {
   const navigate = useNavigate();
@@ -25,42 +26,8 @@ const useSignUp = () => {
     },
   });
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [imgData, setImgData] = useState({
-    imageUrl: DefaultProfileImage,
-    croppedImageUrl: null,
-  });
-  const [prevImgData, setPrevImgData] = useState('');
-
-  const onSelectFile = (e) => {
-    e.preventDefault();
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => {
-        setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
-        setImgData((prevImage) => ({
-          ...prevImage,
-          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
-        }));
-      });
-      reader.readAsDataURL(e.target.files[0]);
-      setIsOpen(true);
-    }
-  };
-
-  const onCancel = () => {
-    setImgData((prevImage) => ({
-      ...prevImage,
-      imageUrl: prevImgData, // 이전 이미지로 설정
-    }));
-    setIsOpen(false);
-  };
-
-  const setCroppedImageFor = (crop, zoom, croppedImageUrl) => {
-    const newImage = { ...imgData, croppedImageUrl, crop, zoom };
-    setImgData(newImage);
-    setIsOpen(false);
-  };
+  const { imgData, showImgModal, onSelectFile, onCancel, setCroppedImageFor } =
+    useImage(DefaultProfileImage);
 
   const { errorMessages } = InputErrorMessagesReducer();
 
@@ -126,7 +93,7 @@ const useSignUp = () => {
     onCancel,
     onSelectFile,
     setCroppedImageFor,
-    isOpen,
+    showImgModal,
   };
 };
 

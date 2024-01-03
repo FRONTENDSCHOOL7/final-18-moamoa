@@ -34,7 +34,7 @@ export function ProductForm({
   onCancel,
   onSelectFile,
   setCroppedImageFor,
-  isOpen,
+  showImgModal,
   editMode,
   productId,
 }) {
@@ -103,7 +103,7 @@ export function ProductForm({
 
   return (
     <Form onSubmit={onSubmit}>
-      {isOpen && (
+      {showImgModal && (
         <ImageCropModal
           imageUrl={imgData.imageUrl}
           cropInit={imgData.crop}
@@ -238,7 +238,7 @@ ProductForm.propTypes = {
   onCancel: PropTypes.any.isRequired,
   onSelectFile: PropTypes.any.isRequired,
   setCroppedImageFor: PropTypes.any.isRequired,
-  isOpen: PropTypes.bool,
+  showImgModal: PropTypes.bool,
   editMode: PropTypes.bool,
   productId: PropTypes.string,
 };
