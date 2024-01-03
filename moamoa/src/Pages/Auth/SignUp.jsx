@@ -27,7 +27,6 @@ const SignUp = () => {
     pageTransition,
     userTypeErrorMessage,
     signUpFailMessage,
-    isOpen,
     updateUserData,
     updateUserType,
     clickNextButton,
@@ -36,6 +35,7 @@ const SignUp = () => {
     onCancel,
     onSelectFile,
     setCroppedImageFor,
+    showImgModal,
   } = useSignUp();
 
   const {
@@ -67,7 +67,7 @@ const SignUp = () => {
       <h1 className='a11y-hidden'>이메일로 회원가입 및 프로필 설정</h1>
       {pageTransition ? (
         <Container>
-          {isOpen && (
+          {showImgModal && (
             <ImageCropModal
               imageUrl={imgData.imageUrl}
               cropInit={imgData.crop}
