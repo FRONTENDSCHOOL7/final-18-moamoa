@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Gobackbtn from '../GoBackbtn';
@@ -95,6 +95,10 @@ export function HeaderSearch({ setSearchText }) {
   HeaderSearch.propTypes = {
     setSearchText: PropTypes.func,
   };
+  const inputFocus = useRef();
+  useEffect(() => {
+    inputFocus.current.focus();
+  });
   return (
     <HeaderSearchContainer>
       <Gobackbtn />
@@ -102,6 +106,7 @@ export function HeaderSearch({ setSearchText }) {
         type='search'
         placeholder='아이디를 입력하세요'
         onChange={(e) => setSearchText(e.target.value)}
+        ref={inputFocus}
       />
     </HeaderSearchContainer>
   );
