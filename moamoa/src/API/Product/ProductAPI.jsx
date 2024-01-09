@@ -78,6 +78,6 @@ export const editProduct = async (productId, productData) => {
 };
 // 축제&체험 리스트
 export async function ProductListAPI() {
-  const response = await authInstance.get('product/?limit=284&skip=0');
+  const response = await authInstance.get(`product/?limit=400`);
   return response.data.product;
 }
