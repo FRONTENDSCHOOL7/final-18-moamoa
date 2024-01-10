@@ -33,7 +33,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://frontendschool7.github.io/final-18-moamoa/",
+  "homepage": "https://frontendschool7.github.io/final-18-moamoa",
   "eslintConfig": {
     "extends": [
       "react-app",
