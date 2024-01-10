@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 
 import Landing from '../Pages/Splash/Landing';
 import Home from '../Pages/Home/Home';
-import Login from '../Pages/Sign/Login';
-import Join from '../Pages/Sign/Join';
+import Login from '../Pages/Auth/Login';
+import SignUp from '../Pages/Auth/SignUp';
 
 import MyProfile from '../Pages/Profile/MyProfile';
 import YourProfile from '../Pages/Profile/YourProfile';
@@ -15,8 +15,8 @@ import FollowerList from '../Pages/Follow/FollowerList';
 
 import ProductDetail from '../Pages/Product/ProductDetail';
 import ProductList from '../Pages/Product/ProductList';
-import AddProduct from '../Pages/Product/AddProduct';
-import EditProduct from '../Pages/Product/EditProduct';
+import ProductAdd from '../Pages/Product/ProductAdd';
+import ProductEdit from '../Pages/Product/ProductEdit';
 
 import UploadPost from '../Pages/Post/UploadPost';
 import EditPost from '../Pages/Post/EditPost';
@@ -45,7 +45,7 @@ export default function AppRoutes() {
       <Route path='/user/login' element={<Login />} />
 
       {/* 회원가입 */}
-      <Route path='/user/join' element={<Join />} />
+      <Route path='/user/signUp' element={<SignUp />} />
 
       {/* 404 페이지} */}
       <Route path='/*' element={<NotFound />} />
@@ -70,10 +70,10 @@ export default function AppRoutes() {
         <Route path='profile/:accountname/following' element={<FollowingList />} />
 
         {/* 상품 등록 */}
-        <Route path='/product' element={<AddProduct />} />
+        <Route path='/product' element={<ProductAdd />} />
 
         {/* 상품 수정 */}
-        <Route path='/product/edit' element={<EditProduct />} />
+        <Route path='/product/edit/:product_id' element={<ProductEdit />} />
 
         {/* 상품 리스트 */}
         <Route path='/product/list' element={<ProductList />} />

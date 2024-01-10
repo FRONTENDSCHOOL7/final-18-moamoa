@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# env 무시 ( API_KEY, ATOM_KEY )
+.env
+
+# DS_Store 무시
+*.DS_Store

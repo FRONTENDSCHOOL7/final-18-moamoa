@@ -1,84 +1,99 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
-import ProductDeleteAPI from '../../API/Product/ProductDeleteAPI';
-import PostDeleteAPI from '../../API/Post/PostDeleteAPI';
+import { deleteProduct } from '../../API/Product/ProductAPI';
+import { deletePost } from '../../API/Post/PostAPI';
 import PropTypes from 'prop-types';
-import NoticeModal from './NoticeModal';
+import AlertModal from './AlertModal';
 
 DeleteModal.propTypes = {
-  postid: PropTypes.string
+  postid: PropTypes.string,
+  setPostId: PropTypes.func,
+  setCloseFooter: PropTypes.func.isRequired
 };
 
-export default function DeleteModal({postid}) {
-  const token = useRecoilValue(userTokenAtom);
+export default function DeleteModal({postid,setPostId, setCloseFooter}) {
   const params = useParams();
   const navigate = useNavigate();
   const [delMadoal, setDelModal] = useState(true);
-  const [postId, setPostId] =  useState(postid)
   const location = useLocation();
-  const post = location.pathname.slice(1, 5);
+  const path = location.pathname.slice(1, 5);
   const [showNoticeModal, setShowNoticeModal] = useState(true);
 
   // 게시글 상세 페이지에서 게시글 삭제
-  const handlePostDelete = () => PostDeleteAPI(token, postId)
-  const deletePost = async () => {
-    await handlePostDelete();
+  const handlePostDelete = async () => {
+    await deletePost(postid);
     setShowNoticeModal(false);
-    await setTimeout(() => {
+    setTimeout(() => {
       navigate(-1);
     }, 1000);
       setDelModal(false);
-      setPostId(null);
     };
 
   // myInfo 페이지에서 게시글 삭제
   const delMyPostListItem = async () => {
-    await handlePostDelete();
+    await deletePost(postid);
     setShowNoticeModal(false);
     setDelModal(false);
-    await setTimeout(() => {
-      window.location.reload();    
+    setPostId(null);
+    setTimeout(() => {
+      setDelModal(false);
+      setCloseFooter(true)
     }, 1000);
   };
 
-    // 상품 상세 페이지에서 상품 삭제
-    const handleProductDelete = () => ProductDeleteAPI(params, token);
-    const deleteProduct = async () => {
-      await handleProductDelete();
-      setShowNoticeModal(false);
-      await setTimeout(() => {
-        navigate('/product/list');
-      }, 1000);
-    };
+  // 상품 상세 페이지에서 상품 삭제
+  const handleProductDelete = async () => {
+    await deleteProduct(params.product_id);
+    setShowNoticeModal(false);
+    setTimeout(() => {
+      navigate('/product/list');
+    }, 1000);
+  };
   
     const deletefunc = () => {
-      if(post === "prof"){
-        delMyPostListItem();
-      } else if(post === "post"){
-        deletePost();
-      } else {
-        deleteProduct();
-      }      
+      switch(path){
+        case 'prof':
+          delMyPostListItem();
+          break;
+        case 'post':
+          handlePostDelete();
+          break;
+        case 'prod':
+          handleProductDelete();
+          break;
+        default:
+          break;
+      }
     }
 
   return (
     <>
       { delMadoal ?       
-      <Modal>
-        <Deltext>정말 삭제하시겠습니까?</Deltext>
-        <Btn>
-          <BtnDel onClick={deletefunc}>삭제</BtnDel>
-          <BtnCancel onClick={()=>{setDelModal(false);}}>취소</BtnCancel>
-        </Btn>
-      </Modal> : null
+      <ModalBg>
+        <Modal>
+          <Deltext>정말 삭제하시겠습니까?</Deltext>
+          <Btn>
+            <BtnDel onClick={deletefunc}>삭제</BtnDel>
+            <BtnCancel onClick={()=>{setDelModal(false);}}>취소</BtnCancel>
+          </Btn>
+        </Modal>
+      </ModalBg> : null
       }
-      { !showNoticeModal && <NoticeModal/>}
+      { !showNoticeModal && <AlertModal type={`delete`}/>}
     </>
   );
 }
+
+const ModalBg = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100;
+`;
 
 const Modal = styled.div`
   width: 26rem;

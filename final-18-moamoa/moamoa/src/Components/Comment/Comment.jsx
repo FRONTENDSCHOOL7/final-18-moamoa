@@ -1,73 +1,60 @@
-import axios from 'axios';
-import React, { useState,useEffect } from 'react'
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
+import React, { useEffect, useState} from 'react'
+import { addComment, getCommentList } from '../../API/Comment/CommnetAPI';
 import CommentItem from './CommentItem';
 import styled from 'styled-components';
-import AddCommentBtn from './AddCommentBtn';
+import CommentAddBtn from './CommentAddBtn';
+import PropTypes from 'prop-types';
 
+Comment.propTypes = {
+  postId: PropTypes.string
+}
 
-export default function Comment(postId) {
-  const token = useRecoilValue(userTokenAtom)
-  const [comments,setComments] = useState("");
-  const [addComment, setAddComment] = useState("");
+export default function Comment({postId}) {
+  const [commentList,setCommentList] = useState([]);
+  const [comment, setComment] = useState("");
 
-
-  const postComment = async (AddData)=>{
-  try {
-    const res = await axios.post(`https://api.mandarin.weniv.co.kr/post/${postId.postId}/comments`, AddData, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-        setComments(res.data.comments);
-  } catch (error) {
-      console.error('데이터 전송에 실패했습니다.', error);
-    }
+  const postComment = async(postId, AddData)=>{
+    const res = await addComment(postId,AddData);
+    console.log(res.comment);
+    setCommentList((prev)=>([res.comment, ...prev]));
+    console.log(commentList)
   }
 
-  const handleCommnet = (e) => setAddComment(e.target.value)
+  const handleComment = (e) => setComment(e.target.value)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(addComment.trim().length === 0){
+    if(comment.trim().length === 0){
       return;
     }
     const AddData = {
       comment:{
-        content:addComment
+        content:comment
       }}
-    postComment(AddData) 
-    setAddComment("")   
+    postComment(postId, AddData) 
+    setComment("")   
   }
 
-  useEffect(() => {
-    async function getComment() {
-      try {
-        const res = await axios.get(`https://api.mandarin.weniv.co.kr/post/${postId.postId}/comments`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setComments(res.data.comments);
-    } catch (error) {
-        console.error('데이터를 가져오지 못했습니다:', error);
-      }
+    console.log(postId);
+    
+  useEffect(()=>{
+    const getcommentData = async(postId) => {
+      const getData = await getCommentList(postId);
+      setCommentList(getData.comments);
     }
-    getComment(); 
-  }, [postId, comments, token]);
-
+    getcommentData(postId)
+  },[postId])
 
   return (
     <CommentContainer>
       <CommentList>
-        {comments && comments.map((item,index)=>{
+        {commentList && commentList.map((item,index)=>{
             return <CommentItem item={item} key={index}/>;
         })}      
       </CommentList>
       <AddComment onSubmit={handleSubmit}>
-        <CommentContent type="text" value={addComment} onChange={handleCommnet} placeholder='댓글을 입력해주세요 :)'/>
-        <AddCommentBtn addcomment={addComment}/>
+        <CommentContent type="text" value={comment} onChange={handleComment} placeholder='댓글을 입력해주세요 :)'/>
+        <CommentAddBtn addcomment={comment}/>
       </AddComment>
     </CommentContainer>
   )
@@ -103,7 +90,7 @@ const AddComment = styled.form`
   position: fixed;
   bottom: 0;
   left: 50%;
-  translate: -50%;
+  transform: translate(-50%);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -113,7 +100,7 @@ const CommentContent = styled.input`
   width: 28rem;
   height: 5rem;
   font-size: 1.4rem;
-  &::placeholder{color: #C4C4C4;}
+  &::placeholder{color: #767676;}
   &:focus{
     outline:none;
   }

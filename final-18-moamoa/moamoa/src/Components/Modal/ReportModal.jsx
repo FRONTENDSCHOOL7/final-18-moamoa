@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
-import NoticeReportModal from './NoticeReportModal';
+import AlertModal from './AlertModal';
+import { reportPost } from '../../API/Post/PostAPI';
+
 
 
 ReportModal.propTypes = {
@@ -16,44 +14,16 @@ ReportModal.propTypes = {
 
 export default function ReportModal({closemodal, setclosemodal,postid}) {
   
-  const token = useRecoilValue(userTokenAtom);
-  const params = useParams();
-  const path = params.post_id;
   const [showAlert, setShowAlert] = useState(true);
 
   const report = async() => {
-    try {
-    await axios.post(`https://api.mandarin.weniv.co.kr/post/${path}/report`,null,{
-        headers:{          
-            Authorization: `Bearer ${token}`
-        }
-      });
-        setShowAlert(false)
-        setTimeout(()=>{
-          setShowAlert(true)
-          setclosemodal((prev)=>!prev)
-        },1000)
-      } catch(error){console.error('게시물 신고를 실패했습니다.',error);    
-    }
+    reportPost(postid)
+    setShowAlert(false)
+    setTimeout(()=>{
+      setShowAlert(true)
+      setclosemodal((prev)=>!prev)
+    },1000)
   }
-
-  const homereport = async() => {
-    try {
-    await axios.post(`https://api.mandarin.weniv.co.kr/post/${postid}/report`,null,{
-        headers:{          
-            Authorization: `Bearer ${token}`
-        }
-      });
-        setShowAlert(false)
-        setTimeout(()=>{
-          setclosemodal((prev)=>!prev)
-          setShowAlert(true)
-        },1000)
-      } catch(error){console.error('게시물 신고를 실패했습니다.',error);    
-    }
-  }
-
-
 
   return (
     <>
@@ -62,11 +32,11 @@ export default function ReportModal({closemodal, setclosemodal,postid}) {
         <Modal>
           <Deltext>이 게시물을 신고 하시겠습니까?</Deltext>
           <Btn>
-            <BtnDel onClick={path?report:homereport}>신고</BtnDel>
+            <BtnReport onClick={report}>신고</BtnReport>
             <BtnCancel onClick={()=>{setclosemodal((prev)=>!prev)}}>취소</BtnCancel>
           </Btn>
         </Modal>
-        { !showAlert? <NoticeReportModal/>:null}
+        { !showAlert? <AlertModal type={`report`}/>:null}
       </BgCont> : null
       }
     </>
@@ -110,7 +80,7 @@ const BtnCancel = styled.button`
   }
 `;
 
-const BtnDel = styled(BtnCancel)`
+const BtnReport = styled(BtnCancel)`
   color: #EB5757;
   border-right: 1px solid #dbdbdb;
 `;

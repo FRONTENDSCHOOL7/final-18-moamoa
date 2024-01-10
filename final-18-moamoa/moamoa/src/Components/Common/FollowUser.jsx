@@ -39,7 +39,7 @@ export default function FollowUser(props) {
           width='56'
           isFollowed={isFollowed}
           buttonText={isFollowed ? '취소' : '팔로우'}
-          backgroundColor={isFollowed ? '#fff' : '#87b7e4'}
+          backgroundColor={isFollowed ? '#fff' : 'var(--buttonActive)'}
           color={isFollowed ? '#767676' : '#fff'}
           bordered={isFollowed}
           onClickHandler={handleButtonClick}

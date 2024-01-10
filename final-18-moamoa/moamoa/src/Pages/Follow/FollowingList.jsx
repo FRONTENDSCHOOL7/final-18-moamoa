@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import HeaderFollowingList from '../../Components/Common/HeaderFollowingList';
+import Header from '../../Components/Common/Header/Header';
 import FollowingUser from '../../Components/Common/FollowingUser';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
-import { FollowingAPI } from '../../API/Follow/FollowingAPI';
+import { FollowingPageAPI } from '../../API/Follow/FollowAPI';
 import Footer from '../../Components/Common/Footer';
-import styled from 'styled-components';
+import { FollowingWrap } from './FollowStyle';
 
 export default function FollowingList() {
   const token = useRecoilValue(userTokenAtom);
@@ -18,7 +18,7 @@ export default function FollowingList() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const followerList = await FollowingAPI(token, accountname);
+        const followerList = await FollowingPageAPI(token, accountname);
         setfollowing(followerList);
       } catch (error) {
         setError(error);
@@ -26,12 +26,11 @@ export default function FollowingList() {
     }
     fetchData();
   }, [token, setfollowing]);
-  console.log(following);
 
   return (
     <div>
       <Container>
-        <HeaderFollowingList />
+        <Header type='follow' />
         <FollowingWrap>
           {following.map((item, index) => {
             const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
@@ -51,7 +50,3 @@ export default function FollowingList() {
     </div>
   );
 }
-
-const FollowingWrap = styled.div`
-  margin-top: 48px;
-`;

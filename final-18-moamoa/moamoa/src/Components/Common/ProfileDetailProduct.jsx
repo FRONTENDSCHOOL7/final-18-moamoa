@@ -2,162 +2,40 @@
   설명: 프로필 상세 페이지 진행중인 행사목록
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.11.01
+  마지막 수정 날까: 2023.12.15
 */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ProductImgBox from '../../Components/Common/ProductImgBox';
-import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
+
+import ProductImgBox from '../Common/ProductImgBox';
+
 import leftBtn from '../../Assets/images/left-vector.png';
 import rightBtn from '../../Assets/images/right-vector.png';
-import CloseIcon from '../../Assets/icons/x.png';
-import NoticeModal from '../Modal/NoticeModal';
 
-// 상품 수정 페이지 이동 테스트 필요
-const ConfirmDelModal = ({ delProduct, closeModal, showNoticeModal }) => {
-  return (
-    <ConfirmModal>
-      <Deltext>정말 삭제하시겠습니까?</Deltext>
-      <BtnWrap>
-        <DelBtn onClick={delProduct}>삭제</DelBtn>
-        <CancelBtn onClick={closeModal}>취소</CancelBtn>
-      </BtnWrap>
-      {!showNoticeModal && <NoticeModal />}
-    </ConfirmModal>
-  );
-};
-ConfirmDelModal.propTypes = {
-  delProduct: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  showNoticeModal: PropTypes.bool.isRequired,
-};
+import { productList } from '../../API/Product/ProductAPI';
 
-function MyProductClick({ productId, closeModal, fetchData }) {
-  const navigate = useNavigate();
-  const token = useRecoilValue(userToken);
+import MyProductClick from './MyProductClick';
 
-  const [showConfirmDelModal, setShowConfirmDelModal] = useState(false);
-  const [showNoticeModal, setShowNoticeModal] = useState(true);
-
-  const delProduct = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${productId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    console.log(json);
-    closeModal();
-    // window.location.reload();
-    // 추후 삭제 알림 모달 활성화 되도록 수정할 것
-    setShowNoticeModal(false);
-    // await setTimeout(() => {
-    // }, 1000);
-    fetchData();
-  };
-
-  const openConfirmDelModal = () => {
-    setShowConfirmDelModal(true); // 삭제 확인 모달을 열기
-  };
-
-  const closeConfirmDelModal = () => {
-    setShowConfirmDelModal(false); // 삭제 확인 모달을 닫기
-  };
-
-  const productID = { product_id: productId };
-
-  return (
-    <ModalCont>
-      <Modal>
-        <section>
-          <Btn onClick={closeModal}>
-            <img src={CloseIcon} alt='닫기' />
-          </Btn>
-          <BtnDel type='button' onClick={openConfirmDelModal}>
-            삭제
-          </BtnDel>
-          <BtnModify
-            type='button'
-            onClick={() => {
-              navigate('/product/edit', { state: productID });
-            }}
-          >
-            수정
-          </BtnModify>
-          <BtnProductDesc
-            type='button'
-            onClick={() => {
-              navigate(`/product/detail/${productId}`);
-            }}
-          >
-            상세 보기
-          </BtnProductDesc>
-        </section>
-      </Modal>
-      {showConfirmDelModal && (
-        <ConfirmDelModal
-          delProduct={delProduct}
-          closeModal={closeConfirmDelModal}
-          showNoticeModal={showNoticeModal}
-        />
-      )}
-    </ModalCont>
-  );
-}
-
-MyProductClick.propTypes = {
-  productId: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  fetchData: PropTypes.func.isRequired,
-};
-
-export default function ProfileDetailProduct() {
+export default function ProfileDetailProduct({ userInfoData, reFetchInfo }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [eventList, setEventList] = useState([]);
-  const token = useRecoilValue(userToken);
-  const userAccountname = location.pathname.replace('/profile/', ''); // 경로에서 사용자 accountname을 추출
+
+  const userAccountname = location.pathname.replace('/profile/', ''); // myInfo인지 확인
   const [showMyProductOptions, setShowMyProductOptions] = useState(false);
   const [productId, setProductId] = useState('');
 
-  const getMyAcnt = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/user/myinfo`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    return json.user['accountname'];
-  };
-
-  const getEventList = async (accountName) => {
-    const acnt = userAccountname === 'myInfo' ? accountName : userAccountname;
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${acnt}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    setEventList(json.product);
-  };
-  const fetchData = async () => {
-    const accountName = await getMyAcnt();
-    getEventList(accountName);
+  const fetchProduct = async () => {
+    const response = await productList(userInfoData.profileAccountname);
+    setEventList(response.product);
   };
 
   useEffect(() => {
-    fetchData();
+    fetchProduct();
   }, []);
 
   const handleProductClick = async (productId) => {
@@ -165,7 +43,6 @@ export default function ProfileDetailProduct() {
       setProductId(productId);
       setShowMyProductOptions(true);
     } else {
-      // 상품 상세 페이지 이동 테스트 필요
       navigate(`/product/detail/${productId}`);
     }
   };
@@ -209,9 +86,11 @@ export default function ProfileDetailProduct() {
               <ProfileProduct ref={profileProductRef}>
                 {showMyProductOptions && (
                   <MyProductClick
+                    userInfoData={userInfoData}
+                    reFetchInfo={reFetchInfo}
                     productId={productId}
                     closeModal={closeModal}
-                    fetchData={fetchData}
+                    fetchProduct={fetchProduct}
                   />
                 )}
 
@@ -253,6 +132,11 @@ export default function ProfileDetailProduct() {
     </ProductItro>
   );
 }
+
+ProfileDetailProduct.propTypes = {
+  userInfoData: PropTypes.object.isRequired,
+  reFetchInfo: PropTypes.func.isRequired,
+};
 
 const ProductItro = styled.div`
   padding: 16px;
@@ -364,101 +248,4 @@ const ProductBox = styled.ul`
     font-size: 11px;
     font-weight: 400;
   }
-`;
-
-//모달 디자인
-const ModalCont = styled.div`
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 100;
-`;
-
-const Modal = styled.div`
-  width: 39rem;
-  height: 20.7rem;
-  margin: auto;
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%);
-  background-color: white;
-  z-index: 10;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-
-  display: flex;
-  flex-direction: column;
-`;
-
-const Btn = styled.button`
-  width: 5rem;
-  height: 5rem;
-  position: absolute;
-  right: 0;
-`;
-
-const BtnDel = styled.button`
-  width: 39rem;
-  padding: 2rem;
-  margin-top: 1rem;
-  font-size: 1.4rem;
-  color: #eb5757;
-  &:hover {
-    font-weight: bold;
-  }
-`;
-
-const BtnModify = styled(BtnDel)`
-  color: #4f9ee9;
-  border-top: 1px solid #dbdbdb;
-  padding-top: 2.5rem;
-`;
-
-const BtnProductDesc = styled(BtnModify)`
-  color: #000;
-`;
-
-const ConfirmModal = styled.div`
-  width: 26rem;
-  height: 14rem;
-  background-color: #fff;
-  border-radius: 1rem;
-  position: fixed;
-  left: 50%;
-  top: 30%;
-  transform: translate(-50%);
-  padding: 3rem 0 0;
-  box-sizing: border-box;
-`;
-
-const BtnWrap = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const Deltext = styled.p`
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: 500;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid #dbdbdb;
-`;
-
-const CancelBtn = styled.button`
-  width: 12.5rem;
-  height: 6.5rem;
-  font-size: 1.4rem;
-  color: #000;
-  &:hover {
-    font-weight: bold;
-  }
-`;
-
-const DelBtn = styled(CancelBtn)`
-  color: #eb5757;
-  border-right: 1px solid #dbdbdb;
 `;

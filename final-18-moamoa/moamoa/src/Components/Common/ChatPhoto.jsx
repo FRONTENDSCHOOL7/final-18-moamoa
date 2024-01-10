@@ -8,7 +8,7 @@ ChatPhoto.propTypes = {
 export default function ChatPhoto(props) {
   return (
     <div>
-      <Photo src={props.src} alt='' />
+      <Photo src={props.src} alt='유저 프로필 사진' />
     </div>
   );
 }

@@ -2,13 +2,17 @@
   설명: 내 프로필 수정 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.10.30
+  마지막 수정 날까: 2023.12.15
+
+  추가 작성자: 유의진 
+  추가 내용: 이미지 크롭 기능
+  작성 날짜: 2023.12.26
 */
 
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경완료
+import userToken from '../../Recoil/userTokenAtom';
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
 import ButtonSubmit from '../../Components/Common/Button';
@@ -17,6 +21,11 @@ import styled from 'styled-components';
 
 import { HeaderContainer, HiddenH1 } from '../Post/UploadEditPostStyle';
 
+import { getMyProfileData } from '../../API/Profile/ProfileAPI';
+
+import { useImage } from '../../Hooks/Common/useImage';
+import ImageCropModal from '../../Components/Modal/ImageCropModal';
+
 function EditProfile() {
   //기존 사용자의 정보를 가져오기
   const token = useRecoilValue(userToken);
@@ -24,46 +33,51 @@ function EditProfile() {
 
   const [username, setUsername] = useState('');
   const [accountname, setAccountname] = useState('');
-  const [imgSrc, setImgSrc] = useState('');
+  // const [imgSrc, setImgSrc] = useState('');
   const [intro, setIntro] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+
+  const { imgData, setImgData, showImgModal, onSelectFile, onCancel, setCroppedImageFor } =
+    useImage(null);
+
+  // const [errorMessage, setErrorMessage] = useState('');
   const [accountError, setAccountError] = useState('');
   const [accountLengthError, setAccountLengthError] = useState('');
   const [introError, setIntroError] = useState('');
   const [duplicateIdError, setDuplicateIdError] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
   const [userType, setUserType] = useState('');
 
   // 내 정보 API
   const getInitInfo = async () => {
-    console.log(token);
-    const res = await fetch('https://api.mandarin.weniv.co.kr/user/myinfo', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const json = await res.json();
-    console.log(json);
+    try {
+      const res = await await await getMyProfileData();
 
-    if (json && json.user) {
-      setImgSrc(json.user['image'] || '');
+      if (res && res.user) {
+        // setImgSrc(res.user['image'] || '');
+        setImgData((prevImage) => ({
+          ...prevImage,
+          imageUrl: res.user['image'],
+        }));
 
-      setAccountname(json.user['accountname']);
+        setAccountname(res.user['accountname']);
 
-      setUserType(json.user['username'].slice(0, 3));
+        setUserType(res.user['username'].slice(0, 3));
 
-      setUsername(json.user['username'].slice(3, json.user['username'].length) || '');
+        setUsername(res.user['username'].slice(3, res.user['username'].length) || '');
 
-      setIntro(json.user['intro'] || '');
+        setIntro(res.user['intro'] || '');
+      }
+    } catch (error) {
+      console.log('기존 프로필 정보를 가져올 수 없습니다.');
     }
   };
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행합니다.
     getInitInfo();
   }, []);
+
   // 프로필 수정 API
   const edit = async (editData) => {
     // const token = localStorage.getItem('token');
@@ -131,40 +145,40 @@ function EditProfile() {
     validateIntroLength(e.target.value);
   };
 
-  const uploadImage = async (imageFile) => {
-    const baseUrl = 'https://api.mandarin.weniv.co.kr/';
-    const reqUrl = baseUrl + 'image/uploadfile';
-    // 폼데이터 만들기
-    const form = new FormData();
-    // 폼데이터에 값 추가하기
-    // 폼데이터.append("키","값")
-    form.append('image', imageFile);
-    // 폼바디에 넣어서 요청하기
-    const res = await fetch(reqUrl, {
-      method: 'POST',
-      body: form,
-    });
-    const json = await res.json();
-    console.log(baseUrl + json.filename);
-    const imageUrl = baseUrl + json.filename;
-    setImgSrc(imageUrl);
-  };
+  // const uploadImage = async (imageFile) => {
+  //   const baseUrl = 'https://api.mandarin.weniv.co.kr/';
+  //   const reqUrl = baseUrl + 'image/uploadfile';
+  //   // 폼데이터 만들기
+  //   const form = new FormData();
+  //   // 폼데이터에 값 추가하기
+  //   // 폼데이터.append("키","값")
+  //   form.append('image', imageFile);
+  //   // 폼바디에 넣어서 요청하기
+  //   const res = await fetch(reqUrl, {
+  //     method: 'POST',
+  //     body: form,
+  //   });
+  //   const json = await res.json();
+  //   console.log(baseUrl + json.filename);
+  //   const imageUrl = baseUrl + json.filename;
+  //   setImgSrc(imageUrl);
+  // };
 
-  const handleChangeImage = (e) => {
-    // 파일 가져오기
-    const imageFile = e.target.files[0];
+  // const handleChangeImage = (e) => {
+  //   // 파일 가져오기
+  //   const imageFile = e.target.files[0];
 
-    // 파일이 선택되지 않았을 경우 오류 메시지 설정
-    if (!imageFile) {
-      setErrorMessage('파일을 선택해주세요.');
-      return;
-    }
+  //   // 파일이 선택되지 않았을 경우 오류 메시지 설정
+  //   if (!imageFile) {
+  //     setErrorMessage('파일을 선택해주세요.');
+  //     return;
+  //   }
 
-    // 오류 메시지 초기화
-    setErrorMessage('');
+  //   // 오류 메시지 초기화
+  //   setErrorMessage('');
 
-    uploadImage(imageFile);
-  };
+  //   uploadImage(imageFile);
+  // };
 
   const submitEdit = (e) => {
     e.preventDefault();
@@ -176,7 +190,8 @@ function EditProfile() {
         username: fullUsername,
         accountname: accountname,
         intro: intro,
-        image: imgSrc,
+        // image: imgSrc,
+        image: imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl,
       },
     };
     edit(editData);
@@ -192,7 +207,7 @@ function EditProfile() {
       !duplicateIdError &&
       username &&
       accountname &&
-      imgSrc &&
+      // imgSrc &&
       intro;
 
     // 상태 변수 업데이트
@@ -205,7 +220,7 @@ function EditProfile() {
     duplicateIdError,
     username,
     accountname,
-    imgSrc,
+    // imgSrc,
     intro,
   ]);
 
@@ -220,26 +235,42 @@ function EditProfile() {
         <Gobackbtn />
         <ButtonSubmit buttonText='저장' onClickHandler={submitEdit} disabled={isButtonDisabled} />
       </HeaderContainer>
-
+      {showImgModal && (
+        <ImageCropModal
+          imageUrl={imgData.imageUrl}
+          cropInit={imgData.crop}
+          zoomInit={imgData.zoom}
+          onCancel={onCancel}
+          setCroppedImageFor={setCroppedImageFor}
+          cropShape='round'
+          aspect={1 / 1}
+        />
+      )}
       <section>
         <HiddenH1>내 프로필 수정</HiddenH1>
         <form onSubmit={handleFormSubmit}>
           {/* 프로필 이미지 */}
           <ProfileImg>
             <label htmlFor='profileImg'>
-              <img src={imgSrc} alt='Profile' id='imagePre' />
+              <img
+                src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
+                alt={'프로필 이미지'}
+                id='imagePre'
+              />
+              {/* <img src={imgSrc} alt='Profile' id='imagePre' /> */}
               <img src={uploadFile} alt='' />
             </label>
             <input
               type='file'
-              onChange={handleChangeImage}
+              onChange={onSelectFile}
+              // onChange={handleChangeImage}
               id='profileImg'
               name='image'
               accept='image/*'
               style={{ display: 'none' }}
               required
             />
-            <EorrorMsg style={{ color: 'red' }}>{errorMessage}</EorrorMsg>
+            {/* <EorrorMsg style={{ color: 'red' }}>{errorMessage}</EorrorMsg> */}
           </ProfileImg>
           <EditProfileBox>
             <div>
@@ -304,6 +335,7 @@ function EditProfile() {
 export default EditProfile;
 
 const ProfileImg = styled.div`
+  margin-top: 48px;
   background: linear-gradient(to bottom, #ffc700 50%, #ffc700 calc(30% + 65px), transparent 50%);
   padding-top: 65px;
   padding-left: 20px;

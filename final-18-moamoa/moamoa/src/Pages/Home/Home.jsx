@@ -1,65 +1,75 @@
-import React, { useEffect } from 'react';
-import userToken from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
-import { useRecoilValue, useRecoilState } from 'recoil';
-import HomePostCardList from '../../Components/Home/HomePostCardList';
-import followPostAtom from '../../Recoil/followPostAtom'; //파일 경로 변경 완료
+import React, { useEffect, useState } from 'react';
+import PostList from '../../Components/Post/PostList';
 import styled from 'styled-components';
-import HomeFeed from './HomeFeed';
-import Header from '../../Components/Common/HeaderBasic';
+import HomeSearch from './HomeSearch';
+import Header from '../../Components/Common/Header/Header';
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
+import { homePostList } from '../../API/Post/PostAPI';
+import { useRecoilState } from 'recoil';
+import postsAtom from '../../Recoil/postsAtom';
+import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
-  const [posts, setPosts] = useRecoilState(followPostAtom);
-  const token = useRecoilValue(userToken);
+  const limit = 5;
+  const [isLoading, setIsLoading] = useState(false);
+  const [postData, setPostData] = useRecoilState(postsAtom);
+  const [ref, inView] = useInView();
+  const [skip, setSkip] = useState(0);
 
   useEffect(() => {
-    const getPostInfo = async () => {
-      const reqUrl = `https://api.mandarin.weniv.co.kr/post/feed`;
-
+    const getHomePostList = async () => {
       try {
-        const res = await fetch(reqUrl, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-type': 'application/json',
-          },
-        });
-
-        if (res.status === 200) {
-          const result = await res.json();
-          setPosts(result.posts);
-        } else {
-          console.error('페이지를 불러오는데 실패했습니다.');
-        }
+        const postListData = await homePostList(limit, skip);
+        console.log(postListData.posts);
+        setPostData(postListData.posts);
+        // setPostData((prevData) => [...prevData, ...postListData.posts]);
+        setTimeout(() => {
+          setIsLoading(true);
+        }, 1200);
       } catch (error) {
-        console.error('서버와 통신을 실패했습니다.', error);
+        console.error('페이지를 불러오는데 실패했습니다.');
       }
     };
-
-    getPostInfo();
+    getHomePostList();
   }, []);
+
+  useEffect(() => {
+    if (inView && !isLoading) {
+      setSkip((prevSkip) => prevSkip + limit);
+    }
+  }, [inView, isLoading]);
 
   return (
     <Container>
-      <Header />
+      <Header type='home' />
       <HomeWrap>
-        {posts.length !== 0 ? (
+        {postData && Object.keys(postData).length !== 0 ? (
           <HomeContainer>
             <PostBg>
-              <PostList>
-                {posts.map((item) => {
-                  return <HomePostCardList key={item.id} post={item} />;
-                })}
-              </PostList>
-            
-          </PostBg>
-        </HomeContainer>
-      ) : (
-        <HomeContainer>
-            <HomeFeed />
-        </HomeContainer>
-      )}
+              {postData.map((item) => {
+                return <PostList key={item.id} post={item} isLoading={isLoading} />;
+              })}
+              {/* {postData.map((item, index) => {
+                const isLastPost = index === postData.length - 1;
+                return (
+                  <PostList
+                    key={item.id}
+                    post={item}
+                    isLoading={isLoading}
+                    ref={isLastPost ? ref : null}
+                  />
+                );
+              })} */}
+
+              <div ref={ref} />
+            </PostBg>
+          </HomeContainer>
+        ) : (
+          <HomeContainer>
+            <HomeSearch />
+          </HomeContainer>
+        )}
       </HomeWrap>
       <Footer />
     </Container>
@@ -71,7 +81,6 @@ const HomeWrap = styled.div`
   margin-top: 35px;
   margin-bottom: 60px;
   flex: 1;
-  // height: 100%;
 `;
 const HomeContainer = styled.div`
   width: 100%;
@@ -83,9 +92,4 @@ const PostBg = styled.div`
   height: 100%;
   margin: auto;
   background-color: #fff;
-`;
-const PostList = styled.ul`
-  box-sizing: border-box;
-  background-color: #ffffff;
-  margin: 15px 1.6rem 8rem;
 `;

@@ -17,7 +17,7 @@ export default function ChatModal() {
   return (
     <>
       <Quitbtn onClick={openModal}>
-        <img src={MoreImg} />
+        <MoreImage src={MoreImg} alt="더보기 버튼"/>
       </Quitbtn>
       {modal && (
         <BgCont>
@@ -40,8 +40,12 @@ export default function ChatModal() {
 
 const Quitbtn = styled.div`
   cursor: pointer;
-  font-size: 24px;
 `;
+
+const MoreImage = styled.img`
+  width: 2.2rem;
+`
+
 const BgCont = styled.div`
   width: 100%;
   height: 100%;

@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom';
 import PropTypes from 'prop-types';
-import NoticeReportModal from '../Modal/NoticeReportModal';
+import AlertModal from '../Modal/AlertModal';
+import { deleteComment } from '../../API/Comment/CommnetAPI';
 
 
 CommentReportModal.propTypes = {
@@ -16,25 +14,17 @@ CommentReportModal.propTypes = {
 
 export default function CommentReportModal({commentid, showModal , setShowModal}) {
   
-  const token = useRecoilValue(userTokenAtom);
   const params = useParams();
-  const path = params.post_id;
+  const postId = params.post_id;
   const [showAlert, setShowAlert] = useState(true);
 
   const report = async() => {
-    try {
-    await axios.post(`https://api.mandarin.weniv.co.kr/post/${path}/${commentid}/report`,null,{
-        headers:{          
-            Authorization: `Bearer ${token}`
-        }
-      });
-        setShowAlert(false)
-        setTimeout(()=>{
-          setShowAlert(true)
-          setShowModal(true)
-        },1000)
-      } catch(error){console.error('게시물 신고를 실패했습니다.',error);    
-    }
+    await deleteComment(postId, commentid)
+    setShowAlert(false)
+    setTimeout(()=>{
+      setShowAlert(true)
+      setShowModal(true)
+    },1000)  
   }
 
   return (
@@ -42,13 +32,13 @@ export default function CommentReportModal({commentid, showModal , setShowModal}
       { !showModal &&
       <BgCont>
         <Modal>
-          <Deltext>이 게시물을 신고 하시겠습니까?</Deltext>
+          <Deltext>댓글을 신고 하시겠습니까?</Deltext>
           <Btn>
             <BtnDel onClick={report}>신고</BtnDel>
             <BtnCancel onClick={()=>setShowModal(true)}>취소</BtnCancel>
           </Btn>
         </Modal>
-        { !showAlert? <NoticeReportModal/>:null}
+        { !showAlert? <AlertModal type={`report`}/>:null}
       </BgCont>
       }
     </>
@@ -72,8 +62,8 @@ const Modal = styled.div`
   border-radius: 1rem;
   position: fixed;
   left: 50%;
-  top: 30%;
-  transform: translate(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   padding: 3rem 0 0;
   box-sizing: border-box;
 `;

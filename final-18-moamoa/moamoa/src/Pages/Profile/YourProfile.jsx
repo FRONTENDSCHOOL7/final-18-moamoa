@@ -2,7 +2,7 @@
   설명: 사용자 accountname의 프로필 페이지(남의 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.23
-  마지막 수정 날까: 2023.11.05
+  마지막 수정 날까: 2023.12.08
 */
 
 import React, { useState, useEffect } from 'react';
@@ -11,10 +11,11 @@ import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import ProfileDetail from '../../Components/Common/ProfileDetail';
-import FollowButton from '../../Components/Common/FollowButton';
-import ProfileDetailPost from '../../Components/Common/ProfileDetailPost';
-import ProfileDetailProduct from '../../Components/Common/ProfileDetailProduct';
+import ProfileDetail from '../../Components/Profile/ProfileDetail';
+
+import FollowButton from '../../Components/Profile/FollowButton';
+import ProfileDetailPost from '../../Components/Profile/ProfileDetailPost';
+import ProfileDetailProduct from '../../Components/Profile/ProfileDetailProduct';
 import styled from 'styled-components';
 
 import MsgIcon from '../../Assets/icons/message-btn.svg';
@@ -23,9 +24,9 @@ import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import Footer from '../../Components/Common/Footer';
 import { Container } from '../../Components/Common/Container';
-import HeaderKebab from '../../Components/Common/HeaderKebab';
+import HeaderKebab from '../../Components/Common/Header/HeaderKebab';
 
-import GetYourinfoAPI from '../../API/Profile/GetYourinfoAPI';
+import { getYourProfileData } from '../../API/Profile/ProfileAPI';
 
 // 프로필보기
 function YourProfile() {
@@ -47,7 +48,7 @@ function YourProfile() {
     setIsLoading(true); // API 호출 전에 로딩 상태를 true로 설정
     try {
       const infoUrl = location.pathname;
-      const res = await GetYourinfoAPI(infoUrl, token);
+      const res = await getYourProfileData(infoUrl);
 
       setProfileImg(res.profile['image']);
       setProfileAccountname(res.profile['accountname']);
@@ -79,12 +80,9 @@ function YourProfile() {
     isFollow,
   };
 
-
-
   const userName = userInfoData.profileUsername
     .slice(3, userInfoData.profileUsername.length)
     .replace(/ /g, '-');
-
 
   console.log(userType);
   // 현제 페이지 주소 복사
@@ -99,7 +97,7 @@ function YourProfile() {
         console.error('주소 복사 실패!: ', err);
       });
   }
-  
+
   return (
     <Container>
       <section>
@@ -107,11 +105,10 @@ function YourProfile() {
         <HiddenH1>남의 프로필</HiddenH1>
         <section>
           <ProfileTop>
-            <ProfileDetail userInfoData={userInfoData} token={token} />
+            <ProfileDetail userInfoData={userInfoData} />
             <Btns>
               <FollowButton
                 userAccount={userInfoData.profileAccountname}
-                token={token}
                 isFollow={!isLoading && userInfoData.isFollow}
                 reFetchInfo={UserInfo}
               />
@@ -133,8 +130,10 @@ function YourProfile() {
 
           {/* 라우터에 연결되면 채팅방으로 연결 */}
         </section>
-        {userType === 'organization' ? <ProfileDetailProduct /> : null}
-        <ProfileDetailPost />
+        {userType === 'organization' ? (
+          <ProfileDetailProduct userInfoData={userInfoData} reFetchInfo={UserInfo} />
+        ) : null}
+        <ProfileDetailPost accountName={profileAccountname} />
         <Footer />
       </section>
     </Container>

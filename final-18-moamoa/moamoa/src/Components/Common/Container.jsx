@@ -10,7 +10,6 @@ export const Container = styled.div`
   flex-direction: column;
   position: relative;
   background-color: #fff;
-  /* border: 1px solid black; */
 `;
 export const ContainerPercent = styled(Container)`
   height: 100%;

@@ -1,38 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import userTokenAtom from '../../Recoil/userTokenAtom'; //파일 경로 변경 완료
-import PostCardItem from '../../Components/Post/PostCardItem';
+import PostItem from '../../Components/Post/PostItem';
 import styled from 'styled-components';
 import Comment from '../../Components/Comment/Comment';
-import HeaderKebab from '../../Components/Common/HeaderKebab';
-import PostDetailAPI from '../../API/Post/PostDetailAPI';
+import HeaderKebab from '../../Components/Common/Header/HeaderKebab';
+import { getPostDetail } from '../../API/Post/PostAPI';
 
 export default function ProductDetail() {
-  const token = useRecoilValue(userTokenAtom);
   const [post, setPost] = useState();
-  const {post_id} = useParams();
+  const { post_id } = useParams();
 
-  const getPostDetail = (data) => {
-    setPost(data.post);
-  }
+  const getPostInfo = () => getPostDetail(post_id);
 
-  const getPostData = () => PostDetailAPI(token, post_id, getPostDetail);
-
-  useEffect(()=>{
-    const getData = async () => {
-      await getPostData();
-    }
-  getData();
-  },[])
+  useEffect(() => {
+    const getPostData = async () => {
+      const postData = await getPostInfo();
+      setPost(postData.post);
+    };
+    getPostData();
+  }, []);
   return (
     <>
       {post && (
         <PostContainer>
           <HeaderKebab />
-          <PostCardContainer>
-            <PostCardItem post={post} />
-          </PostCardContainer>
+          <PostItemContainer>
+            <PostItem post={post} />
+          </PostItemContainer>
           <Comment postId={post_id} />
         </PostContainer>
       )}
@@ -51,7 +45,7 @@ const PostContainer = styled.div`
     display: none;
   }
 `;
-const PostCardContainer = styled.div`
+const PostItemContainer = styled.div`
   padding: 0 1.6rem 1.5rem;
   padding-top: 64px;
   li {
