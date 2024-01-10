@@ -11,7 +11,7 @@ RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename={'https://frontendschool7.github.io/final-18-moamoa'}>
         <GlobalStyle />
         {/* <Profile /> */}
 
