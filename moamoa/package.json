@@ -31,9 +31,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d moamoa build"
   },
-  "homepage": "https://frontendschool7.github.io/final-18-moamoa",
+  "homepage": "https://frontendschool7.github.io/final-18-moamoa/moamoa",
   "eslintConfig": {
     "extends": [
       "react-app",
