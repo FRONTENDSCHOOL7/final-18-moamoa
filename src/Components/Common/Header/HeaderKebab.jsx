@@ -40,12 +40,15 @@ export default function HeaderKebab() {
     closeConfirmLogoutModal();
 
     setToken('');
+    console.log(localStorage);
     localStorage.removeItem('token');
+    localStorage.removeItem('recoil-persist');
     setIsLoginState(false);
     setAccountName('');
     setUserName('');
     setPostsData(null);
     navigate('/user/login');
+    console.log(localStorage);
   };
 
   //모달 창 닫기
