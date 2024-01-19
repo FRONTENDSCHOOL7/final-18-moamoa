@@ -38,9 +38,7 @@ export default function HeaderKebab() {
   const logout = () => {
     // 로그아웃 로직 처리
     closeConfirmLogoutModal();
-
     setToken('');
-    console.log(localStorage);
     localStorage.removeItem('token');
     localStorage.removeItem('recoil-persist');
     setIsLoginState(false);
@@ -48,7 +46,6 @@ export default function HeaderKebab() {
     setUserName('');
     setPostsData(null);
     navigate('/user/login');
-    console.log(localStorage);
   };
 
   //모달 창 닫기
