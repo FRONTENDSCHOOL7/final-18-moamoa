@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import homeButton from '../../Assets/icons/icon-home.svg';
 import chatButton from '../../Assets/icons/icon-message.svg';
@@ -12,6 +12,9 @@ import chatButtonFill from '../../Assets/icons/icon-message-fill.svg';
 import postButtonFill from '../../Assets/icons/icon-post-fill.svg';
 import festivalButtonFill from '../../Assets/icons/icon-festival-fill.svg';
 import profileButtonFill from '../../Assets/icons/icon-user-fill.svg';
+import tabletLogoButton from '../../Assets/icons/icon-tablet-Logo.svg';
+import logoutButton from '../../Assets/icons/icon-logout.svg';
+import desktopLogoButton from '../../Assets/images/MOAMOA.png';
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -58,12 +61,25 @@ export default function Footer() {
 
   return (
     <TabMenu>
+      <Link to='/home'>
+        <TabletLogo src={tabletLogoButton} />
+        <DesktopLogo src={desktopLogoButton} />
+      </Link>
       {tabs.map((tab) => (
         <TabButton key={tab.name} onClick={() => handleToggleSwitch(tab.name)}>
-          <TabBtnImg src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon} alt={`${tab.name}으로 이동`}/>
+          <TabBtnImg
+            src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon}
+            alt={`${tab.name}으로 이동`}
+          />
+
           <TabLabel $colors={toggleSwitch === tab.name ? +true : +false}>{tab.label}</TabLabel>
         </TabButton>
       ))}
+
+      <TabletLogOut>
+        <img src={logoutButton} alt='로그아웃' />
+        <TabLabel className='logout'>로그아웃</TabLabel>
+      </TabletLogOut>
     </TabMenu>
   );
 }
@@ -78,6 +94,24 @@ const TabMenu = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
+  @media (min-width: 768px) {
+    top: 0;
+    bottom: 0;
+    left: 100px;
+    width: 120px;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (min-width: 1200px) {
+    top: 0;
+    bottom: 0;
+    left: 100px;
+    width: 240px;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const TabButton = styled.button.withConfig({
@@ -88,17 +122,79 @@ const TabButton = styled.button.withConfig({
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  align-items: center;
   gap: 4px;
-`;
-const TabBtnImg = styled.img`
+  align-items: center;
+
+  @media (min-width: 768px) {
+    margin-bottom: 16px;
+  }
+  @media (min-width: 1200px) {
+    margin-left: 104px;
+    justify-content: start;
+    flex-direction: row;
+    gap: 23px;
+    width: 100%;
+  }
+
   &:hover {
     opacity: 0.5;
   }
+`;
+const TabBtnImg = styled.img`
   padding-top: 5px;
 `;
+
 const TabLabel = styled.span`
   font-size: 10px;
   color: ${(props) => (props.$colors ? '#FFC700' : '#fff')};
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+  @media (min-width: 1200px) {
+    font-size: 20px;
+  }
+`;
+
+const TabletLogo = styled.img`
+  @media (max-width: 767px) {
+    display: none;
+  }
+  @media (min-width: 1200px) {
+    display: none;
+  }
+  margin-block: 60px;
+`;
+const TabletLogOut = styled.button`
+  @media (max-width: 767px) {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 50px;
+    bottom: 80px;
+    .logout {
+      margin-top: 5px;
+      transform: translateX(-30%);
+    }
+  }
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    gap: 34px;
+    .logout {
+    }
+  }
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const DesktopLogo = styled.img`
+  width: 172px;
+  margin-block: 60px;
+  @media (max-width: 1199px) {
+    display: none;
+  }
 `;
