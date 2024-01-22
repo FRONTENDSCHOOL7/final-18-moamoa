@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { TempLoginButton } from './SplashLoginBtn';
 
 export const StyledButton = styled(TempLoginButton)`
-  margin: 0 auto;
   width: 322px;
   height: 44px;
   border-radius: 44px;
@@ -45,9 +44,38 @@ export const Modal = styled.div.withConfig({
   a:hover {
     font-size: 13px;
   }
+  @media (min-width: 768px) {
+    position: fixed;
+    height: 740px;
+    top: 0px;
+
+    right: ${(props) => (props.visible === true ? '-195px' : '-600px')};
+    padding: 100px 0 20px;
+    a {
+      padding-top: 0;
+    }
+    .joinGuide {
+      padding-top: 0;
+      margin-block: 50px 20px;
+      color: var(--buttonDisable);
+      font-size: 12px;
+    }
+  }
+`;
+export const LoginH1 = styled.h1`
+  @media (max-width: 767px) {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    font-size: 24px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+  }
 `;
 
-export const SVGgroup = styled.div`
+export const SVGgroup = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'visible',
+})`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -67,7 +95,16 @@ export const SVGgroup = styled.div`
   img {
     width: 202px;
   }
+  @media (min-width: 768px) {
+    position: absolute;
+    top: 20%;
+    transition: 0.5s ease;
+    left: ${(props) => (props.visible === true ? '25%' : '50%')};
+    display: flex;
+    transform: translate(-50%, -50%);
+  }
 `;
+
 export const AnimationFireworks = styled.div`
   [class^='firework-'] {
     z-index: 100;
@@ -79,7 +116,7 @@ export const AnimationFireworks = styled.div`
   .firework-1 {
     animation: firework-sm 1.2s both infinite;
     animation-delay: 1.1s;
-    top: 19%;
+    top: 15%;
     left: 15%;
   }
   .firework-2 {
@@ -153,6 +190,57 @@ export const AnimationFireworks = styled.div`
     animation-delay: 0.8s;
     top: 30%;
     left: 58%;
+  }
+  @media (min-width: 768px) {
+    .firework-1 {
+      top: 45%;
+      left: -19%;
+    }
+    .firework-2 {
+      top: 40%;
+      left: 9%;
+    }
+    .firework-3 {
+      top: 75%;
+    }
+    .firework-4 {
+      top: 194%;
+    }
+    .firework-5 {
+      top: 95%;
+      left: 85%;
+    }
+    .firework-6 {
+      top: 120%;
+      left: 130%;
+    }
+    .firework-7 {
+      top: 57%;
+      left: 130%;
+    }
+    .firework-8 {
+      top: 10%;
+      left: 130%;
+    }
+    .firework-9 {
+      top: 42%;
+      left: 110%;
+    }
+    .firework-10 {
+      top: 24%;
+      left: 100%;
+    }
+    .firework-11 {
+      top: 126%;
+      left: 30%;
+    }
+    .firework-12 {
+      top: 166%;
+      left: 110%;
+    }
+    .firework-13 {
+      top: 160%;
+    }
   }
 
   @keyframes firework-sm {
