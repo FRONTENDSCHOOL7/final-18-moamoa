@@ -16,6 +16,11 @@ export const PostBg = styled.div`
   height: 100%;
   margin: auto;
   background-color: #fff;
+  @media (min-width: 768px) {
+    max-width: 480px;
+    /* padding-left: 16%; */
+  }
+
 `;
 
 export const UserSearchHome = styled.div`

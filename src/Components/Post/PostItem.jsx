@@ -96,7 +96,7 @@ export default function PostItem({ post }) {
 }
 
 const PostArticle = styled.article`
-  /* margin-bottom: 3rem; */
+  margin-bottom: 3rem;
 `;
 const Frofile = styled.div`
   margin: 0 auto;
@@ -105,6 +105,9 @@ const Frofile = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (min-width: 768px) {
+    max-width: 480px;
+  }
 `;
 
 const PostFooterContainer = styled.div`
@@ -112,6 +115,9 @@ const PostFooterContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (min-width: 768px) {
+    max-width: 480px;
+  }
 `;
 
 const CreateDate = styled.p`

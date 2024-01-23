@@ -23,6 +23,9 @@ export default function PostContents({contentsData}) {
 const ContentsBox = styled.div`
   display: flex;
   flex-direction: column-reverse;
+  @media (min-width: 768px) {
+    max-width: 480px;
+  }
 `;
 
 const PostImg = styled.img`
@@ -34,6 +37,10 @@ const PostImg = styled.img`
   border-radius: 1rem;
   &:hover {
     cursor: default;
+  }
+  @media (min-width: 768px) {
+    width: 480px;
+    height: 290px;
   }
 `;
 const PostDesc = styled.p`
