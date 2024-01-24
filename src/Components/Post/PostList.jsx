@@ -26,4 +26,8 @@ const Posts = styled.ul`
   &:last-child{
     margin-bottom: 12rem;
   }
+  @media (min-width: 768px) {
+    max-width: 480px;
+    margin: 5rem 0;
+  }
 `;
