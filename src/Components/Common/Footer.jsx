@@ -97,7 +97,7 @@ const TabMenu = styled.div`
   @media (min-width: 768px) {
     top: 0;
     bottom: 0;
-    left: 100px;
+    left: 60px;
     width: 120px;
     height: 100%;
     flex-direction: column;
