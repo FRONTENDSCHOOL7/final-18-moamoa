@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import userToken from '../../../Recoil/userTokenAtom';
 import isLoginAtom from '../../../Recoil/isLoginAtom';
 import accountNameAtom from '../../../Recoil/accountNameAtom';
@@ -13,6 +13,10 @@ import styled from 'styled-components';
 import HeaderMoreBtnModal from '../../Modal/HeaderMoreBtnModal';
 import LogoutModal from '../../Modal/LogoutModal';
 import postsAtom from '../../../Recoil/postsAtom';
+import {
+  showConfirmLogoutModalState,
+  showMyProfileOptionsState,
+} from '../../../Recoil/logoutModalAtom';
 
 export default function HeaderKebab() {
   const navigate = useNavigate();
@@ -22,8 +26,10 @@ export default function HeaderKebab() {
   const setUserName = useSetRecoilState(userNameAtom);
   const setPostsData = useSetRecoilState(postsAtom);
 
-  const [showMyProfileOptions, setShowMyProfileOptions] = useState(false);
-  const [showConfirmLogoutModal, setShowConfirmLogoutModal] = useState(false);
+  const [showMyProfileOptions, setShowMyProfileOptions] = useRecoilState(showMyProfileOptionsState);
+  const [showConfirmLogoutModal, setShowConfirmLogoutModal] = useRecoilState(
+    showConfirmLogoutModalState,
+  );
 
   // ConfirmLogoutModal을 여는 함수
   const openConfirmLogoutModal = () => {
