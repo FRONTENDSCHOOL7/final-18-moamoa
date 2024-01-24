@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { styled } from 'styled-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import homeButton from '../../Assets/icons/icon-home.svg';
@@ -7,6 +6,7 @@ import chatButton from '../../Assets/icons/icon-message.svg';
 import postButton from '../../Assets/icons/icon-post.svg';
 import festivalButton from '../../Assets/icons/icon-festival.svg';
 import profileButton from '../../Assets/icons/icon-user.svg';
+import searchButton from '../../Assets/icons/icon-searchWhite.svg';
 import homeButtonFill from '../../Assets/icons/icon-home-fill.svg';
 import chatButtonFill from '../../Assets/icons/icon-message-fill.svg';
 import postButtonFill from '../../Assets/icons/icon-post-fill.svg';
@@ -15,12 +15,46 @@ import profileButtonFill from '../../Assets/icons/icon-user-fill.svg';
 import tabletLogoButton from '../../Assets/icons/icon-tablet-Logo.svg';
 import logoutButton from '../../Assets/icons/icon-logout.svg';
 import desktopLogoButton from '../../Assets/images/MOAMOA.png';
+import searchButtonFill from '../../Assets/icons/icon-search-fill.svg';
+import {
+  showConfirmLogoutModalState,
+  showMyProfileOptionsState,
+} from '../../Recoil/logoutModalAtom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import HeaderMoreBtnModal from '../Modal/HeaderMoreBtnModal';
+import LogoutModal from '../Modal/LogoutModal';
+import userTokenAtom from '../../Recoil/userTokenAtom';
+import isLoginAtom from '../../Recoil/isLoginAtom';
+import accountNameAtom from '../../Recoil/accountNameAtom';
+import userNameAtom from '../../Recoil/userNameAtom';
+import postsAtom from '../../Recoil/postsAtom';
+import {
+  TabMenu,
+  TabletLogo,
+  DesktopLogo,
+  TabButton,
+  TabBtnImg,
+  TabLabel,
+  TabletLogOut,
+} from './FooterStyle';
 
 export default function Footer() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [showMyProfileOptions, setShowMyProfileOptions] = useRecoilState(showMyProfileOptionsState);
+  const [showConfirmLogoutModal, setShowConfirmLogoutModal] = useRecoilState(
+    showConfirmLogoutModalState,
+  );
   const tabs = [
     { name: 'home', label: '홈', path: '/home', icon: homeButton, fillIcon: homeButtonFill },
+    {
+      name: 'search',
+      label: '검색',
+      path: '/search',
+      icon: searchButton,
+      fillIcon: searchButtonFill,
+    },
+
     { name: 'chat', label: '채팅', path: '/chat', icon: chatButton, fillIcon: chatButtonFill },
     {
       name: 'post',
@@ -59,142 +93,75 @@ export default function Footer() {
     }
   };
 
+  // ConfirmLogoutModal을 여는 함수
+  const openConfirmLogoutModal = () => {
+    setShowMyProfileOptions(false);
+    setShowConfirmLogoutModal(true);
+  };
+  // ConfirmLogoutModal을 닫는 함수
+  const closeConfirmLogoutModal = () => {
+    setShowConfirmLogoutModal(false);
+  };
+  const handleKebabClick = async () => {
+    setShowMyProfileOptions(!showMyProfileOptions);
+  };
+  //모달 창 닫기
+  const closeModal = () => {
+    setShowMyProfileOptions(false);
+  };
+  const setToken = useSetRecoilState(userTokenAtom);
+  const setIsLoginState = useSetRecoilState(isLoginAtom);
+  const setAccountName = useSetRecoilState(accountNameAtom);
+  const setUserName = useSetRecoilState(userNameAtom);
+  const setPostsData = useSetRecoilState(postsAtom);
+  const logout = () => {
+    // 로그아웃 로직 처리
+    closeConfirmLogoutModal();
+    setToken('');
+    localStorage.removeItem('token');
+    localStorage.removeItem('recoil-persist');
+    setIsLoginState(false);
+    setAccountName('');
+    setUserName('');
+    setPostsData(null);
+    navigate('/user/login');
+  };
   return (
-    <TabMenu>
-      <Link to='/home'>
-        <TabletLogo src={tabletLogoButton} />
-        <DesktopLogo src={desktopLogoButton} />
-      </Link>
-      {tabs.map((tab) => (
-        <TabButton key={tab.name} onClick={() => handleToggleSwitch(tab.name)}>
-          <TabBtnImg
-            src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon}
-            alt={`${tab.name}으로 이동`}
-          />
+    <>
+      <TabMenu>
+        <Link to='/home'>
+          <TabletLogo src={tabletLogoButton} />
+          <DesktopLogo src={desktopLogoButton} />
+        </Link>
+        {tabs.map((tab) => (
+          <TabButton
+            key={tab.name}
+            onClick={() => handleToggleSwitch(tab.name)}
+            hideOnMobile={tab.name === 'search'}
+          >
+            <TabBtnImg
+              src={toggleSwitch === tab.name ? tab.fillIcon : tab.icon}
+              alt={`${tab.name}으로 이동`}
+            />
 
-          <TabLabel $colors={toggleSwitch === tab.name ? +true : +false}>{tab.label}</TabLabel>
-        </TabButton>
-      ))}
+            <TabLabel $colors={toggleSwitch === tab.name ? +true : +false}>{tab.label}</TabLabel>
+          </TabButton>
+        ))}
 
-      <TabletLogOut>
-        <img src={logoutButton} alt='로그아웃' />
-        <TabLabel className='logout'>로그아웃</TabLabel>
-      </TabletLogOut>
-    </TabMenu>
+        <TabletLogOut onClick={handleKebabClick}>
+          <img src={logoutButton} alt='로그아웃' />
+          <TabLabel className='logout'>로그아웃</TabLabel>
+        </TabletLogOut>
+      </TabMenu>
+      {showConfirmLogoutModal && (
+        <LogoutModal logout={logout} closeModal={closeConfirmLogoutModal} />
+      )}
+      {showMyProfileOptions && (
+        <HeaderMoreBtnModal
+          closeModal={closeModal}
+          openConfirmLogoutModal={openConfirmLogoutModal}
+        />
+      )}
+    </>
   );
 }
-
-const TabMenu = styled.div`
-  width: 390px;
-  height: 60px;
-  background-color: #2e2c39;
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-  @media (min-width: 768px) {
-    top: 0;
-    bottom: 0;
-    left: 100px;
-    width: 120px;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-  }
-  @media (min-width: 1200px) {
-    top: 0;
-    bottom: 0;
-    left: 100px;
-    width: 240px;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const TabButton = styled.button.withConfig({
-  shouldForwardProp: (prop) => prop !== 'active',
-})`
-  height: 60px;
-  width: 78px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  align-items: center;
-
-  @media (min-width: 768px) {
-    margin-bottom: 16px;
-  }
-  @media (min-width: 1200px) {
-    margin-left: 104px;
-    justify-content: start;
-    flex-direction: row;
-    gap: 23px;
-    width: 100%;
-  }
-
-  &:hover {
-    opacity: 0.5;
-  }
-`;
-const TabBtnImg = styled.img`
-  padding-top: 5px;
-`;
-
-const TabLabel = styled.span`
-  font-size: 10px;
-  color: ${(props) => (props.$colors ? '#FFC700' : '#fff')};
-
-  @media (min-width: 768px) {
-    font-size: 16px;
-  }
-  @media (min-width: 1200px) {
-    font-size: 20px;
-  }
-`;
-
-const TabletLogo = styled.img`
-  @media (max-width: 767px) {
-    display: none;
-  }
-  @media (min-width: 1200px) {
-    display: none;
-  }
-  margin-block: 60px;
-`;
-const TabletLogOut = styled.button`
-  @media (max-width: 767px) {
-    display: none;
-  }
-  @media (min-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 50px;
-    bottom: 80px;
-    .logout {
-      margin-top: 5px;
-      transform: translateX(-30%);
-    }
-  }
-  @media (min-width: 1200px) {
-    flex-direction: row;
-    gap: 34px;
-    .logout {
-    }
-  }
-  &:hover {
-    opacity: 0.5;
-  }
-`;
-
-const DesktopLogo = styled.img`
-  width: 172px;
-  margin-block: 60px;
-  @media (max-width: 1199px) {
-    display: none;
-  }
-`;
