@@ -23,6 +23,10 @@ body{
   &::-webkit-scrollbar {
     display: none;
   }
+
+	@media (min-width: 768px) {
+    background-color:#fff;
+  }
 }
 a{
 	text-decoration:none;

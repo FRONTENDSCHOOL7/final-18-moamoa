@@ -74,6 +74,10 @@ const PostContents =styled.div`
     width: 35.8rem;
     height: 22.8rem;
     border-radius: 1rem;
+    @media (min-width: 768px) {
+    width: 480px;
+    height: 290px;
+  }
   }
 `
 

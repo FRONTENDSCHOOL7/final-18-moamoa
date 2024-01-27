@@ -29,5 +29,6 @@ const Posts = styled.ul`
   @media (min-width: 768px) {
     max-width: 480px;
     margin: 5rem 0;
+    
   }
 `;

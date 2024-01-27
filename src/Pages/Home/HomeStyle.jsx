@@ -18,15 +18,13 @@ export const PostBg = styled.div`
   background-color: #fff;
   @media (min-width: 768px) {
     max-width: 480px;
-    /* padding-left: 16%; */
+    padding-left: 120px;
   }
-
 `;
 
 export const UserSearchHome = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
+  height: 100vh;
   background-color: #fff;
 `;
 export const HomeCont = styled.div`
@@ -39,6 +37,11 @@ export const HomeCont = styled.div`
   margin: auto;
   background: url(${homeBg}) 10.4rem 10.8rem no-repeat;
   background-position: 50% 35%;
+  margin-top: 180px;
+  @media (min-width: 768px) {
+    padding-left: 120px;
+    background-position: 58.3% 35%;
+  }
 `;
 
 export const SearchText = styled.p`
@@ -51,7 +54,7 @@ export const SearchBtn = styled.button`
   height: 4.4rem;
   border-radius: 4.4rem;
   font-size: 1.4rem;
-  background-color: #87b7e4;
+  background-color: var(--buttonActive);
   color: white;
   &:hover {
     cursor: pointer;
