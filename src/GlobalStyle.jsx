@@ -6,6 +6,9 @@ ${reset};
 :root{
 	--buttonActive:#2E2C39;
 	--buttonDisable: #767676;
+	--small: 390px;
+	--medium: 768px;
+	--large: 1200px;
 
 }
 html{ 
