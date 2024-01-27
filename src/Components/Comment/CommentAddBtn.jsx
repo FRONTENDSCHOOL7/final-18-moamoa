@@ -19,12 +19,12 @@ const AddBtn = styled.button`
   height: 4rem;
   border-radius: 1rem;
   border: 1px solid #C4C4C4;
-  color: #767676;
-
+  color: var(--buttonActive);;
+  font-size: 1.2rem;
 `;
 
 const AddBtnOn = styled(AddBtn)`
-  background-color: #87B7E4;
-  border: 1px solid #87B7E4;
+  background-color: var(--buttonActive);
+  border: 1px solid var(--buttonActive);
   color: white;
 `;

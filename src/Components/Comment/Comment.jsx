@@ -52,10 +52,12 @@ export default function Comment({postId}) {
             return <CommentItem item={item} key={index}/>;
         })}      
       </CommentList>
-      <AddComment onSubmit={handleSubmit}>
-        <CommentContent type="text" value={comment} onChange={handleComment} placeholder='댓글을 입력해주세요 :)'/>
-        <CommentAddBtn addcomment={comment}/>
-      </AddComment>
+      <AddCommentCont>
+        <AddComment onSubmit={handleSubmit}>
+          <CommentContent type="text" value={comment} onChange={handleComment} placeholder='댓글을 입력해주세요 :)'/>
+          <CommentAddBtn addcomment={comment}/>
+        </AddComment>
+      </AddCommentCont>
     </CommentContainer>
   )
 }
@@ -64,19 +66,37 @@ const CommentContainer = styled.div`
   width: 100%;
   height: 100%;
   background-color: #fff9e4;
+  @media (min-width: 768px) {
+    background-color: #fff;
+  }
 `;
 
 const CommentList = styled.ul`
   border-top: 1px solid #dbdbdb;
-  max-width: 39rem;
   margin: auto;
   background-color: #ffffff;
   box-sizing: border-box;
-  padding: 1.8rem 1.6rem 60rem;  
+  padding: 1.8rem 1.6rem 50rem;  
   &::-webkit-scrollbar {
     display: none;
   }
+  @media (min-width: 768px) {
+    padding-bottom: 100px;
+  }
 `;
+const AddCommentCont = styled.div`
+  @media (min-width: 768px) {
+    width: 100%;
+    height: 6rem;
+    border-top: 1px solid #dbdbdb;
+    margin: auto;
+    padding: 0 2rem;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+  }
+`
 
 const AddComment = styled.form`
   box-sizing: border-box;
@@ -94,14 +114,21 @@ const AddComment = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (min-width: 768px) {
+    max-width: 480px;
+    border: none;
+  }
 `;
 
 const CommentContent = styled.input`
-  width: 28rem;
-  height: 5rem;
+  width: 83%;
+  height: 4rem;
   font-size: 1.4rem;
-  &::placeholder{color: #767676;}
+    padding-left: 0.5rem;
+  &::placeholder{
+    color: #767676;
+  }
   &:focus{
-    outline:none;
+    outline: 1px solid #dbdbdb;
   }
 `;

@@ -6,6 +6,9 @@ ${reset};
 :root{
 	--buttonActive:#2E2C39;
 	--buttonDisable: #767676;
+	--small: 390px;
+	--medium: 768px;
+	--large: 1200px;
 
 }
 html{ 
@@ -22,6 +25,10 @@ body{
 	
   &::-webkit-scrollbar {
     display: none;
+  }
+
+	@media (min-width: 768px) {
+    background-color:#fff;
   }
 }
 a{
