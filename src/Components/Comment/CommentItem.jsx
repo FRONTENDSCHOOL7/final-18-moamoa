@@ -73,6 +73,7 @@ const Time = styled.p`
 const CommentDesc = styled.p`
   margin-left: 4.8rem;
   font-size: 1.4rem;
+  line-height: 1.8rem;
   color: #333;
 `;
 const OfficialCont = styled.div`

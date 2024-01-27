@@ -21,9 +21,10 @@ export default function CommentDelModal({ commentid, setCloseFooter }) {
     await deleteComment(postId, commentid);
     setShowNoticeModal(false);
     setCloseFooter(true);
-    setTimeout(() => {
-      setShowNoticeModal(false);
-    }, 1000);
+    window.location.reload();
+    // setTimeout(() => {
+    //   setShowNoticeModal(false);
+    // }, 1000);
   };
 
   return (

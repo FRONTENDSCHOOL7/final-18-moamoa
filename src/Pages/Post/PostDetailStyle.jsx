@@ -11,14 +11,19 @@ export const PostContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  @media (min-width: 768px) {
+    max-width: 480px;
+  }
 `;
 export const PostItemContainer = styled.div`
-  padding: 0 1.6rem 1.5rem;
-  padding-top: 64px;
+  padding: 64px 1.6rem 0 1.5rem;
   li {
     article {
       margin-top: 0;
     }
+  }
+  @media (min-width: 768px) {
+    padding: 120px 0 0 0;
   }
 `;
 
