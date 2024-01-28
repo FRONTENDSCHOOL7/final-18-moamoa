@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 import commentBg from '../../Assets/icons/message-circle.svg';
 
+export const NavbarCont = styled.div`
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
+`
+
 export const PostContainer = styled.div`
   width: 100%;
   height: 100%;
