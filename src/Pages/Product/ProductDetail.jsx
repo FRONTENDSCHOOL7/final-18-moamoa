@@ -38,9 +38,9 @@ export default function ProductDetail() {
 
   return (
     <>
+      <Header type='home' />
       {productData && productAuthorInfo && (
         <FestivalContainer>
-          <Header type='home' />
           <FestivalArticle>
             <Frofile>
               <ArticleUserProfile userProfileData={userProfileData} />
