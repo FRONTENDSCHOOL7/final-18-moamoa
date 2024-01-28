@@ -48,13 +48,13 @@ const Eidt = styled.button`
   width: 10rem;
   height: 2.8rem;
   border-radius: 2rem;
-  border: 2px solid #dbdbdb;
-  color: #767676;
+  border: 1px solid #767676;
+  color: #2E2C39;
   font-size: 1.2rem;
   &:hover {
     cursor: pointer;
-    background-color: #dbdbdb;
-    color: #000;
+    background-color: var(--buttonActive);
+    color: #fff;
   }
   margin-left: 1rem;
 `;

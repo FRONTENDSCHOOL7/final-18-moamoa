@@ -89,12 +89,12 @@ const AddCommentCont = styled.div`
     width: 100%;
     height: 6rem;
     border-top: 1px solid #dbdbdb;
-    margin: auto;
-    padding: 0 2rem;
+    margin: 0 0 0 60px;
     position: fixed;
     bottom: 0;
     left: 50%;
     transform: translate(-50%);
+    background-color: #fff;
   }
 `
 
@@ -103,7 +103,7 @@ const AddComment = styled.form`
   width: 100%;
   max-width: 39rem;
   height: 6rem;
-  background-color: white;
+  background-color: #fff;
   border-top: 1px solid #dbdbdb;
   margin: auto;
   padding: 0 2rem;

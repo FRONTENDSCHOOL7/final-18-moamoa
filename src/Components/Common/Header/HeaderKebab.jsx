@@ -87,7 +87,7 @@ export default function HeaderKebab() {
 const HeaderContainer = styled.header`
   display: flex;
   margin: 0 auto;
-  z-index: 100;
+  z-index: 3;
   height: 48px;
   width: 390px;
 

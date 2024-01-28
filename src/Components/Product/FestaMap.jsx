@@ -87,7 +87,7 @@ geocoder.addressSearch(festaName, callback);
       { showMap ?
       <Map>
         <FestivalDesc>{festaName}</FestivalDesc>
-        <div id="map" style={{width:'358px',height:'300px'}}></div>
+        <div id="map" style={{width:'100%',height:'300px'}}></div>
       </Map> : 
       <NotMap>
         <MonoImg src={monomoa} alt="모아모아 캐릭터" />
