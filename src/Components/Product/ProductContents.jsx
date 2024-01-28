@@ -40,9 +40,17 @@ const FestivalImg = styled.img`
   height: 27rem;
   aspect-ratio: 39/27;
   object-fit: cover;
+  @media (min-width: 768px) {
+    width: 480px;
+    height: 290px;
+    border-radius: 10px;
+  }
 `;
 const InfoContainer = styled.div`
   padding: 0 1.6rem;
+  @media (min-width: 768px) {
+    padding: 0;
+  }
 `;
 const FestivalTitle = styled.h3`
   font-size: 1.8rem;
