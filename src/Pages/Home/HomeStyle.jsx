@@ -6,10 +6,19 @@ export const HomeWrap = styled.div`
   margin-top: 35px;
   margin-bottom: 60px;
   flex: 1;
+  @media (min-width: 1200px) {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px 0 270px;
+    margin-top: 80px;
+  }
 `;
 export const HomeContainer = styled.div`
   width: 100%;
   height: 100%;
+  @media (min-width: 1200px) {
+		width: 480px;
+  }
 `;
 export const PostBg = styled.div`
   max-width: 39rem;
@@ -19,6 +28,10 @@ export const PostBg = styled.div`
   @media (min-width: 768px) {
     max-width: 480px;
 		padding-left: 120px;
+  }
+  @media (min-width: 1200px) {
+		padding: 0;
+    margin: 0;
   }
 `;
 

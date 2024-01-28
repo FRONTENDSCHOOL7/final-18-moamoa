@@ -34,8 +34,6 @@ export default function Comment({postId}) {
     postComment(postId, AddData) 
     setComment("")   
   }
-
-    console.log(postId);
     
   useEffect(()=>{
     const getcommentData = async(postId) => {

@@ -16,6 +16,9 @@ html{
 	@media (min-width: 768px) {
     font-size: 70%;
   }
+	@media (min-width: 1200px) {
+    font-size: 75%;
+  }
 	
 }
 body{
