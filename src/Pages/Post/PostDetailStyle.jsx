@@ -19,7 +19,8 @@ export const PostContainer = styled.div`
     display: none;
   }
   @media (min-width: 768px) {
-    max-width: 480px;
+    max-width: 600px;
+    padding-left: 120px;
   }
 `;
 export const PostItemContainer = styled.div`

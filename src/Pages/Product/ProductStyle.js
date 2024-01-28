@@ -14,6 +14,7 @@ export const FestivalContainer = styled.div`
   overflow: hidden;
   @media (min-width: 768px) {
     max-width: 480px;
+    padding-left: 120px;
   }
 `;
 export const FestivalArticle = styled.article`

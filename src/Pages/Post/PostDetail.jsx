@@ -23,10 +23,10 @@ export default function ProductDetail() {
   },[])
   return (
     <>
+      <HeaderKebab />
       <NavbarCont>
         <Footer/>
       </NavbarCont>
-      <HeaderKebab />
       {post && (
         <PostContainer>
           <PostItemContainer>

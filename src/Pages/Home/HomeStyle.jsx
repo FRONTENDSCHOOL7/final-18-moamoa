@@ -18,6 +18,7 @@ export const PostBg = styled.div`
   background-color: #fff;
   @media (min-width: 768px) {
     max-width: 480px;
+		padding-left: 120px;
   }
 `;
 
@@ -38,7 +39,8 @@ export const HomeCont = styled.div`
   background-position: 50% 35%;
   margin-top: 180px;
   @media (min-width: 768px) {
-    background-position: 50% 35%;
+    background-position: 58.3% 35%;
+		padding-left: 120px;
   }
 `;
 

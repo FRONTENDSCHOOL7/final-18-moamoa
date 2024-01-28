@@ -29,7 +29,6 @@ body{
 
 	@media (min-width: 768px) {
     background-color:#fff;
-		margin-left: 120px;
   }
 }
 a{
