@@ -65,7 +65,6 @@ export const Input = styled.input`
   border-bottom: 1.5px solid ${COLORS.darkgray};
   font-size: ${FONTSIZE.md};
   letter-spacing: ${LETTERSPACING.wide};
-
   background-image: url(${(props) =>
     props.type === 'email' ? Email : props.type === 'password' ? Lock : 'none'});
   background-repeat: no-repeat;
@@ -79,6 +78,9 @@ export const Input = styled.input`
   &:focus {
     border-bottom: 1.5px solid ${COLORS.primary};
     transition: all 0.3s ease-in-out;
+  }
+  @media (min-width: 768px) {
+    background-position: 1% 50%;
   }
 `;
 

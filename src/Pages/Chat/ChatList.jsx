@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from '../../Components/Common/Footer';
-import { Container } from '../../Components/Common/Container';
+import { ContainerVh } from '../../Components/Common/Container';
 import img from '../../Assets/images/followImg/fog.jpg';
 import img2 from '../../Assets/images/followImg/human.jpg';
 import img3 from '../../Assets/images/followImg/woman2.jpg';
@@ -21,7 +21,7 @@ import {
 export default function ChatList() {
   return (
     <div>
-      <Container>
+      <ContainerVh>
         <Header type='moreKebab' />
         <ChatListWrap>
           <SearchWrap>
@@ -70,7 +70,7 @@ export default function ChatList() {
 
           <Footer></Footer>
         </ChatListWrap>
-      </Container>
+      </ContainerVh>
     </div>
   );
 }

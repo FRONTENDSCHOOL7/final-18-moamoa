@@ -1,3 +1,4 @@
+import backgroundMoamoa from '../../Assets/images/backgroundMoamoa.png';
 import styled from 'styled-components';
 
 const Button = styled.button`
@@ -23,21 +24,28 @@ export const ExperienceBtn = styled(Button).withConfig({
   color: ${({ onActive }) => (onActive ? '#ffffff' : 'var(--buttonDisable)')};
   border: ${({ onActive }) => (onActive ? 'none' : '1px solid var(--buttonDisable)')};
 `;
-import backgroundMoamoa from '../../Assets/images/backgroundMoamoa.png';
 
 export const ProductContainer = styled.div`
   max-width: 100%;
+
   margin: 10px auto;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
-  flex: 1;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 480px;
+  }
 
   padding-bottom: 150px;
   background-image: url(${backgroundMoamoa});
   background-repeat: no-repeat;
   background-position: 110% 91%;
   background-position: bottom 8rem right 0px;
+  @media (min-width: 768px) {
+    background-position: 0% 93%;
+  }
 `;
 export const ProductBox = styled.div`
   margin: 0 auto;
@@ -64,6 +72,11 @@ export const Nav = styled.div`
     height: 36px;
     border-radius: 10px;
     margin-right: 6px;
+    margin-bottom: 10px;
+  }
+  @media (min-width: 768px) {
+    max-width: 480px;
+    margin: 0 auto;
   }
 `;
 export const SkeletonContainer = styled(ProductContainer)`
@@ -73,8 +86,11 @@ export const SkeletonContainer = styled(ProductContainer)`
   .itemImage {
     border-radius: 10px;
     width: 370px;
-    height: 140px;
+    height: 180px;
     margin-bottom: 5px;
+    @media (min-width: 768px) {
+      width: 280px;
+    }
   }
 
   .itemName {
@@ -82,9 +98,17 @@ export const SkeletonContainer = styled(ProductContainer)`
     margin: 13px 0 6px 4px;
     width: 150px;
     height: 15px;
+    @media (min-width: 768px) {
+    }
   }
   .itemDate {
     margin-left: 4px;
     width: 140px;
+  }
+  @media (min-width: 768px) {
+    grid-column-gap: 43px;
+    grid-row-gap: 20px;
+    max-width: 480px;
+    margin: 0px auto;
   }
 `;
