@@ -106,6 +106,15 @@ const HeaderContainer = styled.header`
   img {
     cursor: pointer;
   }
+  @media (min-width: 768px) {
+    padding-left: 150px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: space-between;
+  }
+  @media (min-width: 1200px) {
+    display: none;
+  }
 `;
 
 const MoreImg = styled.img`

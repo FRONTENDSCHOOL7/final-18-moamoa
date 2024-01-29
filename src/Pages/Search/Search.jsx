@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from '../../Components/Common/Container';
+import { ContainerVh } from '../../Components/Common/Container';
 import Header from '../../Components/Common/Header/Header';
 import { SearchAPI } from '../../API/Search/SearchAPI';
 import Footer from '../../Components/Common/Footer';
@@ -61,7 +61,7 @@ export default function Search() {
   }, [searchText]);
 
   return (
-    <Container>
+    <ContainerVh>
       <Header type='search' setSearchText={setSearchText}></Header>
       <SearchListWrap>
         {isLoading ? (
@@ -77,6 +77,6 @@ export default function Search() {
         )}
       </SearchListWrap>
       <Footer></Footer>
-    </Container>
+    </ContainerVh>
   );
 }

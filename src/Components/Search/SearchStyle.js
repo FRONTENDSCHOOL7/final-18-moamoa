@@ -28,6 +28,12 @@ export const SkeletonContainer = styled.div`
     width: 150px;
     height: 12px;
   }
+  @media (min-width: 768px) {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    transform: translateX(10%);
+  }
 `;
 
 export const SearchResultBox = styled.div`
@@ -35,6 +41,11 @@ export const SearchResultBox = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  @media (min-width: 768px) {
+    max-width: 480px;
+    margin: 0 auto;
+    transform: translateX(10%);
+  }
 `;
 export const SearchPhotoWrap = styled.div`
   border: 1px solid var(--DBDBDB, #dbdbdb);

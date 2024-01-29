@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import homeBg from '../../Assets/icons/character-yellow.png';
 
 export const HomeWrap = styled.div`
@@ -18,7 +18,7 @@ export const PostBg = styled.div`
   background-color: #fff;
   @media (min-width: 768px) {
     max-width: 480px;
-		padding-left: 120px;
+    padding-left: 120px;
   }
 `;
 
@@ -40,7 +40,7 @@ export const HomeCont = styled.div`
   margin-top: 180px;
   @media (min-width: 768px) {
     background-position: 58.3% 35%;
-		padding-left: 120px;
+    padding-left: 120px;
   }
 `;
 

@@ -110,8 +110,12 @@ export const ChatListWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-
   margin-top: 48px;
+  @media (min-width: 768px) {
+    width: 100%;
+    max-width: 480px;
+    margin: 48px auto;
+  }
 `;
 export const SearchImg = styled.img`
   width: 50px;

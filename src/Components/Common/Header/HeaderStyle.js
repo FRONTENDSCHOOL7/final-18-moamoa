@@ -18,6 +18,15 @@ export const HeaderContainer = styled.header`
   padding-left: 10px;
   padding-right: 10px;
   box-sizing: border-box;
+  @media (min-width: 768px) {
+    padding-left: 150px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: space-between;
+  }
+  @media (min-width: 1200px) {
+    display: none;
+  }
 
   img {
     cursor: pointer;
@@ -77,7 +86,12 @@ export const HeaderSearchContainer = styled.header`
   align-items: center;
   box-sizing: border-box;
   margin-bottom: 10px;
-
+  @media (min-width: 768px) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  @media (min-width: 1200px) {
+  }
   img {
     cursor: pointer;
     padding-right: 8px;
