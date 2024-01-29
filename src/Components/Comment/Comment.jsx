@@ -94,6 +94,9 @@ const AddCommentCont = styled.div`
     transform: translate(-50%);
     background-color: #fff;
   }
+  @media (min-width: 1200px) {
+    margin-left: 120px;
+  }
 `
 
 const AddComment = styled.form`
@@ -115,6 +118,9 @@ const AddComment = styled.form`
   @media (min-width: 768px) {
     max-width: 480px;
     border: none;
+  }
+  @media (min-width: 1200px) {
+    max-width: 600px;
   }
 `;
 

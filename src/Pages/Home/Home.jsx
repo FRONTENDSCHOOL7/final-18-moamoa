@@ -10,6 +10,7 @@ import postsAtom from '../../Recoil/postsAtom';
 import { useInView } from 'react-intersection-observer';
 import { HomeWrap, HomeContainer, PostBg } from './HomeStyle';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
+import Myfollowings from '../../Components/Common/Myfollowings';
 
 export default function Home() {
   const limit = 5;
@@ -22,7 +23,6 @@ export default function Home() {
     const getHomePostList = async () => {
       try{
         const postListData = await homePostList(limit, skip);
-        console.log(postListData.posts)
         setPostData(postListData.posts)
         // setPostData((prevData) => [...prevData, ...postListData.posts]);
         setTimeout(() => {
@@ -71,7 +71,10 @@ export default function Home() {
               <div ref={ref} />
               </PostBg>
             </HomeContainer>
-            <RecommendPlace/>
+            <div>
+              <RecommendPlace/>
+              <Myfollowings/>
+            </div>
           </>
         ) : (
           <HomeContainer>

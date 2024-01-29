@@ -22,6 +22,10 @@ export const PostContainer = styled.div`
     max-width: 600px;
     padding-left: 120px;
   }
+  @media (min-width: 1200px) {
+    max-width: 720px;
+    padding-left: 240px;
+  }
 `;
 export const PostItemContainer = styled.div`
   padding: 64px 1.6rem 0 1.5rem;
@@ -32,6 +36,9 @@ export const PostItemContainer = styled.div`
   }
   @media (min-width: 768px) {
     padding: 120px 0 0 0;
+  }
+  @media (min-width: 1200px) {
+    padding: 80px 0 0 0;
   }
 `;
 
