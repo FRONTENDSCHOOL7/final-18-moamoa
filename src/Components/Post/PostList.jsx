@@ -13,13 +13,13 @@ PostList.propTypes = {
 export default function PostList({post, isLoading}) {
   return (
       <Posts>
-        <li>{post && isLoading ? <PostItem post={post}/>
-        :<PostItemSkeleton />}</li>
+        {post && isLoading ? <PostItem post={post}/>
+        :<PostItemSkeleton />}
       </Posts>
   );
 }
 
-const Posts = styled.ul`
+const Posts = styled.li`
   box-sizing: border-box;
   background-color: #ffffff;
   margin: 3rem 1.6rem;
@@ -30,5 +30,10 @@ const Posts = styled.ul`
     max-width: 480px;
     margin: 5rem 0;
     
+  }
+  @media (min-width: 1200px) {
+    &:first-child{
+      margin-top: 0;
+    }
   }
 `;

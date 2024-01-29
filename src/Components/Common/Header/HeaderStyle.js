@@ -31,6 +31,9 @@ export const HeaderContainer = styled.header`
   img {
     cursor: pointer;
   }
+  @media (min-width: 1200px) {
+    display: none;
+  }
 `;
 export const H1 = styled.h1`
   clip: rect(1px, 1px, 1px, 1px);

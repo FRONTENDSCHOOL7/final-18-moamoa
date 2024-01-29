@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil';
 import postsAtom from '../../Recoil/postsAtom';
 import { useInView } from 'react-intersection-observer';
 import { HomeWrap, HomeContainer, PostBg } from './HomeStyle';
+import RecommendPlace from '../../Components/Common/RecommendPlace';
 
 export default function Home() {
   const limit = 5;
@@ -47,26 +48,31 @@ export default function Home() {
       <Header type='home' />
       <HomeWrap>
         { postData && Object.keys(postData).length !== 0 ? (
-          <HomeContainer>
-            <PostBg>
-              {postData.map((item) => {
-                return <PostList key={item.id} post={item} isLoading={isLoading}/>;
-              })}
-              {/* {postData.map((item, index) => {
-                const isLastPost = index === postData.length - 1;
-                return (
-                  <PostList
-                    key={item.id}
-                    post={item}
-                    isLoading={isLoading}
-                    ref={isLastPost ? ref : null}
-                  />
-                );
-              })} */}
-
-            <div ref={ref} />
-            </PostBg>
-          </HomeContainer>
+          <>
+            <HomeContainer>
+              <PostBg>
+                <ul>
+                  {postData.map((item) => {
+                    return <PostList key={item.id} post={item} isLoading={isLoading}/>;
+                  })}
+                </ul>
+                {/* {postData.map((item, index) => {
+                  const isLastPost = index === postData.length - 1;
+                  return (
+                    <PostList
+                      key={item.id}
+                      post={item}
+                      isLoading={isLoading}
+                      ref={isLastPost ? ref : null}
+                    />
+                  );
+                })} */}
+  
+              <div ref={ref} />
+              </PostBg>
+            </HomeContainer>
+            <RecommendPlace/>
+          </>
         ) : (
           <HomeContainer>
             <HomeSearch />

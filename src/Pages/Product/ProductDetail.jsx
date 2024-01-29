@@ -16,7 +16,7 @@ export default function ProductDetail() {
   const [productAuthorInfo, setProductAuthorInfo] = useState();
 
   const profileImg = productAuthorInfo?.image;
-  const userName = productAuthorInfo?.username?.slice(3);
+  const userName = productAuthorInfo?.username;
   const accountName = productAuthorInfo?.accountname;
 
   const userProfileData = { profileImg, userName, accountName };
@@ -27,7 +27,9 @@ export default function ProductDetail() {
     setProductAuthorInfo(data.product.author);
   };
 
-  const getProductInfo = () => getProductDetail(productId, getProductData);
+  const getProductInfo = () => {
+    return getProductDetail(productId, getProductData)
+  };
 
   useEffect(() => {
     const getData = async () => {

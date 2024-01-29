@@ -22,7 +22,7 @@ export const TabMenu = styled.div`
   @media (min-width: 1200px) {
     top: 0;
     bottom: 0;
-    left: 100px;
+    left: 120px;
     width: 240px;
     height: 100%;
     flex-direction: column;
@@ -48,7 +48,7 @@ export const TabButton = styled.button.withConfig({
     gap: 7px;
   }
   @media (min-width: 1200px) {
-    margin-left: 104px;
+    padding-left: 46px;
     justify-content: start;
     flex-direction: row;
     gap: 23px;
@@ -118,7 +118,6 @@ export const TabletLogo = styled.img`
 export const DesktopLogo = styled.img`
   width: 172px;
   margin-block: 60px;
-  transform: translateX(5%);
   @media (max-width: 1199px) {
     display: none;
   }
