@@ -24,12 +24,12 @@ export const unFollowAPI = async (account) => {
   }
 };
 
-export async function FollowerPageAPI(token, accountname) {
+export async function FollowerPageAPI(accountname) {
   const response = await authInstance.get(`profile/${accountname}/follower`);
 
   return response.data;
 }
-export async function FollowingPageAPI(token, accountname) {
+export async function FollowingPageAPI(accountname) {
   const response = await authInstance.get(`profile/${accountname}/following`);
   return response.data;
 }
