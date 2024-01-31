@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { ProductAtom } from '../../Recoil/ProductAtom';
 
@@ -18,30 +18,11 @@ export default function ProductBundle() {
   const product = useRecoilValue(ProductAtom);
   const filteredProducts = product.filter(filterActive);
 
-  const [nextPage, setNextPage] = useState(4);
-  useEffect(() => {
-    function handleScroll() {
-      const scrollPosition = window.innerHeight + window.scrollY;
-
-      const documentHeight = document.documentElement.scrollHeight;
-
-      if (scrollPosition === documentHeight) {
-        setNextPage((prev) => prev + 4);
-      }
-      console.log(nextPage);
-    }
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <>
       <TopNavigation />
       <ProductContainer>
-        {filteredProducts.slice(0, nextPage).map((item, index) => (
+        {filteredProducts.slice(0).map((item, index) => (
           <ProductBox key={index}>
             <Link to={`/product/detail/${item._id}`} key={index}>
               <ProductListImgBox src={item.itemImage} />
