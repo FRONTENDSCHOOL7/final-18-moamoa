@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import { ContainerVh } from '../../Components/Common/Container';
 import img from '../../Assets/images/followImg/fog.jpg';
 import img2 from '../../Assets/images/followImg/human.jpg';
@@ -68,7 +68,7 @@ export default function ChatList() {
             </ChatDateBox>
           </SearchWrap>
 
-          <Footer></Footer>
+          <NavBar></NavBar>
         </ChatListWrap>
       </ContainerVh>
     </div>

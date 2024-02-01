@@ -35,9 +35,6 @@ export const PostItemContainer = styled.div`
     }
   }
   @media (min-width: 768px) {
-    padding: 120px 0 0 0;
-  }
-  @media (min-width: 1200px) {
     padding: 80px 0 0 0;
   }
 `;
