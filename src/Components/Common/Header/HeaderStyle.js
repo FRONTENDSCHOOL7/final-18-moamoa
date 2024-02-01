@@ -19,12 +19,6 @@ export const HeaderContainer = styled.header`
   padding-right: 10px;
   box-sizing: border-box;
   @media (min-width: 768px) {
-    padding-left: 150px;
-    width: 100%;
-    margin: 0 auto;
-    justify-content: space-between;
-  }
-  @media (min-width: 1200px) {
     display: none;
   }
 

@@ -15,13 +15,17 @@ export const FestivalContainer = styled.div`
   @media (min-width: 768px) {
     max-width: 480px;
     padding-left: 120px;
+  }  
+  @media (min-width: 1200px) {
+    /* max-width: 600px; */
+    padding-left: 240px;
   }
 `;
 export const FestivalArticle = styled.article`
   margin-top: 4.8rem;
   margin-bottom: 7rem;
   @media (min-width: 768px) {
-    margin-top: 120px;
+    margin-top: 80px;
   }
 `;
 export const Frofile = styled.div`

@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
 import accountNameAtom from '../../Recoil/accountNameAtom'
 import { FollowingPageAPI } from '../../API/Follow/FollowAPI'
+import monomoa from '../../Assets/images/mono_moa.png'
 
 export default function Myfollowings() {
 
@@ -12,7 +13,14 @@ export default function Myfollowings() {
 
   useEffect(()=>{
 
-    const getFollowingData = () => FollowingPageAPI(accountName).then((data)=>setFollowingData(data));
+    const getFollowingData = async () => {
+      try {
+        const data = await FollowingPageAPI(accountName);
+        await setFollowingData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     getFollowingData()
     
@@ -23,31 +31,38 @@ export default function Myfollowings() {
 
   return (
     <>
-      {followingData ?
-        <MyFollowingCont>
-        <Link to={`/profile/${accountName}/following`}>
-          <MyFollowingBtn>
-            My Followings
-          </MyFollowingBtn>
-        </Link>
+      <Link to={`/profile/${accountName}/following`}>
+        <MyFollowingBtn>
+          My Followings
+        </MyFollowingBtn>
+      </Link>
+      {followingData && followingData.length !== 0 ?
+      <MyFollowingCont>
+
         {followingData.map((item)=>{
-          return <ul key={item._id}>
-            <li>
-              <Link to={`/profile/${item.accountname}`}>
-                <UserCont>
-                  <FrofileImg src={item.image} alt='팔로잉유저'/>
-                  <Info>
-                    <UserName>{item.username.slice(3)}</UserName>
-                    <Intro>{item.intro}</Intro>
-                  </Info>
-                </UserCont>
-              </Link>
-            </li>
-          </ul>
+          return (
+          <ul key={item._id}>
+              <li>
+                <Link to={`/profile/${item.accountname}`}>
+                  <UserCont>
+                    <FrofileImg src={item.image} alt='팔로잉유저'/>
+                    <Info>
+                      <UserName>{item.username.slice(3)}</UserName>
+                      <Intro>{item.intro}</Intro>
+                    </Info>
+                  </UserCont>
+                </Link>
+              </li>
+            </ul>
+          )
         })}
-      </MyFollowingCont>
-      : null }
-      
+      </MyFollowingCont> 
+      : <Nonfollowigns>
+          <Imgcont>
+            <MonoImg src={monomoa} alt="모아모아 캐릭터" />
+            <Desc>아직 following 중인 사용자가 없어요🥲</Desc>
+          </Imgcont>
+        </Nonfollowigns> }
     </>
   )
 }
@@ -106,3 +121,29 @@ const Intro = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
 `
+
+const Nonfollowigns = styled.div`
+  font-size: 16px;
+  color: #767676;
+  text-align: center;
+`
+
+const Imgcont = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const MonoImg =styled.img`
+  width: 8rem;
+  margin: auto;
+  padding-right: 2.5rem;
+`;
+
+const Desc = styled.p`
+  font-size: 1..2rem;
+  padding: 0 1.8rem;
+  margin-top: 3rem;
+  line-height: 2rem;
+  color: #767676;
+`;
