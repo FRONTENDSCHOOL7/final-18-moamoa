@@ -36,7 +36,7 @@ import {
   TabBtnImg,
   TabLabel,
   TabletLogOut,
-} from './FooterStyle';
+} from './NavBarStyle';
 
 export default function NavBar() {
   const navigate = useNavigate();
