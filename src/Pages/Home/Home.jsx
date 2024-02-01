@@ -77,9 +77,15 @@ export default function Home() {
             </div>
           </>
         ) : (
-          <HomeContainer>
-            <HomeSearch />
-          </HomeContainer>
+          <>
+            <HomeContainer>
+              <HomeSearch />
+            </HomeContainer>
+            <div>
+              <RecommendPlace/>
+              <Myfollowings/>
+            </div>
+          </>
         )}
       </HomeWrap>
       <Footer />
