@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 import { TempLoginButton } from './SplashLoginBtn';
+export const BtnContainter = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(-4%);
+  @media (min-width: 1200px) {
+    transform: translateX(-2%);
+  }
+`;
 
 export const StyledButton = styled(TempLoginButton)`
   width: 322px;
@@ -15,6 +25,11 @@ export const StyledButton = styled(TempLoginButton)`
   background-size: ${({ backgroundSize }) => backgroundSize};
   background-position: ${({ backgroundPosition }) => backgroundPosition};
   opacity: ${({ opacity }) => opacity};
+  @media (min-width: 768px) {
+    width: 80%;
+    font-size: 14px;
+    margin: 0 0 15px 34px;
+  }
 `;
 
 export const Modal = styled.div.withConfig({
@@ -45,11 +60,11 @@ export const Modal = styled.div.withConfig({
     font-size: 13px;
   }
   @media (min-width: 768px) {
+    width: 50%;
     position: fixed;
-    height: 740px;
+    height: 100%;
     top: 0px;
-
-    right: ${(props) => (props.visible === true ? '-195px' : '-600px')};
+    right: ${(props) => (props.visible === true ? '-25%' : '-50%')};
     padding: 100px 0 20px;
     a {
       padding-top: 0;
@@ -70,6 +85,7 @@ export const LoginH1 = styled.h1`
     font-size: 24px;
     margin: 0 auto;
     padding-bottom: 50px;
+    transform: translateX(-1%);
   }
 `;
 
@@ -77,7 +93,7 @@ export const SVGgroup = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== 'visible',
 })`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
   text-align: center;
   gap: 5px;
@@ -96,12 +112,13 @@ export const SVGgroup = styled.div.withConfig({
     width: 202px;
   }
   @media (min-width: 768px) {
-    position: absolute;
-    top: 20%;
-    transition: 0.5s ease;
-    left: ${(props) => (props.visible === true ? '25%' : '50%')};
+    width: 100%;
     display: flex;
-    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: ${(props) => (props.visible === true ? '-25%' : '0%')};
+    transition: 0.5s ease;
   }
 `;
 
@@ -193,53 +210,56 @@ export const AnimationFireworks = styled.div`
   }
   @media (min-width: 768px) {
     .firework-1 {
-      top: 45%;
-      left: -19%;
+      top: 100%;
+      left: 35%;
     }
     .firework-2 {
-      top: 40%;
-      left: 9%;
+      top: 90%;
+      left: 60%;
     }
     .firework-3 {
-      top: 75%;
-    }
-    .firework-4 {
-      top: 194%;
-    }
-    .firework-5 {
-      top: 95%;
-      left: 85%;
-    }
-    .firework-6 {
-      top: 120%;
-      left: 130%;
-    }
-    .firework-7 {
-      top: 57%;
-      left: 130%;
-    }
-    .firework-8 {
-      top: 10%;
-      left: 130%;
-    }
-    .firework-9 {
-      top: 42%;
-      left: 110%;
-    }
-    .firework-10 {
-      top: 24%;
-      left: 100%;
-    }
-    .firework-11 {
-      top: 126%;
+      top: 70%;
       left: 30%;
     }
+    .firework-4 {
+      top: 65%;
+      left: 70%;
+    }
+    .firework-5 {
+      top: 40%;
+      left: 50%;
+    }
+    .firework-6 {
+      top: 45%;
+      left: 37%;
+    }
+    .firework-7 {
+      top: 120%;
+      left: 50%;
+    }
+    .firework-8 {
+      top: 120%;
+      left: 56%;
+    }
+    .firework-9 {
+      top: 110%;
+      left: 40%;
+    }
+    .firework-10 {
+      top: 10%;
+      left: 60%;
+    }
+    .firework-11 {
+      top: 45%;
+      left: 70%;
+    }
     .firework-12 {
-      top: 166%;
-      left: 110%;
+      top: 120%;
+      left: 65%;
     }
     .firework-13 {
-      top: 160%;
+      top: 40%;
+      left: 40%;
     }
   }
 

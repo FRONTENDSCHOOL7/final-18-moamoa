@@ -4,17 +4,22 @@ import Bluemoa from '../../Assets/images/Bluemoa.png';
 import kakao from '../../Assets/images/kakao.png';
 import google from '../../Assets/images/google.png';
 import naver from '../../Assets/images/naver.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { useRecoilValue } from 'recoil';
-import { StyledButton } from './SplashStyle';
-export function TempLoginButton({ className, children }) {
-  return <button className={className}>{children}</button>;
+import { BtnContainter, StyledButton } from './SplashStyle';
+export function TempLoginButton({ className, children, onClick }) {
+  return (
+    <button className={className} onClick={onClick}>
+      {children}
+    </button>
+  );
 }
 
 TempLoginButton.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
+  onClick: PropTypes.func,
 };
 StyledButton.propTypes = {
   borderColor: PropTypes.string,
@@ -36,18 +41,20 @@ export default function SplashLoginBtn() {
       navigate('/');
     }
   }, []);
+  const handleEmailLogin = () => {
+    navigate('/user/login');
+  };
   return (
-    <div>
-      <Link to='/user/login'>
-        <StyledButton
-          borderColor='#017dc2'
-          backgroundImage={Bluemoa}
-          backgroundPosition='14px 3px'
-          backgroundSize='30px'
-        >
-          이메일 계정으로 로그인
-        </StyledButton>
-      </Link>
+    <BtnContainter>
+      <StyledButton
+        borderColor='#017dc2'
+        backgroundImage={Bluemoa}
+        backgroundPosition='14px 3px'
+        backgroundSize='30px'
+        onClick={handleEmailLogin}
+      >
+        이메일 계정으로 로그인
+      </StyledButton>
       <StyledButton
         borderColor='#ebce78'
         backgroundImage={kakao}
@@ -75,6 +82,6 @@ export default function SplashLoginBtn() {
       >
         네이버 계정으로 로그인
       </StyledButton>
-    </div>
+    </BtnContainter>
   );
 }
