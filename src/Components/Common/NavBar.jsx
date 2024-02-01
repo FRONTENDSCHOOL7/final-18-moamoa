@@ -38,7 +38,7 @@ import {
   TabletLogOut,
 } from './FooterStyle';
 
-export default function Footer() {
+export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [showMyProfileOptions, setShowMyProfileOptions] = useRecoilState(showMyProfileOptionsState);

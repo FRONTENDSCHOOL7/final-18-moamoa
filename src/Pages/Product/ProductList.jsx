@@ -7,7 +7,7 @@ import ProductListSkeleton from '../../Components/Product/ProductListSkeleton';
 import ProductOutput from '../../Components/Product/ProductOutput';
 import { Container } from '../../Components/Common/Container';
 import Header from '../../Components/Common/Header/Header';
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import { ProductListWrap } from './ProductStyle';
 import { ProductAtom } from '../../Recoil/ProductAtom';
 
@@ -42,7 +42,7 @@ export default function ProductList() {
           <ProductOutput />
         )}
       </ProductListWrap>
-      <Footer></Footer>
+      <NavBar></NavBar>
     </Container>
   );
 }
