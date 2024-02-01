@@ -22,10 +22,9 @@ export const MoaMoaBox = styled.div.withConfig({
     position: absolute;
     top: 50%;
     left: 50%;
-
-    height: 740px;
+    width: 100%;
+    height: 100%;
     display: flex;
-    width: 780px;
     transform: translate(-50%, -50%);
     overflow: hidden;
     border-radius: 10px;
@@ -39,8 +38,9 @@ export const Copyright = styled.div.withConfig({
   font-size: 14px;
   @media (min-width: 768px) {
     position: absolute;
-    top: 30%;
+    margin-top: 600px;
     transition: 0.5s ease;
-    left: ${(props) => (props.visible === true ? '14%' : '40%')};
+    left: ${(props) => (props.visible === true ? '25%' : '50%')};
+    transform: translateX(-50%);
   }
 `;
