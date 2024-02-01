@@ -86,7 +86,7 @@ export const SVGgroup = styled.div.withConfig({
     transition: 0.5s ease;
     left: ${(props) => (props.visible === true ? '25%' : '50%')};
     display: flex;
-    transform: translate(-50%, -50%);
+    transform: translate(-220%, -50%);
     padding-right: 2%;
   }
 `;
