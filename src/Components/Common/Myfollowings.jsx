@@ -5,11 +5,13 @@ import styled from 'styled-components'
 import accountNameAtom from '../../Recoil/accountNameAtom'
 import { FollowingPageAPI } from '../../API/Follow/FollowAPI'
 import monomoa from '../../Assets/images/mono_moa.png'
+import MyFollowingSkeleton from '../Skeleton/MyFollowingSkeleton'
 
 export default function Myfollowings() {
 
   const accountName = useRecoilValue(accountNameAtom);
   const [followingData, setFollowingData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(()=>{
 
@@ -17,6 +19,9 @@ export default function Myfollowings() {
       try {
         const data = await FollowingPageAPI(accountName);
         await setFollowingData(data);
+        setTimeout(() => {
+          setIsLoading(true);
+        }, 1200);
       } catch (error) {
         console.error(error);
       }
@@ -30,40 +35,43 @@ export default function Myfollowings() {
   console.log(followingData);
 
   return (
-    <MyFollowingCont>
-      <Link to={`/profile/${accountName}/following`}>
-        <MyFollowingBtn>
-          My Followings
-        </MyFollowingBtn>
-      </Link>
-      {followingData && followingData.length !== 0 ?
-      <MyFollowingCont>
-
-        {followingData.map((item)=>{
-          return (
-          <ul key={item._id}>
-              <li>
-                <Link to={`/profile/${item.accountname}`}>
-                  <UserCont>
-                    <FrofileImg src={item.image} alt='팔로잉유저'/>
-                    <Info>
-                      <UserName>{item.username.slice(3)}</UserName>
-                      <Intro>{item.intro}</Intro>
-                    </Info>
-                  </UserCont>
-                </Link>
-              </li>
-            </ul>
-          )
-        })}
-      </MyFollowingCont> 
-      : <Nonfollowigns>
-          <Imgcont>
-            <MonoImg src={monomoa} alt="모아모아 캐릭터" />
-            <Desc>아직 following 중인 사용자가 없어요🥲</Desc>
-          </Imgcont>
-        </Nonfollowigns> }
-    </MyFollowingCont>
+    <>
+      {followingData && isLoading ? <MyFollowingCont>
+        <Link to={`/profile/${accountName}/following`}>
+          <MyFollowingBtn>
+            My Followings
+          </MyFollowingBtn>
+        </Link>
+        {followingData && followingData.length !== 0 ?
+        <MyFollowingCont>
+  
+          {followingData.map((item)=>{
+            return (
+            <ul key={item._id}>
+                <li>
+                  <Link to={`/profile/${item.accountname}`}>
+                    <UserCont>
+                      <FrofileImg src={item.image} alt='팔로잉유저'/>
+                      <Info>
+                        <UserName>{item.username.slice(3)}</UserName>
+                        <Intro>{item.intro}</Intro>
+                      </Info>
+                    </UserCont>
+                  </Link>
+                </li>
+              </ul>
+            )
+          })}
+        </MyFollowingCont> 
+        : <Nonfollowigns>
+            <Imgcont>
+              <MonoImg src={monomoa} alt="모아모아 캐릭터" />
+              <Desc>아직 following 중인 사용자가 없어요.</Desc>
+            </Imgcont>
+          </Nonfollowigns> }
+      </MyFollowingCont>: <MyFollowingSkeleton/>}
+    </>
+    
   )
 }
 
@@ -141,7 +149,7 @@ const MonoImg =styled.img`
 `;
 
 const Desc = styled.p`
-  font-size: 1..2rem;
+  font-size: 1.2rem;
   padding: 0 1.8rem;
   margin-top: 3rem;
   line-height: 2rem;
