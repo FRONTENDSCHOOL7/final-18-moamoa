@@ -30,7 +30,7 @@ export default function Myfollowings() {
   console.log(followingData);
 
   return (
-    <>
+    <MyFollowingCont>
       <Link to={`/profile/${accountName}/following`}>
         <MyFollowingBtn>
           My Followings
@@ -63,7 +63,7 @@ export default function Myfollowings() {
             <Desc>아직 following 중인 사용자가 없어요🥲</Desc>
           </Imgcont>
         </Nonfollowigns> }
-    </>
+    </MyFollowingCont>
   )
 }
 
