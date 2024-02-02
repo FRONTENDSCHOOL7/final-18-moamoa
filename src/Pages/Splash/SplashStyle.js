@@ -11,11 +11,7 @@ export const MoaMoaBox = styled.div.withConfig({
   width: 390px;
   height: 100vh;
   margin: 0 auto;
-  p {
-    padding-top: 10px;
-    color: #ffffff;
-    font-size: 18px;
-  }
+
   overflow: hidden;
   position: relative;
   @media (min-width: 768px) {
@@ -38,7 +34,7 @@ export const Copyright = styled.div.withConfig({
   font-size: 14px;
   @media (min-width: 768px) {
     position: absolute;
-    margin-top: 600px;
+    bottom: 10%;
     transition: 0.5s ease;
     left: ${(props) => (props.visible === true ? '25%' : '50%')};
     transform: translateX(-50%);

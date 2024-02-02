@@ -108,15 +108,26 @@ export const SVGgroup = styled.div.withConfig({
     width: 57px;
     height: 57px;
   }
+  .logotext {
+    color: #fff;
+    margin-top: 8px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-weight: 300;
+  }
   img {
     width: 202px;
   }
   @media (min-width: 768px) {
+    .blinkFestival {
+      margin-top: 0px;
+    }
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
+    top: 29%;
     left: ${(props) => (props.visible === true ? '-25%' : '0%')};
     transition: 0.5s ease;
   }
