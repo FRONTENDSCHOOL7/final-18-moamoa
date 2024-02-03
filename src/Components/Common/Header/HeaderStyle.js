@@ -24,6 +24,9 @@ export const HeaderContainer = styled.header`
   @media (min-width: 768px) {
     display: none;
   }
+
+  left: 50%;
+  transform: translate(-50%, 0);
 `;
 export const H1 = styled.h1`
   clip: rect(1px, 1px, 1px, 1px);
