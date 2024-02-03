@@ -5,7 +5,7 @@ export const Container = styled.div`
   max-width: var(--small);
   width: 100%;
   flex: 1;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;

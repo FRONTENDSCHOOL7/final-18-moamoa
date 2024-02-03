@@ -2,7 +2,7 @@
   설명: 게시글 수정 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.30
-  마지막 수정 날까: 2023.12.07
+  마지막 수정 날까: 2024.02.01
   
   추가 작성자: 유의진 
   추가 내용: 이미지 크롭 기능
@@ -10,11 +10,8 @@
 */
 
 import React, { useState, useEffect } from 'react';
-// import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
-// import userToken from '../../Recoil/userTokenAtom';
 
 import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Common/GoBackbtn';
@@ -24,13 +21,11 @@ import uploadFile from '../../Assets/images/upload-file.png';
 import xButton from '../../Assets/icons/x.svg';
 
 import { getPostDetail, editPost } from '../../API/Post/PostAPI';
-// import { uploadImage } from '../../API/Image/ImageAPI';
 import { useImage } from '../../Hooks/Common/useImage';
 import ImageCropModal from '../../Components/Modal/ImageCropModal';
 
 import {
   HeaderContainer,
-  HiddenH1,
   UploadPostBox,
   ProfileImg,
   TextArea,
@@ -165,7 +160,7 @@ export default function EditPost() {
       )}
       <UploadPostBox>
         <section>
-          <HiddenH1>게시글 수정</HiddenH1>
+          <h1 className='a11y-hidden'>게시글 수정</h1>
           <form onSubmit={handleFormSubmit}>
             <ProfileImg>
               {/* 사용자 프로필 */}

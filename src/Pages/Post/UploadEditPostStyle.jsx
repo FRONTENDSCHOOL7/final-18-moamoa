@@ -24,21 +24,6 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const a11yHidden = `
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  width: 1px
-	height: 1px;
-	margin: -1px;
-  overflow: hidden;
-	padding: 0;
-	position: absolute;
-`;
-
-export const HiddenH1 = styled.h1`
-  ${a11yHidden}
-`;
-
 export const UploadPostBox = styled.div`
   flex: 1;
   padding: 16px;

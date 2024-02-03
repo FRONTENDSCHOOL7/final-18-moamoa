@@ -13,6 +13,7 @@ ${reset};
 }
 html{ 
 	font-size: 62.5%;
+
 	@media (min-width: 768px) {
     font-size: 70%;
   }

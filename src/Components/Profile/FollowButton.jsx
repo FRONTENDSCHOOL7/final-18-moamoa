@@ -2,16 +2,15 @@
   설명: 팔로우/언팔로우 버튼 - 남의 프로필
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.12.15
+  마지막 수정 날까: 2024.02.03
 */
 
 import React, { useState, useEffect } from 'react';
 
-import styled from 'styled-components';
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
 
 import { followAPI, unFollowAPI } from '../../API/Follow/FollowAPI';
-
+import { FollowBtn } from './ProfileStyle';
 FollowButton.propTypes = {
   userAccount: PropTypes.string.isRequired,
   isFollow: PropTypes.bool.isRequired,
@@ -46,28 +45,3 @@ export default function FollowButton({ userAccount, isFollow, reFetchInfo }) {
     </div>
   );
 }
-
-const FollowBtn = styled.div`
-  button {
-    padding: 9px 42px;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #767676;
-    background-color: #fff;
-    border: 1px solid #dbdbdb;
-  }
-
-  p {
-    color: #767676;
-  }
-
-  &.followed button {
-    background-color: #87b7e4;
-    border-color: #87b7e4;
-  }
-
-  &.followed p {
-    color: #fff;
-  }
-`;

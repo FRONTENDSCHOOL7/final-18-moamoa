@@ -2,7 +2,7 @@
   설명: 게시글 등록 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.12.15
+  마지막 수정 날까: 2024.02.01
 
   추가 작성자: 유의진 
   추가 내용: 이미지 크롭 기능
@@ -20,7 +20,6 @@ import uploadFile from '../../Assets/images/upload-file.png';
 import xButton from '../../Assets/icons/x.svg';
 
 import { uploadPost } from '../../API/Post/PostAPI';
-// import { uploadImage } from '../../API/Image/ImageAPI';
 
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 import { useImage } from '../../Hooks/Common/useImage';
@@ -28,7 +27,6 @@ import ImageCropModal from '../../Components/Modal/ImageCropModal';
 
 import {
   HeaderContainer,
-  HiddenH1,
   UploadPostBox,
   ProfileImg,
   TextArea,
@@ -41,7 +39,6 @@ export default function AddPost() {
   const navigate = useNavigate();
 
   const [content, setContent] = useState('');
-  // const [image, setPostImage] = useState('');
   const [userImage, setUserImage] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -69,14 +66,6 @@ export default function AddPost() {
     setContent(e.target.value);
   };
 
-  // const handleChangeImage = async (e) => {
-  //   // 파일 가져오기
-  //   const imageFile = e.target.files[0];
-  //   const response = await uploadImage(imageFile);
-  //   const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
-  //   setPostImage(imageUrl);
-  // };
-
   //textarea 높이 설정
   const adjustTextareaHeight = (event) => {
     const textarea = event.target;
@@ -91,8 +80,7 @@ export default function AddPost() {
     const uploadPostData = {
       post: {
         content,
-        // image,
-        image: imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl,
+        image: imgData.croppedImageUrl ? imgData.croppedImageUrl || imgData.imageUrl : '',
       },
     };
 
@@ -110,13 +98,6 @@ export default function AddPost() {
   };
 
   useEffect(() => {
-    //   if (content.trim() === '' && !image) {
-    //     setIsButtonDisabled(true);
-    //   } else {
-    //     setIsButtonDisabled(false);
-    //   }
-    // }, [content, image]
-
     if (content.trim() === '' && (!imgData.croppedImageUrl || !imgData.imageUrl)) {
       setIsButtonDisabled(true);
     } else {
@@ -148,7 +129,7 @@ export default function AddPost() {
       )}
       <UploadPostBox>
         <section>
-          <HiddenH1>게시글 등록</HiddenH1>
+          <h1 className='a11y-hidden'>게시글 등록</h1>
 
           <form onSubmit={handleFormSubmit}>
             <ProfileImg>
@@ -176,7 +157,7 @@ export default function AddPost() {
             <div>
               {/* 이미지 미리보기 */}
 
-              {(imgData.imageUrl || imgData.croppedImageUrl) && (
+              {imgData && (imgData.imageUrl || imgData.croppedImageUrl) ? (
                 <ImgPre>
                   <img
                     src={imgData.croppedImageUrl ? imgData.croppedImageUrl : imgData.imageUrl}
@@ -189,18 +170,7 @@ export default function AddPost() {
                     </button>
                   </XButton>
                 </ImgPre>
-              )}
-
-              {/* {image ? (
-                <ImgPre>
-                  <img src={image} alt='' id='imagePre' />
-                  <XButton>
-                    <button type='button' onClick={closeImg}>
-                      <img src={xButton} alt='' />
-                    </button>
-                  </XButton>
-                </ImgPre>
-              ) : null} */}
+              ) : null}
 
               {/* 이미지 등록 버튼 */}
               <InputImgIcon>
