@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PostList from '../../Components/Post/PostList';
 import HomeSearch from './HomeSearch';
 import Header from '../../Components/Common/Header/Header';
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
 import { useRecoilState } from 'recoil';
@@ -77,12 +77,18 @@ export default function Home() {
             </div>
           </>
         ) : (
-          <HomeContainer>
-            <HomeSearch />
-          </HomeContainer>
+          <>
+            <HomeContainer>
+              <HomeSearch />
+            </HomeContainer>
+            <div>
+              <RecommendPlace/>
+              <Myfollowings/>
+            </div>
+          </>
         )}
       </HomeWrap>
-      <Footer />
+      <NavBar />
     </Container>
   );
 }

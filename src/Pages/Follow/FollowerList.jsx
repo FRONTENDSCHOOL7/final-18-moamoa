@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
 import FollowUser from '../../Components/Common/FollowUser';
 import Header from '../../Components/Common/Header/Header';
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import { FollowerPageAPI } from '../../API/Follow/FollowAPI';
 import { useParams } from 'react-router-dom';
 import { FollowingWrap } from './FollowStyle';
@@ -44,7 +44,7 @@ export default function FollowerList() {
           })}
         </FollowingWrap>
 
-        <Footer></Footer>
+        <NavBar></NavBar>
       </Container>
     </div>
   );

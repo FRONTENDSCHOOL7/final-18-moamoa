@@ -39,6 +39,7 @@ export const UserSearchHome = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #fff;
+  
 `;
 export const HomeCont = styled.div`
   position: relative;
@@ -52,8 +53,13 @@ export const HomeCont = styled.div`
   background-position: 50% 35%;
   margin-top: 180px;
   @media (min-width: 768px) {
-    background-position: 58.3% 35%;
+    background-position: calc(50% + 60px) 35%;
     padding-left: 120px;
+  }
+  @media (min-width: 1200px) {
+    margin-top: 25%;
+    background-position: 24.5% 35%;
+    padding: 0 40% 0 0;
   }
 `;
 

@@ -17,7 +17,7 @@ import { Container } from '../../Components/Common/Container';
 
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import Header from '../../Components/Common/Header/Header';
 
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
@@ -103,7 +103,7 @@ function MyProfile() {
             <ProfileDetailProduct userInfoData={userInfoData} reFetchInfo={UserInfo} />
           ) : null}
           <ProfileDetailPost accountName={profileAccountname} />
-          <Footer />
+          <NavBar />
         </section>
       </ProfileWrap>
     </Container>

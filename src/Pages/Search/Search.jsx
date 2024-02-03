@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ContainerVh } from '../../Components/Common/Container';
 import Header from '../../Components/Common/Header/Header';
 import { SearchAPI } from '../../API/Search/SearchAPI';
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import { useRecoilValue } from 'recoil';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import useDebounce from '../../Hooks/Search/useDebounce';
@@ -76,7 +76,7 @@ export default function Search() {
           <NotFound />
         )}
       </SearchListWrap>
-      <Footer></Footer>
+      <NavBar></NavBar>
     </ContainerVh>
   );
 }

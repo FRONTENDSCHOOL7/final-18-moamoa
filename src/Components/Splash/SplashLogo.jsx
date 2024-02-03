@@ -15,7 +15,7 @@ export default function SplashLogo() {
           <img src={fireworks} className='blinkfireworks' alt='' />
         </div>
         <img src={Logo} alt='모아모아 로고' />
-        <p className='logotext'>내 손 안의 안의 모든 축제!</p>
+        <p className='logotext'>내 손 안의 모든 축제! 모아모아</p>
         <AnimationFireworks>
           <div className='firework-1'></div>
           <div className='firework-2'></div>

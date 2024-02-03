@@ -4,7 +4,7 @@ import Header from '../../Components/Common/Header/Header';
 import FollowingUser from '../../Components/Common/FollowingUser';
 import { useParams } from 'react-router-dom';
 import { FollowingPageAPI } from '../../API/Follow/FollowAPI';
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import { FollowingWrap } from './FollowStyle';
 
 export default function FollowingList() {
@@ -42,7 +42,7 @@ export default function FollowingList() {
             );
           })}
         </FollowingWrap>
-        <Footer></Footer>
+        <NavBar></NavBar>
       </Container>
     </div>
   );

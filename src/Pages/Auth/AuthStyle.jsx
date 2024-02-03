@@ -5,7 +5,7 @@ import UploadFile from '../../Assets/images/upload-file.png';
 import { Link } from 'react-router-dom';
 
 const COLORS = {
-  primary: '#87b7e4',
+  primary: '#2E2C39',
   darkgray: '#767676',
 };
 
@@ -20,6 +20,296 @@ const LETTERSPACING = {
   normal: '1.5px',
   wide: '2px',
 };
+
+export const Container = styled.div`
+@media (min-width: 768px) {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: ${COLORS.primary};;
+  height: 100vh;
+  overflow: hidden;
+}
+`
+
+export const SplashBg = styled.div`
+  display: none;  
+  @media (min-width: 768px) {
+    display: block;
+    width: 50vw;
+    height: 100vh;
+  }
+`
+
+export const ProfileSetBg = styled.div`
+  @media (min-width: 768px) {
+    display: block;
+    width: 50vw;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 10;
+  }
+`
+
+
+export const SVGgroup = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'visible',
+})`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
+  gap: 5px;
+  .blinkFestival {
+    margin-top: 150px;
+    width: 109px;
+    height: 13px;
+    transform: translateX(-40%);
+  }
+  .blinkfireworks {
+    transform: translate(57%, 20%);
+    width: 57px;
+    height: 57px;
+  }
+  .logotext{
+    color: #fff;
+    margin-top: 8px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-weight: 300;
+  }
+  img {
+    width: 202px;
+  }
+  @media (min-width: 768px) {
+    position: fixed;
+    top: 30%;
+    transition: 0.5s ease;
+    left: ${(props) => (props.visible === true ? '25%' : '50%')};
+    display: flex;
+    transform: translate(-220%, -50%);
+    padding-right: 2%;
+  }
+`;
+
+export const AnimationFireworks = styled.div`
+  [class^='firework-'] {
+    z-index: 100;
+    position: absolute;
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 50%;
+  }
+  .firework-1 {
+    animation: firework-sm 1.2s both infinite;
+    animation-delay: 1.1s;
+    top: 15%;
+    left: 15%;
+  }
+  .firework-2 {
+    animation: firework-lg 1.2s both infinite;
+    animation-delay: 0.8s;
+    top: 10%;
+    left: 19%;
+  }
+  .firework-3 {
+    animation: firework-lg 1.2s both infinite;
+    animation-delay: 0.3s;
+    top: 5%;
+    left: 27%;
+  }
+  .firework-4 {
+    animation: firework-md 1.2s both infinite;
+    animation-delay: 1.3s;
+    top: 14%;
+    left: 31%;
+  }
+  .firework-5 {
+    animation: firework-md 1.2s both infinite;
+    animation-delay: 1.4s;
+    top: 25%;
+    left: 20%;
+  }
+  .firework-6 {
+    animation: firework-md 1.2s both infinite;
+    animation-delay: 0.4s;
+    top: 16%;
+    left: 82%;
+  }
+  .firework-7 {
+    animation: firework-lg 1.2s both infinite;
+    animation-delay: 0.2s;
+    top: 27%;
+    left: 75%;
+  }
+  .firework-8 {
+    animation: firework-sm 1.2s both infinite;
+    animation-delay: 0.2s;
+    top: 10%;
+    left: 79%;
+  }
+  .firework-9 {
+    animation: firework-md 1.4s both infinite;
+    animation-delay: 0.6s;
+    top: 12%;
+    left: 59%;
+  }
+  .firework-10 {
+    animation: firework-lg 1.5s both infinite;
+    animation-delay: 0.8s;
+    top: 14%;
+    left: 49%;
+  }
+  .firework-11 {
+    animation: firework-lg 1.5s both infinite;
+    animation-delay: 0.8s;
+    top: 4%;
+    left: 49%;
+  }
+  .firework-12 {
+    animation: firework-md 1.3s both infinite;
+    animation-delay: 0.8s;
+    top: 33%;
+    left: 40%;
+  }
+  .firework-13 {
+    animation: firework-lg 1.1s both infinite;
+    animation-delay: 0.8s;
+    top: 30%;
+    left: 58%;
+  }
+  @media (min-width: 768px) {
+    .firework-1 {
+      top: 45%;
+      left: -19%;
+    }
+    .firework-2 {
+      top: 40%;
+      left: 9%;
+    }
+    .firework-3 {
+      top: 75%;
+    }
+    .firework-4 {
+      top: 194%;
+    }
+    .firework-5 {
+      top: 95%;
+      left: 85%;
+    }
+    .firework-6 {
+      top: 120%;
+      left: 130%;
+    }
+    .firework-7 {
+      top: 57%;
+      left: 130%;
+    }
+    .firework-8 {
+      top: 10%;
+      left: 130%;
+    }
+    .firework-9 {
+      top: 42%;
+      left: 110%;
+    }
+    .firework-10 {
+      top: 24%;
+      left: 100%;
+    }
+    .firework-11 {
+      top: 126%;
+      left: 30%;
+    }
+    .firework-12 {
+      top: 166%;
+      left: 110%;
+    }
+    .firework-13 {
+      top: 160%;
+    }
+  }
+
+  @keyframes firework-sm {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    10%,
+    70% {
+      opacity: 1;
+    }
+    100% {
+      box-shadow:
+        -2rem 0rem 0 #c683d7,
+        2rem 0rem 0 #c683d7,
+        0rem -2rem 0 #c683d7,
+        0rem 2rem 0 #c683d7,
+        1.3rem -1.3rem 0 #c683d7,
+        1.3rem 1.3rem 0 #c683d7,
+        -1.3rem -1.3rem 0 #c683d7,
+        -1.3rem 1.3rem 0 #c683d7;
+    }
+  }
+  @keyframes firework-md {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    10%,
+    70% {
+      opacity: 1;
+    }
+    100% {
+      box-shadow:
+        -3rem 0rem 0 #ff6969,
+        3rem 0rem 0 #ff6969,
+        0rem -3rem 0 #ff6969,
+        0rem 3rem 0 #ff6969,
+        2rem -2rem 0 #ff6969,
+        2rem 2rem 0 #ff6969,
+        -2rem -2rem 0 #ff6969,
+        -2rem 2rem 0 #ff6969;
+    }
+  }
+  @keyframes firework-lg {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    10%,
+    70% {
+      opacity: 1;
+    }
+    100% {
+      box-shadow:
+        -4rem 0rem 0 #609966,
+        4rem 0rem 0 #609966,
+        0rem -4rem 0 #609966,
+        0rem 4rem 0 #609966,
+        3rem -3rem 0 #609966,
+        3rem 3rem 0 #609966,
+        -3rem -3rem 0 #609966,
+        -3rem 3rem 0 #609966;
+    }
+  }
+`;
+
+
+export const ProfileSetContainer = styled.div`
+  margin: 0 auto;
+  max-width: var(--small);
+  width: 100%;
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  @media (min-width: 768px) {
+    max-width: 480px;
+    margin-top: 5%;
+  }
+`;
 
 const buttonStyle = css`
   font-size: ${FONTSIZE.md};
@@ -62,7 +352,7 @@ export const Form = styled.form`
 export const Input = styled.input`
   border: none;
   outline: none;
-  border-bottom: 1.5px solid ${COLORS.darkgray};
+  border-bottom: 1px solid #dbdbdb;
   font-size: ${FONTSIZE.md};
   letter-spacing: ${LETTERSPACING.wide};
   background-image: url(${(props) =>
@@ -90,8 +380,8 @@ export const LongBtn = styled.button`
   letter-spacing: ${LETTERSPACING.wide};
 
   color: white;
-  background-color: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `${COLORS.darkgray}`)};
-  border: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `${COLORS.darkgray}`)};
+  background-color: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `#aaa`)};
+  border: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `#aaa`)};
 `;
 
 export const AlertParagraph = styled.p`

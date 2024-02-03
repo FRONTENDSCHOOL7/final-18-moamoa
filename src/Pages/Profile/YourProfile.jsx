@@ -22,7 +22,7 @@ import MsgIcon_desktop from '../../Assets/icons/message-btn-desktop.svg';
 import ShareIcon_desktop from '../../Assets/icons/share-btn-desktop.svg';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import { Container } from '../../Components/Common/Container';
 import HeaderKebab from '../../Components/Common/Header/HeaderKebab';
 
@@ -148,7 +148,7 @@ function YourProfile() {
           <ProfileDetailProduct userInfoData={userInfoData} reFetchInfo={UserInfo} />
         ) : null}
         <ProfileDetailPost accountName={profileAccountname} />
-        <Footer />
+        <NavBar />
       </ProfileWrap>
     </Container>
   );

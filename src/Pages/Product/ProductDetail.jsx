@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../Components/Common/Header/Header';
 import AskBtn from '../../Components/Product/AskBtn';
 import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
-import Footer from '../../Components/Common/Footer';
+import NavBar from '../../Components/Common/NavBar';
 import { FestivalContainer, FestivalArticle, Frofile } from './ProductStyle';
 
 import { getProductDetail } from '../../API/Product/ProductAPI';
@@ -50,7 +50,7 @@ export default function ProductDetail() {
             </Frofile>
             <ProductContents productData={productData} />
           </FestivalArticle>
-          <Footer />
+          <NavBar />
         </FestivalContainer>
       )}
     </>

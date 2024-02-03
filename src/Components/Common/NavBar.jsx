@@ -36,9 +36,9 @@ import {
   TabBtnImg,
   TabLabel,
   TabletLogOut,
-} from './FooterStyle';
+} from './NavBarStyle';
 
-export default function Footer() {
+export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [showMyProfileOptions, setShowMyProfileOptions] = useRecoilState(showMyProfileOptionsState);
