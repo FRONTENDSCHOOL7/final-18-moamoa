@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import homeButton from '../../Assets/icons/icon-home.svg';
 import chatButton from '../../Assets/icons/icon-message.svg';
@@ -37,7 +38,6 @@ import {
   TabLabel,
   TabletLogOut,
 } from './NavBarStyle';
-
 export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,6 +45,10 @@ export default function NavBar() {
   const [showConfirmLogoutModal, setShowConfirmLogoutModal] = useRecoilState(
     showConfirmLogoutModalState,
   );
+  TabButton.propTypes = {
+    hideOnMobile: PropTypes.bool,
+  };
+
   const tabs = [
     { name: 'home', label: '홈', path: '/home', icon: homeButton, fillIcon: homeButtonFill },
     {
@@ -149,8 +153,8 @@ export default function NavBar() {
         ))}
 
         <TabletLogOut onClick={handleKebabClick}>
-          <img src={logoutButton} alt='로그아웃' />
-          <TabLabel className='logout'>로그아웃</TabLabel>
+          <img src={logoutButton} className='logoutImg' alt='로그아웃' />
+          <TabLabel className='logoutText'>로그아웃</TabLabel>
         </TabletLogOut>
       </TabMenu>
       {showConfirmLogoutModal && (
