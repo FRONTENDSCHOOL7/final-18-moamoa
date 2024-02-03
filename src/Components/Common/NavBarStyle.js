@@ -30,11 +30,11 @@ export const TabMenu = styled.div`
   }
 `;
 export const TabButton = styled.button.withConfig({
-  shouldForwardProp: (prop) => prop !== 'active',
+  shouldForwardProp: (prop) => prop !== 'active' && prop !== 'hideOnMobile',
 })`
   height: 60px;
   width: 100%;
-  padding-bottom:4px;
+  padding-bottom: 4px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,7 +57,7 @@ export const TabButton = styled.button.withConfig({
   }
 
   &:hover {
-    background-color: #3B394A;
+    background-color: #3b394a;
   }
 `;
 export const TabBtnImg = styled.img`
@@ -92,10 +92,14 @@ export const TabletLogOut = styled.button`
     padding: 6px 0 2px 50px;
     gap: 7px;
     bottom: 80px;
-    .logout {
+    .logoutText {
       transform: translateX(-30%);
     }
   }
+  @media (max-height: 767px) {
+    position: static;
+  }
+
   @media (min-width: 1200px) {
     width: 100%;
     flex-direction: row;
@@ -106,8 +110,8 @@ export const TabletLogOut = styled.button`
     }
   }
   &:hover {
-    background-color: #3B394A;
-    color: #FFC700;
+    background-color: #3b394a;
+    color: #ffc700;
   }
 `;
 export const TabletLogo = styled.img`
