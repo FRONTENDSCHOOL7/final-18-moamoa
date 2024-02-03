@@ -51,6 +51,15 @@ export const ProfileImg = styled.div`
     }
   }
 
+  @media (min-width: 768px) {
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 199, 0, 0) 0%,
+      #ffc700 calc(30% + 65px),
+      white calc(30% + 65px),
+      white 100%
+    );
+  }
   @media (min-width: 1200px) {
     background: none;
     padding: 0px;
