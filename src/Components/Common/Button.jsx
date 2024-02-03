@@ -36,7 +36,7 @@ export default function Button(props) {
 const ButtonSubmit = styled.button`
   width: ${(props) => (props.width ? `${props.width}px` : '90px')};
   background-color: ${(props) =>
-    props.disabled ? '#DDE7F0' : props.$backgroundColor ? `${props.$backgroundColor}` : '#87b7e4'};
+    props.disabled ? '#767676' : props.$backgroundColor ? `${props.$backgroundColor}` : '#2E2C39'};
   color: ${(props) => (props.color ? `${props.color}` : '#fff')};
   border: ${(props) => (props.border ? `${props.color}` : '#fff')};
 
@@ -46,4 +46,12 @@ const ButtonSubmit = styled.button`
   font-size: 14px;
   font-weight: bold;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+
+  @media (min-width: 768px) {
+    width: 100%;
+    font-size: 1.6rem;
+    height: 40px;
+  }
+  @media (min-width: 1200px) {
+  }
 `;

@@ -200,7 +200,7 @@ export const HamView = styled.div`
       }
     }
     li:first-child {
-      margin-top: 3rem;
+      margin-top: 1.5rem;
     }
     li:last-child {
       margin-bottom: 8.5rem;

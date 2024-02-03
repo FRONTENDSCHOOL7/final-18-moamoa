@@ -21,3 +21,11 @@ export const getYourProfileData = async (infoUrl) => {
     console.error('프로필 정보를 가져올 수 없습니다.', error);
   }
 };
+
+export const editProfileData = async (editData) => {
+  try {
+    await authInstance.put('/user', editData);
+  } catch (error) {
+    return `*${error.response.data.message}`;
+  }
+};
