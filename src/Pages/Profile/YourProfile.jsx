@@ -2,11 +2,10 @@
   설명: 사용자 accountname의 프로필 페이지(남의 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.23
-  마지막 수정 날까: 2023.12.08
+  마지막 수정 날까: 2023.02.03
 */
 
 import React, { useState, useEffect } from 'react';
-
 import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -16,10 +15,11 @@ import ProfileDetail from '../../Components/Profile/ProfileDetail';
 import FollowButton from '../../Components/Profile/FollowButton';
 import ProfileDetailPost from '../../Components/Profile/ProfileDetailPost';
 import ProfileDetailProduct from '../../Components/Profile/ProfileDetailProduct';
-import styled from 'styled-components';
 
 import MsgIcon from '../../Assets/icons/message-btn.svg';
 import ShareIcon from '../../Assets/icons/share-btn.svg';
+import MsgIcon_desktop from '../../Assets/icons/message-btn-desktop.svg';
+import ShareIcon_desktop from '../../Assets/icons/share-btn-desktop.svg';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import NavBar from '../../Components/Common/NavBar';
@@ -27,6 +27,7 @@ import { Container } from '../../Components/Common/Container';
 import HeaderKebab from '../../Components/Common/Header/HeaderKebab';
 
 import { getYourProfileData } from '../../API/Profile/ProfileAPI';
+import { ProfileWrap, ProfileTop, Btns, CircleBtn } from './ProfileStyle';
 
 // 프로필보기
 function YourProfile() {
@@ -43,6 +44,8 @@ function YourProfile() {
   const [profileFollowingCount, setProfileFollowingCount] = useState(0);
   const [isFollow, setIsFollow] = useState(true);
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   async function UserInfo() {
     setIsLoading(true); // API 호출 전에 로딩 상태를 true로 설정
@@ -84,7 +87,17 @@ function YourProfile() {
     .slice(3, userInfoData.profileUsername.length)
     .replace(/ /g, '-');
 
-  console.log(userType);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // 현제 페이지 주소 복사
   function copyURLToClipboard() {
     const currentURL = window.location.href;
@@ -100,34 +113,35 @@ function YourProfile() {
 
   return (
     <Container>
-      <section>
-        <HeaderKebab />
-        <HiddenH1>남의 프로필</HiddenH1>
+      <HeaderKebab />
+      <ProfileWrap>
         <section>
+          <h1 className='a11y-hidden'>남의 프로필</h1>
           <ProfileTop>
-            <ProfileDetail userInfoData={userInfoData} />
-            <Btns>
-              <FollowButton
-                userAccount={userInfoData.profileAccountname}
-                isFollow={!isLoading && userInfoData.isFollow}
-                reFetchInfo={UserInfo}
-              />
-              <CircleBtn>
-                <button
-                  type='button'
-                  onClick={() => {
-                    navigate(`/chat/${userName}`);
-                  }}
-                >
-                  <img src={MsgIcon} alt='' />
-                </button>
-                <button onClick={copyURLToClipboard}>
-                  <img src={ShareIcon} alt='' />
-                </button>
-              </CircleBtn>
-            </Btns>
+            <section>
+              <ProfileDetail userInfoData={userInfoData} />
+              <Btns>
+                <FollowButton
+                  userAccount={userInfoData.profileAccountname}
+                  isFollow={!isLoading && userInfoData.isFollow}
+                  reFetchInfo={UserInfo}
+                />
+                <CircleBtn>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      navigate(`/chat/${userName}`);
+                    }}
+                  >
+                    <img src={windowWidth >= 1200 ? MsgIcon_desktop : MsgIcon} alt='' />
+                  </button>
+                  <button onClick={copyURLToClipboard}>
+                    <img src={windowWidth >= 1200 ? ShareIcon_desktop : ShareIcon} alt='' />
+                  </button>
+                </CircleBtn>
+              </Btns>
+            </section>
           </ProfileTop>
-
           {/* 라우터에 연결되면 채팅방으로 연결 */}
         </section>
         {userType === 'organization' ? (
@@ -135,46 +149,9 @@ function YourProfile() {
         ) : null}
         <ProfileDetailPost accountName={profileAccountname} />
         <NavBar />
-      </section>
+      </ProfileWrap>
     </Container>
   );
 }
 
 export default YourProfile;
-
-const a11yHidden = `
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
-  width: 1px
-	height: 1px;
-	margin: -1px;
-  overflow: hidden;
-	padding: 0;
-	position: absolute;
-`;
-
-const HiddenH1 = styled.h1`
-  ${a11yHidden}
-`;
-
-const ProfileTop = styled.div`
-  position: relative;
-  margin-top: 48px;
-`;
-
-const Btns = styled.div`
-  position: absolute;
-  top: 128px;
-  right: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 6px;
-`;
-
-const CircleBtn = styled.div`
-  display: flex;
-  gap: 8px;
-  button {
-  }
-`;

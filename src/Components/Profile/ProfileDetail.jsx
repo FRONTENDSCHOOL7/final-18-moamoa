@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지 공통 UI
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.12.13
+  마지막 수정 날까: 2024.02.03
 */
 
 import React, { useState, useEffect } from 'react';
@@ -10,10 +10,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
-import styled from 'styled-components';
 import UserTypeCheck from '../../Assets/icons/icon-usertype-check.svg';
 
 import PostCount from './PostCount';
+import { ProfileDetailBox, ProfileImg, ProfileInfo, CountWrap } from './ProfileStyle';
 
 ProfileDetail.propTypes = {
   userInfoData: PropTypes.object.isRequired,
@@ -82,83 +82,3 @@ export default function ProfileDetail({ userInfoData }) {
     </ProfileDetailBox>
   );
 }
-
-const ProfileDetailBox = styled.div`
-  background-color: #fff;
-  border-bottom: 1px solid #dbdbdb;
-`;
-const ProfileImg = styled.div`
-  background: linear-gradient(to bottom, #ffc700 50%, #ffc700 calc(30% + 65px), transparent 50%);
-  padding-top: 65px;
-  padding-left: 20px;
-
-  img {
-    width: 105px;
-    height: 105px;
-    border-radius: 50%;
-    border: 5px solid #fff;
-    background: #fff;
-  }
-`;
-
-const ProfileInfo = styled.div`
-  padding: 10px 16px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  p {
-    color: #767676;
-    font-size: 12px;
-  }
-
-  p:first-child {
-    color: #000;
-    font-size: 16px;
-    margin-bottom: 0.2rem;
-  }
-
-  .profile-intro {
-    font-size: 14px;
-  }
-
-  div {
-    p:first-child {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-  }
-`;
-
-const CountWrap = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-
-  padding: 14px 0;
-  text-align: center;
-
-  p {
-    font-size: 18px;
-  }
-
-  button {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
-    p: last-child {
-      font-size: 10px;
-      color: #767676;
-    }
-  }
-
-  span {
-    display: inline-block;
-    width: 0.5px;
-    height: 22px;
-    background-color: #e3e3e3;
-  }
-`;

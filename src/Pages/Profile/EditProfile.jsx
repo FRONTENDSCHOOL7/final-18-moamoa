@@ -19,7 +19,7 @@ import ButtonSubmit from '../../Components/Common/Button';
 import uploadFile from '../../Assets/images/upload-file.png';
 import styled from 'styled-components';
 
-import { HeaderContainer, HiddenH1 } from '../Post/UploadEditPostStyle';
+import { HeaderContainer } from '../Post/UploadEditPostStyle';
 
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 
@@ -247,7 +247,7 @@ function EditProfile() {
         />
       )}
       <section>
-        <HiddenH1>내 프로필 수정</HiddenH1>
+        <h1 className='a11y-hidden'>내 프로필 수정</h1>
         <form onSubmit={handleFormSubmit}>
           {/* 프로필 이미지 */}
           <ProfileImg>
