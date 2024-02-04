@@ -46,7 +46,7 @@ export const ProfileSetBg = styled.div`
     width: 50vw;
     height: 100vh;
     background-color: #fff;
-    z-index: 10;
+    z-index: 300;
   }
 `
 
@@ -81,13 +81,17 @@ export const SVGgroup = styled.div.withConfig({
     width: 202px;
   }
   @media (min-width: 768px) {
-    position: fixed;
-    top: 30%;
-    transition: 0.5s ease;
-    left: ${(props) => (props.visible === true ? '25%' : '50%')};
+    .blinkFestival {
+      margin-top: 0px;
+    }
+    width: 100%;
     display: flex;
-    transform: translate(-220%, -50%);
-    padding-right: 2%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 29%;
+    left: ${(props) => (props.visible === true ? '-25%' : '0%')};
+    transition: 0.5s ease;
   }
 `;
 
@@ -291,6 +295,21 @@ export const AnimationFireworks = styled.div`
         -3rem -3rem 0 #609966,
         -3rem 3rem 0 #609966;
     }
+  }
+`;
+
+export const Copyright = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'visible',
+})`
+  margin-top: 370px;
+  color: #ffffff;
+  font-size: 14px;
+  @media (min-width: 768px) {
+    position: absolute;
+    bottom: 10%;
+    transition: 0.5s ease;
+    left: ${(props) => (props.visible === true ? '25%' : '50%')};
+    transform: translateX(-50%);
   }
 `;
 
