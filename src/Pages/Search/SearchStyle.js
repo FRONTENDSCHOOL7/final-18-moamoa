@@ -18,6 +18,6 @@ export const RecommendPlaceContainer = styled.div`
     display: none;
   }
   position: absolute;
-  top: 7%;
-  right: 5%;
+  top: 8.5%;
+  right: 2.5%;
 `;
