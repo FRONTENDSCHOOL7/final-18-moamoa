@@ -3,9 +3,6 @@ import styled from 'styled-components';
 export const ProductListWrap = styled.div`
   background-color: #fff;
   margin-top: 48px;
-  @media (min-width: 768px) {
-    margin-top: 80px;
-  }
 `;
 
 export const FestivalContainer = styled.div`
@@ -20,6 +17,7 @@ export const FestivalContainer = styled.div`
     padding-left: 120px;
   }
   @media (min-width: 1200px) {
+    /* max-width: 600px; */
     padding-left: 240px;
   }
 `;

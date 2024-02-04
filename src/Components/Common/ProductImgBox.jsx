@@ -36,7 +36,6 @@ const ProductListPoster = styled(ImgBox)`
   height: 180px;
   object-fit: fill;
   @media (min-width: 768px) {
-    width: 225px;
-    height: 134px;
+    width: 280px;
   }
 `;
