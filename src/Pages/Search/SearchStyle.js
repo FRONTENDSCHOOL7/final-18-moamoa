@@ -7,5 +7,17 @@ export const SearchListWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  position: relative;
+  @media (min-width: 768px) {
+    margin: 0 auto;
+  }
+  @media (min-width: 1200px) {
+  }
+`;
+export const RecommendPlaceContainer = styled.div`
+  @media (max-width: 1199px) {
+    display: none;
+  }
+  position: absolute;
+  top: 7%;
+  right: 5%;
 `;

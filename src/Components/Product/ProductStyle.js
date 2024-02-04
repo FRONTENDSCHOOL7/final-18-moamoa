@@ -27,15 +27,18 @@ export const ExperienceBtn = styled(Button).withConfig({
 
 export const ProductContainer = styled.div`
   max-width: 100%;
-
   margin: 10px auto;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
 
   @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 224px);
+    margin-left: 204px;
     max-width: 480px;
+  }
+  @media (min-width: 1200px) {
+    margin-left: 310px;
   }
 
   padding-bottom: 150px;
@@ -75,21 +78,33 @@ export const Nav = styled.div`
     margin-bottom: 10px;
   }
   @media (min-width: 768px) {
+    padding: 0;
     max-width: 480px;
-    margin: 0 auto;
+    margin-left: 204px;
+  }
+  @media (min-width: 1200px) {
+    margin-left: 310px;
   }
 `;
 export const SkeletonContainer = styled(ProductContainer)`
   gap: 20px;
   margin: 10px auto;
   margin-left: 10px;
+  @media (min-width: 768px) {
+    margin: 0px;
+  }
   .itemImage {
-    border-radius: 10px;
     width: 370px;
     height: 180px;
     margin-bottom: 5px;
+    border-radius: 10px;
     @media (min-width: 768px) {
-      width: 280px;
+      width: 225px;
+      height: 134px;
+      margin-left: 204px;
+    }
+    @media (min-width: 1200px) {
+      margin-left: 310px;
     }
   }
 
@@ -99,16 +114,20 @@ export const SkeletonContainer = styled(ProductContainer)`
     width: 150px;
     height: 15px;
     @media (min-width: 768px) {
+      margin-left: 204px;
+    }
+    @media (min-width: 1200px) {
+      margin-left: 310px;
     }
   }
   .itemDate {
     margin-left: 4px;
     width: 140px;
-  }
-  @media (min-width: 768px) {
-    grid-column-gap: 43px;
-    grid-row-gap: 20px;
-    max-width: 480px;
-    margin: 0px auto;
+    @media (min-width: 768px) {
+      margin-left: 204px;
+    }
+    @media (min-width: 1200px) {
+      margin-left: 310px;
+    }
   }
 `;

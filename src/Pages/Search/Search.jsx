@@ -12,7 +12,9 @@ import NotFound from '../../Components/Search/NotFound';
 import SearchResultBox from '../../Components/Search/SearchResultBox';
 
 import 'react-loading-skeleton/dist/skeleton.css';
-import { SearchListWrap } from './SearchStyle';
+import { RecommendPlaceContainer, SearchListWrap } from './SearchStyle';
+import RecommendPlace from '../../Components/Common/RecommendPlace';
+import Myfollowings from '../../Components/Common/Myfollowings';
 
 export default function Search() {
   const [, setError] = useState(null);
@@ -75,6 +77,10 @@ export default function Search() {
         ) : (
           <NotFound />
         )}
+        <RecommendPlaceContainer>
+          <RecommendPlace />
+          <Myfollowings />
+        </RecommendPlaceContainer>
       </SearchListWrap>
       <NavBar></NavBar>
     </ContainerVh>

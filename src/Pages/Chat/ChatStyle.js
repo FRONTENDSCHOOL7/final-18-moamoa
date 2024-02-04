@@ -112,9 +112,13 @@ export const ChatListWrap = styled.div`
   gap: 16px;
   margin-top: 48px;
   @media (min-width: 768px) {
-    width: 100%;
-    max-width: 480px;
-    margin: 48px auto;
+    width: 480px;
+    padding: 0;
+    margin-top: 80px;
+    margin-left: 204px;
+  }
+  @media (min-width: 1200px) {
+    margin-left: 310px;
   }
 `;
 export const SearchImg = styled.img`
@@ -181,4 +185,15 @@ export const ChatDateBox = styled.div`
   position: absolute;
   bottom: 22%;
   right: 0px;
+  @media (min-width: 768px) {
+    right: 55px;
+  }
+`;
+export const RecommendPlaceContainer = styled.div`
+  @media (max-width: 1200px) {
+    display: none;
+  }
+  position: absolute;
+  top: 8%;
+  right: 2.5%;
 `;

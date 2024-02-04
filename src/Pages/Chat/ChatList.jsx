@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from '../../Components/Common/NavBar';
-import { ContainerVh } from '../../Components/Common/Container';
+import { Container } from '../../Components/Common/Container';
 import img from '../../Assets/images/followImg/fog.jpg';
 import img2 from '../../Assets/images/followImg/human.jpg';
 import img3 from '../../Assets/images/followImg/woman2.jpg';
@@ -17,11 +17,14 @@ import {
   ChatDateBox,
   ChatDate,
 } from './ChatStyle';
+import { RecommendPlaceContainer } from './ChatStyle';
+import RecommendPlace from '../../Components/Common/RecommendPlace';
+import Myfollowings from '../../Components/Common/Myfollowings';
 
 export default function ChatList() {
   return (
     <div>
-      <ContainerVh>
+      <Container>
         <Header type='moreKebab' />
         <ChatListWrap>
           <SearchWrap>
@@ -69,8 +72,12 @@ export default function ChatList() {
           </SearchWrap>
 
           <NavBar></NavBar>
+          <RecommendPlaceContainer>
+            <RecommendPlace />
+            <Myfollowings />
+          </RecommendPlaceContainer>
         </ChatListWrap>
-      </ContainerVh>
+      </Container>
     </div>
   );
 }

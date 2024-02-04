@@ -82,11 +82,9 @@ export const HeaderSearchContainer = styled.header`
   align-items: center;
   box-sizing: border-box;
   margin-bottom: 10px;
-  @media (min-width: 768px) {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  @media (min-width: 1200px) {
+  input::-webkit-search-cancel-button {
+    padding-right: 10px;
+    cursor: pointer;
   }
   img {
     cursor: pointer;
@@ -95,6 +93,7 @@ export const HeaderSearchContainer = styled.header`
   }
   input {
     background-color: #f2f2f2;
+    flex: 1;
     width: 340px;
     height: 32px;
     border-radius: 32px;
@@ -104,5 +103,21 @@ export const HeaderSearchContainer = styled.header`
       outline: none;
       border: 1px solid #797979;
     }
+  }
+  @media (min-width: 768px) {
+    position: static;
+    border: none;
+    padding: 0;
+    margin-top: 80px;
+    margin-inline: auto;
+    input {
+    }
+    img {
+      display: none;
+    }
+  }
+  @media (min-width: 1200px) {
+    left: 40%;
+    transform: translateX(-30%);
   }
 `;

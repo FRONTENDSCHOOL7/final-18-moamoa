@@ -29,10 +29,10 @@ export const SkeletonContainer = styled.div`
     height: 12px;
   }
   @media (min-width: 768px) {
-    width: 100%;
-    max-width: 480px;
-    margin: 0 auto;
-    transform: translateX(10%);
+    transform: translateX(-30%);
+  }
+  @media (min-width: 1200px) {
+    transform: translateX(-100%);
   }
 `;
 
@@ -42,9 +42,10 @@ export const SearchResultBox = styled.div`
   display: flex;
   align-items: center;
   @media (min-width: 768px) {
-    max-width: 480px;
-    margin: 0 auto;
-    transform: translateX(10%);
+    transform: translateX(-35%);
+  }
+  @media (min-width: 1200px) {
+    transform: translateX(-90%);
   }
 `;
 export const SearchPhotoWrap = styled.div`
@@ -92,6 +93,12 @@ export const NotFoundContainer = styled.div`
     font-size: 20px;
     transform: translateX(5%);
     color: var(--buttonDisable);
+  }
+  @media (min-width: 768px) {
+    transform: translateY(-10%);
+  }
+  @media (min-width: 1200px) {
+    transform: translate(-80%, -10%);
   }
 `;
 export const BlueCheck = styled.img`
