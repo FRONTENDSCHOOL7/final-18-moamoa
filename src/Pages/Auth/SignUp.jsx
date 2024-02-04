@@ -12,6 +12,7 @@ import {
   ProfileSetBg,
   ProfileSetContainer,
   SVGgroup,
+  Copyright,
   AnimationFireworks,
   TitleH2,
   Form,
@@ -201,6 +202,8 @@ const SignUp = () => {
                 <div className='firework-15'></div>
               </AnimationFireworks>
             </SVGgroup>
+
+      <Copyright visible={modalActive}>@copyright moamoa corp</Copyright>
           </SplashBg>
         </Container>
       ) : (
@@ -293,6 +296,8 @@ const SignUp = () => {
                 <div className='firework-15'></div>
               </AnimationFireworks>
             </SVGgroup>
+
+      <Copyright visible={modalActive}>@copyright moamoa corp</Copyright>
           </SplashBg>
         </Container>
       )}
