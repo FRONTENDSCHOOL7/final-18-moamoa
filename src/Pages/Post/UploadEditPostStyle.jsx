@@ -30,11 +30,23 @@ export const UploadPostBox = styled.div`
   position: relative;
   background-color: #fff;
   margin-top: 48px;
+
+  @media (min-width: 768px) {
+    margin-left: calc(120px + (100% - 768px) / 2);
+    margin-right: calc(120px + (100% - 1020px) / 2);
+    margin-top: 80px;
+    padding-top: 0px;
+  }
+
+  @media (min-width: 1200px) {
+    min-width: 648px;
+    margin-left: calc(240px + (100% - 1020px) / 2);
+  }
 `;
 
 export const ProfileImg = styled.div`
-  width: 42px;
-  height: 42px;
+  width: 4.2rem;
+  height: 4.2rem;
 
   img {
     width: 100%;
@@ -48,20 +60,16 @@ export const TextArea = styled.div`
   padding: 10px 0;
 
   textarea {
-    resize: none; // 이 부분을 추가합니다.
+    resize: none;
     box-sizing: border-box;
     width: 100%;
     border-radius: 2px;
-    padding-top: 5px; // 위쪽 padding 추가
-    padding-left: 5px; // 왼쪽 padding 추가
+    padding: 8px;
     overflow-y: hidden;
 
-    border: none;
+    border: 2px solid #2e2c39;
 
-    &:focus {
-      border: 1px solid #ffc700; // textarea가 포커스될 때 빨간색 테두리가 생깁니다.
-      outline: none; // 기본 브라우저 포커스 스타일을 제거합니다.
-    }
+    font-size: 1.4rem;
   }
 `;
 
@@ -74,6 +82,8 @@ export const ImgPre = styled.div`
     object-fit: cover;
     border-radius: 10px;
   }
+
+  margin-bottom: 10px;
 `;
 
 export const XButton = styled.div`

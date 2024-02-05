@@ -2,7 +2,7 @@
   설명: 게시글 등록 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2024.02.01
+  마지막 수정 날까: 2024.02.05
 
   추가 작성자: 유의진 
   추가 내용: 이미지 크롭 기능
@@ -24,6 +24,7 @@ import { uploadPost } from '../../API/Post/PostAPI';
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 import { useImage } from '../../Hooks/Common/useImage';
 import ImageCropModal from '../../Components/Modal/ImageCropModal';
+import NavBar from '../../Components/Common/NavBar';
 
 import {
   HeaderContainer,
@@ -45,6 +46,8 @@ export default function AddPost() {
   const { imgData, setImgData, showImgModal, onSelectFile, onCancel, setCroppedImageFor } =
     useImage(null);
 
+  const [isTabletScreen, setIsTabletScreen] = useState(window.innerWidth >= 768);
+
   const getUserImg = async () => {
     try {
       const response = await await getMyProfileData();
@@ -60,6 +63,16 @@ export default function AddPost() {
   useEffect(() => {
     // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행
     getUserImg();
+
+    const handleResize = () => {
+      setIsTabletScreen(window.innerWidth >= 768);
+    };
+
+    // 리사이즈 이벤트 리스너 추가
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const inputContent = (e) => {
@@ -89,7 +102,6 @@ export default function AddPost() {
   };
 
   const closeImg = () => {
-    // setPostImage('');
     setImgData({
       imageUrl: '',
       croppedImageUrl: null,
@@ -112,10 +124,16 @@ export default function AddPost() {
 
   return (
     <Container>
-      <HeaderContainer>
-        <Gobackbtn />
-        <ButtonSubmit buttonText='업로드' onClickHandler={submitPost} disabled={isButtonDisabled} />
-      </HeaderContainer>
+      {!isTabletScreen && (
+        <HeaderContainer>
+          <Gobackbtn />
+          <ButtonSubmit
+            buttonText='업로드'
+            onClickHandler={submitPost}
+            disabled={isButtonDisabled}
+          />
+        </HeaderContainer>
+      )}
       {showImgModal && (
         <ImageCropModal
           imageUrl={imgData.imageUrl}
@@ -147,7 +165,7 @@ export default function AddPost() {
                   }}
                   id='contentTextarea'
                   name='content'
-                  rows='1'
+                  rows='10'
                   cols='50'
                   placeholder='내용을 입력해주세요'
                 ></textarea>
@@ -156,7 +174,6 @@ export default function AddPost() {
 
             <div>
               {/* 이미지 미리보기 */}
-
               {imgData && (imgData.imageUrl || imgData.croppedImageUrl) ? (
                 <ImgPre>
                   <img
@@ -188,8 +205,16 @@ export default function AddPost() {
                 />
               </InputImgIcon>
             </div>
+            {isTabletScreen && (
+              <ButtonSubmit
+                buttonText='업로드'
+                onClickHandler={submitPost}
+                disabled={isButtonDisabled}
+              />
+            )}
           </form>
         </section>
+        {isTabletScreen && <NavBar />}
       </UploadPostBox>
     </Container>
   );
