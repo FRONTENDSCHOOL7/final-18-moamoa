@@ -96,8 +96,15 @@ export const SVGgroup = styled.div.withConfig({
 `;
 
 export const AnimationFireworks = styled.div`
+  @media (min-width: 768px) {
+    position: relative;
+    width: 50vw;
+    height: 30vh;
+    left: -30%;
+    top: -300px;
+  }
   [class^='firework-'] {
-    z-index: 100;
+    z-index: 500;
     position: absolute;
     width: 0.15rem;
     height: 0.15rem;
