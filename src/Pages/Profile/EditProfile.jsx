@@ -2,7 +2,7 @@
   설명: 내 프로필 수정 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2023.02.04
+  마지막 수정 날까: 2023.02.06
 
   추가 작성자: 유의진 
   추가 내용: 이미지 크롭 기능
@@ -47,8 +47,6 @@ function EditProfile() {
   const [duplicateIdError, setDuplicateIdError] = useState('');
   const [userType, setUserType] = useState('');
 
-  const [isTabletScreen, setIsTabletScreen] = useState(window.innerWidth >= 768);
-
   // 내 정보 API
   const getInitInfo = async () => {
     try {
@@ -75,18 +73,6 @@ function EditProfile() {
 
   useEffect(() => {
     getInitInfo();
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsTabletScreen(window.innerWidth >= 768);
-    };
-
-    // 리사이즈 이벤트 리스너 추가
-    window.addEventListener('resize', handleResize);
-
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
-    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // 프로필 수정 API
@@ -191,12 +177,10 @@ function EditProfile() {
 
   return (
     <Container>
-      {!isTabletScreen && (
-        <HeaderContainer>
-          <Gobackbtn />
-          <ButtonSubmit buttonText='저장' onClickHandler={submitEdit} disabled={isButtonDisabled} />
-        </HeaderContainer>
-      )}
+      <HeaderContainer>
+        <Gobackbtn />
+        <ButtonSubmit buttonText='저장' onClickHandler={submitEdit} disabled={isButtonDisabled} />
+      </HeaderContainer>
       {showImgModal && (
         <ImageCropModal
           imageUrl={imgData.imageUrl}
@@ -286,18 +270,20 @@ function EditProfile() {
                 </TextInput>
                 {introError && <EorrorMsg>{introError}</EorrorMsg>}
               </div>
-              {isTabletScreen && (
+              <div className='large-scree'>
                 <ButtonSubmit
                   buttonText='저장'
                   onClickHandler={submitEdit}
                   disabled={isButtonDisabled}
                 />
-              )}
+              </div>
             </EditProfileBox>
           </form>
         </section>
       </ProfileWrap>
-      {isTabletScreen && <NavBar />}
+      <div className='large-scree'>
+        <NavBar />
+      </div>
     </Container>
   );
 }

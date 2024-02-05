@@ -7,6 +7,10 @@ import { Container } from '../../Components/Common/Container';
 import DefaultImg from '../../Assets/images/img-product-default.png';
 import { HeaderSubmitProduct } from '../../Components/Common/Header/HeaderComponents';
 import { useImage } from '../../Hooks/Common/useImage';
+import NavBar from '../../Components/Common/NavBar';
+import RecommendPlace from '../../Components/Common/RecommendPlace';
+import Myfollowings from '../../Components/Common/Myfollowings';
+import { ProductSection } from './ProductAddEditStyle';
 
 const ProductEdit = () => {
   const params = useParams();
@@ -68,24 +72,33 @@ const ProductEdit = () => {
     <Container>
       <HeaderSubmitProduct />
       <h1 className='a11y-hidden'>상품 수정 페이지</h1>
-      <ProductForm
-        product={{ productName, productType, startDate, endDate, location, description }}
-        setProductType={setProductType}
-        setProductName={setProductName}
-        setStartDate={setStartDate}
-        setEndDate={setEndDate}
-        setLocation={setLocation}
-        setDescription={setDescription}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        imgData={imgData}
-        onCancel={onCancel}
-        onSelectFile={onSelectFile}
-        setCroppedImageFor={setCroppedImageFor}
-        showImgModal={showImgModal}
-        editMode={editMode}
-        productId={productId}
-      />
+      <ProductSection>
+        <ProductForm
+          product={{ productName, productType, startDate, endDate, location, description }}
+          setProductType={setProductType}
+          setProductName={setProductName}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+          setLocation={setLocation}
+          setDescription={setDescription}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          imgData={imgData}
+          onCancel={onCancel}
+          onSelectFile={onSelectFile}
+          setCroppedImageFor={setCroppedImageFor}
+          showImgModal={showImgModal}
+          editMode={editMode}
+          productId={productId}
+        />
+        <div className='Recommend'>
+          <RecommendPlace />
+          <Myfollowings />
+        </div>
+      </ProductSection>
+      <div className='large-scree'>
+        <NavBar />
+      </div>
     </Container>
   );
 };

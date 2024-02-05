@@ -22,6 +22,10 @@ export const HeaderContainer = styled.header`
   img {
     cursor: pointer;
   }
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 export const UploadPostBox = styled.div`
@@ -29,18 +33,16 @@ export const UploadPostBox = styled.div`
   padding: 16px;
   position: relative;
   background-color: #fff;
+  margin: 0 auto;
   margin-top: 48px;
 
   @media (min-width: 768px) {
-    margin-left: calc(120px + (100% - 768px) / 2);
-    margin-right: calc(120px + (100% - 1020px) / 2);
     margin-top: 80px;
-    padding-top: 0px;
+    padding: 0px 0px 0px 120px;
   }
 
   @media (min-width: 1200px) {
-    min-width: 648px;
-    margin-left: calc(240px + (100% - 1020px) / 2);
+    padding-left: 270px;
   }
 `;
 
