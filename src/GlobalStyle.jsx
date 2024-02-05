@@ -38,6 +38,7 @@ body{
 a{
 	text-decoration:none;
 	color:inherit;
+	cursor:pointer;
 }
 input,button{
 	border:none;
