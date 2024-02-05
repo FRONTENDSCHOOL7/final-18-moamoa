@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SearchListWrap = styled.div`
+export const SearchListWrap = styled.ul`
   height: 100%;
   margin-top: 48px;
   padding: 16px;

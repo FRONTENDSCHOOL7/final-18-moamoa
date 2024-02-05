@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const TabMenu = styled.div`
+export const TabMenu = styled.nav`
   width: 390px;
   height: 60px;
   background-color: #2e2c39;
@@ -29,7 +29,7 @@ export const TabMenu = styled.div`
     align-items: center;
   }
 `;
-export const TabButton = styled.button.withConfig({
+export const TabButton = styled.a.withConfig({
   shouldForwardProp: (prop) => prop !== 'active' && prop !== 'hideOnMobile',
 })`
   height: 60px;

@@ -25,7 +25,7 @@ export const ExperienceBtn = styled(Button).withConfig({
   border: ${({ onActive }) => (onActive ? 'none' : '1px solid var(--buttonDisable)')};
 `;
 
-export const ProductContainer = styled.div`
+export const ProductContainer = styled.ul`
   max-width: 100%;
 
   margin: 10px auto;
@@ -47,7 +47,7 @@ export const ProductContainer = styled.div`
     background-position: 0% 93%;
   }
 `;
-export const ProductBox = styled.div`
+export const ProductBox = styled.li`
   margin: 0 auto;
 
   .itemName {
@@ -64,7 +64,7 @@ export const ProductBox = styled.div`
   }
 `;
 
-export const Nav = styled.div`
+export const Nav = styled.nav`
   display: flex;
   padding: 10px;
   .btn {

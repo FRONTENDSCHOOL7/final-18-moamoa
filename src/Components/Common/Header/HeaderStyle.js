@@ -64,6 +64,9 @@ export const HeaderFollowContainer = styled.div`
   padding-left: 16px;
   box-sizing: border-box;
   margin-bottom: 8px;
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 export const ChatUserName = styled.h2`
   font-weight: 500;

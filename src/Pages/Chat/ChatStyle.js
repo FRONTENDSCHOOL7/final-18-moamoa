@@ -105,7 +105,7 @@ export const RemoveFile = styled.div`
   margin: 0px 10px;
 `;
 
-export const ChatListWrap = styled.div`
+export const ChatListWrap = styled.ul`
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -128,7 +128,7 @@ export const SearchImg = styled.img`
   object-fit: cover;
   border-radius: 50px;
 `;
-export const SearchWrap = styled.div`
+export const SearchWrap = styled.li`
   position: relative;
   height: 50px;
   display: flex;

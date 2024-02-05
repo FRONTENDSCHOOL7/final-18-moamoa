@@ -36,7 +36,7 @@ export const SkeletonContainer = styled.div`
   }
 `;
 
-export const SearchResultBox = styled.div`
+export const SearchResultBox = styled.li`
   height: 50px;
   width: 100%;
   display: flex;
