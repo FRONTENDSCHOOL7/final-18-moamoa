@@ -32,6 +32,7 @@ export const TabMenu = styled.nav`
 export const TabButton = styled.a.withConfig({
   shouldForwardProp: (prop) => prop !== 'active' && prop !== 'hideOnMobile',
 })`
+  box-sizing: border-box;
   height: 60px;
   width: 100%;
   padding-bottom: 4px;
@@ -41,10 +42,13 @@ export const TabButton = styled.a.withConfig({
   gap: 4px;
   align-items: center;
 
+  text-decoration: none;
+
   @media (max-width: 768px) {
     display: ${({ hideOnMobile }) => (hideOnMobile ? 'none' : 'flex')};
   }
   @media (min-width: 768px) {
+    width: 100%;
     margin-bottom: 16px;
     gap: 7px;
   }
@@ -53,7 +57,6 @@ export const TabButton = styled.a.withConfig({
     justify-content: start;
     flex-direction: row;
     gap: 23px;
-    width: 100%;
   }
 
   &:hover {
