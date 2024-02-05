@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Button from '../Common/Button';
-import PropTypes from 'prop-types'; // npm install prop-types 설치 필요
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+
+import { FollowWrap, UserPhotoWrap, UserPhoto, UserInfo, UserId, UserText } from './FollowStyle';
 
 FollowUser.propTypes = {
   src: PropTypes.string.isRequired,
@@ -22,7 +23,7 @@ export default function FollowUser(props) {
     navigate(`/profile/${accountname}`);
   };
   return (
-    <div>
+    <>
       <FollowWrap>
         <UserPhotoWrap>
           <UserPhoto
@@ -45,51 +46,6 @@ export default function FollowUser(props) {
           onClickHandler={handleButtonClick}
         ></Button>
       </FollowWrap>
-    </div>
+    </>
   );
 }
-
-const FollowWrap = styled.div`
-  width: 358px;
-  height: 50px;
-
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 8px 0 8px 16px;
-  Button {
-    font-size: 12px;
-    font-weight: bold;
-    margin-left: 80px;
-  }
-`;
-const UserPhotoWrap = styled.div`
-  border: 1px solid var(--DBDBDB, #dbdbdb);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-`;
-const UserPhoto = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-const UserInfo = styled.div`
-  margin-left: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-const UserId = styled.h2`
-  font-size: 14px;
-`;
-const UserText = styled.span`
-  color: #767676;
-  font-size: 12px;
-  width: 150px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
