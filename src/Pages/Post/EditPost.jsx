@@ -2,7 +2,7 @@
   설명: 게시글 수정 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.30
-  마지막 수정 날까: 2024.02.01
+  마지막 수정 날까: 2024.02.05
   
   추가 작성자: 유의진 
   추가 내용: 이미지 크롭 기능
@@ -23,6 +23,7 @@ import xButton from '../../Assets/icons/x.svg';
 import { getPostDetail, editPost } from '../../API/Post/PostAPI';
 import { useImage } from '../../Hooks/Common/useImage';
 import ImageCropModal from '../../Components/Modal/ImageCropModal';
+import NavBar from '../../Components/Common/NavBar';
 
 import {
   HeaderContainer,
@@ -43,7 +44,7 @@ export default function EditPost() {
   const [userImage, setUserImage] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [content, setContent] = useState('');
-  // const [image, setImage] = useState('');
+  const [isTabletScreen, setIsTabletScreen] = useState(window.innerWidth >= 768);
 
   const { imgData, setImgData, showImgModal, onSelectFile, onCancel, setCroppedImageFor } =
     useImage(null);
@@ -72,18 +73,17 @@ export default function EditPost() {
   };
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행합니다.
     getInitPostInfo();
+    const handleResize = () => {
+      setIsTabletScreen(window.innerWidth >= 768);
+    };
+
+    // 리사이즈 이벤트 리스너 추가
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // const handleChangeImage = async (e) => {
-  //   // 파일 가져오기
-  //   const imageFile = e.target.files[0];
-  //   const response = await uploadImage(imageFile);
-  //   const imageUrl = `https://api.mandarin.weniv.co.kr/${response.data.filename}`;
-
-  //   setImage(imageUrl);
-  // };
 
   //textarea 높이 설정
   const adjustTextareaHeight = (event) => {
@@ -122,13 +122,6 @@ export default function EditPost() {
   };
 
   useEffect(() => {
-    //   if (content.trim() === '' && !image) {
-    //     setIsButtonDisabled(true);
-    //   } else {
-    //     setIsButtonDisabled(false);
-    //   }
-    // }, [content, image]
-
     if (content.trim() === '' && (!imgData.croppedImageUrl || !imgData.imageUrl)) {
       setIsButtonDisabled(true);
     } else {
@@ -143,10 +136,12 @@ export default function EditPost() {
 
   return (
     <Container>
-      <HeaderContainer>
-        <Gobackbtn />
-        <ButtonSubmit buttonText='저장' onClickHandler={submitEdit} disabled={isButtonDisabled} />
-      </HeaderContainer>
+      {!isTabletScreen && (
+        <HeaderContainer>
+          <Gobackbtn />
+          <ButtonSubmit buttonText='저장' onClickHandler={submitEdit} disabled={isButtonDisabled} />
+        </HeaderContainer>
+      )}
       {showImgModal && (
         <ImageCropModal
           imageUrl={imgData.imageUrl}
@@ -177,7 +172,7 @@ export default function EditPost() {
                   }}
                   id='contentTextarea'
                   name='content'
-                  rows='1'
+                  rows='10'
                   cols='50'
                   placeholder='내용을 입력해주세요'
                 ></textarea>
@@ -200,16 +195,6 @@ export default function EditPost() {
                   </XButton>
                 </ImgPre>
               )}
-              {/* {image ? (
-                <ImgPre>
-                  <img src={image} alt='' id='imagePre' />
-                  <XButton>
-                    <button type='button' onClick={closeImg}>
-                      <img src={xButton} alt='' />
-                    </button>
-                  </XButton>
-                </ImgPre>
-              ) : null} */}
               {/* 이미지 등록 버튼 */}
               <InputImgIcon>
                 <label htmlFor='profileImg'>
@@ -226,8 +211,16 @@ export default function EditPost() {
                 />
               </InputImgIcon>
             </div>
+            {isTabletScreen && (
+              <ButtonSubmit
+                buttonText='저장'
+                onClickHandler={submitEdit}
+                disabled={isButtonDisabled}
+              />
+            )}
           </form>
         </section>
+        {isTabletScreen && <NavBar />}
       </UploadPostBox>
     </Container>
   );
