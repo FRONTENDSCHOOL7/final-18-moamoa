@@ -3,7 +3,7 @@ import Calendar from '../../Assets/icons/icon-calendar.png';
 import UploadFile from '../../Assets/images/upload-file.png';
 
 const COLORS = {
-  primary: '#87b7e4',
+  primary: '#2E2C39',
   darkgray: '#767676',
 };
 
@@ -45,11 +45,16 @@ const borderStyle = css`
 
 export const Form = styled.form`
   position: relative;
+  margin: 0 auto;
   margin-top: 80px;
   background-color: #fff;
   color: ${COLORS.darkgray};
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 1200px) {
+    margin-top: 0px;
+  }
 
   input[type='text'] {
     ${contentStyle}
@@ -92,6 +97,16 @@ export const Form = styled.form`
       ${contentStyle}
     }
   }
+
+  @media (min-width: 768px) {
+    max-width: 480px;
+    padding-left: 120px;
+  }
+  @media (min-width: 1200px) {
+    min-width: 480px;
+    margin-left: 0px;
+    padding-left: 270px;
+  }
 `;
 
 export const Container = styled.div`
@@ -103,6 +118,15 @@ export const Container = styled.div`
 
   &:last-of-type {
     margin-bottom: 100px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 0;
+    margin-bottom: 18px;
+
+    &:last-of-type {
+      margin-bottom: 18px;
+    }
   }
 `;
 
@@ -129,6 +153,10 @@ export const ImgLabel = styled.label`
     right: 42px;
     bottom: 34px;
     background: url(${UploadFile}) 0 0 / cover;
+
+    @media (min-width: 768px) {
+      right: 8px;
+    }
   }
 `;
 
@@ -155,12 +183,17 @@ export const Paragraph = styled.p`
 
 const Btn = styled.button`
   letter-spacing: ${LETTERSPACING.wide};
-  transition: all 0.2s ease-in-out;
+  // transition: all 0.2s ease-in-out;
 
   &:hover {
     background-color: ${COLORS.primary};
     color: white;
     border-color: ${COLORS.primary};
+  }
+
+  &:hover,
+  &:focus {
+    transition: all 0.2s ease-in-out;
   }
 `;
 
@@ -189,4 +222,13 @@ export const SubmitTypeBtn = styled(Btn)`
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
+
+  @media (min-width: 768px) {
+    position: static;
+    transform: none;
+    border-radius: 32px;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 80px;
+  }
 `;

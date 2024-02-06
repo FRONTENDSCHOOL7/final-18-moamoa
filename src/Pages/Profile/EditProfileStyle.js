@@ -2,7 +2,7 @@
   설명: 프로필 수정 페이지 사용된 css
   작성자: 이해지
   최초 작성 날짜: 2023.02.03
-  마지막 수정 날까: 2023.02.04
+  마지막 수정 날까: 2023.02.07
 */
 
 import styled from 'styled-components';
@@ -41,7 +41,7 @@ export const ProfileImg = styled.div`
       left: 85px;
 
       @media (min-width: 1200px) {
-        left: 360px;
+        left: 512.5px;
       }
     }
   }

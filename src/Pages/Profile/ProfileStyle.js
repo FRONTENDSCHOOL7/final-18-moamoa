@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지에 사용된 css
   작성자: 이해지
   최초 작성 날짜: 2023.02.02
-  마지막 수정 날까: 2023.02.03
+  마지막 수정 날까: 2023.02.07
 */
 
 import styled from 'styled-components';
@@ -11,13 +11,11 @@ export const ProfileWrap = styled.div`
   background-color: #fff;
 
   @media (min-width: 768px) {
-    margin-left: calc(120px + (100% - 768px) / 2);
-    margin-right: calc(120px + (100% - 1020px) / 2);
+    padding-left: 120px;
   }
 
   @media (min-width: 1200px) {
-    min-width: 648px;
-    margin-left: calc(240px + (100% - 1020px) / 2);
+    padding-left: 240px;
   }
 `;
 

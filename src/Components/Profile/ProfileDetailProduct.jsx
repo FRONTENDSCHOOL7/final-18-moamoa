@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지 진행중인 행사목록
   작성자: 이해지
   최초 작성 날짜: 2023.10.29
-  마지막 수정 날까: 2023.02.03
+  마지막 수정 날까: 2023.02.07
 */
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -79,14 +79,14 @@ export default function ProfileDetailProduct({ userInfoData, reFetchInfo }) {
   // 왼쪽으로 스크롤하는 함수
   const scrollLeft = () => {
     if (profileProductRef.current) {
-      animateScroll(profileProductRef.current, profileProductRef.current.scrollLeft - 190, 200);
+      animateScroll(profileProductRef.current, profileProductRef.current.scrollLeft - 250, 200);
     }
   };
 
   // 오른쪽으로 스크롤하는 함수
   const scrollRight = () => {
     if (profileProductRef.current) {
-      animateScroll(profileProductRef.current, profileProductRef.current.scrollLeft + 190, 200);
+      animateScroll(profileProductRef.current, profileProductRef.current.scrollLeft + 250, 200);
     }
   };
 

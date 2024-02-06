@@ -75,5 +75,12 @@ button{
 	padding: 0;
 	position: absolute;
 }
+
+.large-scree{
+	display: none;
+	@media (min-width: 768px) {
+			display: block;
+	}
+}
 `;
 export default GlobalStyle;

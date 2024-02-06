@@ -2,7 +2,7 @@
   설명: 게시글 등록 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2024.02.05
+  마지막 수정 날까: 2024.02.06
 
   추가 작성자: 유의진 
   추가 내용: 이미지 크롭 기능
@@ -46,8 +46,6 @@ export default function AddPost() {
   const { imgData, setImgData, showImgModal, onSelectFile, onCancel, setCroppedImageFor } =
     useImage(null);
 
-  const [isTabletScreen, setIsTabletScreen] = useState(window.innerWidth >= 768);
-
   const getUserImg = async () => {
     try {
       const response = await await getMyProfileData();
@@ -63,16 +61,6 @@ export default function AddPost() {
   useEffect(() => {
     // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행
     getUserImg();
-
-    const handleResize = () => {
-      setIsTabletScreen(window.innerWidth >= 768);
-    };
-
-    // 리사이즈 이벤트 리스너 추가
-    window.addEventListener('resize', handleResize);
-
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
-    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const inputContent = (e) => {
@@ -124,16 +112,10 @@ export default function AddPost() {
 
   return (
     <Container>
-      {!isTabletScreen && (
-        <HeaderContainer>
-          <Gobackbtn />
-          <ButtonSubmit
-            buttonText='업로드'
-            onClickHandler={submitPost}
-            disabled={isButtonDisabled}
-          />
-        </HeaderContainer>
-      )}
+      <HeaderContainer>
+        <Gobackbtn />
+        <ButtonSubmit buttonText='업로드' onClickHandler={submitPost} disabled={isButtonDisabled} />
+      </HeaderContainer>
       {showImgModal && (
         <ImageCropModal
           imageUrl={imgData.imageUrl}
@@ -155,7 +137,7 @@ export default function AddPost() {
               <img src={userImage} alt='' />
             </ProfileImg>
             <TextArea>
-              <div>
+              <section>
                 {/* 내용 입력 창 */}
                 <textarea
                   value={content}
@@ -169,10 +151,10 @@ export default function AddPost() {
                   cols='50'
                   placeholder='내용을 입력해주세요'
                 ></textarea>
-              </div>
+              </section>
             </TextArea>
 
-            <div>
+            <section>
               {/* 이미지 미리보기 */}
               {imgData && (imgData.imageUrl || imgData.croppedImageUrl) ? (
                 <ImgPre>
@@ -204,17 +186,19 @@ export default function AddPost() {
                   style={{ display: 'none' }}
                 />
               </InputImgIcon>
-            </div>
-            {isTabletScreen && (
+            </section>
+            <div className='large-scree'>
               <ButtonSubmit
                 buttonText='업로드'
                 onClickHandler={submitPost}
                 disabled={isButtonDisabled}
               />
-            )}
+            </div>
           </form>
         </section>
-        {isTabletScreen && <NavBar />}
+        <div className='large-scree'>
+          <NavBar />
+        </div>
       </UploadPostBox>
     </Container>
   );
