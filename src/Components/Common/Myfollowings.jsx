@@ -31,9 +31,6 @@ export default function Myfollowings() {
     
   },[accountName]);
 
-
-  console.log(followingData);
-
   return (
     <>
       {followingData && isLoading ? <MyFollowingCont>
