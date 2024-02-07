@@ -1,8 +1,30 @@
 import styled from 'styled-components';
 
-export const ChatRoom = styled.div`
+export const ChatRoomWrap = styled.div`
   margin-top: 47px;
-  height: 100vh;
+  height: 100%;
+  display: flex;
+  background-color: #fff;
+
+  @media (min-width: 768px) {
+    margin-top: 0px;
+  }
+  @media (min-width: 1200px) {
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+
+    padding-right: 30px;
+    height: auto;
+  }
+
+  div.Recommend > :nth-child(2) {
+    height: auto;
+  }
+`;
+
+export const ChatRoom = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -14,15 +36,55 @@ export const ChatRoom = styled.div`
     display: flex;
     flex-direction: row;
   }
+  margin: 16px;
+  gap: 10px;
+  @media (min-width: 768px) {
+    margin: 80px auto 16px;
+    max-width: 480px;
+    padding-left: 120px;
+  }
+  @media (min-width: 1200px) {
+    margin: 0px;
+    min-width: 480px;
+    margin-left: 0px;
+    padding-left: 270px;
+    margin-bottom: 80px;
+  }
 `;
+
+export const SendMsg = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  p {
+    margin-top: 10px;
+  }
+`;
+
 export const ChatMessages = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 0px;
+
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (min-width: 768px) {
+    border: 3px solid #2e2c39;
+    padding: 20px;
+  }
 `;
+
 export const Message = styled.div`
   width: 220px;
-  font-size: 14px;
+  font-size: 1.4rem;
   background-color: #ffffff;
   border: 1px solid var(--buttonDisable);
   border-radius: 0px 30px 30px 30px;
@@ -34,33 +96,39 @@ export const Message = styled.div`
 export const InputArea = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+
   padding: 10px;
   background-color: #ffffff;
+
+  border: 3px solid #2e2c39;
+  border-radius: 10px;
+  gap: 10px;
 `;
 export const MessageInput = styled.input`
-  width: 60%;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 14px;
+  font-size: 1.4rem;
+  flex: 1;
+  border: none;
+  border-width: 0 0 1px;
+
+  &:focus {
+    outline: none;
+  }
 `;
+
 export const SendButton = styled.button`
   background-color: ${(props) => (props.disabled ? '#fff' : 'var(--buttonActive)')};
   color: ${(props) => (props.disabled ? 'var(--buttonDisable)' : '#fff')};
   border: 1px solid ${(props) => (props.disabled ? 'var(--buttonDisable)' : '#fff')};
   border-radius: 10px;
-  margin-left: 3px;
-  width: 46px;
   height: 40px;
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: bold;
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 
   box-sizing: border-box;
+  padding: 0 20px;
 `;
 export const FileBox = styled.div`
-  width: 30px;
-  margin-left: 6px;
   .fileImg {
     cursor: pointer;
   }
@@ -77,26 +145,29 @@ export const UserName = styled.h2`
   display: block;
   margin-left: 8px;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: 1.2rem;
   color: var(--buttonDisable);
   font-weight: 500;
 `;
 export const MyTalk = styled.p`
   width: 220px;
-  font-size: 14px;
+  font-size: 1.4rem;
   background-color: #ffffff;
   border: 1px solid var(--buttonDisable);
   border-radius: 30px 0px 30px 30px;
-  margin: 0px 80px 10px;
+  // margin: 0px 80px 10px;
   box-sizing: border-box;
   padding: 10px 12px 12px;
   line-height: normal;
   white-space: pre-line;
+
+  // position: absolute;
+  right: 0px;
 `;
 export const RemoveFile = styled.div`
   button {
     color: red;
-    font-size: 12px;
+    font-size: 1.2rem;
     border: 1px solid red;
   }
   .removeFileName {
@@ -135,7 +206,7 @@ export const SearchWrap = styled.li`
   align-items: center;
 
   Button {
-    font-size: 12px;
+    font-size: 1.2rem;
     font-weight: bold;
     margin-left: 80px;
   }
@@ -164,11 +235,11 @@ export const UserInfo = styled.div`
   }
 `;
 export const UserId = styled.h2`
-  font-size: 14px;
+  font-size: 1.4rem;
 `;
 export const UserText = styled.span`
   color: var(--buttonDisable);
-  font-size: 12px;
+  font-size: 1.2rem;
   width: 150px;
   white-space: nowrap;
   overflow: hidden;
@@ -176,7 +247,7 @@ export const UserText = styled.span`
 `;
 export const ChatDate = styled.span`
   color: var(--buttonDisable);
-  font-size: 10px;
+  font-size: 1rem;
 `;
 export const ChatDateBox = styled.div`
   display: flex;

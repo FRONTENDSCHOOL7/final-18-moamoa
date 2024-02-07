@@ -4,6 +4,10 @@ import Header from '../../Components/Common/Header/Header';
 
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
 import { useParams } from 'react-router-dom';
+import NavBar from '../../Components/Common/NavBar';
+import RecommendPlace from '../../Components/Common/RecommendPlace';
+import Myfollowings from '../../Components/Common/Myfollowings';
+
 import {
   ChatRoom,
   ChatMessages,
@@ -14,6 +18,8 @@ import {
   FileInput,
   MessageInput,
   SendButton,
+  ChatRoomWrap,
+  SendMsg,
 } from './ChatStyle';
 
 export default function ChatRoomKim() {
@@ -78,43 +84,54 @@ export default function ChatRoomKim() {
   return (
     <Container>
       <Header type='chatChangeUser'></Header>
-      <ChatRoom>
-        <ChatMessages ref={bottomRef}>
-          {sendMsg.map((msg, index) => (
-            <MyTalk key={index}>{msg}</MyTalk>
-          ))}
-        </ChatMessages>
-        {file && (
-          <RemoveFile>
-            <button onClick={handleRemoveFile}>파일 삭제</button>
-            <p className='removeFileName'>{file.name.slice(0, 8)}</p>
-          </RemoveFile>
-        )}
-        <InputArea>
-          <FileBox>
-            <label htmlFor='file'>
-              <img src={iconImageButton} alt='이미지 첨부' className='fileImg' />
-            </label>
-            <FileInput
-              type='file'
-              id='file'
-              accept='image/*'
-              onChange={handleFileChange}
-              ref={fileInputRef}
+      <ChatRoomWrap>
+        <ChatRoom>
+          <ChatMessages ref={bottomRef}>
+            <SendMsg>
+              {sendMsg.map((msg, index) => (
+                <MyTalk key={index}>{msg}</MyTalk>
+              ))}
+            </SendMsg>
+          </ChatMessages>
+          {file && (
+            <RemoveFile>
+              <button onClick={handleRemoveFile}>파일 삭제</button>
+              <p className='removeFileName'>{file.name.slice(0, 8)}</p>
+            </RemoveFile>
+          )}
+          <InputArea>
+            <FileBox>
+              <label htmlFor='file'>
+                <img src={iconImageButton} alt='이미지 첨부' className='fileImg' />
+              </label>
+              <FileInput
+                type='file'
+                id='file'
+                accept='image/*'
+                onChange={handleFileChange}
+                ref={fileInputRef}
+              />
+            </FileBox>
+            <MessageInput
+              type='text'
+              placeholder='메시지 입력하기...'
+              value={message}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
             />
-          </FileBox>
-          <MessageInput
-            type='text'
-            placeholder='메시지 입력하기...'
-            value={message}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-          />
-          <SendButton onClick={handleSendClick} disabled={message.trim() === '' && !ButtonActive}>
-            전송
-          </SendButton>
-        </InputArea>
-      </ChatRoom>
+            <SendButton onClick={handleSendClick} disabled={message.trim() === '' && !ButtonActive}>
+              전송
+            </SendButton>
+          </InputArea>
+        </ChatRoom>
+        <div className='Recommend'>
+          <RecommendPlace />
+          <Myfollowings />
+        </div>
+      </ChatRoomWrap>
+      <div className='large-scree'>
+        <NavBar />
+      </div>
     </Container>
   );
 }
