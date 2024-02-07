@@ -128,7 +128,7 @@ export default function NavBar() {
     setAccountName('');
     setUserName('');
     setPostsData(null);
-    navigate('/user/login');
+    navigate('/');
   };
   return (
     <>
