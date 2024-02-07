@@ -4,6 +4,10 @@ import Header from '../../Components/Common/Header/Header';
 import Photo from '../../Components/Common/ChatPhoto';
 import img from '../../Assets/images/followImg/human.jpg';
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
+import NavBar from '../../Components/Common/NavBar';
+import RecommendPlace from '../../Components/Common/RecommendPlace';
+import Myfollowings from '../../Components/Common/Myfollowings';
+
 import {
   ChatRoom,
   ChatMessages,
@@ -16,6 +20,8 @@ import {
   FileInput,
   MessageInput,
   SendButton,
+  ChatRoomWrap,
+  SendMsg,
 } from './ChatStyle';
 export default function ChatRoomKim() {
   const [message, setMessage] = useState('');
@@ -75,60 +81,71 @@ export default function ChatRoomKim() {
   return (
     <Container>
       <Header type='chat'></Header>
-      <ChatRoom>
-        <ChatMessages ref={bottomRef}>
-          <div className='talkBox'>
-            <Photo src={img} />
-            <div>
-              <UserName>텃밭체험 수미아빠</UserName>
-              <Message>
-                옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다. 이상의 청춘의 뼈
-                따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게 뛰노는 인생의 힘있다.
-              </Message>
+      <ChatRoomWrap>
+        <ChatRoom>
+          <ChatMessages ref={bottomRef}>
+            <div className='talkBox'>
+              <Photo src={img} />
+              <div>
+                <UserName>텃밭체험 수미아빠</UserName>
+                <Message>
+                  옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다. 이상의 청춘의
+                  뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게 뛰노는 인생의 힘있다.
+                </Message>
+              </div>
             </div>
-          </div>
-          <div className='talkBox'>
-            <Photo src={img} />
-            <div>
-              <UserName>텃밭체험 수미아빠</UserName>
-              <Message>토마토가 증말 맛있어~</Message>
+            <div className='talkBox'>
+              <Photo src={img} />
+              <div>
+                <UserName>텃밭체험 수미아빠</UserName>
+                <Message>토마토가 증말 맛있어~</Message>
+              </div>
             </div>
-          </div>
-          {sendMsg.map((msg, index) => (
-            <MyTalk key={index}>{msg}</MyTalk>
-          ))}
-        </ChatMessages>
-        {file && (
-          <RemoveFile>
-            <button onClick={handleRemoveFile}>파일 삭제</button>
-            <p className='removeFileName'>{file.name.slice(0, 8)}</p>
-          </RemoveFile>
-        )}
-        <InputArea>
-          <FileBox>
-            <label htmlFor='file'>
-              <img src={iconImageButton} alt='이미지 첨부' className='fileImg' />
-            </label>
-            <FileInput
-              type='file'
-              id='file'
-              accept='image/*'
-              onChange={handleFileChange}
-              ref={fileInputRef}
+            <SendMsg>
+              {sendMsg.map((msg, index) => (
+                <MyTalk key={index}>{msg}</MyTalk>
+              ))}
+            </SendMsg>
+          </ChatMessages>
+          {file && (
+            <RemoveFile>
+              <button onClick={handleRemoveFile}>파일 삭제</button>
+              <p className='removeFileName'>{file.name.slice(0, 8)}</p>
+            </RemoveFile>
+          )}
+          <InputArea>
+            <FileBox>
+              <label htmlFor='file'>
+                <img src={iconImageButton} alt='이미지 첨부' className='fileImg' />
+              </label>
+              <FileInput
+                type='file'
+                id='file'
+                accept='image/*'
+                onChange={handleFileChange}
+                ref={fileInputRef}
+              />
+            </FileBox>
+            <MessageInput
+              type='text'
+              placeholder='메시지 입력하기...'
+              value={message}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
             />
-          </FileBox>
-          <MessageInput
-            type='text'
-            placeholder='메시지 입력하기...'
-            value={message}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-          />
-          <SendButton onClick={handleSendClick} disabled={message.trim() === '' && !ButtonActive}>
-            전송
-          </SendButton>
-        </InputArea>
-      </ChatRoom>
+            <SendButton onClick={handleSendClick} disabled={message.trim() === '' && !ButtonActive}>
+              전송
+            </SendButton>
+          </InputArea>
+        </ChatRoom>
+        <div className='Recommend'>
+          <RecommendPlace />
+          <Myfollowings />
+        </div>
+      </ChatRoomWrap>
+      <div className='large-scree'>
+        <NavBar />
+      </div>
     </Container>
   );
 }
