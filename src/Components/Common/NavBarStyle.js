@@ -1,7 +1,8 @@
 import { styled } from 'styled-components';
 
 export const TabMenu = styled.nav`
-  width: 390px;
+  // width: 390px;
+  width: 100%;
   height: 60px;
   background-color: #2e2c39;
   display: flex;
@@ -72,7 +73,7 @@ export const TabBtnImg = styled.img`
   }
 `;
 export const TabLabel = styled.span`
-  font-size: 10px;
+  font-size: 12px;
   color: ${(props) => (props.$colors ? '#FFC700' : '#fff')};
 
   @media (min-width: 768px) {

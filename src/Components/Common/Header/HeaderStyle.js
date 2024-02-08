@@ -8,7 +8,8 @@ export const HeaderContainer = styled.header`
   position: fixed;
   min-height: 48px;
   max-height: 48px;
-  width: 390px;
+  // width: 390px;
+  width: 100%;
   justify-content: space-between;
   border-bottom: 1px solid #dbdbdb;
   background-color: #fff;
@@ -55,7 +56,7 @@ export const HeaderFollowContainer = styled.div`
   position: fixed;
   min-height: 48px;
   max-height: 48px;
-  width: 390px;
+  width: 100%;
   gap: 8px;
   border-bottom: 1px solid #dbdbdb;
   background-color: #fff;
@@ -78,7 +79,7 @@ export const HeaderSearchContainer = styled.header`
   height: 48px;
   min-height: 48px;
   max-height: 48px;
-  width: 390px;
+  width: 100%;
   position: fixed;
   background-color: #fff;
   border-bottom: 1px solid #dbdbdb;

@@ -194,7 +194,7 @@ export const HamView = styled.div`
 
   ul {
     li {
-      min-width: 358px;
+      width: 358px;
       @media (min-width: 768px) {
         min-width: 480px;
       }

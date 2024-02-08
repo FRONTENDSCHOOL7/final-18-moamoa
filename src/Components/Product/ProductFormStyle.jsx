@@ -98,8 +98,8 @@ export const Form = styled.form`
     }
   }
 
+  max-width: 480px;
   @media (min-width: 768px) {
-    max-width: 480px;
     padding-left: 120px;
   }
   @media (min-width: 1200px) {
@@ -216,7 +216,7 @@ export const SubmitTypeBtn = styled(Btn)`
   background-color: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `${COLORS.darkgray}`)};
   border: ${(props) => (props.$isfilled ? `${COLORS.primary}` : `${COLORS.darkgray}`)};
   position: fixed;
-  width: 390px;
+  width: 100%;
   height: 60px;
   bottom: 0;
   left: 50%;
