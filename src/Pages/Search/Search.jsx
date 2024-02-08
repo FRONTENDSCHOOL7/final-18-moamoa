@@ -12,7 +12,12 @@ import NotFound from '../../Components/Search/NotFound';
 import SearchResultBox from '../../Components/Search/SearchResultBox';
 
 import 'react-loading-skeleton/dist/skeleton.css';
-import { RecommendPlaceContainer, SearchListWrap } from './SearchStyle';
+import {
+  RecommendPlaceContainer,
+  SearchListWrap,
+  SearchListContainer,
+  SearchList,
+} from './SearchStyle';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
 import Myfollowings from '../../Components/Common/Myfollowings';
 
@@ -64,24 +69,29 @@ export default function Search() {
 
   return (
     <ContainerVh>
-      <Header type='search' setSearchText={setSearchText}></Header>
-      <SearchListWrap>
-        {isLoading ? (
-          <SearchResultSkeleton />
-        ) : searchResults?.length ? (
-          searchResults
-            .slice(0, 5)
-            .map((item, index) => (
-              <SearchResultBox key={index} item={item} searchText={searchText} />
-            ))
-        ) : (
-          <NotFound />
-        )}
+      <SearchListContainer>
+        <SearchListWrap>
+          <Header type='search' setSearchText={setSearchText}></Header>
+          <SearchList>
+            {isLoading ? (
+              <SearchResultSkeleton />
+            ) : searchResults?.length ? (
+              searchResults
+                .slice(0, 5)
+                .map((item, index) => (
+                  <SearchResultBox key={index} item={item} searchText={searchText} />
+                ))
+            ) : (
+              <NotFound />
+            )}
+          </SearchList>
+        </SearchListWrap>
+
         <RecommendPlaceContainer>
           <RecommendPlace />
           <Myfollowings />
         </RecommendPlaceContainer>
-      </SearchListWrap>
+      </SearchListContainer>
       <NavBar></NavBar>
     </ContainerVh>
   );

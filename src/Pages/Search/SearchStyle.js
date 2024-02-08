@@ -1,23 +1,51 @@
 import styled from 'styled-components';
-
-export const SearchListWrap = styled.ul`
+export const SearchListContainer = styled.section`
   height: 100%;
-  margin-top: 48px;
+
+  @media (min-width: 768px) {
+    margin: 0 auto;
+    margin-top: 80px;
+    min-width: 480px;
+    padding-left: 120px;
+  }
+
+  @media (min-width: 1200px) {
+    margin: 0;
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 30px;
+    padding-left: 270px;
+  }
+`;
+export const SearchListWrap = styled.div`
+  height: 100%;
+  @media (min-width: 1200px) {
+    min-width: 480px;
+  }
+`;
+export const SearchList = styled.ul`
+  // height: 100%;
+  // width: 100%;
+  margin-top: 0px;
   padding: 16px;
+  padding-top: 64px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   @media (min-width: 768px) {
-    margin: 0 auto;
-  }
-  @media (min-width: 1200px) {
+    padding: 16px;
+    padding-top: 0px;
   }
 `;
+
 export const RecommendPlaceContainer = styled.div`
-  @media (max-width: 1199px) {
-    display: none;
+  display: none;
+
+  @media (min-width: 1200px) {
+    display: block;
   }
-  position: absolute;
-  top: 8.5%;
-  right: 2.5%;
+  > :nth-child(2) {
+    height: auto;
+  }
 `;

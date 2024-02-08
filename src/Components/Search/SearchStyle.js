@@ -28,12 +28,6 @@ export const SkeletonContainer = styled.div`
     width: 150px;
     height: 12px;
   }
-  @media (min-width: 768px) {
-    transform: translateX(-30%);
-  }
-  @media (min-width: 1200px) {
-    transform: translateX(-100%);
-  }
 `;
 
 export const SearchResultBox = styled.li`
@@ -41,12 +35,6 @@ export const SearchResultBox = styled.li`
   width: 100%;
   display: flex;
   align-items: center;
-  @media (min-width: 768px) {
-    transform: translateX(-35%);
-  }
-  @media (min-width: 1200px) {
-    transform: translateX(-90%);
-  }
 `;
 export const SearchPhotoWrap = styled.div`
   border: 1px solid var(--DBDBDB, #dbdbdb);
@@ -79,8 +67,9 @@ export const UserIntro = styled.span`
   text-overflow: ellipsis;
 `;
 export const NotFoundContainer = styled.div`
+  margin-top: 40%;
   width: 100%;
-  height: 85%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,12 +82,6 @@ export const NotFoundContainer = styled.div`
     font-size: 20px;
     transform: translateX(5%);
     color: var(--buttonDisable);
-  }
-  @media (min-width: 768px) {
-    transform: translateY(-10%);
-  }
-  @media (min-width: 1200px) {
-    transform: translate(-80%, -10%);
   }
 `;
 export const BlueCheck = styled.img`

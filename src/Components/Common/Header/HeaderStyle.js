@@ -90,12 +90,16 @@ export const HeaderSearchContainer = styled.header`
     padding-right: 10px;
     cursor: pointer;
   }
+  a {
+    margin-left: 10px;
+  }
   img {
     cursor: pointer;
     padding-right: 8px;
     padding-bottom: 2px;
   }
   input {
+    margin-right: 10px;
     background-color: #f2f2f2;
     flex: 1;
     width: 340px;
@@ -112,16 +116,11 @@ export const HeaderSearchContainer = styled.header`
     position: static;
     border: none;
     padding: 0;
-    margin-top: 80px;
     margin-inline: auto;
     input {
     }
     img {
       display: none;
     }
-  }
-  @media (min-width: 1200px) {
-    left: 40%;
-    transform: translateX(-30%);
   }
 `;
