@@ -51,7 +51,7 @@ export default function HeaderKebab() {
     setAccountName('');
     setUserName('');
     setPostsData(null);
-    navigate('/user/login');
+    navigate('/');
   };
 
   //모달 창 닫기
