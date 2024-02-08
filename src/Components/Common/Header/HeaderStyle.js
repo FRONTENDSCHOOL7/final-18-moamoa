@@ -8,7 +8,8 @@ export const HeaderContainer = styled.header`
   position: fixed;
   min-height: 48px;
   max-height: 48px;
-  width: 390px;
+  // width: 390px;
+  width: 100%;
   justify-content: space-between;
   border-bottom: 1px solid #dbdbdb;
   background-color: #fff;
@@ -55,7 +56,7 @@ export const HeaderFollowContainer = styled.div`
   position: fixed;
   min-height: 48px;
   max-height: 48px;
-  width: 390px;
+  width: 100%;
   gap: 8px;
   border-bottom: 1px solid #dbdbdb;
   background-color: #fff;
@@ -78,7 +79,7 @@ export const HeaderSearchContainer = styled.header`
   height: 48px;
   min-height: 48px;
   max-height: 48px;
-  width: 390px;
+  width: 100%;
   position: fixed;
   background-color: #fff;
   border-bottom: 1px solid #dbdbdb;
@@ -89,12 +90,16 @@ export const HeaderSearchContainer = styled.header`
     padding-right: 10px;
     cursor: pointer;
   }
+  a {
+    margin-left: 10px;
+  }
   img {
     cursor: pointer;
     padding-right: 8px;
     padding-bottom: 2px;
   }
   input {
+    margin-right: 10px;
     background-color: #f2f2f2;
     flex: 1;
     width: 340px;
@@ -111,16 +116,11 @@ export const HeaderSearchContainer = styled.header`
     position: static;
     border: none;
     padding: 0;
-    margin-top: 80px;
     margin-inline: auto;
     input {
     }
     img {
       display: none;
     }
-  }
-  @media (min-width: 1200px) {
-    left: 40%;
-    transform: translateX(-30%);
   }
 `;

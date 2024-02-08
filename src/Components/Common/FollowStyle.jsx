@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const FollowWrap = styled.li`
-  width: 358px;
+  // width: 358px;
   height: 50px;
   display: flex;
   align-items: center;
-  padding: 8px 0 8px 16px;
+  padding: 8px 16px;
   Button {
     font-size: 12px;
     font-weight: bold;

@@ -28,7 +28,7 @@ export const ExperienceBtn = styled(Button).withConfig({
 export const ProductContainer = styled.ul`
   max-width: 100%;
 
-  margin: 10px auto;
+  margin: 20px auto;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
@@ -66,7 +66,9 @@ export const ProductBox = styled.li`
 
 export const Nav = styled.nav`
   display: flex;
-  padding: 10px;
+  margin: 10px auto;
+  margin-top: 16px;
+  max-width: 370px;
   .btn {
     width: 80px;
     height: 36px;
@@ -76,7 +78,7 @@ export const Nav = styled.nav`
   }
   @media (min-width: 768px) {
     max-width: 480px;
-    margin: 0 auto;
+    margin-top: 0px;
   }
 `;
 export const SkeletonContainer = styled(ProductContainer)`

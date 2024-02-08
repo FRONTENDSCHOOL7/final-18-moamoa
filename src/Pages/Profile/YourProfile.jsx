@@ -2,7 +2,7 @@
   설명: 사용자 accountname의 프로필 페이지(남의 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.23
-  마지막 수정 날까: 2023.02.03
+  마지막 수정 날까: 2023.02.07
 */
 
 import React, { useState, useEffect } from 'react';
@@ -48,7 +48,7 @@ function YourProfile() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   async function UserInfo() {
-    setIsLoading(true); // API 호출 전에 로딩 상태를 true로 설정
+    setIsLoading(true);
     try {
       const infoUrl = location.pathname;
       const res = await getYourProfileData(infoUrl);
@@ -63,7 +63,7 @@ function YourProfile() {
     } catch (error) {
       console.error('An error occurred while fetching user info:', error);
     }
-    setIsLoading(false); // API 호출이 끝난 후 로딩 상태를 false로 설정
+    setIsLoading(false);
   }
 
   useEffect(() => {

@@ -8,12 +8,13 @@ export const MoaMoaBox = styled.div.withConfig({
   flex-direction: column;
   align-items: center;
 
-  width: 390px;
+  // width: 390px;
   height: 100vh;
   margin: 0 auto;
 
   overflow: hidden;
   position: relative;
+
   @media (min-width: 768px) {
     position: absolute;
     top: 50%;

@@ -8,7 +8,12 @@ export const ProductSection = styled.section`
 
     padding-right: 30px;
   }
-
+  .Recommend {
+    display: none;
+    @media (min-width: 1200px) {
+      display: block;
+    }
+  }
   div.Recommend > :nth-child(2) {
     height: auto;
   }

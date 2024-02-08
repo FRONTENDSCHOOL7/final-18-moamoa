@@ -23,7 +23,7 @@ html{
 	
 }
 body{
-	background-color:#fff9e4;
+	background-color:#fffff;
 	/* 바디에 배경색 */
 	font-family: 'Pretendard', sans-serif;
 	

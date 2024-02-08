@@ -15,9 +15,14 @@ export const ChatRoomWrap = styled.div`
     justify-content: space-between;
 
     padding-right: 30px;
-    height: auto;
+    height: 100%;
   }
-
+  .Recommend {
+    display: none;
+    @media (min-width: 1200px) {
+      display: block;
+    }
+  }
   div.Recommend > :nth-child(2) {
     height: auto;
   }
@@ -48,6 +53,7 @@ export const ChatRoom = styled.div`
     min-width: 480px;
     margin-left: 0px;
     padding-left: 270px;
+    padding-bottom: 16px;
     margin-bottom: 80px;
   }
 `;

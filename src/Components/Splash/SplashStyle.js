@@ -1,25 +1,31 @@
 import styled from 'styled-components';
 import { TempLoginButton } from './SplashLoginBtn';
 export const BtnContainter = styled.div`
+  margin: 0 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transform: translateX(-4%);
-  @media (min-width: 1200px) {
-    transform: translateX(-2%);
+  gap: 10px;
+  // transform: translateX(-4%);
+  // @media (min-width: 1200px) {
+  //   transform: translateX(-2%);
+
+  // }
+  @media (min-width: 768px) {
+    gap: 15px;
   }
 `;
 
 export const StyledButton = styled(TempLoginButton)`
-  width: 322px;
+  width: 100%;
   height: 44px;
   border-radius: 44px;
   background-color: #fff;
   color: var(--buttonDisable);
   background-repeat: no-repeat;
-  font-size: 10px;
-  margin: 0 0 10px 34px;
+  font-size: 1.2rem;
+  // margin: 0 0 10px 34px;
   border: ${({ borderColor }) => `1px solid ${borderColor}`};
   background-image: ${({ backgroundImage }) => `url(${backgroundImage})`};
   background-size: ${({ backgroundSize }) => backgroundSize};
@@ -28,7 +34,7 @@ export const StyledButton = styled(TempLoginButton)`
   @media (min-width: 768px) {
     width: 80%;
     font-size: 14px;
-    margin: 0 0 15px 34px;
+    // margin: 0 0 15px 34px;
   }
 `;
 
@@ -43,7 +49,7 @@ export const Modal = styled.div.withConfig({
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 390px;
+  width: 100%;
   height: 400px;
   padding: 56px 0 20px;
   background-color: #fff;

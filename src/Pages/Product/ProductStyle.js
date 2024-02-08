@@ -3,15 +3,19 @@ import styled from 'styled-components';
 export const ProductListWrap = styled.div`
   background-color: #fff;
   margin-top: 48px;
+  @media (min-width: 768px) {
+    margin-top: 80px;
+  }
 `;
 
 export const FestivalContainer = styled.div`
-  max-width: 39rem;
   width: 100%;
   height: 100%;
-  margin: auto;
   background-color: #ffffff;
   overflow: hidden;
+  margin: 0 auto;
+  max-width: 480px;
+
   @media (min-width: 768px) {
     max-width: 480px;
     padding-left: 120px;
@@ -22,8 +26,14 @@ export const FestivalContainer = styled.div`
   }
 `;
 export const FestivalArticle = styled.article`
+  // margin: 0 1.6rem;
   margin-top: 4.8rem;
-  margin-bottom: 7rem;
+  margin-bottom: 7.6rem;
+
+  @media (min-width: 480px) {
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
+  }
   @media (min-width: 768px) {
     margin-top: 80px;
   }

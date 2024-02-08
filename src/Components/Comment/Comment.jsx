@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react';
 import { addComment, getCommentList } from '../../API/Comment/CommnetAPI';
 import CommentItem from './CommentItem';
 import styled from 'styled-components';
@@ -6,58 +6,65 @@ import CommentAddBtn from './CommentAddBtn';
 import PropTypes from 'prop-types';
 
 Comment.propTypes = {
-  postId: PropTypes.string
-}
+  postId: PropTypes.string,
+};
 
-export default function Comment({postId}) {
-  const [commentList,setCommentList] = useState([]);
-  const [comment, setComment] = useState("");
+export default function Comment({ postId }) {
+  const [commentList, setCommentList] = useState([]);
+  const [comment, setComment] = useState('');
 
-  const postComment = async(postId, AddData)=>{
-    const res = await addComment(postId,AddData);
+  const postComment = async (postId, AddData) => {
+    const res = await addComment(postId, AddData);
     console.log(res.comment);
-    setCommentList((prev)=>([res.comment, ...prev]));
-    console.log(commentList)
-  }
+    setCommentList((prev) => [res.comment, ...prev]);
+    console.log(commentList);
+  };
 
-  const handleComment = (e) => setComment(e.target.value)
+  const handleComment = (e) => setComment(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(comment.trim().length === 0){
+    if (comment.trim().length === 0) {
       return;
     }
     const AddData = {
-      comment:{
-        content:comment
-      }}
-    postComment(postId, AddData) 
-    setComment("")   
-  }
-    
-  useEffect(()=>{
-    const getcommentData = async(postId) => {
+      comment: {
+        content: comment,
+      },
+    };
+    postComment(postId, AddData);
+    setComment('');
+  };
+
+  useEffect(() => {
+    const getcommentData = async (postId) => {
       const getData = await getCommentList(postId);
       setCommentList(getData.comments);
-    }
-    getcommentData(postId)
-  },[postId])
+    };
+    getcommentData(postId);
+  }, [postId]);
 
   return (
     <CommentContainer>
       <CommentList>
-        {commentList && commentList.map((item,index)=>{
-            return <CommentItem item={item} key={index}/>;
-        })}      
+        {commentList &&
+          commentList.map((item, index) => {
+            return <CommentItem item={item} key={index} />;
+          })}
       </CommentList>
       <AddCommentCont>
         <AddComment onSubmit={handleSubmit}>
-          <CommentContent type="text" value={comment} onChange={handleComment} placeholder='댓글을 입력해주세요 :)'/>
-          <CommentAddBtn addcomment={comment}/>
+          <CommentContent
+            type='text'
+            value={comment}
+            onChange={handleComment}
+            placeholder='댓글을 입력해주세요 :)'
+          />
+          <CommentAddBtn addcomment={comment} />
         </AddComment>
       </AddCommentCont>
     </CommentContainer>
-  )
+  );
 }
 
 const CommentContainer = styled.div`
@@ -74,7 +81,7 @@ const CommentList = styled.ul`
   margin: auto;
   background-color: #ffffff;
   box-sizing: border-box;
-  padding: 1.8rem 1.6rem 50rem;  
+  padding: 1.8rem 1.6rem 50rem;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -97,12 +104,12 @@ const AddCommentCont = styled.div`
   @media (min-width: 1200px) {
     margin-left: 120px;
   }
-`
+`;
 
 const AddComment = styled.form`
   box-sizing: border-box;
   width: 100%;
-  max-width: 39rem;
+  // max-width: 39rem;
   height: 6rem;
   background-color: #fff;
   border-top: 1px solid #dbdbdb;
@@ -128,11 +135,11 @@ const CommentContent = styled.input`
   width: 83%;
   height: 4rem;
   font-size: 1.4rem;
-    padding-left: 0.5rem;
-  &::placeholder{
+  padding-left: 0.5rem;
+  &::placeholder {
     color: #767676;
   }
-  &:focus{
+  &:focus {
     outline: 1px solid #dbdbdb;
   }
 `;

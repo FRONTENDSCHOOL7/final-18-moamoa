@@ -6,7 +6,7 @@ export const HeaderContainer = styled.header`
   height: 48px;
   min-height: 48px;
   max-height: 48px;
-  width: 390px;
+  width: 100%;
   justify-content: space-between;
   border-bottom: 1px solid #dbdbdb;
   background-color: #fff;
@@ -33,12 +33,13 @@ export const UploadPostBox = styled.div`
   padding: 16px;
   position: relative;
   background-color: #fff;
-  margin: 0 auto;
+
   margin-top: 48px;
 
   @media (min-width: 768px) {
     margin-top: 80px;
-    padding: 0px 0px 0px 120px;
+    padding-left: 150px;
+    padding-right: 30px;
   }
 
   @media (min-width: 1200px) {

@@ -89,7 +89,8 @@ const HeaderContainer = styled.header`
   margin: 0 auto;
   z-index: 3;
   height: 48px;
-  width: 390px;
+  // width: 390px;
+  width: 100%;
 
   position: fixed;
 

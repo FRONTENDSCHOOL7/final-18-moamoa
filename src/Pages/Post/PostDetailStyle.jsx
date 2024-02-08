@@ -6,18 +6,22 @@ export const NavbarCont = styled.div`
   @media (min-width: 768px) {
     display: block;
   }
-`
+`;
 
 export const PostContainer = styled.div`
   width: 100%;
   height: 100%;
-  max-width: 39rem;
+  // max-width: 39rem;
   margin: auto;
   background-color: #ffffff;
   box-sizing: border-box;
   &::-webkit-scrollbar {
     display: none;
   }
+  @media (min-width: 480px) {
+    max-width: 480px;
+  }
+
   @media (min-width: 768px) {
     max-width: 600px;
     padding-left: 120px;
