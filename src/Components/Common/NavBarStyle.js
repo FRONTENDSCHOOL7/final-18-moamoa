@@ -11,6 +11,7 @@ export const TabMenu = styled.nav`
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
+
   @media (min-width: 768px) {
     top: 0;
     bottom: 0;
@@ -19,6 +20,9 @@ export const TabMenu = styled.nav`
     height: 100%;
     flex-direction: column;
     align-items: center;
+  }
+  @media (min-width: 800px) {
+    transition: all 0.5s;
   }
   @media (min-width: 1200px) {
     top: 0;
