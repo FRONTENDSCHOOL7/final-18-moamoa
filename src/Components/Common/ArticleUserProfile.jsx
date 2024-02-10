@@ -44,8 +44,6 @@ export default function ArticleUserProfile({ userProfileData }) {
 
 const Container = styled.div`
   width: 100%;
-  /* height: vw;
-  margin: 0 auto; */
 `;
 
 const FrofileImg = styled.img`
