@@ -93,8 +93,7 @@ const AddCommentCont = styled.div`
   @media (min-width: 768px) {
     width: 100%;
     height: 6rem;
-    border-top: 1px solid #dbdbdb;
-    margin: 0 0 0 60px;
+    margin: 0 0 10px 60px;
     position: fixed;
     bottom: 0;
     left: 50%;
@@ -102,19 +101,19 @@ const AddCommentCont = styled.div`
     background-color: #fff;
   }
   @media (min-width: 1200px) {
-    margin-left: 120px;
+    margin: 0 0 20px 120px;
   }
 `;
 
 const AddComment = styled.form`
   box-sizing: border-box;
   width: 100%;
-  // max-width: 39rem;
+  max-width: 48rem;
   height: 6rem;
   background-color: #fff;
   border-top: 1px solid #dbdbdb;
   margin: auto;
-  padding: 0 2rem;
+  padding: 0 1.2rem;
   position: fixed;
   bottom: 0;
   left: 50%;
@@ -124,10 +123,11 @@ const AddComment = styled.form`
   align-items: center;
   @media (min-width: 768px) {
     max-width: 480px;
-    border: none;
+    border: 2px solid #dbdbdb;
+    border-radius: 10px;
   }
   @media (min-width: 1200px) {
-    max-width: 600px;
+    /* max-width: 600px; */
   }
 `;
 
@@ -140,6 +140,6 @@ const CommentContent = styled.input`
     color: #767676;
   }
   &:focus {
-    outline: 1px solid #dbdbdb;
+    outline:none;
   }
 `;

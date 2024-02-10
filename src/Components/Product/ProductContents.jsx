@@ -34,16 +34,15 @@ export default function ProductContents({ productData }) {
 }
 
 const FestivalImg = styled.img`
-  // width: 39rem;
-  // height: 27rem;
   width: 100%;
   aspect-ratio: 39/27;
   object-fit: cover;
-
+  @media (min-width: 480px) {
+    border-radius: 10px;
+  }
   @media (min-width: 768px) {
     width: 480px;
     height: 290px;
-    border-radius: 10px;
   }
 `;
 const InfoContainer = styled.div`
@@ -52,9 +51,6 @@ const InfoContainer = styled.div`
   @media (min-width: 480px) {
     padding: 0;
   }
-  // @media (min-width: 768px) {
-  //   padding: 0;
-  // }
 `;
 const FestivalTitle = styled.h3`
   font-size: 1.8rem;

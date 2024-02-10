@@ -21,18 +21,16 @@ export const FestivalContainer = styled.div`
     padding-left: 120px;
   }
   @media (min-width: 1200px) {
-    /* max-width: 600px; */
     padding-left: 240px;
   }
 `;
 export const FestivalArticle = styled.article`
-  // margin: 0 1.6rem;
   margin-top: 4.8rem;
   margin-bottom: 7.6rem;
 
   @media (min-width: 480px) {
-    margin-left: 1.6rem;
-    margin-right: 1.6rem;
+    margin-left: 0rem;
+    margin-right: 0rem;
   }
   @media (min-width: 768px) {
     margin-top: 80px;
@@ -45,4 +43,7 @@ export const Frofile = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (min-width: 768px) {
+    padding: 0 0 0.7rem 0;
+  }
 `;
