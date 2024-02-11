@@ -5,11 +5,11 @@ import { useProductData } from '../../Hooks/Product/useProductData';
 import { getProductDetail } from '../../API/Product/ProductAPI';
 import { Container } from '../../Components/Common/Container';
 import DefaultImg from '../../Assets/images/img-product-default.png';
-import { HeaderSubmitProduct } from '../../Components/Common/Header/HeaderComponents';
+import { HeaderSubmitProduct } from '../../Components/Header/HeaderComponents';
 import { useImage } from '../../Hooks/Common/useImage';
 import NavBar from '../../Components/Common/NavBar';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
-import Myfollowings from '../../Components/Common/Myfollowings';
+import Myfollowings from '../../Components/Follow/Myfollowings';
 import { ProductSection } from './ProductAddEditStyle';
 
 const ProductEdit = () => {

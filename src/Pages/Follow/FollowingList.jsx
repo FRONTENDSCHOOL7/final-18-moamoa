@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import Header from '../../Components/Common/Header/Header';
-import FollowingUser from '../../Components/Common/FollowingUser';
+import Header from '../../Components/Header/Header';
+import FollowingUser from '../../Components/Follow/FollowingUser';
 import { useParams } from 'react-router-dom';
 import { FollowingPageAPI } from '../../API/Follow/FollowAPI';
 import NavBar from '../../Components/Common/NavBar';

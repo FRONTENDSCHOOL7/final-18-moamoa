@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ContainerVh } from '../../Components/Common/Container';
-import Header from '../../Components/Common/Header/Header';
+import Header from '../../Components/Header/Header';
 import { SearchAPI } from '../../API/Search/SearchAPI';
 import NavBar from '../../Components/Common/NavBar';
 import { useRecoilValue } from 'recoil';
@@ -19,7 +19,7 @@ import {
   SearchList,
 } from './SearchStyle';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
-import Myfollowings from '../../Components/Common/Myfollowings';
+import Myfollowings from '../../Components/Follow/Myfollowings';
 
 export default function Search() {
   const [, setError] = useState(null);

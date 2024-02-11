@@ -24,7 +24,7 @@ import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import NavBar from '../../Components/Common/NavBar';
 import { Container } from '../../Components/Common/Container';
-import HeaderKebab from '../../Components/Common/Header/HeaderKebab';
+import HeaderKebab from '../../Components/Header/HeaderKebab';
 
 import { getYourProfileData } from '../../API/Profile/ProfileAPI';
 import { ProfileWrap, ProfileTop, Btns, CircleBtn } from './ProfileStyle';

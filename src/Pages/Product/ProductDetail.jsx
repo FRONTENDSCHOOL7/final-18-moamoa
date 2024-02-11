@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../../Components/Common/Header/Header';
+import Header from '../../Components/Header/Header';
 import AskBtn from '../../Components/Product/AskBtn';
 import ArticleUserProfile from '../../Components/Common/ArticleUserProfile';
 import NavBar from '../../Components/Common/NavBar';

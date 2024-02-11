@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import Button from '../Common/Button';
+import Button from '../Button/Button';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+
 import { FollowWrap, UserPhotoWrap, UserPhoto, UserInfo, UserId, UserText } from './FollowStyle';
 
 FollowUser.propTypes = {
@@ -12,27 +13,28 @@ FollowUser.propTypes = {
 };
 
 export default function FollowUser(props) {
-  const [isFollowed, setIsFollowed] = useState(true);
+  const [isFollowed, setIsFollowed] = useState(false);
   const navigate = useNavigate();
   const handleButtonClick = () => {
     setIsFollowed(!isFollowed);
   };
+  const { userText, userId } = props;
   const handleUser = (accountname) => {
     navigate(`/profile/${accountname}`);
   };
   return (
-    <div>
+    <>
       <FollowWrap>
         <UserPhotoWrap>
           <UserPhoto
             src={props.src}
-            alt='Follower'
             onClick={() => handleUser(props.accountname)}
+            alt='Follower'
           ></UserPhoto>
         </UserPhotoWrap>
         <UserInfo onClick={() => handleUser(props.accountname)}>
-          <UserId>{props.userId}</UserId>
-          <UserText>{props.userText}</UserText>
+          <UserId>{userId}</UserId>
+          <UserText>{userText}</UserText>
         </UserInfo>
         <Button
           width='56'
@@ -44,6 +46,6 @@ export default function FollowUser(props) {
           onClickHandler={handleButtonClick}
         ></Button>
       </FollowWrap>
-    </div>
+    </>
   );
 }

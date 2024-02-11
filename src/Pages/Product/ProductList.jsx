@@ -6,7 +6,7 @@ import { ProductListAPI } from '../../API/Product/ProductAPI';
 import ProductListSkeleton from '../../Components/Product/ProductListSkeleton';
 import ProductOutput from '../../Components/Product/ProductOutput';
 import { Container } from '../../Components/Common/Container';
-import Header from '../../Components/Common/Header/Header';
+import Header from '../../Components/Header/Header';
 import NavBar from '../../Components/Common/NavBar';
 import { ProductListWrap } from './ProductStyle';
 import { ProductAtom } from '../../Recoil/ProductAtom';

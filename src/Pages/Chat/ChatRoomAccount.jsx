@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import Header from '../../Components/Common/Header/Header';
+import Header from '../../Components/Header/Header';
 
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
 import { useParams } from 'react-router-dom';
 import NavBar from '../../Components/Common/NavBar';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
-import Myfollowings from '../../Components/Common/Myfollowings';
+import Myfollowings from '../../Components/Follow/Myfollowings';
 
 import {
   ChatRoom,

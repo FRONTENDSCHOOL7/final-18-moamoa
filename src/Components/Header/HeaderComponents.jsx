@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import Gobackbtn from '../GoBackbtn';
-import HomeBtn from '../HomeBtn';
-import SearchBtn from '../SearchBtn';
+import Gobackbtn from '../Button/GoBackbtn';
+import HomeBtn from '../Button/HomeBtn';
+import SearchBtn from '../Button/SearchBtn';
 import {
   HeaderContainer,
   HeaderFollowContainer,
