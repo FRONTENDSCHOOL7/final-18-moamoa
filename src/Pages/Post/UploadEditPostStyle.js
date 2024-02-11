@@ -38,12 +38,23 @@ export const UploadPostBox = styled.div`
 
   @media (min-width: 768px) {
     margin-top: 80px;
+    padding: 0;
     padding-left: 150px;
     padding-right: 30px;
   }
 
   @media (min-width: 1200px) {
     padding-left: 270px;
+  }
+`;
+
+export const ProfileTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    width: ${(props) => (props.width ? `${props.width}px` : '90px')};
   }
 `;
 
@@ -60,25 +71,23 @@ export const ProfileImg = styled.div`
 `;
 
 export const TextArea = styled.div`
-  padding: 10px 0;
-
   textarea {
     resize: none;
     box-sizing: border-box;
     width: 100%;
-    border-radius: 2px;
-    padding: 8px;
+
     overflow-y: hidden;
 
-    border: 2px solid #2e2c39;
-
+    border: none;
     font-size: 1.4rem;
+    outline: none;
   }
 `;
 
 export const ImgPre = styled.div`
   height: 228px;
   position: relative;
+  margin: 8px 0;
   img {
     width: 100%;
     height: 100%;
@@ -95,18 +104,43 @@ export const XButton = styled.div`
   right: 6px;
 `;
 
-export const InputImgIcon = styled.div`
-  position: absolute;
+export const ImgIconBtn = styled.div`
+  margin: 8px 0;
+  border: 1px solid #767676;
+  border-radius: 35px;
   bottom: 16px;
-  right: 16px;
-
-  width: 50px;
-  height: 50px;
-
-  img {
-    width: 100%;
-    height: 100%;
-
+  width: 17rem;
+  transition: all 0.2s ease-in-out;
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1.4rem;
     cursor: pointer;
+    padding: 5px 0;
+    p {
+      color: #767676;
+    }
+
+    .btnHover {
+      display: none;
+    }
+
+    &:hover {
+      .default {
+        display: none;
+      }
+      .btnHover {
+        display: block;
+      }
+    }
+  }
+  &:hover {
+    background-color: #2e2c39;
+    border: 1px solid #2e2c39;
+    p {
+      color: white;
+    }
   }
 `;

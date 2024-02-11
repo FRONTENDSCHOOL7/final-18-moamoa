@@ -21,9 +21,6 @@ export const TabMenu = styled.nav`
     flex-direction: column;
     align-items: center;
   }
-  @media (min-width: 800px) {
-    transition: all 0.5s;
-  }
   @media (min-width: 1200px) {
     top: 0;
     bottom: 0;
