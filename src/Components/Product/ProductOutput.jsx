@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ProductAtom } from '../../Recoil/ProductAtom';
 
@@ -17,12 +17,37 @@ import { ProductContainer, ProductBox } from './ProductStyle';
 export default function ProductBundle() {
   const product = useRecoilValue(ProductAtom);
   const filteredProducts = product.filter(filterActive);
+  const [nextPage, setNextPage] = useState(4);
+
+  const handleObserver = useCallback((entries) => {
+    const [target] = entries;
+    console.log(target);
+    if (target.isIntersecting) {
+      setNextPage((prev) => prev + 4);
+    }
+  });
+  const observerElem = useRef(null);
+  useEffect(() => {
+    let options = {
+      root: null,
+      rootMargin: '10px',
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver(handleObserver, options);
+    const element = observerElem.current;
+
+    if (element) observer.observe(element);
+    return () => {
+      if (element) observer.unobserve(element);
+    };
+  }, [handleObserver]);
 
   return (
     <>
       <TopNavigation />
       <ProductContainer>
-        {filteredProducts.slice(0).map((item, index) => (
+        {filteredProducts.slice(0, nextPage).map((item, index) => (
           <ProductBox key={index}>
             <Link to={`/product/detail/${item._id}`} key={index}>
               <ProductListImgBox src={item.itemImage} />
@@ -37,6 +62,7 @@ export default function ProductBundle() {
           </ProductBox>
         ))}
       </ProductContainer>
+      <div className='loader' ref={observerElem}></div>
     </>
   );
 }
