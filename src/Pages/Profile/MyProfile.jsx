@@ -18,7 +18,7 @@ import { Container } from '../../Components/Common/Container';
 import userToken from '../../Recoil/userTokenAtom'; //파일경로 변경 완료
 
 import NavBar from '../../Components/Common/NavBar';
-import Header from '../../Components/Common/Header/Header';
+import Header from '../../Components/Header/Header';
 
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
 import { ProfileWrap, ProfileTop, Btns, MyProfileBtn } from './ProfileStyle';

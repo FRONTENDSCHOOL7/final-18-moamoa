@@ -29,7 +29,7 @@ export const ProfileTop = styled.div`
 
 export const Btns = styled.div`
   position: absolute;
-  top: 128px;
+  top: 138px;
   right: 16px;
   display: flex;
   flex-direction: column;

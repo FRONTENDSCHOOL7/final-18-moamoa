@@ -1,22 +1,22 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import userToken from '../../../Recoil/userTokenAtom';
-import isLoginAtom from '../../../Recoil/isLoginAtom';
-import accountNameAtom from '../../../Recoil/accountNameAtom';
-import userNameAtom from '../../../Recoil/userNameAtom';
+import userToken from '../../Recoil/userTokenAtom';
+import isLoginAtom from '../../Recoil/isLoginAtom';
+import accountNameAtom from '../../Recoil/accountNameAtom';
+import userNameAtom from '../../Recoil/userNameAtom';
 
-import HomeBtn from '../HomeBtn';
-import Gobackbtn from '../GoBackbtn';
-import more from '../../../Assets/icons/icon-more.svg';
+import HomeBtn from '../Button/HomeBtn';
+import Gobackbtn from '../Button/GoBackbtn';
+import more from '../../Assets/icons/icon-more.svg';
 import styled from 'styled-components';
-import HeaderMoreBtnModal from '../../Modal/HeaderMoreBtnModal';
-import LogoutModal from '../../Modal/LogoutModal';
-import postsAtom from '../../../Recoil/postsAtom';
+import HeaderMoreBtnModal from '../Modal/HeaderMoreBtnModal';
+import LogoutModal from '../Modal/LogoutModal';
+import postsAtom from '../../Recoil/postsAtom';
 import {
   showConfirmLogoutModalState,
   showMyProfileOptionsState,
-} from '../../../Recoil/logoutModalAtom';
+} from '../../Recoil/logoutModalAtom';
 
 export default function HeaderKebab() {
   const navigate = useNavigate();

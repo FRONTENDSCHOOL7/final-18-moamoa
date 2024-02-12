@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PostList from '../../Components/Post/PostList';
 import HomeSearch from './HomeSearch';
-import Header from '../../Components/Common/Header/Header';
+import Header from '../../Components/Header/Header';
 import NavBar from '../../Components/Common/NavBar';
 import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
@@ -9,7 +9,7 @@ import { useRecoilState } from 'recoil';
 import postsAtom from '../../Recoil/postsAtom';
 import { HomeWrap, HomeContainer, PostBg } from './HomeStyle';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
-import Myfollowings from '../../Components/Common/Myfollowings';
+import Myfollowings from '../../Components/Follow/Myfollowings';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);

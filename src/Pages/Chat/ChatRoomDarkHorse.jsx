@@ -1,12 +1,12 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { Container } from '../../Components/Common/Container';
-import Header from '../../Components/Common/Header/Header';
-import Photo from '../../Components/Common/ChatPhoto';
+import Header from '../../Components/Header/Header';
+import Photo from '../../Components/Chat/ChatPhoto';
 import img from '../../Assets/images/followImg/woman2.jpg';
 import iconImageButton from '../../Assets/icons/icon-img-button.svg';
 import NavBar from '../../Components/Common/NavBar';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
-import Myfollowings from '../../Components/Common/Myfollowings';
+import Myfollowings from '../../Components/Follow/Myfollowings';
 
 import {
   ChatRoom,

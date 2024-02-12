@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PostItem from '../../Components/Post/PostItem';
 import Comment from '../../Components/Comment/Comment';
-import HeaderKebab from '../../Components/Common/Header/HeaderKebab';
+import HeaderKebab from '../../Components/Header/HeaderKebab';
 import NavBar from '../../Components/Common/NavBar';
 import { getPostDetail } from '../../API/Post/PostAPI';
 import { PostContainer, PostItemContainer, NavbarCont } from './PostDetailStyle';

@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { ProductForm } from '../../Components/Product/ProductForm';
 import { useProductData } from '../../Hooks/Product/useProductData';
 import { Container } from '../../Components/Common/Container';
-import { HeaderSubmitProduct } from '../../Components/Common/Header/HeaderComponents';
+import { HeaderSubmitProduct } from '../../Components/Header/HeaderComponents';
 import DefaultImg from '../../Assets/images/img-product-default.png';
 import { useImage } from '../../Hooks/Common/useImage';
 import NavBar from '../../Components/Common/NavBar';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
-import Myfollowings from '../../Components/Common/Myfollowings';
+import Myfollowings from '../../Components/Follow/Myfollowings';
 import { ProductSection } from './ProductAddEditStyle';
 const ProductAdd = () => {
   const initialState = {

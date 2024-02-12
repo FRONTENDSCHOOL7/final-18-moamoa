@@ -13,8 +13,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Container } from '../../Components/Common/Container';
-import Gobackbtn from '../../Components/Common/GoBackbtn';
-import ButtonSubmit from '../../Components/Common/Button';
+import Gobackbtn from '../../Components/Button/GoBackbtn';
+import ButtonSubmit from '../../Components/Button/Button';
 
 import uploadFile from '../../Assets/images/upload-file.png';
 import xButton from '../../Assets/icons/x.svg';
