@@ -42,7 +42,6 @@ const ButtonSubmit = styled.button`
 
   height: 32px;
   border-radius: 32px;
-  font-family: pretendard;
   font-size: 14px;
   font-weight: bold;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};

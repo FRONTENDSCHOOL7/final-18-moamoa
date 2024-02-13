@@ -76,9 +76,7 @@ export const ChatUserName = styled.h2`
 export const HeaderSearchContainer = styled.header`
   display: flex;
   justify-content: center;
-  height: 48px;
-  min-height: 48px;
-  max-height: 48px;
+  height: 4.8rem;
   width: 100%;
   position: fixed;
   background-color: #fff;
@@ -102,10 +100,10 @@ export const HeaderSearchContainer = styled.header`
     margin-right: 10px;
     background-color: #f2f2f2;
     flex: 1;
-    width: 340px;
-    height: 32px;
+    width: 3.4rem;
+    height: 3.2rem;
     border-radius: 32px;
-    padding-left: 20px;
+    padding-left: 2rem;
     box-sizing: border-box;
     &:focus {
       outline: none;
@@ -118,6 +116,8 @@ export const HeaderSearchContainer = styled.header`
     padding: 0;
     margin-inline: auto;
     input {
+      height: 4rem;
+      font-size: 1.3rem;
     }
     img {
       display: none;

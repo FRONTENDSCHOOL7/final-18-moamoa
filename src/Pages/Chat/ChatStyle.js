@@ -192,7 +192,7 @@ export const ChatListWrap = styled.ul`
     width: 480px;
     padding: 0;
     margin-top: 80px;
-    margin-left: 204px;
+    margin-inline: auto;
   }
   @media (min-width: 1200px) {
     margin-left: 310px;
