@@ -2,7 +2,7 @@
   설명: 프로필 수정 페이지 사용된 css
   작성자: 이해지
   최초 작성 날짜: 2023.02.03
-  마지막 수정 날까: 2023.02.07
+  마지막 수정 날까: 2023.02.13
 */
 
 import styled from 'styled-components';
@@ -14,19 +14,24 @@ export const ProfileImg = styled.div`
   padding-left: 20px;
 
   label {
-    cursor: pointer;
     position: relative;
+    display: flex;
+    align-items: flex-end;
+
+    @media (min-width: 768px) {
+      justify-content: center;
+    }
 
     img:first-child {
+      cursor: pointer;
       width: 105px;
       height: 105px;
       border-radius: 50%;
       border: 5px solid #fff;
       background: #fff;
 
-      @media (min-width: 1200px) {
+      @media (min-width: 768px) {
         display: flex;
-        margin: 0 auto;
 
         width: 120px;
         height: 120px;
@@ -34,28 +39,16 @@ export const ProfileImg = styled.div`
     }
 
     img:last-child {
+      cursor: pointer;
       width: 40px;
       height: 40px;
-      position: absolute;
-      bottom: 0px;
-      left: 85px;
 
-      @media (min-width: 1200px) {
-        left: 512.5px;
-      }
+      position: relative;
+      left: -30px;
     }
   }
 
   @media (min-width: 768px) {
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 199, 0, 0) 0%,
-      #ffc700 calc(30% + 65px),
-      white calc(30% + 65px),
-      white 100%
-    );
-  }
-  @media (min-width: 1200px) {
     background: none;
     padding-top: 0px;
     margin-top: 80px;

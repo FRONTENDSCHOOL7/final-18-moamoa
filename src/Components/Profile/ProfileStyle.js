@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지 컴포넌트에 사용된 css
   작성자: 이해지
   최초 작성 날짜: 2023.02.02
-  마지막 수정 날까: 2023.02.03
+  마지막 수정 날까: 2023.02.13
 */
 
 import styled from 'styled-components';
@@ -42,7 +42,7 @@ export const ProfileImg = styled.div`
     border: 5px solid #fff;
     background: #fff;
 
-    @media (min-width: 1200px) {
+    @media (min-width: 768px) {
       display: flex;
       margin: 0 auto;
 
@@ -52,15 +52,6 @@ export const ProfileImg = styled.div`
   }
 
   @media (min-width: 768px) {
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 199, 0, 0) 0%,
-      #ffc700 calc(30% + 65px),
-      white calc(30% + 65px),
-      white 100%
-    );
-  }
-  @media (min-width: 1200px) {
     background: none;
     padding: 0px;
   }
@@ -96,7 +87,7 @@ export const ProfileInfo = styled.div`
     }
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     div {
       display: flex;
       flex-direction: column;
@@ -105,6 +96,9 @@ export const ProfileInfo = styled.div`
     p {
       margin: 0 auto;
     }
+    margin-bottom: 34px;
+  }
+  @media (min-width: 1200px) {
     margin-bottom: 35px;
   }
 `;
@@ -140,7 +134,7 @@ export const CountWrap = styled.div`
     background-color: #e3e3e3;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     justify-content: space-around;
     padding: 1.6rem 0;
     span {
@@ -200,12 +194,12 @@ export const HamView = styled.div`
       }
     }
     li:first-child {
-      margin-top: 1.5rem;
+      margin-top: 5rem;
     }
     li:last-child {
-      margin-bottom: 8.5rem;
+      margin-bottom: 9rem;
       @media (min-width: 768px) {
-        margin-bottom: 0;
+        margin-bottom: 5rem;
       }
     }
   }
@@ -225,13 +219,16 @@ export const BenView = styled.div`
     margin: 0;
     list-style: none;
 
-    gap: 1.1rem;
+    gap: 1.6rem;
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   img {
     vertical-align: top;
     width: 100%;
-    height: 11rem;
+    aspect-ratio: 14 / 11;
     object-fit: cover;
   }
   @media (min-width: 768px) {
@@ -402,7 +399,7 @@ export const FollowBtn = styled.div`
     color: #767676;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     position: relative;
     margin: 0 45px;
     z-index: 10;
