@@ -1,34 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useInView } from 'react-intersection-observer';
 import PostList from '../../Components/Post/PostList';
 import HomeSearch from './HomeSearch';
 import Header from '../../Components/Header/Header';
 import NavBar from '../../Components/Common/NavBar';
 import { Container } from '../../Components/Common/Container';
 import { homePostList } from '../../API/Post/PostAPI';
-import { useRecoilState } from 'recoil';
-import postsAtom from '../../Recoil/postsAtom';
 import { HomeWrap, HomeContainer, PostBg } from './HomeStyle';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
 import Myfollowings from '../../Components/Follow/Myfollowings';
 
 export default function Home() {
+  const limit = 5;
+  const [ref, inView] = useInView();
   const [isLoading, setIsLoading] = useState(false);
-  const [postData, setPostData] = useRecoilState(postsAtom);
+  const [skip, setSkip] = useState(0);
+  const [postData, setPostData] = useState([]);
 
-  useEffect(() => {
-    const getHomePostList = async () => {
+    const getHomePostList = useCallback(async () => {
       try{
-        const postListData = await homePostList();
-        setPostData(postListData.posts);
-        setTimeout(() => {
-          setIsLoading(true);
-        }, 1200);
+        const postListData = await homePostList(limit, skip);
+        if(Object.keys(postListData).length !== 0){
+          setPostData((prevData) => [...prevData, ...postListData.posts]);
+        }
       } catch(error){
         console.error("페이지를 불러오는데 실패했습니다.");
       }
-    };
-    getHomePostList();
-  }, []);
+    },[skip]);
+
+    useEffect(()=>{
+      getHomePostList()
+      setTimeout(() => {
+        setIsLoading(true);
+      }, 1200);
+    },[getHomePostList, skip])
+
+    // 무한스크롤
+    useEffect(() => {
+      if (inView && isLoading) {
+        setSkip((prevSkip) => prevSkip + limit);
+      }
+    }, [inView, isLoading]);
 
   return (
     <Container>
@@ -40,9 +53,10 @@ export default function Home() {
               <PostBg>
                 <ul>
                   {postData.map((item) => {
-                    return <PostList key={item.id} post={item} isLoading={isLoading}/>;
+                    return <PostList key={uuidv4()} post={item} isLoading={isLoading}/>;
                   })}
                 </ul>
+                <div ref={ref} />
               </PostBg>
             </HomeContainer>
             <div>
