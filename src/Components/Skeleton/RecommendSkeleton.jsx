@@ -6,7 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function RecommendSkeleton() {
   return (
-    <>
+    <Container>
       <MyFollowingBtn>
         <Skeleton className='btn'/>
       </MyFollowingBtn>
@@ -37,11 +37,17 @@ export default function RecommendSkeleton() {
           <Skeleton className='desc'/>
         </FestDesc>
       </FestaInfo>
-
-    </>
+    </Container>
     
   )
 }
+
+const Container = styled.div`
+  display: none;
+  @media (min-width: 1200px) {
+    display: block;
+  }
+`
 
 const MyFollowingBtn = styled.button`
   .btn{

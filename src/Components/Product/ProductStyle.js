@@ -1,4 +1,3 @@
-import backgroundMoamoa from '../../Assets/images/backgroundMoamoa.png';
 import styled from 'styled-components';
 
 const Button = styled.button`
@@ -39,12 +38,8 @@ export const ProductContainer = styled.ul`
   }
 
   padding-bottom: 150px;
-  background-image: url(${backgroundMoamoa});
-  background-repeat: no-repeat;
-  background-position: 110% 91%;
-  background-position: bottom 8rem right 0px;
+
   @media (min-width: 768px) {
-    background-position: 0% 93%;
   }
 `;
 export const ProductBox = styled.li`

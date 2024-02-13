@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <HeaderContainer>
       <Link to='/home'>
-        <H1>모아모아</H1>
+        <H1>모아모아 피드</H1>
         <HomeBtn src={MOAMOA} alt='홈으로 이동' />
       </Link>
       <Link to='/search'>

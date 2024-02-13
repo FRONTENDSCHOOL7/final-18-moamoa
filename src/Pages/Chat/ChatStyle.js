@@ -189,10 +189,10 @@ export const ChatListWrap = styled.ul`
   gap: 16px;
   margin-top: 48px;
   @media (min-width: 768px) {
-    width: 480px;
+    width: 48rem;
     padding: 0;
     margin-top: 80px;
-    margin-left: 204px;
+    margin-inline: auto;
   }
   @media (min-width: 1200px) {
     margin-left: 310px;

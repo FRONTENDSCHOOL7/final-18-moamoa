@@ -6,7 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function MyFollowingSkeleton() {
   return (
-    <>
+    <Container>
       <MyFollowingBtn>
         <Skeleton className='btn'/>
       </MyFollowingBtn>
@@ -37,10 +37,17 @@ export default function MyFollowingSkeleton() {
           <Skeleton className='userInfo'/>
         </UserName>
       </UserInfo>
-    </>
+    </Container>
     
   )
 }
+
+const Container = styled.div`
+  display: none;
+  @media (min-width: 1200px) {
+    display: block;
+  }
+`
 
 const MyFollowingBtn = styled.button`
   .btn{
