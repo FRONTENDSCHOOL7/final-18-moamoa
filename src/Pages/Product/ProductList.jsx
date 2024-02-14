@@ -3,7 +3,7 @@ import { useSetRecoilState, useRecoilValue } from 'recoil';
 import 'react-loading-skeleton/dist/skeleton.css';
 import userTokenAtom from '../../Recoil/userTokenAtom';
 import { ProductListAPI } from '../../API/Product/ProductAPI';
-import ProductListSkeleton from '../../Components/Product/ProductListSkeleton';
+import ProductListSkeleton from '../../Components/Skeleton/ProductListSkeleton';
 import ProductOutput from '../../Components/Product/ProductOutput';
 import { Container } from '../../Components/Common/Container';
 import Header from '../../Components/Header/Header';
