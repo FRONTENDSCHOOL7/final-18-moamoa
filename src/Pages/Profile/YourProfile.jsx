@@ -2,7 +2,7 @@
   설명: 사용자 accountname의 프로필 페이지(남의 페이지)
   작성자: 이해지
   최초 작성 날짜: 2023.10.23
-  마지막 수정 날까: 2023.02.07
+  마지막 수정 날까: 2023.02.13
 */
 
 import React, { useState, useEffect } from 'react';
@@ -133,10 +133,10 @@ function YourProfile() {
                       navigate(`/chat/${userName}`);
                     }}
                   >
-                    <img src={windowWidth >= 1200 ? MsgIcon_desktop : MsgIcon} alt='' />
+                    <img src={windowWidth >= 768 ? MsgIcon_desktop : MsgIcon} alt='' />
                   </button>
                   <button onClick={copyURLToClipboard}>
-                    <img src={windowWidth >= 1200 ? ShareIcon_desktop : ShareIcon} alt='' />
+                    <img src={windowWidth >= 768 ? ShareIcon_desktop : ShareIcon} alt='' />
                   </button>
                 </CircleBtn>
               </Btns>

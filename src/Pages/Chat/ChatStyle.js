@@ -83,7 +83,7 @@ export const ChatMessages = styled.div`
   gap: 10px;
 
   @media (min-width: 768px) {
-    border: 3px solid #2e2c39;
+    border: 3px solid #dbdbdb;
     padding: 20px;
   }
 `;
@@ -106,7 +106,7 @@ export const InputArea = styled.div`
   padding: 10px;
   background-color: #ffffff;
 
-  border: 3px solid #2e2c39;
+  border: 3px solid #dbdbdb;
   border-radius: 10px;
   gap: 10px;
 `;

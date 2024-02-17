@@ -2,7 +2,7 @@
   설명: 프로필 상세 페이지에 사용된 css
   작성자: 이해지
   최초 작성 날짜: 2023.02.02
-  마지막 수정 날까: 2023.02.07
+  마지막 수정 날까: 2023.02.13
 */
 
 import styled from 'styled-components';
@@ -22,7 +22,7 @@ export const ProfileWrap = styled.div`
 export const ProfileTop = styled.div`
   position: relative;
   margin-top: 48px;
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     margin-top: 80px;
   }
 `;
@@ -35,12 +35,15 @@ export const Btns = styled.div`
   flex-direction: column;
   gap: 6px;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     position: absolute;
     flex-direction: row;
-    top: 214px;
+    top: 210px;
     right: 50%;
     transform: translateX(50%);
+  }
+  @media (min-width: 1200px) {
+    top: 214px;
   }
 `;
 
@@ -60,9 +63,13 @@ export const CircleBtn = styled.div`
   gap: 8px;
   justify-content: flex-end;
 
-  @media (min-width: 1200px) {
+  @media (min-width: 768px) {
     position: absolute;
-    width: 234px;
+    width: 224px;
     justify-content: space-between;
+  }
+
+  @media (min-width: 1200px) {
+    width: 234px;
   }
 `;

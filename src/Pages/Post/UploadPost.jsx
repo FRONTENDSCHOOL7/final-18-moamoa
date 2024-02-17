@@ -2,7 +2,7 @@
   설명: 게시글 등록 페이지
   작성자: 이해지
   최초 작성 날짜: 2023.10.24
-  마지막 수정 날까: 2024.02.06
+  마지막 수정 날까: 2024.02.13
 
   추가 작성자: 유의진 
   추가 내용: 이미지 크롭 기능
@@ -16,7 +16,8 @@ import { Container } from '../../Components/Common/Container';
 import Gobackbtn from '../../Components/Button/GoBackbtn';
 import ButtonSubmit from '../../Components/Button/Button';
 
-import uploadFile from '../../Assets/images/upload-file.png';
+import uploadFile from '../../Assets/icons/post-image.svg';
+import uploadFileHover from '../../Assets/icons/post-image-hover.svg';
 import xButton from '../../Assets/icons/x.svg';
 
 import { uploadPost } from '../../API/Post/PostAPI';
@@ -33,7 +34,8 @@ import {
   TextArea,
   ImgPre,
   XButton,
-  InputImgIcon,
+  ImgIconBtn,
+  ProfileTop,
 } from './UploadEditPostStyle';
 
 export default function AddPost() {
@@ -98,7 +100,7 @@ export default function AddPost() {
   };
 
   useEffect(() => {
-    if (content.trim() === '' && (!imgData.croppedImageUrl || !imgData.imageUrl)) {
+    if (content.trim() === '' && !imgData.croppedImageUrl && !imgData.imageUrl) {
       setIsButtonDisabled(true);
     } else {
       setIsButtonDisabled(false);
@@ -132,10 +134,35 @@ export default function AddPost() {
           <h1 className='a11y-hidden'>게시글 등록</h1>
 
           <form onSubmit={handleFormSubmit}>
-            <ProfileImg>
-              {/* 사용자 프로필 */}
-              <img src={userImage} alt='' />
-            </ProfileImg>
+            <ProfileTop>
+              <ProfileImg>
+                {/* 사용자 프로필 */}
+                <img src={userImage} alt='' />
+              </ProfileImg>
+              <div className='large-scree'>
+                <ButtonSubmit
+                  buttonText='업로드'
+                  onClickHandler={submitPost}
+                  disabled={isButtonDisabled}
+                />
+              </div>
+            </ProfileTop>
+            {/* 이미지 등록 버튼 */}
+            <ImgIconBtn>
+              <label htmlFor='profileImg'>
+                <img className='default' src={uploadFile} alt='' />
+                <img className='btnHover' src={uploadFileHover} alt='' />
+                <p>게시글 사진 추가하기</p>
+              </label>
+              <input
+                type='file'
+                onChange={onSelectFile}
+                id='profileImg'
+                name='image'
+                accept='image/*'
+                style={{ display: 'none' }}
+              />
+            </ImgIconBtn>
             <TextArea>
               <section>
                 {/* 내용 입력 창 */}
@@ -147,9 +174,9 @@ export default function AddPost() {
                   }}
                   id='contentTextarea'
                   name='content'
-                  rows='10'
+                  rows='1'
                   cols='50'
-                  placeholder='내용을 입력해주세요'
+                  placeholder='게시글 내용을 입력해주세요.'
                 ></textarea>
               </section>
             </TextArea>
@@ -170,30 +197,7 @@ export default function AddPost() {
                   </XButton>
                 </ImgPre>
               ) : null}
-
-              {/* 이미지 등록 버튼 */}
-              <InputImgIcon>
-                <label htmlFor='profileImg'>
-                  <img src={uploadFile} alt='' />
-                </label>
-                <input
-                  type='file'
-                  // onChange={handleChangeImage}
-                  onChange={onSelectFile}
-                  id='profileImg'
-                  name='image'
-                  accept='image/*'
-                  style={{ display: 'none' }}
-                />
-              </InputImgIcon>
             </section>
-            <div className='large-scree'>
-              <ButtonSubmit
-                buttonText='업로드'
-                onClickHandler={submitPost}
-                disabled={isButtonDisabled}
-              />
-            </div>
           </form>
         </section>
         <div className='large-scree'>
