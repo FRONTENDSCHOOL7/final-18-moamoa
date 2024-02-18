@@ -8,17 +8,54 @@ export const useImage = (initialImg) => {
     croppedImageUrl: null,
   });
   const [prevImgData, setPrevImgData] = useState('');
-  // const [compImg, setCompImg] = useState('');
 
-  const onSelectFile = async (e) => {
+  const resizeImage = async (url, maxWidth, maxHeight) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let newWidth, newHeight;
+
+        if (img.width > maxWidth || img.height > maxHeight) {
+          const aspectRatio = img.width / img.height;
+
+          if (aspectRatio > 1) {
+            newWidth = maxWidth;
+            newHeight = newWidth / aspectRatio;
+          } else {
+            newHeight = maxHeight;
+            newWidth = newHeight * aspectRatio;
+          }
+        } else {
+          newWidth = img.width;
+          newHeight = img.height;
+        }
+
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        resolve(canvas.toDataURL('image/jpeg'));
+      };
+
+      img.src = url;
+    });
+  };
+
+  const onSelectFile = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
-      reader.addEventListener('load', () => {
+      reader.addEventListener('load', async () => {
         setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
+
+        const resizedImageUrl = await resizeImage(reader.result, 700, 500);
+
         setImgData((prevImage) => ({
           ...prevImage,
-          imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
+          imageUrl: resizedImageUrl || '', // 새로운 이미지 설정
         }));
       });
 
