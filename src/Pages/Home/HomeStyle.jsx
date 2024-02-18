@@ -58,8 +58,8 @@ export const HomeCont = styled.div`
   }
   @media (min-width: 1200px) {
     margin-top: 25%;
-    background-position: 24.5% 35%;
-    padding: 0 40% 0 0;
+    background-position: 48% 35%;
+    padding: 0 2% 0 0;
   }
 `;
 
@@ -80,3 +80,17 @@ export const SearchBtn = styled.button`
     font-weight: bold;
   }
 `;
+
+export const LoadingCont = styled.div`
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const LoadingImg = styled.img`
+
+  width: 50px;
+  height: 50px;
+`

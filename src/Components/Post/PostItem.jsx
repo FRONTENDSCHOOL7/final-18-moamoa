@@ -12,6 +12,7 @@ import accountNameAtom from '../../Recoil/accountNameAtom';
 import PropTypes from 'prop-types';
 import { heartPost,  unheartPost } from '../../API/Post/PostAPI';
 import PostContents from './PostContents';
+import { Link } from 'react-router-dom';
 
 PostItem.propTypes = {
   post: PropTypes.object
@@ -86,7 +87,7 @@ export default function PostItem({ post }) {
                   {heartcount}
                 </HeartBtn>
               )}
-              <CommentBtn>{postItemInfo.commentCount}</CommentBtn>
+              <Link to={`/post/${postId}`}><CommentBtn>{postItemInfo.commentCount}</CommentBtn></Link>
             </div>
           </PostFooterContainer>
         </PostArticle>

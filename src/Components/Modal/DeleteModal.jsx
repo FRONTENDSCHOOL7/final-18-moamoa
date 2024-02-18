@@ -12,7 +12,7 @@ DeleteModal.propTypes = {
   setCloseFooter: PropTypes.func.isRequired
 };
 
-export default function DeleteModal({postid,setPostId, setCloseFooter}) {
+export default function DeleteModal({postid,setPostId}) {
   const params = useParams();
   const navigate = useNavigate();
   const [delMadoal, setDelModal] = useState(true);
@@ -36,10 +36,11 @@ export default function DeleteModal({postid,setPostId, setCloseFooter}) {
     setShowNoticeModal(false);
     setDelModal(false);
     setPostId(null);
-    setTimeout(() => {
-      setDelModal(false);
-      setCloseFooter(true)
-    }, 1000);
+    window.location.reload();
+    // setTimeout(() => {
+    //   setDelModal(false);
+    //   setCloseFooter(true)
+    // }, 1000);
   };
 
   // 상품 상세 페이지에서 상품 삭제
