@@ -16,7 +16,6 @@ export const useImage = (initialImg) => {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         setPrevImgData(imgData.imageUrl); // 이전 이미지 저장
-        console.log(imgData)
         setImgData((prevImage) => ({
           ...prevImage,
           imageUrl: reader.result?.toString() || '', // 새로운 이미지 설정
@@ -24,9 +23,7 @@ export const useImage = (initialImg) => {
       });
 
       reader.readAsDataURL(e.target.files[0]);
-      console.log(e.target.files[0]);
       const compFile = e.target.files[0];
-      console.log(compFile)
       const compOptions = {
         // maxSizeMB: 0.5,
         maxWidthOrHeight: 650,
@@ -37,7 +34,6 @@ export const useImage = (initialImg) => {
       const promise = imageCompression(compressedFile);
       await promise.then((result) => {
         setImgData(result);
-        console.log(result);
         reader.readAsDataURL(result);
         setShowImgModal(true);
       })

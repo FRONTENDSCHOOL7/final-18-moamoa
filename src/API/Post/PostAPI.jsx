@@ -77,7 +77,6 @@ export const unheartPost = async (postId) => {
   try {
     const response = await authInstance.delete(`/post/${postId}/unheart`);
     const data = await response.data;
-    console.log(data);
     return data;
   } catch (error) {
     console.error('API 응답에 실패하였습니다.', error);

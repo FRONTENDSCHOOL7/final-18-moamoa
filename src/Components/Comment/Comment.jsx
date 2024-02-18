@@ -15,9 +15,7 @@ export default function Comment({ postId }) {
 
   const postComment = async (postId, AddData) => {
     const res = await addComment(postId, AddData);
-    console.log(res.comment);
     setCommentList((prev) => [res.comment, ...prev]);
-    console.log(commentList);
   };
 
   const handleComment = (e) => setComment(e.target.value);
