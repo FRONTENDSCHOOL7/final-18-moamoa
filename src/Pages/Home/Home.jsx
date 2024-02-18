@@ -64,7 +64,7 @@ export default function Home() {
               <Myfollowings/>
             </div>
           </>
-        ) : (
+        ) : 
           <>
             <HomeContainer>
               <HomeSearch />
@@ -74,7 +74,7 @@ export default function Home() {
               <Myfollowings/>
             </div>
           </>
-        )}
+        }
       </HomeWrap>
       <NavBar />
     </Container>
