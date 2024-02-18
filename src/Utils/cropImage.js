@@ -51,7 +51,7 @@ export default async function getCroppedImg(imageSrc, pixelCrop) {
   ctx.putImageData(data, 0, 0);
 
   // As Base64 string
-  return canvas.toDataURL('image/jpeg');
+  return canvas.toDataURL('image/webp');
 
   // As a blob
   // return new Promise((resolve) => {
