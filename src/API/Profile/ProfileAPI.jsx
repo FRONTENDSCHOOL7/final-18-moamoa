@@ -1,9 +1,14 @@
 import { authInstance } from '../InstanceAPI';
 
 // 내 프로필 정보 불러오기
-export const getMyProfileData = async () => {
+export const getMyProfileData = async (token) => {
   try {
-    const res = await authInstance.get(`/user/myinfo`);
+    const res = await authInstance.get(`/user/myinfo`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
     const data = await res.data;
     return data;
   } catch (error) {

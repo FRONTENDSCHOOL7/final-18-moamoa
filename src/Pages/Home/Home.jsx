@@ -10,6 +10,8 @@ import { homePostList } from '../../API/Post/PostAPI';
 import { HomeWrap, HomeContainer, PostBg } from './HomeStyle';
 import RecommendPlace from '../../Components/Common/RecommendPlace';
 import Myfollowings from '../../Components/Follow/Myfollowings';
+import { useRecoilValue } from 'recoil';
+import userTokenAtom from '../../Recoil/userTokenAtom';
 
 export default function Home() {
   const limit = 5;
@@ -17,10 +19,11 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [skip, setSkip] = useState(0);
   const [postData, setPostData] = useState([]);
+  const userToken = useRecoilValue(userTokenAtom);
 
     const getHomePostList = useCallback(async () => {
       try{
-        const postListData = await homePostList(limit, skip);
+        const postListData = await homePostList(limit, skip,userToken);
         if(Object.keys(postListData).length !== 0){
           setPostData((prevData) => [...prevData, ...postListData.posts]);
         }
@@ -34,7 +37,7 @@ export default function Home() {
       setTimeout(() => {
         setIsLoading(true);
       }, 1200);
-    },[getHomePostList, skip])
+    },[getHomePostList, skip, userToken])
 
     // 무한스크롤
     useEffect(() => {

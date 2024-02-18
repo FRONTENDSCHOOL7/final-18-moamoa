@@ -43,7 +43,7 @@ function MyProfile() {
 
   async function UserInfo() {
     try {
-      const res = await getMyProfileData();
+      const res = await getMyProfileData(token);
 
       setProfileImg(res.user['image']);
       setProfileAccountname(res.user['accountname']);
