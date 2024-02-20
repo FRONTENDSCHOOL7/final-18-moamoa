@@ -18,7 +18,7 @@ export default function RecommendPlace() {
       setPlace(data.product);
       setTimeout(() => {
         setIsLoading(true);
-      }, 1200);
+      }, 300);
     }
     fetchProductList();
   },[accountName])

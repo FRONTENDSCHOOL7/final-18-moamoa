@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useInView } from 'react-intersection-observer';
 import PostList from '../../Components/Post/PostList';
@@ -36,7 +36,7 @@ export default function Home() {
       getHomePostList()
       setTimeout(() => {
         setIsLoading(true);
-      }, 1200);
+      }, 500);
     },[getHomePostList, skip, userToken])
 
     // 무한스크롤
@@ -45,6 +45,12 @@ export default function Home() {
         setSkip((prevSkip) => prevSkip + limit);
       }
     }, [inView, isLoading]);
+
+    const posts = useMemo(() => {
+      return postData.map((item) => {
+        return <PostList key={uuidv4()} post={item} isLoading={isLoading}/>;
+      });
+    }, [postData, isLoading]);
 
   return (
     <Container>
@@ -55,9 +61,7 @@ export default function Home() {
             <HomeContainer>
               <PostBg>
                 <ul>
-                  {postData.map((item) => {
-                    return <PostList key={uuidv4()} post={item} isLoading={isLoading}/>;
-                  })}
+                  {posts}
                 </ul>
                 <div ref={ref} />
               </PostBg>

@@ -21,7 +21,7 @@ export default function Myfollowings() {
         await setFollowingData(data);
         setTimeout(() => {
           setIsLoading(true);
-        }, 1200);
+        }, 300);
       } catch (error) {
         console.error(error);
       }

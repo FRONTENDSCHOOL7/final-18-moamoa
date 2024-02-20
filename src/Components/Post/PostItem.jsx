@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import ArticleUserProfile from '../Common/ArticleUserProfile';
 import PostMoreBtn from './PostMoreBtn';
 import styled from 'styled-components';
@@ -38,32 +38,27 @@ export default function PostItem({ post }) {
   const contentsData = { postItemInfo, postImgUrl, postId }
   const btnData = {postId, accountName, showModal}
 
-  const heartedPost = () => heartPost(postId);
-
-  const hearted = async () => {
-    await heartedPost();
-  };
-
-  const unheartedPost = () => unheartPost(postId);
-
-  const unhearted = async () => {
-    await unheartedPost();
-  };
-
-  const handleHeartCount = () => {
+  const hearted = useCallback(async () => {
+    await heartPost(postId);
     setHeartColor(heartBgFill);
     setHeartCount((prev) => prev + 1);
     setHeartValue((prev) => !prev);
-    hearted(()=>{});
-  };
+  }, [postId]);
 
-  const handleUnheartCount = () => {
+  const unhearted = useCallback(async () => {
+    await unheartPost(postId);
     setHeartCount((prev) => prev - 1);
     setHeartValue((prev) => !prev);
-    unhearted(()=>{
-      setHeartColor(heartBg);
-    });
-  };
+    setHeartColor(heartBg);
+  }, [postId]);
+
+  const handleHeartCount = useCallback(() => {
+    hearted();
+  }, [hearted]);
+
+  const handleUnheartCount = useCallback(() => {
+    unhearted();
+  }, [unhearted]);
 
   return (
     <>
