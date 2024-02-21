@@ -21,8 +21,9 @@ import uploadFileHover from '../../Assets/icons/post-image-hover.svg';
 import xButton from '../../Assets/icons/x.svg';
 
 import { uploadPost } from '../../API/Post/PostAPI';
-
 import { getMyProfileData } from '../../API/Profile/ProfileAPI';
+import userTokenAtom from '../../Recoil/userTokenAtom';
+
 import { useImage } from '../../Hooks/Common/useImage';
 import ImageCropModal from '../../Components/Modal/ImageCropModal';
 import NavBar from '../../Components/Common/NavBar';
@@ -37,9 +38,11 @@ import {
   ImgIconBtn,
   ProfileTop,
 } from './UploadEditPostStyle';
+import { useRecoilValue } from 'recoil';
 
 export default function AddPost() {
   const navigate = useNavigate();
+  const token = useRecoilValue(userTokenAtom)
 
   const [content, setContent] = useState('');
   const [userImage, setUserImage] = useState('');
@@ -50,7 +53,7 @@ export default function AddPost() {
 
   const getUserImg = async () => {
     try {
-      const response = await await getMyProfileData();
+      const response = await getMyProfileData(token);
 
       if (response && response.user) {
         setUserImage(response.user['image'] || '');
@@ -63,7 +66,7 @@ export default function AddPost() {
   useEffect(() => {
     // 컴포넌트가 마운트될 때 getInitInfo 함수를 실행
     getUserImg();
-  }, []);
+  }, [token]);
 
   const inputContent = (e) => {
     setContent(e.target.value);

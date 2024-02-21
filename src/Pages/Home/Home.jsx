@@ -55,8 +55,9 @@ export default function Home() {
   return (
     <Container>
       <Header type='home' />
+      <NavBar />
       <HomeWrap>
-        { postData && Object.keys(postData).length !== 0 ? (
+        { postData && postData.length !== 0 ? (
           <>
             <HomeContainer>
               <PostBg>
@@ -83,7 +84,6 @@ export default function Home() {
           </>
         }
       </HomeWrap>
-      <NavBar />
     </Container>
   );
 }

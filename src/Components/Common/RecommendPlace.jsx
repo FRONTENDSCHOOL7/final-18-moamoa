@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components'
 import { productList } from '../../API/Product/ProductAPI'
 import { productPeriod } from '../../Pages/Product/period'
@@ -11,17 +12,20 @@ export default function RecommendPlace() {
   const [randomPlaceList, setRandomPlaceList] = useState([]);
   const [recommendPlaceList, setRecommendPlaceList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
-  useEffect(()=> {
-    const fetchProductList = async () => {
-      const data = await productList(accountName);
-      setPlace(data.product);
-      setTimeout(() => {
-        setIsLoading(true);
-      }, 300);
-    }
-    fetchProductList();
+
+
+  const fetchProductList = useCallback(async () => {
+    const data = await productList(accountName);
+    setPlace(data.product);
+    setTimeout(() => {
+      setIsLoading(true);
+    }, 300);
   },[accountName])
+
+  useEffect(()=> {
+    fetchProductList();
+  },[fetchProductList])
+
 
   useEffect(() => {
     const randomPlace = Math.floor(Math.random() * place.length);
@@ -32,7 +36,7 @@ export default function RecommendPlace() {
 
   useEffect(() => {
     if (randomPlaceList.length >= 3) {
-      const index = randomPlaceList.slice(1, 4);
+      const index = randomPlaceList.slice(2, 5);
       const places = index.map((i) => place[i]);
       setRecommendPlaceList(places);
     }
@@ -52,7 +56,7 @@ export default function RecommendPlace() {
           <Place>
             {recommendPlaceList.map((item)=>{
               const date = productPeriod(item);
-              return <ul key={item.id}>
+              return <ul key={uuidv4()}>
                 <li>
                   <Link to={`/product/detail/${item.id}`}>
                     <PlaceItem>
