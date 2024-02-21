@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import ArticleUserProfile from '../Common/ArticleUserProfile';
 import PostMoreBtn from './PostMoreBtn';
 import styled from 'styled-components';
@@ -38,32 +38,27 @@ export default function PostItem({ post }) {
   const contentsData = { postItemInfo, postImgUrl, postId }
   const btnData = {postId, accountName, showModal}
 
-  const heartedPost = () => heartPost(postId);
-
-  const hearted = async () => {
-    await heartedPost();
-  };
-
-  const unheartedPost = () => unheartPost(postId);
-
-  const unhearted = async () => {
-    await unheartedPost();
-  };
-
-  const handleHeartCount = () => {
+  const hearted = useCallback(async () => {
+    await heartPost(postId);
     setHeartColor(heartBgFill);
     setHeartCount((prev) => prev + 1);
     setHeartValue((prev) => !prev);
-    hearted(()=>{});
-  };
+  }, [postId]);
 
-  const handleUnheartCount = () => {
+  const unhearted = useCallback(async () => {
+    await unheartPost(postId);
     setHeartCount((prev) => prev - 1);
     setHeartValue((prev) => !prev);
-    unhearted(()=>{
-      setHeartColor(heartBg);
-    });
-  };
+    setHeartColor(heartBg);
+  }, [postId]);
+
+  const handleHeartCount = useCallback(() => {
+    hearted();
+  }, [hearted]);
+
+  const handleUnheartCount = useCallback(() => {
+    unhearted();
+  }, [unhearted]);
 
   return (
     <>
@@ -122,7 +117,7 @@ const PostFooterContainer = styled.div`
 `;
 
 const CreateDate = styled.p`
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #767676;
 `;
 
@@ -130,7 +125,7 @@ const HeartBtn = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'heartcolor',
 })`
   padding-left: 2.6rem;
-  padding-right: 1.6rem;
+  margin-right: 1.6rem;
   height: 2rem;
   color: #767676;
   background: url(${(props) => props.heartcolor}) 0.2rem no-repeat;

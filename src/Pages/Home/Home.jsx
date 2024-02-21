@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useInView } from 'react-intersection-observer';
 import PostList from '../../Components/Post/PostList';
@@ -36,7 +36,7 @@ export default function Home() {
       getHomePostList()
       setTimeout(() => {
         setIsLoading(true);
-      }, 1200);
+      }, 1000);
     },[getHomePostList, skip, userToken])
 
     // 무한스크롤
@@ -46,18 +46,23 @@ export default function Home() {
       }
     }, [inView, isLoading]);
 
+    const posts = useMemo(() => {
+      return postData.map((item) => {
+        return <PostList key={uuidv4()} post={item} isLoading={isLoading}/>;
+      });
+    }, [postData, isLoading]);
+
   return (
     <Container>
       <Header type='home' />
+      <NavBar />
       <HomeWrap>
-        { postData && Object.keys(postData).length !== 0 ? (
+        { postData && postData.length !== 0 ? (
           <>
             <HomeContainer>
               <PostBg>
                 <ul>
-                  {postData.map((item) => {
-                    return <PostList key={uuidv4()} post={item} isLoading={isLoading}/>;
-                  })}
+                  {posts}
                 </ul>
                 <div ref={ref} />
               </PostBg>
@@ -79,7 +84,6 @@ export default function Home() {
           </>
         }
       </HomeWrap>
-      <NavBar />
     </Container>
   );
 }

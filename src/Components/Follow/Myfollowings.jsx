@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import styled from 'styled-components'
@@ -13,23 +14,21 @@ export default function Myfollowings() {
   const [followingData, setFollowingData] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(()=>{
-
-    const getFollowingData = async () => {
-      try {
-        const data = await FollowingPageAPI(accountName);
-        await setFollowingData(data);
-        setTimeout(() => {
-          setIsLoading(true);
-        }, 1200);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getFollowingData()
-    
+  const getFollowingData = useCallback( async () => {
+    try {
+      const data = await FollowingPageAPI(accountName);
+      await setFollowingData(data);
+      setTimeout(() => {
+        setIsLoading(true);
+      }, 300);
+    } catch (error) {
+      console.error(error);
+    }
   },[accountName]);
+
+  useEffect(()=>{
+    getFollowingData()
+  },[getFollowingData]);
 
   return (
     <>
@@ -44,7 +43,7 @@ export default function Myfollowings() {
   
           {followingData.map((item)=>{
             return (
-            <ul key={item._id}>
+            <ul key={uuidv4()}>
                 <li>
                   <Link to={`/profile/${item.accountname}`}>
                     <UserCont>

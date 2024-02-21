@@ -28,7 +28,7 @@ export default function ArticleUserProfile({ userProfileData }) {
                   <OrCont>
                     <UserName>{userName.slice(3)}</UserName>
                     {userName.slice(0, 3) === '[o]' ? (
-                      <UserCheck src={UserTypeCheck} alt='' />
+                      <UserCheck src={UserTypeCheck} alt='공식계정' style={{width:"1.2rem",height:"1.2rem"}}/>
                     ) : null}
                   </OrCont>
                   <AccountName>@{accountName}</AccountName>

@@ -68,7 +68,7 @@ export default function HeaderKebab() {
         <Gobackbtn />
         <HomeBtn />
         <button type='button' onClick={handleKebabClick}>
-          <MoreImg src={more} alt='더 보기' />
+          <img src={more} alt='더 보기' style={{width:"2.2rem",height:"2.2rem"}}/>
         </button>
         {showMyProfileOptions && (
           <HeaderMoreBtnModal
@@ -110,8 +110,4 @@ const HeaderContainer = styled.header`
   @media (min-width: 768px) {
     display: none;
   }
-`;
-
-const MoreImg = styled.img`
-  width: 2.2rem;
 `;

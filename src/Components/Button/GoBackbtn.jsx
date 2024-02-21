@@ -15,7 +15,7 @@ export default function Gobackbtn() {
   };
   return (
     <Link onClick={handleGoBack}>
-      <GoBackImage src={iconGoBack} alt='뒤로가기' />
+      <GoBackImage src={iconGoBack} alt='뒤로가기' style={{width:"2.2rem",height:"2.2rem"}}/>
     </Link>
   );
 }

@@ -12,7 +12,7 @@ const COLORS = {
 const FONTSIZE = {
   sm: '14px',
   md: '16px',
-  lg: '27px',
+  lg: '22px',
 };
 
 const LETTERSPACING = {
