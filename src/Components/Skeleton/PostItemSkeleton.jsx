@@ -71,7 +71,8 @@ const PostContents =styled.div`
     border-radius: 0.6rem;
   }
   .postImg{
-    width: 35.8rem;
+    overflow: hidden;
+    width: 100%;
     height: 22.8rem;
     border-radius: 1rem;
     @media (min-width: 768px) {

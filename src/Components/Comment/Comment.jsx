@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { addComment, getCommentList } from '../../API/Comment/CommnetAPI';
 import CommentItem from './CommentItem';
 import styled from 'styled-components';
@@ -34,13 +34,15 @@ export default function Comment({ postId }) {
     setComment('');
   };
 
+  const getcommentData = useCallback(async () => {
+    const getData = await getCommentList(postId);
+    setCommentList(getData.comments);
+  },[postId]);
+
+
   useEffect(() => {
-    const getcommentData = async (postId) => {
-      const getData = await getCommentList(postId);
-      setCommentList(getData.comments);
-    };
     getcommentData(postId);
-  }, [postId]);
+  }, [getcommentData]);
 
   return (
     <CommentContainer>

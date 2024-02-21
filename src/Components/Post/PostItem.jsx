@@ -117,7 +117,7 @@ const PostFooterContainer = styled.div`
 `;
 
 const CreateDate = styled.p`
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #767676;
 `;
 
@@ -125,7 +125,7 @@ const HeartBtn = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'heartcolor',
 })`
   padding-left: 2.6rem;
-  padding-right: 1.6rem;
+  margin-right: 1.6rem;
   height: 2rem;
   color: #767676;
   background: url(${(props) => props.heartcolor}) 0.2rem no-repeat;

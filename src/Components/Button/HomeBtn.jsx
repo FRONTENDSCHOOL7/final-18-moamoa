@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom';
 export default function HomeBtn() {
   return (
     <Link to='/home'>
-      <HomeButton src={MOAMOA} alt='홈으로 이동' />
+      <HomeButton src={MOAMOA} alt='홈으로 이동' style={{width:"13rem",height:"2.5rem"}}/>
     </Link>
   );
 }
 const HomeButton = styled.img`
-  width: 13rem;
   margin-top: 0.3rem;
 `;

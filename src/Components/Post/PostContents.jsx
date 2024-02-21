@@ -29,9 +29,6 @@ const ContentsBox = styled.div`
 `;
 
 const PostImg = styled.img`
-  // width: 35.8rem;
-  // height: 22.8rem;
-  // margin: 0 auto;
   aspect-ratio: 358/228;
   object-fit: cover;
   border-radius: 1rem;

@@ -36,7 +36,7 @@ export default function Home() {
       getHomePostList()
       setTimeout(() => {
         setIsLoading(true);
-      }, 500);
+      }, 1000);
     },[getHomePostList, skip, userToken])
 
     // 무한스크롤

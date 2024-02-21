@@ -9,7 +9,7 @@ export default function HomeFeed() {
   
   setTimeout(()=>{
     setIsLoading(true);
-  }, 500);
+  }, 1000);
 
   return (
     <>
