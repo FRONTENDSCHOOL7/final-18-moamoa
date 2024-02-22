@@ -66,7 +66,7 @@ export const UserIntro = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-export const NotFoundContainer = styled.div`
+export const NotFoundContainer = styled.li`
   margin-top: 40%;
   width: 100%;
   height: 100%;

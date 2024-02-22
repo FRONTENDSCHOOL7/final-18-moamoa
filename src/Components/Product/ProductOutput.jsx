@@ -21,7 +21,6 @@ export default function ProductBundle() {
 
   const handleObserver = useCallback((entries) => {
     const [target] = entries;
-    console.log(target);
     if (target.isIntersecting) {
       setNextPage((prev) => prev + 4);
     }
