@@ -57,7 +57,6 @@ export default function ChatRoomKim() {
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
       setFile(e.target.files[0]);
-      console.log(setFile(e.target.files[0]));
       setButtonActive(true);
     } else {
       setFile(null);
@@ -68,7 +67,6 @@ export default function ChatRoomKim() {
   const handleRemoveFile = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
-      console.log('test:', fileInputRef);
     }
     setFile(null);
     setButtonActive(false);
