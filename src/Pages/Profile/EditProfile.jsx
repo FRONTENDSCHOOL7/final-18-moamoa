@@ -70,7 +70,7 @@ function EditProfile() {
         setIntro(res.user['intro'] || '');
       }
     } catch (error) {
-      console.log('기존 프로필 정보를 가져올 수 없습니다.');
+      console.error('기존 프로필 정보를 가져올 수 없습니다.');
     }
   };
 

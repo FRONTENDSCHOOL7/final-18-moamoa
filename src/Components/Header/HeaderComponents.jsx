@@ -62,7 +62,6 @@ export function HeaderChatRoomFixed() {
     { id: 'darkHorse', name: '승마체험 곽사장' },
     { id: 'sumiDad', name: '텃밭체험 수미아빠' },
   ];
-  console.log(addressUserName);
   for (const user of users) {
     if (user.id === addressUserName) {
       userName = user.name;
