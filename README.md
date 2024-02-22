@@ -169,376 +169,6 @@ PW: 123123
 
 ## 6. 핵심 코드
 
-### 회원 가입 시 회원 유형 구분
-
-- 서비스 특성에 따라 회원 가입 시 회원 유형(일반 회원 / 기업 및 기관) 선택이 가능합니다.
-- 사용자가 선택한 버튼에 따라 변수 userType에 individual 혹은 organization이 저장됩니다.
-
-```jsx
-const [userType, setUserType] = useState('');
-
-const handleUserType = (e) => {
-    const { name } = e.target;
-    setUserType(name);
-  };
-  
-return 
-	<h3>회원분류선택</h3>
-  <SelectUserBtnContainer>
-    <SelectUserBtn
-      type='button'
-      name='individual'
-      onClick={handleUserType}
-    >
-      일반 회원
-    </SelectUserBtn>
-    <SelectUserBtn
-      type='button'
-      name='organization'
-      onClick={handleUserType}
-    >
-      기업 및 기관
-    </SelectUserBtn>
-  </SelectUserBtnContainer>
-```
-
-- 회원가입 POST 요청 시 props로 받은 userType이 ‘individual’이라면 사용자 명 앞에 구분자 [i], 기관이라면 사용자 명 앞에 구분자 [o]를 붙여 회원 분류 처리가 가능하도록 서버에 저장했습니다.
-
-```jsx
-const JoinAPI = async (userInfo, userType) => {
-  const reqUrl = 'https://api.mandarin.weniv.co.kr/user';
-
-  try {
-    const response = await fetch(`${reqUrl}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...userInfo,
-        user: {
-          ...userInfo.user,
-          username:
-            userType === 'individual'
-              ? `[i]${userInfo.user.username}`
-              : `[o]${userInfo.user.username}`,
-        },
-      }),
-    });
-    const result = await response.json();
-    console.log(result);
-    return result;
-  } catch (error) {
-    if (error.response) {
-      const { status, data } = error.response;
-      if (status === 422 || status === 404) {
-        console.log(data.message);
-      }
-    }
-  }
-};
-```
-
-### 회원 유형에 따른 프로필 페이지 구성
-
-- 회원 가입 시에 선택한 회원 유형(type)은 부모코드에서 사용자의 데이터를 받아 프로필 페이지를 구성하는 컴포넌트의 프롭스로 전달했습니다.
-- 여기서 컴포넌트에게 프롭스로 전달할 사용자 정보를 담은 object는 userInfoDate이며 ProfileDetail 컴포넌트에게 그 값을 전달합니다.
-- userType은 'organization’과 'Individual'로 구분됩니다.
-
-```jsx
-// YourProfile.jsx, MyProfile.jsx
-
-const userInfoData = {
-    profileImg,
-    profileUsername,
-    profileAccountname,
-    profileIntro,
-    profileFollowerCount,
-    profileFollowingCount,
-    userType, // 회원 유형 : 'organization' | 'Individual'
-    isFollow,
-  };
-
-return (
-	<Container>
-			{/* ... */}
-          <section>
-            <ProfileDetail userInfoData={userInfoData} token={token} />
-            <Btns>
-              {/* ... */}
-              {/* 일반 계정일 경우 행사 등록 버튼 제거 */}
-              {userType === 'organization' ? (
-                <button
-                  type='button'
-                  onClick={() => {
-                    navigate('/product');
-                  }}
-                >
-                  행사 등록
-                </button>
-              ) : null}
-            </Btns>
-          </section>
-        {/* ... */}
-        {/* 일반 계정일 경우 행사 리스트 UI 제거 */}
-        {userType === 'organization' ? <ProfileDetailProduct /> : null}
-      {/* ... */}
-  </Container>
-)
-```
-
-- ProfileDetail 컴포넌트에서는 프롭스 정보를 사용해 조건부 렌더링으로 프로필 페이지를 구성했습니다.
-- 프롭스 정보에서 profileUsername에 구분자 [i]나 [o]가 있다면 그 값을 지우며, 만약 userType이 organization이라면 화면에 출력되는 username 뒷쪽에 공식 인증 마크를 추가합니다.
-
-```jsx
-// ProfileDetail.jsx
-
-export default function ProfileDetail({ userInfoData, token }) {
-
-  return (
-    <ProfileDetailBox>
-        {/* ... */}
-        <ProfileInfo>
-          <div>
-            {/* 행사 리스트 출력  */}
-            <p>
-              {userInfoData.userType === 'organization'
-                ? userInfoData.profileUsername.replace('[o]', '')
-                : userInfoData.profileUsername.replace('[i]', '')}
-              {userInfoData.userType === 'organization' ? <img src={UserTypeCheck} alt='' /> : ''}
-            </p>
-            {/* ... */}
-        </ProfileInfo>
-
-        <CountWrap>
-	{/* 회원 유형에 따른 게시글 수 차이*/}
-          {userInfoData.profileAccountname &&
-            userInfoData.profileImg &&
-            userInfoData.profileUsername && (
-              <PostCnt
-                src={userInfoData.profileAccountname}
-                token={token}
-                userType={userInfoData.userType}
-              />
-            )}
-          {/* ... */}
-        </CountWrap>
-      {/* ... */}
-    </ProfileDetailBox>
-  );
-}
-```
-
-- 그리고 회원 유형에 따른 게시글 수의 차이를 주었습니다.
-- 먼저 유저별 게시글 목록을 가져오는 API와 상품 리스트 정보를 가져오는 API를 이용하여 각각의 길이를 계산하였습니다. 그리고 그들의 합은 게시글 수의 값이 됩니다.
-- 이때, 판매자 계정이 아닐경우 상품 리스트 정보, 즉 행사 길이를 0으로 지정하였습니다.
-
-```jsx
-// 게시글 수
-function PostCnt({ src, token, userType }) {
-  const [postCount, setPostCount] = useState(0);
-  const [productCount, setProductCount] = useState(0);
-	
-  // 유저별 게시글 목록을 가져오는 API를 이용하여 게시글 수 계산...
-
-  // 상품 리스트 정보를 가져오는 API를 이용하여 행사 수 계산
-  const fetchProductCount = async () => {
-    const res = await fetch(`https://api.mandarin.weniv.co.kr/product/${src}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    const json = await res.json();
-    setProductCount(json.product.length);
-    //판매자 계정이 아닐경우 행사 길이가 0
-    userType === 'organization' ? setProductCount(json.product.length) : setProductCount(0);
-  };
-
-  // ...
-
-  return (
-    <PostCountWrap>
-      <p>{postCount + productCount}</p>
-      <p>게시글 수</p>
-    </PostCountWrap>
-  );
-}
-```
-
-### 행사 등록 시 행사 유형 구분 & API 요청 시 가격을 기간으로 변경 사용
-
-#### 1. 행사 등록 시 행사 유형 구분
-- 기업 및 기관은 행사 등록 시 행사 유형 (축제/체험) 선택이 가능합니다.
-- 기업 및 기관이 선택한 버튼에 따라 변수 eventType에 festival 혹은 experience가 저장됩니다.
-
-```jsx
-const [eventType, setEventType] = useState('');
-
-return <SelectedButton
-                id='category'
-                type='button'
-                onClick={() => setEventType('festival')}
-                selected={eventType === 'festival'}
-              >
-                축제
-              </SelectedButton>
-              <SelectedButton
-                id='category'
-                type='button'
-                onClick={() => setEventType('experience')}
-                selected={eventType === 'experience'}
-              >
-                체험
-              </SelectedButton>
-```
-
-- 상품 등록 POST 요청 시 props로 받은 eventType이 ‘festival’이라면 상품명 앞에 구분자 [f], 체험이라면 상품명 앞에 구분자 [e]를 붙여 행사 분류 처리가 가능하도록 서버에 저장했습니다.
-
-```jsx
-const ProductUploadAPI = (inputValue) => {
-  const reqURL = 'https://api.mandarin.weniv.co.kr/product';
-  const token = useRecoilValue(userTokenAtom);
-  const { eventName, eventPeriod, eventDetail, imgSrc, eventType } = inputValue;
-
-  const uploadProduct = async () => {
-    try {
-      await axios({
-        method: 'post',
-        url: reqURL,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
-          product: {
-            itemName: eventType === 'festival' ? `[f]${eventName}` : `[e]${eventName}`,
-            price: eventPeriod,
-            link: eventDetail,
-            itemImage: imgSrc,
-          },
-        },
-      }).then((res) => {
-        console.log(res.data);
-      });
-    } catch (error) {
-      if (error.response) {
-        const { status, data } = error.response;
-        if (status === 422 || status === 404) {
-          console.log(data.message);
-        }
-      }
-    }
-  };
-  return uploadProduct;
-};
-```
-
-#### 2. API 요청 시 가격을 기간으로 변경 사용
-- 상품 등록 api 요청 시 “price”를 “행사 진행 기간”으로 사용하기 위해 2개의 string 값들을 1개의 number 값으로 변환하는 작업을 해주었습니다.
-
-```jsx
-상품등록 Req
-{
-		"product":{
-				"itemName": String,
-				"price": Number,//1원 이상
-				"link": String,
-				"itemImage": String
-		}
-}
-```
-
-- 2개의 Input (type=’date’)에서 사용자가 행사 시작일와 행사 종료일을 선택하면 변수 eventStartDate, eventEndDate에 각각 string 타입의 날짜가 저장됩니다. (ex. “2023-11-08”, “2023-11-09”)
-
-```jsx
-<PeriodInput
-	type='date' id='event-period' 
-	onChange={(e) => setEventStartDate(e.target.value)} value={eventStartDate}
-  pattern='yyyy-MM-dd' max='9999-12-31'>
-</PeriodInput>
-<PeriodInput 
-	type='date' id='event-period'
-  onChange={(e) => setEventEndDate(e.target.value)} value={eventEndDate}
-  pattern='yyyy-MM-dd' max='9999-12-31'>
-</PeriodInput>
-```
-
-- 함수 checkTwoDates를 사용하여 행사 시작일이 행사 종료일보다 늦지 않은지 체크합니다. 만약 시작일이 종료일보다 더 늦다면 안내 메세지를 출력합니다.
-
-```jsx
-const checkTwoDates = () => {
-    if (eventStartDate && eventEndDate && eventStartDate > eventEndDate) {
-      setPeriodInfoMsg('행사 시작 날짜와 행사 종료 날짜를 다시 확인해주세요.');
-    } else {
-      setPeriodInfoMsg('');
-    }
-  };
-```
-
-- 행사 등록 폼 제출은 HeaderButton을 클릭하여 가능합니다. 시작일이 종료일보다 늦다면 버튼은 활성화 되지 않습니다.
-
-```jsx
-<HeaderButton onClick={submitProduct}
-            disabled={
-              !imgSrc || eventName.length < 2 || !eventStartDate || !eventEndDate ||
-              !eventDetail || !eventType || eventStartDate > eventEndDate
-            }> 저장
-</HeaderButton>
-```
-
-- 함수 twoDatesIntoOneString을 사용하여 2개의 string 타입 날짜들을 1개의 number 타입 날짜로 변환 시켰습니다. 사용자가 시작 날짜 또는 종료 날짜를 선택하면 datesArr 배열에 담습니다. 그 후 map, parseInt, replaceAll을 사용하여 2개의 날짜에서 ‘-’를 빼고 숫자로 변환합니다. 마지막으로 join을 사용하여 2개의 날짜를 합쳐서 변수 eventPeriod에 담아 상품 등록 api 요청을 보냅니다. ex. 2023110820231109
-
-```jsx
- const twoDatesIntoOneString = () => {
-    const datesArr = [];
-    if (eventStartDate) {
-      datesArr.push(eventStartDate);
-    }
-    if (eventEndDate) {
-      datesArr.push(eventEndDate);
-    }
-
-    const putDatesIntoArray = datesArr.map((date) => parseInt(date.replaceAll('-', '')));
-    // .sort((firstDate, lastDate) => firstDate - lastDate);
-    setEventPeriod(parseInt(putDatesIntoArray.join('')));
-  };
-```
-
-### 행사 리스트 렌더링
-
-상품 등록에서 구분한 축제와 체험을 filter를 이용하여 구분했습니다.
-
-```jsx
-.filter((item) => return item.itemName.includes('[f]'));
-```
-
-상품의 price에는 input type:date 두 개로 받아온 긴 숫자(ex. 2023070120231110)에서 문자열로 바꾸고 slice를 이용하였고 사이에 `.`과  `~` 를 추가하여 행사기간:년도.월.일~년도.월.일 방식으로 만들었습니다.
-
-```jsx
-<p className='itemDate'>
-{'행사기간: ' +
-`${item.price.toString().slice(2, 4)}.${item.price
-.toString()
-.slice(4, 6)}.${item.price.toString().slice(6, 8)}~${item.price
-.toString()
-.slice(10, 12)}.${item.price.toString().slice(12, 14)}.${item.price
-.toString()
-.slice(14, 16)}`}
-</p>
-```
-
-그리고 다른 조와 함께 서버를 사용하여 저희 축제 목록에 다른 조의 상품이 겹치는 것을 방지하기 위해 price의 긴 자리 수의 특수성을 이용하여 price.length를 이용해  모아모아 조가 올린 행사만 담도록 하였습니다.
-
-```jsx
-.filter((item) => {
-                    if (item.price.toString().length >= 16) {
-                      return true;
-                    }
-                    return false;
-                  }
-```
-
 
 
 <br />
@@ -665,67 +295,62 @@ const checkTwoDates = () => {
 <details>
 <summary>📁 MOAMOA</summary>
 <div markdown="1">
+
+    📦src
+	 ┣ 📂API
+	 ┃ ┣ 📂Auth
+	 ┃ ┣ 📂Comment
+	 ┃ ┣ 📂Follow
+	 ┃ ┣ 📂Image
+	 ┃ ┣ 📂Post
+	 ┃ ┣ 📂Product
+	 ┃ ┣ 📂Profile
+	 ┃ ┗ 📂Search
+	 ┣ 📂Assets
+	 ┃ ┣ 📂icons
+	 ┃ ┗ 📂images
+	 ┣ 📂Components
+	 ┃ ┣ 📂Button
+	 ┃ ┣ 📂Chat
+	 ┃ ┣ 📂Comment
+	 ┃ ┣ 📂Common
+	 ┃ ┣ 📂Follow
+	 ┃ ┣ 📂Header
+	 ┃ ┣ 📂Modal
+	 ┃ ┣ 📂Post
+	 ┃ ┣ 📂Product
+	 ┃ ┣ 📂Profile
+	 ┃ ┣ 📂Search
+	 ┃ ┣ 📂Skeleton
+	 ┃ ┗ 📂Splash
+	 ┣ 📂Hooks
+	 ┃ ┣ 📂Auth
+	 ┃ ┣ 📂Common
+	 ┃ ┣ 📂Product
+	 ┃ ┗ 📂Search
+	 ┣ 📂Pages
+	 ┃ ┣ 📂Auth
+	 ┃ ┣ 📂Chat
+	 ┃ ┣ 📂Follow
+	 ┃ ┣ 📂Home
+	 ┃ ┣ 📂Post
+	 ┃ ┣ 📂Product
+	 ┃ ┣ 📂Profile
+	 ┃ ┣ 📂Search
+	 ┃ ┗ 📂Splash
+	 ┣ 📂Recoil
+	 ┣ 📂Router
+	 ┗ 📂Utils
+  	 ┣ 📜App.css
+	 ┣ 📜App.js
+	 ┣ 📜GlobalStyle.jsx
+	 ┣ 📜fonts.css
+	 ┣ 📜index.css
+	 ┣ 📜index.js
+	 ┗ 📜md.md
+
  
-    📦
-    ├─ .DS_Store
-    ├─ .github
-    │  ├─ ISSUE_TEMPLATE
-    │  │  └─ 이슈-생성-템플릿.md
-    │  └─ pull_request_template.md
-    └─ moamoa
-       ├─ .env
-       ├─ .eslintrc.js
-       ├─ .eslintrc.json
-       ├─ .gitignore
-       ├─ .prettierrc
-       ├─ README.md
-       ├─ package-lock.json
-       ├─ package.json
-       ├─ public
-       │  ├─ favicon.ico
-       │  └─ index.html
-       └─ src
-          ├─ API
-          │  ├─ Auth
-          │  ├─ Comment
-          │  ├─ Follow
-          │  ├─ Img
-          │  ├─ Post
-          │  ├─ Product
-          │  ├─ Profile
-          │  ├─ Search
-          │  └─ Valid
-          ├─ App.css
-          ├─ App.js
-          ├─ Assets
-          │  ├─ icons
-          │  └─ images
-          ├─ Components
-          │  ├─ Comment
-          │  ├─ Common
-          │  ├─ Home
-          │  ├─ Modal
-          │  └─ Post
-          ├─ GlobalStyle.jsx
-          ├─ Hooks
-          │  ├─ Search
-          │  └─ Sign  
-          ├─ Pages
-          │  ├─ Chat
-          │  ├─ Follow
-          │  ├─ Home
-          │  ├─ NotFound.jsx
-          │  ├─ Post
-          │  ├─ Product
-          │  ├─ Profile
-          │  ├─ Search
-          │  ├─ Sign
-          │  └─ Splash
-          ├─ Recoil
-          ├─ Router
-          ├─ fonts.css
-          ├─ index.css
-          └─ index.js
+
     
 </div>
 </details>
@@ -733,20 +358,29 @@ const checkTwoDates = () => {
 <br/>
 
 ## 10. 프로젝트 참여소감
-
-### 송재웅
+<details>
+<summary><h3>송재웅</h3></summary>
+<div markdown="1">
 이 프로젝트를 진행하면서 많은 지식과 경험을 얻었습니다. 이 기능을 구현하기 위해 필요한 것을 배우는 것뿐만 아니라, 문제에 직면했을 때 문제 해결과 고민하는 시간도 많이 보냈습니다. 기능을 올바르게 작동시키기까지의 과정은 상당한 시간이 걸렸고, 이 과정을 통해 개인적으로 크게 성장하게 되었습니다. 프로젝트가 진행됨에 따라 처음에 있던 어려움과 얼마나 나아졌는지를 되돌아보지 않을 수 없었습니다. 결과적으로 프로젝트의 성공에 기여한 것에 대한 큰 만족감을 느꼈습니다. 이러한 협업 경험은 제게 큰 가치가 있었습니다. 이 프로젝트에서 얻은 교훈과 경험을 미래에도 소중히 여기겠습니다. 성공적인 프로젝트를 위해 열심히 노력한 조원들에게 감사합니다.
-    
-
-### 유의진
+</div>
+</details>
+<details>
+<summary><h3>유의진</h3></summary>
+<div markdown="1">
 프로젝트도 처음 해보고 팀장도 처음 맡아봐서 부족한 점도 힘든 점도 많았지만 그만큼 배우고 성장할 수 있는 시간이었다고 생각합니다. 
 이번 프로젝트 경험을 통해 코드가 제 생각처럼 작동하지 않더라도 문제의 원인을 끝까지 찾다보면 결국 해결할 수 있다는 점을 배웠습니다.
 제가 막히는 순간이 올때마다 항상 친절하게 도움주셨던 멘토님과 강사님들께 너무 감사드립니다. 그리고 밤낮 가리지 않고 불타는 열정을 보여주셨던 저희 낭랑 18조 팀원분들께도 너무 감사하다는 말씀을 드리고 싶습니다. 여러분들과 함께해서 프로젝트를 잘 마무리했다고 생각합니다. 한 달동안 모두 너무 고생많으셨습니다!!
-
-
-### 이해지
+</div>
+</details>
+<details>
+<summary><h3>이해지</h3></summary>
+<div markdown="1">
 이 프로젝트 참여는 저에게 협업의 중요성을 깨닫게 해주는 값진 경험이었습니다. 주어진 API를 사용하는 과제는 처음에는 제 능력을 시험하는 도전으로 다가왔고, 때로는 실력의 한계를 느끼며 어려움을 겪기도 했습니다. 하지만, 훌륭한 팀원들과의 만남은 이 프로젝트를 진행하는 데 있어 큰 힘이 되었습니다. 서로의 약점을 보완하고, 격려를 주고받으며 함께 성장해 나가는 과정 속에서 최종적으로 좋은 결과물을 만들어낼 수 있었습니다. 프로젝트를 진행하는 내내 너무나 즐거웠고, 함께해주신 조원분들께 깊이 감사드립니다. 앞으로 남은 리팩토링 작업도 무척이나 기대하고 있습니다. 계속해서 잘 부탁드리겠습니다!!
-    
-
-### 장수연
+</div>
+</details> 
+<details>
+<summary><h3>장수연</h3></summary>
+<div markdown="1">
 이번 프로젝트를 통해 프로그래밍에서 오류를 해결하는 과정이 얼마나 중요한지를 배울 수 있었습니다. 문제를 찾아내고 해결해나가는 과정에서 많이 성장했다고 느낍니다. 또, 평소에 컴포넌트화를 어떻게 해야하는지에 대한 대한 의문점이 많았는데, 프로젝트를 진행하며 코드의 가독성을 높이고 유지보수를 용이하게 하는 컴포넌트화의 중요성을 체감했고, 컴포넌트화 하는 방법에 대해 공부할 수 있었습니다. 좋은 팀원분들을 만나  서로의 부족한 점을 채우며 즐겁게 프로젝트를 마무리 할 수 있었습니다. 감사합니다! 낭랑 18조👶💛
+</div>
+</details>
