@@ -21,29 +21,27 @@ export default function FollowUser(props) {
     navigate(`/profile/${accountname}`);
   };
   return (
-    <div>
-      <FollowWrap>
-        <UserPhotoWrap>
-          <UserPhoto
-            src={props.src}
-            alt='Follower'
-            onClick={() => handleUser(props.accountname)}
-          ></UserPhoto>
-        </UserPhotoWrap>
-        <UserInfo onClick={() => handleUser(props.accountname)}>
-          <UserId>{props.userId}</UserId>
-          <UserText>{props.userText}</UserText>
-        </UserInfo>
-        <Button
-          width='56'
-          isFollowed={isFollowed}
-          buttonText={isFollowed ? '취소' : '팔로우'}
-          backgroundColor={isFollowed ? '#fff' : 'var(--buttonActive)'}
-          color={isFollowed ? '#767676' : '#fff'}
-          bordered={isFollowed}
-          onClickHandler={handleButtonClick}
-        ></Button>
-      </FollowWrap>
-    </div>
+    <FollowWrap>
+      <UserPhotoWrap>
+        <UserPhoto
+          src={props.src}
+          alt='Follower'
+          onClick={() => handleUser(props.accountname)}
+        ></UserPhoto>
+      </UserPhotoWrap>
+      <UserInfo onClick={() => handleUser(props.accountname)}>
+        <UserId>{props.userId}</UserId>
+        <UserText>{props.userText}</UserText>
+      </UserInfo>
+      <Button
+        width='56'
+        isFollowed={isFollowed}
+        buttonText={isFollowed ? '취소' : '팔로우'}
+        backgroundColor={isFollowed ? '#fff' : 'var(--buttonActive)'}
+        color={isFollowed ? '#767676' : '#fff'}
+        bordered={isFollowed}
+        onClickHandler={handleButtonClick}
+      ></Button>
+    </FollowWrap>
   );
 }

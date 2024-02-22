@@ -25,8 +25,6 @@ export const SearchListWrap = styled.div`
   }
 `;
 export const SearchList = styled.ul`
-  // height: 100%;
-  // width: 100%;
   margin-top: 0px;
   padding: 16px;
   padding-top: 64px;

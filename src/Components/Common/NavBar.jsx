@@ -134,8 +134,8 @@ export default function NavBar() {
     <>
       <TabMenu>
         <Link to='/home'>
-          <TabletLogo src={tabletLogoButton} />
-          <DesktopLogo src={desktopLogoButton} />
+          <TabletLogo src={tabletLogoButton} alt='로고' />
+          <DesktopLogo src={desktopLogoButton} alt='로고' />
         </Link>
         {tabs.map((tab) => (
           <TabButton
@@ -153,7 +153,7 @@ export default function NavBar() {
         ))}
 
         <TabletLogOut onClick={handleKebabClick}>
-          <img src={logoutButton} className='logoutImg' alt='로그아웃' />
+          <img src={logoutButton} className='logoutImg' alt='' />
           <TabLabel className='logoutText'>로그아웃</TabLabel>
         </TabletLogOut>
       </TabMenu>

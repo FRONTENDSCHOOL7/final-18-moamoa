@@ -31,7 +31,7 @@ export const TabMenu = styled.nav`
     align-items: center;
   }
 `;
-export const TabButton = styled.a.withConfig({
+export const TabButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== 'active' && prop !== 'hideOnMobile',
 })`
   box-sizing: border-box;

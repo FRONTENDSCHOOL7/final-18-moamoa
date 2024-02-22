@@ -25,25 +25,23 @@ export default function FollowingList() {
   }, [accountname, setfollowing]);
 
   return (
-    <div>
-      <Container>
-        <Header type='follow' />
-        <FollowingWrap>
-          {following.map((item, index) => {
-            const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
-            return (
-              <FollowingUser
-                key={index}
-                src={item.image}
-                userId={cleanedUserId}
-                userText={item.intro}
-                accountname={item.accountname}
-              />
-            );
-          })}
-        </FollowingWrap>
-        <NavBar></NavBar>
-      </Container>
-    </div>
+    <Container>
+      <Header type='follow' />
+      <FollowingWrap>
+        {following.map((item, index) => {
+          const cleanedUserId = item.username.replace(/\[i\]|\[o\]/g, '');
+          return (
+            <FollowingUser
+              key={index}
+              src={item.image}
+              userId={cleanedUserId}
+              userText={item.intro}
+              accountname={item.accountname}
+            />
+          );
+        })}
+      </FollowingWrap>
+      <NavBar></NavBar>
+    </Container>
   );
 }

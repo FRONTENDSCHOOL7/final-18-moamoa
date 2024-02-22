@@ -23,7 +23,7 @@ import Myfollowings from '../../Components/Follow/Myfollowings';
 
 export default function ChatList() {
   return (
-    <div>
+    <>
       <Container>
         <Header type='moreKebab' />
         <ChatListWrap>
@@ -70,14 +70,14 @@ export default function ChatList() {
               <ChatDate>2020.10.25</ChatDate>
             </ChatDateBox>
           </SearchWrap>
-
-          <NavBar></NavBar>
-          <RecommendPlaceContainer>
-            <RecommendPlace />
-            <Myfollowings />
-          </RecommendPlaceContainer>
         </ChatListWrap>
+
+        <NavBar></NavBar>
+        <RecommendPlaceContainer>
+          <RecommendPlace />
+          <Myfollowings />
+        </RecommendPlaceContainer>
       </Container>
-    </div>
+    </>
   );
 }
