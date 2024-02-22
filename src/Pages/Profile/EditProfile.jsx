@@ -20,6 +20,7 @@ import uploadFile from '../../Assets/images/upload-file.png';
 import { HeaderContainer } from '../Post/UploadEditPostStyle';
 
 import { getMyProfileData, editProfileData } from '../../API/Profile/ProfileAPI';
+import userTokenAtom from '../../Recoil/userTokenAtom';
 
 import { useImage } from '../../Hooks/Common/useImage';
 import ImageCropModal from '../../Components/Modal/ImageCropModal';
@@ -27,6 +28,7 @@ import NavBar from '../../Components/Common/NavBar';
 
 import { ProfileWrap } from './ProfileStyle';
 import { ProfileImg, EditProfileBox, TextInput, TextLabel, EorrorMsg } from './EditProfileStyle';
+import { useRecoilValue } from 'recoil';
 
 function EditProfile() {
   //기존 사용자의 정보를 가져오기
@@ -35,6 +37,7 @@ function EditProfile() {
   const [username, setUsername] = useState('');
   const [accountname, setAccountname] = useState('');
   const [intro, setIntro] = useState('');
+  const token = useRecoilValue(userTokenAtom);
 
   const { imgData, setImgData, showImgModal, onSelectFile, onCancel, setCroppedImageFor } =
     useImage(null);
@@ -50,7 +53,7 @@ function EditProfile() {
   // 내 정보 API
   const getInitInfo = async () => {
     try {
-      const res = await getMyProfileData();
+      const res = await getMyProfileData(token);
 
       if (res && res.user) {
         setImgData((prevImage) => ({
