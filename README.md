@@ -178,15 +178,93 @@ PW: 123123
 
 ## 6. 🎯 트러블슈팅
 
-### 문제
-- 원인 <br/>
+### 이미지의 종횡비에 따라 등록이 되지 않는 오류 <br/> 
+```js
+const resizeImage = async (url, maxWidth, maxHeight) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
 
-- 해결 <br/>
+        let newWidth, newHeight;
 
-- 개선사항 <br/>
+        if (img.width > maxWidth || img.height > maxHeight) {
+          const aspectRatio = img.width / img.height;
+
+          if (aspectRatio > 1) {
+            newWidth = maxWidth;
+            newHeight = newWidth / aspectRatio;
+          } else {
+            newHeight = maxHeight;
+            newWidth = newHeight * aspectRatio;
+          }
+        } else {
+          newWidth = img.width;
+          newHeight = img.height;
+        }
+
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        resolve(canvas.toDataURL('image/jpeg'));
+      };
+
+      img.src = url;
+    });
+  };
+const resizedImageUrl = await resizeImage(reader.result, 700, 500);
+```
+- useImage.jsx에서 resizeImage 함수를 작성하여 해결했습니다. resizeImage 함수는 사용자가 이미지를 등록할 때 width가 700px , height가 500ox보다 큰 이미지는 캔버스를 이용해 리사이징을 하는 코드입니다.  <br/>
+
+- resizeImage 함수를 작성하여 비율이 맞지않아 등록이 되지않는 문제를 해결하였고,리사이징이 되어 이미지의 용량도 압축되는 결과를 얻었습니다.
+
+| 개선 전 | 개선 후 |
+|---------|---------|
+| ![image](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/88381607/2bfdc404-0c61-44c2-8200-09378c058938) | ![image](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/88381607/62efb06d-6530-4979-8637-6e7b3f4b00bc) |
+
+<br/>
+
+### 축제&체험 리스트 페이지의 성능 개선을 위한 무한스크롤 구현
+
+- 초기에 이미지를 불러올 때의 시간을 줄여 성능을 개선하려 시도하였습니다.
+```js
+const [nextPage, setNextPage] = useState(4);
+
+  const handleObserver = useCallback((entries) => {
+    const [target] = entries;
+    console.log(target);
+    if (target.isIntersecting) {
+      setNextPage((prev) => prev + 4);
+    }
+  });
+  const observerElem = useRef(null);
+  useEffect(() => {
+    let options = {
+      root: null,
+      rootMargin: '10px',
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver(handleObserver, options);
+    const element = observerElem.current;
+
+    if (element) observer.observe(element);
+    return () => {
+      if (element) observer.unobserve(element);
+    };
+  }, [handleObserver]);
+```
+-intersection Observer API를 사용하여 화면에 제일 하단에 관찰할 요소를 넣어 감지되면 4개씩 행사를 불러오게 만들었습니다.
+| 개선 전 | 개선 후 |
+|---------|---------|
+| ![image](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/88381607/ca21dfbe-7312-4ef5-bf3d-418b2a187821) | ![image](https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/88381607/a5dff719-12a2-456d-bc06-13b5e85d7aae) |
 
 
 
+
+-lighthouse 성능 측정을 하였고, 12점 향상시켰습니다.
 <br />
 
 ## 7. 협업 방법
