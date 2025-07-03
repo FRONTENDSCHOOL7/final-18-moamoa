@@ -24,69 +24,6 @@ PW: 123123
 
 <br/>
 
-## 2. 낭랑 18조 👶
-
-### 1) 팀원 소개
-|**송재웅**|**유의진**|**이해지**|**장수연**|
-| :------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c1f2d0a1-47f5-46a6-8926-4fed264513f6"> | <img width="180" height="210" alt="jiwon" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/b2a28339-ef5d-4a55-a3e9-c5d0ae74deb2"> | <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/c4cd07b4-d205-4ee3-85fc-c4b266b2eb1c">|  <img width="180" height="210" alt="jyp" src="https://github.com/FRONTENDSCHOOL7/final-18-moamoa/assets/135303974/f3f52131-b81d-4b74-90ed-f9559ff84dc5">|
-| [ GitHub ](https://github.com/AYFG) | [ GitHub ](https://github.com/timetam24) | [ GitHub ](https://github.com/LeeeeHaeji) | [ GitHub ](https://github.com/Sooooyeon)| 
-|<img  src="https://img.shields.io/badge/Communication leader-FE5F50?style=for-the-badge&logo=leader&logoColor=#FE5F50">|<img  src="https://img.shields.io/badge/Project leader-40AEF0?style=for-the-badge&logo=leader&logoColor=#40AEF0">|<img  src="https://img.shields.io/badge/QA leader-83B81A?style=for-the-badge&logo=leader&logoColor=#83B81A">|<img  src="https://img.shields.io/badge/Development leader-EF2D5E?style=for-the-badge&logo=leader&logoColor=#EF2D5E">|
-
-
-
-<br />
-
-### 2) 팀 목표
-
-- 프로젝트 완성 🚀
-- 배운 기술들을 최대한 활용해보기
-- 우리가 쓰는 기술의 명확한 사용 이유를 알기
-- React 고수 되기 **🤓**
-
-<br/>
-
-### 3) 개인 목표
-
-<table>
-<tr>
- <td align="center">유의진</td>
- <td>
-1. 요구 사항 대로 작동하는 코드 작성하기 <br/>
- 2. react와 친해지기 <br/>
- 3. 웹 접근성 고려하여 사용자 위주 UI & UX 제작하기
-
- </td>
-</tr>
-<tr>
- <td align="center">이해지</td>
- <td>
-   1. react에 익숙해지기 <br/>
- 2. 협업 경험과 스킬 쌓기 <br/>
- 3. 반응형 웹 사이트를 제작하여 포트폴리오에 추가하기
-  </td>
-</tr>
-<tr>
- <td align="center">송재웅</td>
- <td>
-1. 필수 기능을 구현 후 기한 안에 배포 <br/>
-2. 배포 후 리팩토링도 진행하여 더 좋은 방향을 고민하고 배우기 <br/>
- 3. 프로젝트 끝까지 즐겁게 진행하기
- </td>
-</tr>
-<tr>
- <td align="center">장수연</td>
- <td>
- 1. 깃을 사용한 협업 경험 <br/>
- 2. 소프트스킬 능력 향상 <br/>
- 3. 코드의 재사용성을 높이는 컴포넌트화
- </td>
-</tr>
-</table>
-
-
-<br />
-
 ## 3. 기술 스택
 
  <img  src="https://img.shields.io/badge/react-2D333B?style=for-the-badge&logo=react&logoColor=61DAFB"> <img  src="https://img.shields.io/badge/Recoil-2D333B?style=for-the-badge&logo=react&logoColor=3578E5"> <img  src="https://img.shields.io/badge/Styled component-2D333B?style=for-the-badge&logo=styledcomponents&logoColor=#DB7093"> <img  src="https://img.shields.io/badge/prettier-2D333B?style=for-the-badge&logo=prettier&logoColor=#F7B93E">
@@ -451,31 +388,3 @@ const [nextPage, setNextPage] = useState(4);
 </details>
 
 <br/>
-
-## 10. 프로젝트 참여소감
-<details>
-<summary><h3>송재웅</h3></summary>
-<div markdown="1">
-이 프로젝트를 진행하면서 많은 지식과 경험을 얻었습니다. 이 기능을 구현하기 위해 필요한 것을 배우는 것뿐만 아니라, 문제에 직면했을 때 문제 해결과 고민하는 시간도 많이 보냈습니다. 기능을 올바르게 작동시키기까지의 과정은 상당한 시간이 걸렸고, 이 과정을 통해 개인적으로 크게 성장하게 되었습니다. 프로젝트가 진행됨에 따라 처음에 있던 어려움과 얼마나 나아졌는지를 되돌아보지 않을 수 없었습니다. 결과적으로 프로젝트의 성공에 기여한 것에 대한 큰 만족감을 느꼈습니다. 이러한 협업 경험은 제게 큰 가치가 있었습니다. 이 프로젝트에서 얻은 교훈과 경험을 미래에도 소중히 여기겠습니다. 성공적인 프로젝트를 위해 열심히 노력한 조원들에게 감사합니다.
-</div>
-</details>
-<details>
-<summary><h3>유의진</h3></summary>
-<div markdown="1">
-프로젝트도 처음 해보고 팀장도 처음 맡아봐서 부족한 점도 힘든 점도 많았지만 그만큼 배우고 성장할 수 있는 시간이었다고 생각합니다. 
-이번 프로젝트 경험을 통해 코드가 제 생각처럼 작동하지 않더라도 문제의 원인을 끝까지 찾다보면 결국 해결할 수 있다는 점을 배웠습니다.
-제가 막히는 순간이 올때마다 항상 친절하게 도움주셨던 멘토님과 강사님들께 너무 감사드립니다. 그리고 밤낮 가리지 않고 불타는 열정을 보여주셨던 저희 낭랑 18조 팀원분들께도 너무 감사하다는 말씀을 드리고 싶습니다. 여러분들과 함께해서 프로젝트를 잘 마무리했다고 생각합니다. 한 달동안 모두 너무 고생많으셨습니다!!
-</div>
-</details>
-<details>
-<summary><h3>이해지</h3></summary>
-<div markdown="1">
-이 프로젝트 참여는 저에게 협업의 중요성을 깨닫게 해주는 값진 경험이었습니다. 주어진 API를 사용하는 과제는 처음에는 제 능력을 시험하는 도전으로 다가왔고, 때로는 실력의 한계를 느끼며 어려움을 겪기도 했습니다. 하지만, 훌륭한 팀원들과의 만남은 이 프로젝트를 진행하는 데 있어 큰 힘이 되었습니다. 서로의 약점을 보완하고, 격려를 주고받으며 함께 성장해 나가는 과정 속에서 최종적으로 좋은 결과물을 만들어낼 수 있었습니다. 프로젝트를 진행하는 내내 너무나 즐거웠고, 함께해주신 조원분들께 깊이 감사드립니다. 앞으로 남은 리팩토링 작업도 무척이나 기대하고 있습니다. 계속해서 잘 부탁드리겠습니다!!
-</div>
-</details> 
-<details>
-<summary><h3>장수연</h3></summary>
-<div markdown="1">
-이번 프로젝트를 통해 프로그래밍에서 오류를 해결하는 과정이 얼마나 중요한지를 배울 수 있었습니다. 문제를 찾아내고 해결해나가는 과정에서 많이 성장했다고 느낍니다. 또, 평소에 컴포넌트화를 어떻게 해야하는지에 대한 대한 의문점이 많았는데, 프로젝트를 진행하며 코드의 가독성을 높이고 유지보수를 용이하게 하는 컴포넌트화의 중요성을 체감했고, 컴포넌트화 하는 방법에 대해 공부할 수 있었습니다. 좋은 팀원분들을 만나  서로의 부족한 점을 채우며 즐겁게 프로젝트를 마무리 할 수 있었습니다. 감사합니다! 낭랑 18조👶💛
-</div>
-</details>
